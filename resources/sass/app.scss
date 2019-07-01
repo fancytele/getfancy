@@ -1,24 +1,16 @@
-/**
- * Dashkit v1.4.2
- *
- * Custom variables followed by Dashkit variables followed by Bootstrap variables
- * to ensure cascade of styles.
- */
+@import "abstracts/variables";
+@import ".~bootstrap/scss/bootstrap";
 
-// Bootstrap functions
-@import '.~bootstrap/scss/functions';
+// Abstracts
+@import "abstracts/helpers";
 
-// Custom variables
-@import 'user-variables';
+// Layout
+@import "layout/navbar";
+@import "layout/footer";
 
-// Dashkit variables
-@import 'dashkit/variables';
-
-// Bootstrap core
-@import '.~bootstrap/scss/bootstrap';
-
-// Dashkit core
-@import 'dashkit/dashkit';
-
-// Custom core
-@import 'user';
+// Components
+@import "components/features";
+@import "components/hero";
+@import "components/how-it-works";
+@import "components/plan-item";
+@import "components/testimonial";
