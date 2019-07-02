@@ -1,8 +1,16 @@
-// Fonts
-@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import "abstracts/variables";
+@import ".~bootstrap/scss/bootstrap";
 
-// Variables
-@import 'variables';
+// Abstracts
+@import "abstracts/helpers";
 
-// Bootstrap
-@import '~bootstrap/scss/bootstrap';
+// Layout
+@import "layout/navbar";
+@import "layout/footer";
+
+// Components
+@import "components/features";
+@import "components/hero";
+@import "components/how-it-works";
+@import "components/plan-item";
+@import "components/testimonial";

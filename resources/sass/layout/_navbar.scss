@@ -1,0 +1,48 @@
+.navbar {
+  transition: background-color 0.3s;
+
+  .getfancy-logo {
+    width: 6.25rem;
+  }
+
+  .getfancy-dark-logo {
+    display: none;
+  }
+}
+
+.navbar-light {
+  .getfancy-dark-logo {
+    display: block;
+  }
+
+  .getfancy-white-logo {
+    display: none;
+  }
+
+  .nav-link:after {
+    background-color: $black;
+  }
+}
+
+.nav-link {
+  font-size: 0.75em;
+  overflow: hidden;
+  position: relative;
+
+  &:after {
+    content: "";
+    background-color: $white;
+    bottom: -0.125em;
+    height: 0.125em;
+    position: absolute;
+    right: 0.625em;
+    left: 0.625em;
+    transition: bottom 0.3s;
+  }
+
+  &.active::after,
+  &:hover:after {
+    content: "";
+    bottom: 0.3125em;
+  }
+}
