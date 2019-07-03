@@ -16,3 +16,8 @@ mix.js('resources/js/app.js', 'public/js')
   .sass('resources/sass/app.scss', 'public/css')
   .sass('resources/sass/themes/dashkit.scss', 'public/css/theme.css')
   .copyDirectory('resources/img', 'public/img');
+
+if (mix.inProduction()) {
+  mix.version();
+  mix.disableNotifications();
+}
