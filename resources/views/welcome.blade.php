@@ -216,10 +216,10 @@
                 <div class="row">
                     <div class="col-md-4 mb-5 plan-item">
                     <h5 class="font-weight-normal text-uppercase">Starter</h5>
-                    <div class="plan-price">
-                        <span class="plan-price-sign">$</span>
-                        <span class="plan-price-amount">14.95</span>
-                        <span class="plan-price-time">/mon</span>
+                    <div class="plan-price text-primary">
+                        <span class="font-weight-bold h4 mr-n1 plan-price-sign">$</span>
+                        <span class="font-weight-bold h1 plan-price-amount">14.95</span>
+                        <span class="plan-price-time small text-black-50">/mon</span>
                     </div>
                     <ul class="list-group list-group-flush mb-3 mt-4 text-left">
                         <li class="list-group-item">
@@ -239,10 +239,10 @@
         
                     <div class="col-md-4 mb-5 plan-item">
                     <h5 class="font-weight-normal text-uppercase">Basic</h5>
-                    <div class="plan-price">
-                        <span class="plan-price-sign">$</span>
-                        <span class="plan-price-amount">19.95</span>
-                        <span class="plan-price-time">/mon</span>
+                    <div class="plan-price text-primary">
+                        <span class="font-weight-bold h4 mr-n1 plan-price-sign">$</span>
+                        <span class="font-weight-bold h1 plan-price-amount">19.95</span>
+                        <span class="plan-price-time small text-black-50">/mon</span>
                     </div>
                     <ul class="list-group list-group-flush mb-3 mt-4 text-left">
                         <li class="list-group-item">
@@ -262,10 +262,10 @@
         
                     <div class="col-md-4 mb-5 plan-item">
                     <h5 class="font-weight-normal text-uppercase">Pro</h5>
-                    <div class="plan-price">
-                        <span class="plan-price-sign">$</span>
-                        <span class="plan-price-amount">27.95</span>
-                        <span class="plan-price-time">/mon</span>
+                    <div class="plan-price text-primary">
+                        <span class="font-weight-bold h4 mr-n1 plan-price-sign">$</span>
+                        <span class="font-weight-bold h1 plan-price-amount">27.95</span>
+                        <span class="plan-price-time small text-black-50">/mon</span>
                     </div>
                     <ul class="list-group list-group-flush mb-3 mt-4 text-left">
                         <li class="list-group-item">

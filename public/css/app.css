@@ -11280,26 +11280,6 @@ a.text-dark:focus {
   padding-left: 0;
 }
 
-.plan-item .plan-price {
-  color: #1c8ae1;
-  font-weight: bold;
-}
-
-.plan-item .plan-price .plan-price-sign {
-  font-size: 1.875em;
-  margin-right: -0.3125rem;
-}
-
-.plan-item .plan-price .plan-price-amount {
-  font-size: 3.125em;
-}
-
-.plan-item .plan-price .plan-price-time {
-  color: rgba(0, 0, 0, 0.5);
-  font-size: 0.9375em;
-  font-weight: lighter;
-}
-
 #testimonial {
   background-color: #1b2e4e;
 }
