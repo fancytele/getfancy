@@ -232,7 +232,7 @@
                         <span class="font-weight-bold">Public</span> API access
                         </li>
                     </ul>
-                    <a href="#" class="btn btn-block btn-primary py-2">
+                    <a href="{{ route('checkout') }}" class="btn btn-block btn-primary py-2">
                         Start a personal account
                     </a>
                     </div>
@@ -255,7 +255,7 @@
                         <span class="font-weight-bold">Public</span> API access
                         </li>
                     </ul>
-                    <a href="#" class="btn btn-block btn-primary py-2">
+                    <a href="{{ route('checkout') }}" class="btn btn-block btn-primary py-2">
                         Start a personal account
                     </a>
                     </div>
@@ -278,7 +278,7 @@
                         <span class="font-weight-bold">Public</span> API access
                         </li>
                     </ul>
-                    <a href="#" class="btn btn-block btn-primary py-2">
+                    <a href="{{ route('checkout') }}" class="btn btn-block btn-primary py-2">
                         Start a personal account
                     </a>
                     </div>

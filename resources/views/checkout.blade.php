@@ -303,7 +303,7 @@
                                     <p>
                                         Switch to the
                                         <a
-                                            href="#"
+                                            href="{{ route('checkout') }}"
                                             class="font-italic text-decoration-underline text-white"
                                         >Enterprise</a>
                                         plan.

@@ -12,7 +12,7 @@
 */
 
 Route::get('/', 'WebSiteController@index');
-Route::get('/checkout', 'WebSiteController@checkout');
+Route::get('/checkout', 'WebSiteController@checkout')->name('checkout');
 
 Auth::routes();
 
