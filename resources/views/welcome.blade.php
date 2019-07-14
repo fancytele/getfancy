@@ -286,113 +286,108 @@
 
         <section
             id="plans"
-            class="getfancy-section text-center"
+            class="getfancy-section pb-6 text-center"
         >
             <h3 class="display-4 mb-5 text-primary">Our Plans</h3>
 
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4 mb-5 plan-item">
-                        <h5 class="font-weight-normal text-uppercase">Starter
-                        </h5>
-                        <div class="plan-price text-primary">
+                    <div class="col-md-8 offset-md-2">
+                        <h2 class="display-1 text-primary">
                             <span
-                                class="font-weight-bold h4 mr-n1 plan-price-sign"
+                                class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3"
                             >$</span>
-                            <span
-                                class="font-weight-bold h1 plan-price-amount">14.95</span>
-                            <span
-                                class="plan-price-time small text-black-50">/mon</span>
-                        </div>
-                        <ul
-                            class="list-group list-group-flush mb-3 mt-4 text-left">
-                            <li class="list-group-item">
-                                <span class="font-weight-bold">90k</span>
-                                monthly requests
-                            </li>
-                            <li class="list-group-item">
-                                <span class="font-weight-bold">8am-5pm</span>
-                                technical support
-                            </li>
-                            <li class="border-bottom list-group-item">
-                                <span class="font-weight-bold">Public</span> API
-                                access
-                            </li>
-                        </ul>
-                        <a
-                            href="{{ route('checkout') }}"
-                            class="btn btn-block btn-primary py-2"
-                        >
-                            Start a personal account
-                        </a>
-                    </div>
+                            <span>99</span>
+                        </h2>
 
-                    <div class="col-md-4 mb-5 plan-item">
-                        <h5 class="font-weight-normal text-uppercase">Basic</h5>
-                        <div class="plan-price text-primary">
-                            <span
-                                class="font-weight-bold h4 mr-n1 plan-price-sign"
-                            >$</span>
-                            <span
-                                class="font-weight-bold h1 plan-price-amount">19.95</span>
-                            <span
-                                class="plan-price-time small text-black-50">/mon</span>
-                        </div>
-                        <ul
-                            class="list-group list-group-flush mb-3 mt-4 text-left">
-                            <li class="list-group-item">
-                                <span class="font-weight-bold">100k</span>
-                                monthly requests
-                            </li>
-                            <li class="list-group-item">
-                                <span class="font-weight-bold">24/7</span>
-                                technical support
-                            </li>
-                            <li class="border-bottom list-group-item">
-                                <span class="font-weight-bold">Public</span> API
-                                access
-                            </li>
-                        </ul>
-                        <a
-                            href="{{ route('checkout') }}"
-                            class="btn btn-block btn-primary py-2"
+                        <div
+                            class="btn-group"
+                            role="group"
+                            aria-label="Basic example"
                         >
-                            Start a personal account
-                        </a>
-                    </div>
+                            <button
+                                type="button"
+                                class="btn btn-outline-light text-body"
+                                data-type="monthly"
+                                data-amount="9.99"
+                            >Monthly</button>
+                            <button
+                                type="button"
+                                class="active btn btn-primary"
+                                data-type="annually"
+                                data-amount="99"
+                            >Annually</button>
+                            <button
+                                type="button"
+                                class="btn btn-outline-light text-body"
+                                data-type="biannually"
+                                data-amount="159"
+                            >Biannually</button>
+                        </div>
+                        <p>
+                            <small class="text-muted font-italic">
+                                Variant time, same characteristics
+                            </small>
+                        </p>
+                        <div class="my-5 row">
+                            <div class="col-md-6">
+                                <ul
+                                    class="border-bottom border-top list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <span
+                                            class="font-weight-bold">Unlimited</span>
+                                        extensions
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span
+                                            class="font-weight-bold">Customer</span>
+                                        support
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="font-weight-bold">
+                                            All minutes
+                                        </span>
+                                        = fixed
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span
+                                            class="font-weight-bold">Choose</span>
+                                        your number
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul
+                                    class="border-bottom border-top list-group list-group-flush">
+                                    <li class="list-group-item">
+                                        <span
+                                            class="font-weight-bold">Conference</span>
+                                        call
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span
+                                            class="font-weight-bold">Custom</span>
+                                        voice
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span class="font-weight-bold">
+                                            Recording
+                                        </span>
+                                        voice
+                                    </li>
+                                    <li class="list-group-item">
+                                        <span
+                                            class="font-weight-bold">Recording</span>
+                                        voicemail to Email
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
 
-                    <div class="col-md-4 mb-5 plan-item">
-                        <h5 class="font-weight-normal text-uppercase">Pro</h5>
-                        <div class="plan-price text-primary">
-                            <span
-                                class="font-weight-bold h4 mr-n1 plan-price-sign"
-                            >$</span>
-                            <span
-                                class="font-weight-bold h1 plan-price-amount">27.95</span>
-                            <span
-                                class="plan-price-time small text-black-50">/mon</span>
-                        </div>
-                        <ul
-                            class="list-group list-group-flush mb-3 mt-4 text-left">
-                            <li class="list-group-item">
-                                <span class="font-weight-bold">Unlimited</span>
-                                monthly requests
-                            </li>
-                            <li class="list-group-item">
-                                <span class="font-weight-bold">24/7</span>
-                                technical support
-                            </li>
-                            <li class="border-bottom list-group-item">
-                                <span class="font-weight-bold">Public</span> API
-                                access
-                            </li>
-                        </ul>
                         <a
                             href="{{ route('checkout') }}"
-                            class="btn btn-block btn-primary py-2"
-                        >
-                            Start a personal account
-                        </a>
+                            class="btn btn-primary px-7"
+                        >Buy now</a>
                     </div>
                 </div>
             </div>
