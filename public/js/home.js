@@ -17813,7 +17813,7 @@ var animateScrollSpy = function animateScrollSpy(event) {
 
 var changeNavbarBg = function changeNavbarBg() {
   var scroll = $(window).scrollTop();
-  var navbarDarkClass = 'navbar-dark';
+  var navbarDarkClass = 'border-0 bg-transparent navbar-dark';
   var navbarLightClasses = 'bg-white navbar-light shadow';
 
   if (scroll >= 130) {

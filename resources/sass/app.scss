@@ -1,4 +1,13 @@
+// Bootstrap functions
+@import ".~bootstrap/scss/functions";
+
+// Custom variables
 @import "abstracts/variables";
+
+// Dashkit variables
+@import "themes/dashkit/variables";
+
+// Bootstrap core
 @import ".~bootstrap/scss/bootstrap";
 
 // Abstracts
@@ -14,3 +23,6 @@
 @import "components/how-it-works";
 @import "components/plan-item";
 @import "components/testimonial";
+
+// Themes
+@import "themes/dashkit/dashkit";

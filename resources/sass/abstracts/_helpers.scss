@@ -1,9 +1,25 @@
-.text-blue-solid {
-  color: $blue-solid;
-}
-
 .bg-white-ghost {
   background-color: $white-ghost !important;
+}
+
+.border-white-50 {
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+.blockquote-fancy {
+  line-height: 1.2;
+
+  .blockquote-footer {
+    font-size: 1rem;
+
+    &:before {
+      content: "";
+    }
+  }
+}
+
+.text-blue-solid {
+  color: $blue-solid;
 }
 
 .w-60 {

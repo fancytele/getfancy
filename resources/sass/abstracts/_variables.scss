@@ -1,18 +1,27 @@
+$path-to-fonts: "../fonts" !default;
+$path-to-img: "../img" !default;
+
 // Colors system
 $blue: #0193fe;
 $black: #000;
+
+$primary:       #704895;
+$secondary:     #F3a3b4;
+$info:          #bbdff7;
+
+// Custom color system
 $blue-solid: #1b5b9a;
 $white-ghost: #f6f7fb;
 
 // Navs
-
 $navbar-nav-link-padding-x: 0.8rem;
-$font-family-sans-serif: 'Cerebri Sans', sans-serif !default;
-
+$font-family-sans-serif: "Cerebri Sans", sans-serif !default;
 
 // Navbar
 $navbar-dark-color: #fff;
 $navbar-dark-hover-color: #fff;
 
-$navbar-light-color: rgba($black, .9);
-$navbar-light-hover-color: rgba($black, .9);
+$navbar-light-color: rgba($black, 0.9);
+$navbar-light-hover-color: rgba($black, 0.9);
+
+$font-size-base: 1rem !default; // 16px

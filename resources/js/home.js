@@ -12,7 +12,7 @@ const animateScrollSpy = function (event) {
 
 const changeNavbarBg = function () {
   const scroll = $(window).scrollTop();
-  const navbarDarkClass = 'navbar-dark';
+  const navbarDarkClass = 'border-0 bg-transparent navbar-dark';
   const navbarLightClasses = 'bg-white navbar-light shadow';
 
   if (scroll >= 130) {

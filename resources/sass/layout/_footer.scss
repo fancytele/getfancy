@@ -1,31 +1,29 @@
 .footer {
   background-color: #262f36;
   padding: 3rem 0 .2rem;
-  text-align: center;
 
   .form-control {
     background-color: #3b4248;
     color: $white;
-    text-align: center;
 
     &::placeholder {
-      color: #fff !important;
+      color: #ddd !important;
     }
 
     &::-webkit-input-placeholder {
-      color: #fff !important;
+      color: #ddd !important;
     }
 
     &::-moz-placeholder {
-      color: #fff !important;
+      color: #ddd !important;
     }
 
     &:-ms-input-placeholder {
-      color: #fff !important;
+      color: #ddd !important;
     }
 
     &:-moz-placeholder {
-      color: #fff !important;
+      color: #ddd !important;
     }
   }
 }
