@@ -19,7 +19,7 @@
 
     <!-- Styles -->
     <link
-        href="{{ asset('css/theme.css') }}"
+        href="{{ asset('css/app.css') }}"
         rel="stylesheet"
     >
 </head>
