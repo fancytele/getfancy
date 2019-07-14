@@ -28,5 +28,7 @@ $(document).ready(() => {
   $("#getfancy-menu .nav-link").on('click', animateScrollSpy);
 
   // Listen Scroll event
-  $(window).on('scroll', changeNavbarBg)
+  $(window).on('scroll', changeNavbarBg);
+
+  AOS.init();
 });

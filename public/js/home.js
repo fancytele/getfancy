@@ -17832,6 +17832,7 @@ $(document).ready(function () {
   $("#getfancy-menu .nav-link").on('click', animateScrollSpy); // Listen Scroll event
 
   $(window).on('scroll', changeNavbarBg);
+  AOS.init();
 });
 
 /***/ }),

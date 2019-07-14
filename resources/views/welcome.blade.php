@@ -16,9 +16,16 @@
         defer
     ></script>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
     <link
         rel="stylesheet"
         href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css"
+    >
+
+    <link
+        href="https://unpkg.com/aos@2.3.1/dist/aos.css"
+        rel="stylesheet"
     >
 
     <!-- Styles -->
@@ -112,7 +119,10 @@
             style="background-image: url(img/hero_blue.jpg)"
         >
             <div class="container">
-                <div class="hero-content">
+                <div
+                    class="hero-content"
+                    data-aos="zoom-in"
+                >
                     <h3 class="display-3">Virtual Phone System</h3>
                     <p>
                         GetFancy is a virtual phone system for startups and
@@ -147,16 +157,20 @@
             <div class="container">
                 <div class="row d-flex">
                     <div class="col-lg-6 ml-auto getfancy-section">
-                        <h3 class="display-4 text-primary">Features</h3>
-                        <p class="mb-5 text-blue-solid">
-                            Make it easy to provide your business powerful phone
-                            service.
-                            No complex hardware to install or mantain. GetFancy
-                            is simple to use
-                            and manage, requiring no technical expertise
-                        </p>
+                        <div data-aos="zoom-in">
+                            <h3 class="display-4 text-primary">Features</h3>
+                            <p class="mb-5 text-blue-solid">
+                                Make it easy to provide your business powerful
+                                phone service. No complex hardware to install or
+                                mantain. GetFancy is simple to use and manage,
+                                requiring no technical expertise
+                            </p>
+                        </div>
                         <div class="row d-flex">
-                            <div class="col-md-6">
+                            <div
+                                class="col-md-6"
+                                data-aos="fade-right"
+                            >
                                 <h5 class="font-weight-bold">Work Anywhere</h5>
                                 <p>
                                     Plug in your existing phone anyhwere and it
@@ -165,7 +179,10 @@
                                     the office.
                                 </p>
                             </div>
-                            <div class="col-md-6">
+                            <div
+                                class="col-md-6"
+                                data-aos="fade-left"
+                            >
                                 <h5 class="font-weight-bold">Relability</h5>
                                 <p>
                                     Our proven 99.9% up-time and our system wide
@@ -175,7 +192,10 @@
                                     carrier in the nation.
                                 </p>
                             </div>
-                            <div class="col-md-6">
+                            <div
+                                class="col-md-6"
+                                data-aos="fade-right"
+                            >
                                 <h5 class="font-weight-bold">
                                     Management Tools
                                 </h5>
@@ -188,7 +208,10 @@
                                     record phone calls and much, mucho more.
                                 </p>
                             </div>
-                            <div class="col-md-6">
+                            <div
+                                class="col-md-6"
+                                data-aos="fade-left"
+                            >
                                 <h5 class="font-weight-bold">Easy Setup</h5>
                                 <p>
                                     No technical knowledge required! Our cloud
@@ -211,7 +234,10 @@
             class="getfancy-section text-center"
         >
             <div class="container">
-                <div class="mb-5 work-heading">
+                <div
+                    class="mb-5 work-heading"
+                    data-aos="zoom-in"
+                >
                     <h3 class="display-4 text-primary">How It Works</h3>
                     <p class="m-auto text-blue-solid">
                         GetFancy is an all-in-one virtual phone service
@@ -224,7 +250,11 @@
                     </p>
                 </div>
                 <div class="row work-list">
-                    <div class="col-md-4 mb-3">
+                    <div
+                        class="col-md-4 mb-3"
+                        data-aos="fade-up"
+                        data-aos-anchor-placement="center-bottom"
+                    >
                         <i
                             class="la la-mobile la-5x px-5 bg-lighter text-blue-solid"></i>
                         <div class="mt-4">
@@ -237,7 +267,11 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div
+                        class="col-md-4 mb-3"
+                        data-aos="fade-up"
+                        data-aos-anchor-placement="center-bottom"
+                    >
                         <i
                             class="la la-microphone la-5x px-5 bg-lighter text-blue-solid"></i>
                         <div class="mt-4">
@@ -250,7 +284,11 @@
                             </p>
                         </div>
                     </div>
-                    <div class="col-md-4 mb-3">
+                    <div
+                        class="col-md-4 mb-3"
+                        data-aos="fade-up"
+                        data-aos-anchor-placement="center-bottom"
+                    >
                         <i
                             class="la la-headphones la-5x px-5 bg-lighter text-blue-solid"></i>
                         <div class="mt-4">
@@ -288,48 +326,59 @@
             id="plans"
             class="getfancy-section pb-6 text-center"
         >
-            <h3 class="display-4 mb-5 text-primary">Our Plans</h3>
+            <h3
+                class="display-4 mb-5 text-primary"
+                data-aos="zoom-in"
+            >Our Plans</h3>
 
             <div class="container">
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
-                        <h2 class="display-1 text-primary">
-                            <span
-                                class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3"
-                            >$</span>
-                            <span>99</span>
-                        </h2>
+                        <div data-aos="zoom-in">
+                            <h2 class="display-1 text-primary">
+                                <span
+                                    class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3"
+                                >$</span>
+                                <span>99</span>
+                            </h2>
+
+                            <div
+                                class="btn-group"
+                                role="group"
+                                aria-label="Basic example"
+                            >
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-light text-body"
+                                    data-type="monthly"
+                                    data-amount="9.99"
+                                >Monthly</button>
+                                <button
+                                    type="button"
+                                    class="active btn btn-primary"
+                                    data-type="annually"
+                                    data-amount="99"
+                                >Annually</button>
+                                <button
+                                    type="button"
+                                    class="btn btn-outline-light text-body"
+                                    data-type="biannually"
+                                    data-amount="159"
+                                >Biannually</button>
+                            </div>
+
+                            <p>
+                                <small class="text-muted font-italic">
+                                    Variant time, same characteristics
+                                </small>
+                            </p>
+                        </div>
 
                         <div
-                            class="btn-group"
-                            role="group"
-                            aria-label="Basic example"
+                            class="my-5 row"
+                            data-aos="fade-up"
+                            data-aos-anchor-placement="center-bottom"
                         >
-                            <button
-                                type="button"
-                                class="btn btn-outline-light text-body"
-                                data-type="monthly"
-                                data-amount="9.99"
-                            >Monthly</button>
-                            <button
-                                type="button"
-                                class="active btn btn-primary"
-                                data-type="annually"
-                                data-amount="99"
-                            >Annually</button>
-                            <button
-                                type="button"
-                                class="btn btn-outline-light text-body"
-                                data-type="biannually"
-                                data-amount="159"
-                            >Biannually</button>
-                        </div>
-                        <p>
-                            <small class="text-muted font-italic">
-                                Variant time, same characteristics
-                            </small>
-                        </p>
-                        <div class="my-5 row">
                             <div class="col-md-6">
                                 <ul
                                     class="border-bottom border-top list-group list-group-flush">
@@ -404,6 +453,7 @@
                 action=""
                 method="POST"
                 class="mb-5"
+                data-aos="flip-up"
             >
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
