@@ -11,8 +11,18 @@ class WebSiteController extends Controller
         return view('welcome');
     }
 
-    public function checkout()
+    /**
+     * Show the application dashboard.
+     *
+     * @param Illuminate\Http\Request $request
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function checkout(Request $request)
     {
-        return view('checkout');
+        if (preg_match("/monthly|annually|binnually/", $request->getRequestUri())) {
+            return view('checkout');
+        }
+
+        return redirect()->route('checkout', 'annually');
     }
 }

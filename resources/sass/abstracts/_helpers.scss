@@ -2,6 +2,12 @@
   background-color: $white-ghost !important;
 }
 
+.border-sm-top {
+  @include media-breakpoint-up(sm) {
+    border-top: 1px solid $gray-300 !important;
+  }
+}
+
 .border-white-50 {
   border-color: rgba(255, 255, 255, 0.5) !important;
 }

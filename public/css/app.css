@@ -12335,6 +12335,12 @@ a.text-white:focus {
   background-color: #f6f7fb !important;
 }
 
+@media (min-width: 576px) {
+  .border-sm-top {
+    border-top: 1px solid #E3EBF6 !important;
+  }
+}
+
 .border-white-50 {
   border-color: rgba(255, 255, 255, 0.5) !important;
 }
@@ -12517,9 +12523,32 @@ a.text-white:focus {
   }
 }
 
-.plan-item .list-group-item {
-  font-size: 0.8125em;
-  padding-left: 0;
+#plans .plan-wrapper {
+  height: 4.375rem;
+  position: relative;
+}
+
+#plans .plan-wrapper .plan-item {
+  left: 50%;
+  opacity: 0;
+  position: absolute;
+  -webkit-transform: translateX(-55%);
+          transform: translateX(-55%);
+  -webkit-transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+  transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+  visibility: hidden;
+  z-index: -1;
+}
+
+#plans .plan-wrapper .plan-item.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: auto;
+}
+
+#plans .btn-group button {
+  -webkit-transition: background-color 0.5s, border-color 0.5s, color 0.5s;
+  transition: background-color 0.5s, border-color 0.5s, color 0.5s;
 }
 
 #testimonial {

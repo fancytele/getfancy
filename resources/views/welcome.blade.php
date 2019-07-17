@@ -112,7 +112,7 @@
         </nav>
     </header>
 
-    <main>
+    <main class="overflow-hidden">
         <section
             id="home"
             class="hero text-white d-flex align-items-center"
@@ -335,35 +335,55 @@
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
                         <div data-aos="zoom-in">
-                            <h2 class="display-1 text-primary">
+                            <h2 class="display-1 text-primary plan-wrapper">
                                 <span
-                                    class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3"
-                                >$</span>
-                                <span>99</span>
+                                    id="monthly"
+                                    class="plan-item"
+                                >
+                                    <span
+                                        class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3"
+                                    >$</span>
+                                    <span class="plan-amount">9.99</span>
+                                </span>
+                                <span
+                                    id="annually"
+                                    class="active plan-item"
+                                >
+                                    <span
+                                        class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3"
+                                    >$</span>
+                                    <span class="plan-amount">99</span>
+                                </span>
+                                <span
+                                    id="biannually"
+                                    class="plan-item"
+                                >
+                                    <span
+                                        class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3"
+                                    >$</span>
+                                    <span class="plan-amount">159</span>
+                                </span>
                             </h2>
 
                             <div
                                 class="btn-group"
                                 role="group"
-                                aria-label="Basic example"
+                                aria-label="Our Plans Button Groups"
                             >
                                 <button
                                     type="button"
-                                    class="btn btn-outline-light text-body"
+                                    class="btn btn-outline-light shadow-none text-body"
                                     data-type="monthly"
-                                    data-amount="9.99"
                                 >Monthly</button>
                                 <button
                                     type="button"
-                                    class="active btn btn-primary"
+                                    class="active btn btn-primary shadow-none"
                                     data-type="annually"
-                                    data-amount="99"
                                 >Annually</button>
                                 <button
                                     type="button"
-                                    class="btn btn-outline-light text-body"
+                                    class="btn btn-outline-light shadow-none text-body"
                                     data-type="biannually"
-                                    data-amount="159"
                                 >Biannually</button>
                             </div>
 
@@ -407,7 +427,7 @@
                             </div>
                             <div class="col-md-6">
                                 <ul
-                                    class="border-bottom border-top list-group list-group-flush">
+                                    class="border-bottom border-sm-top list-group list-group-flush">
                                     <li class="list-group-item">
                                         <span
                                             class="font-weight-bold">Conference</span>
@@ -434,7 +454,8 @@
                         </div>
 
                         <a
-                            href="{{ route('checkout') }}"
+                            id="plan-buy"
+                            href="#"
                             class="btn btn-primary px-7"
                         >Buy now</a>
                     </div>
@@ -443,7 +464,7 @@
         </section>
     </main>
 
-    <footer class="footer text-white">
+    <footer class="footer overflow-hidden text-white">
         <div class="container">
             <h3 class="display-4 font-weight-bold mb-4 text-center">
                 Contact Us
