@@ -17825,11 +17825,18 @@ __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap
   };
 
   var changePlan = function changePlan(e) {
-    var id = e.target.dataset.type;
-    $('#plans .btn-group .active').removeClass('active btn-primary').addClass('btn-outline-light text-body');
-    $("#plans .btn-group button[data-type=\"".concat(id, "\"")).addClass('active btn-primary').removeClass('btn-outline-light text-body');
-    $('#plans .plan-wrapper .plan-item.active').removeClass('active');
-    $("#plans .plan-wrapper #".concat(id)).addClass('active');
+    var activeClass = 'active';
+
+    if ($(this).hasClass(activeClass)) {
+      e.stopPropagation();
+      return;
+    }
+
+    var id = e.target.dataset.type; // Remove active Button and Plan Item the 'active' class
+
+    $('#plans .active').removeClass(activeClass); // Add selected Button and Plan Item class 'active'
+
+    $("#plans .btn-group button[data-type=\"".concat(id, "\"], #plans .plan-wrapper #").concat(id)).addClass(activeClass);
   };
 
   var redirectToCheckout = function redirectToCheckout(e) {

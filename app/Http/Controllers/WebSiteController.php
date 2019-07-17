@@ -3,26 +3,31 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Plan;
 
 class WebSiteController extends Controller
 {
     public function index()
     {
-        return view('welcome');
+        $plans = Plan::get(['name', 'slug', 'cost', 'is_primary']);
+
+        return view('welcome', compact('plans'));
     }
 
     /**
      * Show the application dashboard.
      *
-     * @param Illuminate\Http\Request $request
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function checkout(Request $request)
+    public function checkout(string $slug)
     {
-        if (preg_match("/monthly|annually|binnually/", $request->getRequestUri())) {
-            return view('checkout');
+        $plans = Plan::get(['name', 'slug', 'cost', 'is_primary']);
+        $slugs = $plans->pluck('slug')->toArray();
+
+        if (in_array($slug, $slugs)) {
+            return view('checkout', ['plan' => $plans->firstWhere('slug', $slug)]);
         }
 
-        return redirect()->route('checkout', 'annually');
+        return redirect()->route('checkout', $plans->firstWhere('is_primary', true)->slug);
     }
 }

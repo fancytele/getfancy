@@ -12547,8 +12547,17 @@ a.text-white:focus {
 }
 
 #plans .btn-group button {
+  box-shadow: none;
+  color: inherit;
   -webkit-transition: background-color 0.5s, border-color 0.5s, color 0.5s;
   transition: background-color 0.5s, border-color 0.5s, color 0.5s;
+}
+
+#plans .btn-group button.active {
+  background-color: #704895;
+  border-color: #5d3c7b;
+  color: #FFFFFF;
+  cursor: default;
 }
 
 #testimonial {

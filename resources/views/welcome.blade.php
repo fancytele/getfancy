@@ -336,33 +336,18 @@
                     <div class="col-md-8 offset-md-2">
                         <div data-aos="zoom-in">
                             <h2 class="display-1 text-primary plan-wrapper">
+                                @foreach ($plans as $plan)
                                 <span
-                                    id="monthly"
-                                    class="plan-item"
+                                    id="{{ $plan->slug }}"
+                                    class="plan-item{{ $plan->is_primary ? ' active' : '' }}"
                                 >
                                     <span
                                         class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3"
                                     >$</span>
-                                    <span class="plan-amount">9.99</span>
-                                </span>
-                                <span
-                                    id="annually"
-                                    class="active plan-item"
-                                >
                                     <span
-                                        class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3"
-                                    >$</span>
-                                    <span class="plan-amount">99</span>
+                                        class="plan-amount">{{ $plan->cost }}</span>
                                 </span>
-                                <span
-                                    id="biannually"
-                                    class="plan-item"
-                                >
-                                    <span
-                                        class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3"
-                                    >$</span>
-                                    <span class="plan-amount">159</span>
-                                </span>
+                                @endforeach
                             </h2>
 
                             <div
@@ -370,21 +355,13 @@
                                 role="group"
                                 aria-label="Our Plans Button Groups"
                             >
+                                @foreach ($plans as $plan)
                                 <button
                                     type="button"
-                                    class="btn btn-outline-light shadow-none text-body"
-                                    data-type="monthly"
-                                >Monthly</button>
-                                <button
-                                    type="button"
-                                    class="active btn btn-primary shadow-none"
-                                    data-type="annually"
-                                >Annually</button>
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-light shadow-none text-body"
-                                    data-type="biannually"
-                                >Biannually</button>
+                                    class="btn btn-outline-light{{ $plan->is_primary ? ' active' : '' }}"
+                                    data-type="{{ $plan->slug }}"
+                                >{{ $plan->name }}</button>
+                                @endforeach
                             </div>
 
                             <p>

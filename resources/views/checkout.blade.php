@@ -105,12 +105,12 @@
                                     <div>
                                         <h2 class="display-4">
                                             Checkout
-                                            <small class="d-block d-lg-none h5 text-primary">
-                                                Standard Plan ($
-                                                <span
-                                                    class="h4">99</span>
-                                                /year)
-                                            </small>
+                                            <span
+                                                class="d-block d-lg-none h4 text-primary"
+                                            >
+                                                {{ $plan->name }} -
+                                                ${{ $plan->cost }}
+                                            </span>
                                         </h2>
                                     </div>
 
@@ -240,22 +240,22 @@
                             class="bg-primary col-lg-4 d-none d-lg-block pt-4 rounded-right text-white">
                             <div class="card-body">
                                 <div class="mb-4">
-                                    <h4 class="mb-4">Standard Plan</h4>
+                                    {{-- <h4 class="mb-4">{{ $plan->name }}</h4> --}}
                                     <div>
                                         <span
                                             class="align-top d-inline-block h2 mb-0 plan-price-sign"
                                         >$</span>
                                         <span
                                             class="d-inline-block display-1 font-weight-light mt-n3 plan-price-amount"
-                                        >99</span>
+                                        >{{ $plan->cost }}</span>
                                         <span
                                             class="d-inline-block h3 mb-0 plan-price-time text-white"
                                         >
-                                            / year
+                                            / {{ $plan->slug }}
                                         </span>
                                     </div>
                                     <p class="font-italic mb-0">
-                                        Automatically renews after 1 year
+                                        Automatically renews
                                     </p>
                                 </div>
 

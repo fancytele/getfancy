@@ -21,6 +21,15 @@
   }
 
   .btn-group button {
+    box-shadow: none;
+    color: inherit;
     transition: background-color 0.5s, border-color 0.5s, color 0.5s;
+
+    &.active {
+      background-color: $primary;
+      border-color: darken($primary, 7.5%);
+      color: $white;
+      cursor: default;
+    }
   }
 }
