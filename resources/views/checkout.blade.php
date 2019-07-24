@@ -10,6 +10,19 @@
 
     <title>GetFancy</title>
 
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <!-- Scripts -->
+    <script
+        src="{{ asset('js/home.js') }}"
+        defer
+    ></script>
+
+    <script
+        src="{{ asset('js/stripe.js') }}"
+        defer
+    ></script>
+
     <link
         rel="stylesheet"
         href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
@@ -22,323 +35,581 @@
         href="{{ asset('css/app.css') }}"
         rel="stylesheet"
     >
+
+    <style>
+        /**
+ * The CSS shown here will not be introduced in the Quickstart guide, but shows
+ * how you can use CSS to style your Element's container.
+ */
+        .StripeElement {
+            box-sizing: border-box;
+            height: calc(1.5em + 1rem + 2px);
+            padding: 0.5rem 0.75rem;
+            border: 1px solid #D2DDEC;
+            border-radius: 0.375rem;
+            background-color: white;
+            line-height: 1.5;
+            -webkit-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        }
+
+        .StripeElement--focus {
+            color: #000;
+            background-color: #FFFFFF;
+            border-color: #704895;
+            outline: 0;
+        }
+
+        .StripeElement--invalid {
+            border-color: #fa755a;
+        }
+
+        .StripeElement--webkit-autofill {
+            background-color: #fefde5 !important;
+        }
+    </style>
 </head>
 
 <body>
-    <header>
-        <nav
-            id="getfancy-navbar"
-            class="navbar navbar-light navbar-expand-md"
-        >
-            <div class="container">
-                <a
-                    class="font-weight-bold navbar-brand pl-3 py-4 text-uppercase"
-                    href="{{ url('/') }}"
-                >
-                    <span class="getfancy-logo">
-                        GetFancy
-                    </span>
-                </a>
-                <button
-                    class="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#getfancy-menu"
-                    aria-controls="getfancy-menu"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div
-                    class="collapse h5 mb-0 navbar-collapse"
-                    id="getfancy-menu"
-                >
-                    <ul class="navbar-nav ml-auto text-uppercase">
-                        <li class="nav-item">
-                            <a
-                                class="nav-link"
-                                href="#home"
-                            >
-                                Home <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                class="nav-link"
-                                href="#features"
-                            >Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                class="nav-link"
-                                href="#how-it-works"
-                            >How it Works</a>
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                class="nav-link"
-                                href="#testimonial"
-                            >Testimonial</a>
-                        </li>
-                        <li class="nav-item">
-                            <a
-                                class="nav-link"
-                                href="#plans"
-                            >Our Plans</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
+    @include('partials.header')
 
     <main class="py-5">
-        <div class="container">
-            <div class="card">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-8 pt-3">
-                            <form action="">
-                                <div class="card-body">
-                                    <div>
-                                        <h2 class="display-4">
-                                            Checkout
-                                            <span
-                                                class="d-block d-lg-none h4 text-primary"
-                                            >
-                                                {{ $plan->name }} -
-                                                ${{ $plan->cost }}
-                                            </span>
-                                        </h2>
-                                    </div>
+        <section class="skew-section-primary"></section>
 
-                                    <hr class="mx-n5">
-
-                                    <div class="pt-4">
-                                        <h3 class="ml-n2">
-                                            <span class="fa-stack text-primary">
-                                                <i
-                                                    class="far fa-circle fa-stack-2x"></i>
+        <section
+            id="checkout"
+            class="pt-7"
+        >
+            <div class="container">
+                <div class="border-4 card shadow">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-8 pt-3">
+                                <form
+                                    action=""
+                                    id="payment-form"
+                                >
+                                    <div class="card-body">
+                                        <div>
+                                            <h2 class="display-4">
+                                                Checkout
                                                 <span
-                                                    class="fa-stack-1x">1</span>
-                                            </span>
-                                            Your Basic Information
-                                        </h3>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="first_name">
-                                                        First Name
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        id="first_name"
-                                                        name="first_name"
-                                                        placeholder="John"
-                                                        required
-                                                        autofocus
-                                                    >
+                                                    class="d-block d-lg-none h4 text-primary"
+                                                >
+                                                    {{ $plan->name }} -
+                                                    ${{ $plan->cost }}
+                                                </span>
+                                            </h2>
+                                        </div>
+
+                                        <hr class="mx-n5">
+
+                                        <!-- Create Account -->
+                                        <div class="pt-4">
+                                            <h3 class="ml-n2">
+                                                <span
+                                                    class="fa-stack text-primary"
+                                                >
+                                                    <i
+                                                        class="far fa-circle fa-stack-2x"></i>
+                                                    <span
+                                                        class="fa-stack-1x">1</span>
+                                                </span>
+                                                Create Account
+                                            </h3>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="first_name">
+                                                            First Name
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            class="form-control"
+                                                            id="first_name"
+                                                            name="first_name"
+                                                            placeholder="John"
+                                                            required
+                                                            autofocus
+                                                        >
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="last_name">
-                                                        Last Name
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        class="form-control"
-                                                        id="last_name"
-                                                        name="last_name"
-                                                        placeholder="Doe"
-                                                        required
-                                                    >
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="last_name">
+                                                            Last Name
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            class="form-control"
+                                                            id="last_name"
+                                                            name="last_name"
+                                                            placeholder="Doe"
+                                                            required
+                                                        >
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="email">
-                                                        E-mail
-                                                    </label>
-                                                    <input
-                                                        type="email"
-                                                        class="form-control"
-                                                        id="email"
-                                                        name="email"
-                                                        placeholder="johndoe@example.com"
-                                                        required
-                                                    >
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="email">
+                                                            E-mail
+                                                        </label>
+                                                        <input
+                                                            type="email"
+                                                            class="form-control"
+                                                            id="email"
+                                                            name="email"
+                                                            placeholder="johndoe@example.com"
+                                                            required
+                                                        >
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group">
-                                                    <label for="verify_email">
-                                                        Verify E-mail
-                                                    </label>
-                                                    <input
-                                                        type="email"
-                                                        class="form-control"
-                                                        id="verify_email"
-                                                        name="verify_email"
-                                                        placeholder="johndoe@example.com"
-                                                        required
-                                                    >
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label
+                                                            for="verify_email"
+                                                        >
+                                                            Verify E-mail
+                                                        </label>
+                                                        <input
+                                                            type="email"
+                                                            class="form-control"
+                                                            id="verify_email"
+                                                            name="verify_email"
+                                                            placeholder="johndoe@example.com"
+                                                            required
+                                                        >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="password">
+                                                            Password
+                                                        </label>
+                                                        <input
+                                                            type="password"
+                                                            class="form-control"
+                                                            id="password"
+                                                            name="password"
+                                                            placeholder="********"
+                                                            required
+                                                        >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label
+                                                            for="repeat-password"
+                                                        >
+                                                            Verify Password
+                                                        </label>
+                                                        <input
+                                                            type="password"
+                                                            class="form-control"
+                                                            id="repeat-password"
+                                                            name="repeat-password"
+                                                            placeholder="********"
+                                                            required
+                                                        >
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
 
-                                    <hr class="mx-n5">
+                                        <hr class="mx-n5">
 
-                                    <div class="pt-4">
-                                        <h3 class="ml-n2">
-                                            <span class="fa-stack text-primary">
-                                                <i
-                                                    class="far fa-circle fa-stack-2x"></i>
+                                        <!-- Billing Information -->
+                                        <div class="pt-4">
+                                            <h3 class="ml-n2">
                                                 <span
-                                                    class="fa-stack-1x">2</span>
-                                            </span>
-                                            Your Payment Information
-                                        </h3>
+                                                    class="fa-stack text-primary"
+                                                >
+                                                    <i
+                                                        class="far fa-circle fa-stack-2x"></i>
+                                                    <span
+                                                        class="fa-stack-1x">2</span>
+                                                </span>
+                                                Your Billing Information
+                                            </h3>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="country">
+                                                            Country
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            class="form-control"
+                                                            id="country"
+                                                            name="country"
+                                                            placeholder="---"
+                                                            required
+                                                        >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="city">
+                                                            City
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            class="form-control"
+                                                            id="city"
+                                                            name="city"
+                                                            placeholder="---"
+                                                            required
+                                                        >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="state">
+                                                            State, Providence,
+                                                            Region
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            class="form-control"
+                                                            id="state"
+                                                            name="state"
+                                                            placeholder="---"
+                                                            required
+                                                        >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-group">
+                                                        <label for="zip_code">
+                                                            Zip Code
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            class="form-control"
+                                                            id="zip_code"
+                                                            name="zip_code"
+                                                            placeholder="---"
+                                                            required
+                                                        >
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group">
+                                                        <label for="address">
+                                                            Address
+                                                        </label>
+                                                        <input
+                                                            type="text"
+                                                            class="form-control"
+                                                            id="address"
+                                                            name="address"
+                                                            placeholder="Street address, P.O. box, company name, c/o"
+                                                            required
+                                                        >
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Additional Features -->
+                                        <hr class="mx-n5">
+
+                                        <div class="pt-4">
+                                            <h3 class="ml-n2">
+                                                <span
+                                                    class="fa-stack text-primary"
+                                                >
+                                                    <i
+                                                        class="far fa-circle fa-stack-2x"></i>
+                                                    <span
+                                                        class="fa-stack-1x">3</span>
+                                                </span>
+                                                Additional Features
+                                            </h3>
+                                            <div>
+                                                <div class="form-group">
+                                                    <div
+                                                        class="custom-control custom-switch">
+                                                        <input
+                                                            type="checkbox"
+                                                            class="custom-control-input"
+                                                            id="professional_recordings"
+                                                        >
+                                                        <label
+                                                            class="custom-control-label"
+                                                            for="professional_recordings"
+                                                        >
+                                                            Professional
+                                                            Greeting/Custom
+                                                            Recordings
+                                                            <small
+                                                                class="d-block text-black-50"
+                                                            >
+                                                                $8
+                                                            </small>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div
+                                                        class="custom-control custom-switch">
+                                                        <input
+                                                            type="checkbox"
+                                                            class="custom-control-input"
+                                                            id="multi_ring"
+                                                        >
+                                                        <label
+                                                            class="custom-control-label"
+                                                            for="multi_ring"
+                                                        >
+                                                            Multi-Ring
+                                                            <small
+                                                                class="d-block text-black-50"
+                                                            >
+                                                                $5
+                                                            </small>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div
+                                                        class="custom-control custom-switch">
+                                                        <input
+                                                            type="checkbox"
+                                                            class="custom-control-input"
+                                                            id="fraud_alert"
+                                                        >
+                                                        <label
+                                                            class="custom-control-label"
+                                                            for="fraud_alert"
+                                                        >
+                                                            Fraud Alert
+                                                            <small
+                                                                class="d-block text-black-50"
+                                                            >
+                                                                $5
+                                                            </small>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div
+                                                        class="custom-control custom-switch">
+                                                        <input
+                                                            type="checkbox"
+                                                            class="custom-control-input"
+                                                            id="call_blocker"
+                                                        >
+                                                        <label
+                                                            class="custom-control-label"
+                                                            for="call_blocker"
+                                                        >
+                                                            Call Blocker
+                                                            <small
+                                                                class="d-block text-black-50"
+                                                            >
+                                                                $5
+                                                            </small>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div
+                                                        class="custom-control custom-switch">
+                                                        <input
+                                                            type="checkbox"
+                                                            class="custom-control-input"
+                                                            id="additional_number"
+                                                        >
+                                                        <label
+                                                            class="custom-control-label"
+                                                            for="additional_number"
+                                                        >
+                                                            Additional
+                                                            Numbers
+                                                            <small
+                                                                class="d-block text-black-50"
+                                                            >
+                                                                $5 (per number)
+                                                            </small>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <hr class="mx-n5">
+
+                                        <div class="pt-4">
+                                            <h3 class="ml-n2">
+                                                <span
+                                                    class="fa-stack text-primary"
+                                                >
+                                                    <i
+                                                        class="far fa-circle fa-stack-2x"></i>
+                                                    <span
+                                                        class="fa-stack-1x">4</span>
+                                                </span>
+                                                Your Payment Information
+                                            </h3>
+                                            <div>
+                                                <div class="form-group">
+                                                    <label for="credit-card">
+                                                        Credict Card
+                                                    </label>
+                                                    <div id="stripe-card"></div>
+                                                    <!-- Used to display form errors. -->
+                                                    <div
+                                                        id="card-errors"
+                                                        role="alert"
+                                                    ></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <hr class="mx-n5">
+
+                                        <div class="pt-4">
+                                            <button
+                                                type="submit"
+                                                class="btn btn-block btn-lg btn-primary font-weight-bold py-3"
+                                            >
+                                                Checkout
+                                            </button>
+                                            <p class="mt-4 text-center">
+                                                <span
+                                                    class="align-middle h2 mb-0 text-primary"
+                                                >
+                                                    <i
+                                                        class="fa-question-circle far"></i>
+                                                </span>
+                                                <span class="font-weight-bold">
+                                                    Need any help?
+                                                </span>
+                                                Don't hesitate to
+                                                <a
+                                                    href="mailto:info@getfancy.co"
+                                                    class="text-body text-decoration-underline"
+                                                >
+                                                    contact support!
+                                                </a>
+                                            </p>
+                                        </div>
                                     </div>
-
-                                    <hr class="mx-n5">
-
-                                    <div class="pt-4">
-                                        <button
-                                            type="submit"
-                                            class="btn btn-block btn-lg btn-primary font-weight-bold py-3"
-                                        >
-                                            Checkout
-                                        </button>
-                                        <p class="mt-4 text-center">
+                                </form>
+                            </div>
+                            <div
+                                class="bg-primary col-lg-4 d-none d-lg-block pt-4 rounded-right text-white">
+                                <div class="card-body">
+                                    <div class="mb-4">
+                                        {{-- <h4 class="mb-4">{{ $plan->name }}
+                                        </h4> --}}
+                                        <div>
                                             <span
-                                                class="align-middle h2 mb-0 text-primary"
+                                                class="align-top d-inline-block h2 mb-0 plan-price-sign"
+                                            >$</span>
+                                            <span
+                                                class="d-inline-block display-1 font-weight-light mt-n3 plan-price-amount"
+                                            >{{ $plan->cost }}</span>
+                                            <span
+                                                class="d-inline-block h3 mb-0 plan-price-time text-white"
                                             >
+                                                / {{ $plan->slug }}
+                                            </span>
+                                        </div>
+                                        <p class="font-italic mb-0">
+                                            Automatically renews
+                                        </p>
+                                    </div>
+
+                                    <ul class="list-unstyled">
+                                        <li class="mb-2">
+                                            <span class="mr-2">
                                                 <i
-                                                    class="fa-question-circle far"></i>
+                                                    class="far fa-check-circle"></i>
                                             </span>
+                                            Unlimited extensions
+                                        </li>
+                                        <li class="mb-2">
+                                            <span class="mr-2">
+                                                <i
+                                                    class="far fa-check-circle"></i>
+                                            </span>
+                                            Customer support
+                                        </li>
+                                        <li class="mb-2">
+                                            <span class="mr-2">
+                                                <i
+                                                    class="far fa-check-circle"></i>
+                                            </span>
+                                            All minutes = fixed
+                                        </li>
+                                        <li class="mb-2">
+                                            <span class="mr-2">
+                                                <i
+                                                    class="far fa-check-circle"></i>
+                                            </span>
+                                            Choose your number
+                                        </li>
+                                        <li class="mb-2">
+                                            <span class="mr-2">
+                                                <i
+                                                    class="far fa-check-circle"></i>
+                                            </span>
+                                            Conference call
+                                        </li>
+                                    </ul>
+
+                                    <div class="mt-5">
+                                        <p
+                                            class="border-bottom border-bottom-5 border-info d-inline-block mb-0">
+                                            Need
                                             <span class="font-weight-bold">
-                                                Need any help?
+                                                Custom Voice Recording?
                                             </span>
-                                            Don't hesitate to
+                                        </p>
+                                        <p>
+                                            Switch to the
                                             <a
-                                                href="mailto:info@getfancy.co"
-                                                class="text-body text-decoration-underline"
-                                            >
-                                                contact support!
-                                            </a>
+                                                href="{{ route('checkout', 'annually') }}"
+                                                class="font-italic text-decoration-underline text-white"
+                                            >Enterprise</a>
+                                            plan.
                                         </p>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div
-                            class="bg-primary col-lg-4 d-none d-lg-block pt-4 rounded-right text-white">
-                            <div class="card-body">
-                                <div class="mb-4">
-                                    {{-- <h4 class="mb-4">{{ $plan->name }}</h4> --}}
-                                    <div>
-                                        <span
-                                            class="align-top d-inline-block h2 mb-0 plan-price-sign"
-                                        >$</span>
-                                        <span
-                                            class="d-inline-block display-1 font-weight-light mt-n3 plan-price-amount"
-                                        >{{ $plan->cost }}</span>
-                                        <span
-                                            class="d-inline-block h3 mb-0 plan-price-time text-white"
+
+                                    <hr class="border-white-50">
+
+                                    <div class="mt-6">
+                                        <blockquote
+                                            class="blockquote blockquote-fancy"
                                         >
-                                            / {{ $plan->slug }}
-                                        </span>
-                                    </div>
-                                    <p class="font-italic mb-0">
-                                        Automatically renews
-                                    </p>
-                                </div>
-
-                                <ul class="list-unstyled">
-                                    <li class="mb-2">
-                                        <span class="mr-2">
-                                            <i class="far fa-check-circle"></i>
-                                        </span>
-                                        Unlimited extensions
-                                    </li>
-                                    <li class="mb-2">
-                                        <span class="mr-2">
-                                            <i class="far fa-check-circle"></i>
-                                        </span>
-                                        Customer support
-                                    </li>
-                                    <li class="mb-2">
-                                        <span class="mr-2">
-                                            <i class="far fa-check-circle"></i>
-                                        </span>
-                                        All minutes = fixed
-                                    </li>
-                                    <li class="mb-2">
-                                        <span class="mr-2">
-                                            <i class="far fa-check-circle"></i>
-                                        </span>
-                                        Choose your number
-                                    </li>
-                                    <li class="mb-2">
-                                        <span class="mr-2">
-                                            <i class="far fa-check-circle"></i>
-                                        </span>
-                                        Conference call
-                                    </li>
-                                </ul>
-
-                                <div class="mt-5">
-                                    <p
-                                        class="border-bottom border-bottom-5 border-info d-inline-block mb-0">
-                                        Need
-                                        <span class="font-weight-bold">
-                                            Custom Voice Recording?
-                                        </span>
-                                    </p>
-                                    <p>
-                                        Switch to the
-                                        <a
-                                            href="{{ route('checkout', 'annually') }}"
-                                            class="font-italic text-decoration-underline text-white"
-                                        >Enterprise</a>
-                                        plan.
-                                    </p>
-                                </div>
-
-                                <hr class="border-white-50">
-
-                                <div class="mt-6">
-                                    <blockquote
-                                        class="blockquote blockquote-fancy"
-                                    >
-                                        <p class="font-italic">
-                                            Like you, our mission is to connect
-                                            people, therefore the needs of our
-                                            clients come first.
-                                        </p>
-                                        <footer
-                                            class="blockquote-footer font-weight-bold text-white"
-                                        >
-                                            <img
-                                                class="mr-3 rounded-circle w-15"
-                                                src="https://media.licdn.com/dms/image/C5103AQGWZc65_HDAOQ/profile-displayphoto-shrink_800_800/0?e=1568246400&v=beta&t=hpibmKZIeORLRXDltT5pp196r-q2IR9Bd-8EJ25gDj8"
-                                                alt="Johnny Bosche"
+                                            <p class="font-italic">
+                                                Like you, our mission is to
+                                                connect
+                                                people, therefore the needs of
+                                                our
+                                                clients come first.
+                                            </p>
+                                            <footer
+                                                class="blockquote-footer font-weight-bold text-white"
                                             >
-                                            Johnny Bosche
-                                        </footer>
-                                    </blockquote>
+                                                <img
+                                                    class="mr-3 rounded-circle w-15"
+                                                    src="https://media.licdn.com/dms/image/C5103AQGWZc65_HDAOQ/profile-displayphoto-shrink_800_800/0?e=1568246400&v=beta&t=hpibmKZIeORLRXDltT5pp196r-q2IR9Bd-8EJ25gDj8"
+                                                    alt="Johnny Bosche"
+                                                >
+                                                Johnny Bosche
+                                            </footer>
+                                        </blockquote>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </main>
 </body>
 

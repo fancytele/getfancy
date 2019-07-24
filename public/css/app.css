@@ -12338,6 +12338,25 @@ a.text-white:focus {
   min-height: 15rem;
 }
 
+.skew-section-primary {
+  height: 57.5rem;
+  left: 0;
+  position: absolute;
+  right: 0;
+}
+
+.skew-section-primary:after {
+  background: #704895;
+  content: "";
+  height: 100%;
+  position: absolute;
+  top: -50%;
+  -webkit-transform: skewY(-12deg);
+          transform: skewY(-12deg);
+  width: 100%;
+  z-index: -1;
+}
+
 .bg-white-ghost {
   background-color: #f6f7fb !important;
 }

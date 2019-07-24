@@ -16,7 +16,7 @@ require('bootstrap');
     const navbarDarkClass = 'border-0 bg-transparent navbar-dark';
     const navbarLightClasses = 'bg-white navbar-light shadow';
 
-    if (scroll >= 130) {
+    if (scroll >= 100) {
       $('#getfancy-navbar').addClass(navbarLightClasses).removeClass(navbarDarkClass);
     } else {
       $('#getfancy-navbar').addClass(navbarDarkClass).removeClass(navbarLightClasses);
@@ -61,6 +61,8 @@ require('bootstrap');
 
     changeNavbarBg();
 
-    AOS.init();
+    if (typeof AOS !== 'undefined') {
+      AOS.init();
+    }
   });
 })();

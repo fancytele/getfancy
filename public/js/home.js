@@ -17817,7 +17817,7 @@ __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap
     var navbarDarkClass = 'border-0 bg-transparent navbar-dark';
     var navbarLightClasses = 'bg-white navbar-light shadow';
 
-    if (scroll >= 130) {
+    if (scroll >= 100) {
       $('#getfancy-navbar').addClass(navbarLightClasses).removeClass(navbarDarkClass);
     } else {
       $('#getfancy-navbar').addClass(navbarDarkClass).removeClass(navbarLightClasses);
@@ -17857,7 +17857,10 @@ __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap
     $('#plans .btn-group button').on('click', changePlan);
     $('#plans #plan-buy').click(redirectToCheckout);
     changeNavbarBg();
-    AOS.init();
+
+    if (typeof AOS !== 'undefined') {
+      AOS.init();
+    }
   });
 })();
 

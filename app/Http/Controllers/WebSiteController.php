@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Plan;
 
 class WebSiteController extends Controller
@@ -17,6 +16,7 @@ class WebSiteController extends Controller
     /**
      * Show the application dashboard.
      *
+     * @param string $slug
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function checkout(string $slug)
@@ -28,6 +28,8 @@ class WebSiteController extends Controller
             return view('checkout', ['plan' => $plans->firstWhere('slug', $slug)]);
         }
 
-        return redirect()->route('checkout', $plans->firstWhere('is_primary', true)->slug);
+        $primary_slug = $plans->firstWhere('is_primary')->slug;
+        
+        return redirect()->route('checkout', $primary_slug);
     }
 }
