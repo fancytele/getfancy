@@ -1,3 +1,10 @@
+.background-image {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  min-height: 15rem;
+}
+
 .bg-white-ghost {
   background-color: $white-ghost !important;
 }
@@ -26,6 +33,10 @@
 
 .text-blue-solid {
   color: $blue-solid;
+}
+
+.w-50-gutter {
+  width: 49%;
 }
 
 .w-60 {

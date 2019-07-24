@@ -12331,6 +12331,13 @@ a.text-white:focus {
   }
 }
 
+.background-image {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  min-height: 15rem;
+}
+
 .bg-white-ghost {
   background-color: #f6f7fb !important;
 }
@@ -12359,6 +12366,10 @@ a.text-white:focus {
 
 .text-blue-solid {
   color: #1b5b9a;
+}
+
+.w-50-gutter {
+  width: 49%;
 }
 
 .w-60 {

@@ -152,8 +152,12 @@
 
         <section
             id="features"
-            class="features bg-white-ghost"
+            class="bg-white-ghost position-relative"
         >
+            <div
+                class="background-image background-position-top d-lg-block d-none h-100 position-absolute position-bottom w-50-gutter"
+                style="background-image: url(img/feature-business-man.jpg)"
+            ></div>
             <div class="container">
                 <div class="row d-flex">
                     <div class="col-lg-6 ml-auto getfancy-section">
