@@ -94,7 +94,7 @@
 /***/ (function(module, exports) {
 
 // Create a Stripe client.
-var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx'); // Create an instance of Elements.
+var stripe = Stripe("pk_TMBfEj9GXcGCePpgJAFLIb8tHWpEA"); // Create an instance of Elements.
 
 var elements = stripe.elements(); // Custom styling can be passed to options when creating an Element.
 // (Note that this demo uses a wider set of styles than the guide below.)
@@ -102,16 +102,16 @@ var elements = stripe.elements(); // Custom styling can be passed to options whe
 var style = {
   base: {
     color: '#32325d',
-    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontFamily: '"Cerebri Sans", sans-serif',
     fontSmoothing: 'antialiased',
     fontSize: '16px',
     '::placeholder': {
-      color: '#aab7c4'
+      color: '#b1c2d9'
     }
   },
   invalid: {
-    color: '#fa755a',
-    iconColor: '#fa755a'
+    color: '#e63757',
+    iconColor: '#e63757'
   }
 }; // Create an instance of the card Element.
 

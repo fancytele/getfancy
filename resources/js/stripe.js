@@ -1,5 +1,5 @@
 // Create a Stripe client.
-var stripe = Stripe('pk_test_TYooMQauvdEDq54NiTphI7jx');
+var stripe = Stripe(process.env.MIX_STRIPE_KEY);
 
 // Create an instance of Elements.
 var elements = stripe.elements();
@@ -9,21 +9,21 @@ var elements = stripe.elements();
 var style = {
   base: {
     color: '#32325d',
-    fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+    fontFamily: '"Cerebri Sans", sans-serif',
     fontSmoothing: 'antialiased',
     fontSize: '16px',
     '::placeholder': {
-      color: '#aab7c4'
-    }
+      color: '#b1c2d9'
+    },
   },
   invalid: {
-    color: '#fa755a',
-    iconColor: '#fa755a'
+    color: '#e63757',
+    iconColor: '#e63757'
   }
 };
 
 // Create an instance of the card Element.
-var card = elements.create('card', { style: style, hidePostalCode: true });
+var card = elements.create('card', { style, hidePostalCode: true });
 
 // Add an instance of the card Element into the `stripe-card` <div>.
 card.mount('#stripe-card');

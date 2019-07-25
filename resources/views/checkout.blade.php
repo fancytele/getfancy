@@ -35,39 +35,6 @@
         href="{{ asset('css/app.css') }}"
         rel="stylesheet"
     >
-
-    <style>
-        /**
- * The CSS shown here will not be introduced in the Quickstart guide, but shows
- * how you can use CSS to style your Element's container.
- */
-        .StripeElement {
-            box-sizing: border-box;
-            height: calc(1.5em + 1rem + 2px);
-            padding: 0.5rem 0.75rem;
-            border: 1px solid #D2DDEC;
-            border-radius: 0.375rem;
-            background-color: white;
-            line-height: 1.5;
-            -webkit-transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-        }
-
-        .StripeElement--focus {
-            color: #000;
-            background-color: #FFFFFF;
-            border-color: #704895;
-            outline: 0;
-        }
-
-        .StripeElement--invalid {
-            border-color: #fa755a;
-        }
-
-        .StripeElement--webkit-autofill {
-            background-color: #fefde5 !important;
-        }
-    </style>
 </head>
 
 <body>
@@ -461,6 +428,7 @@
                                                     <!-- Used to display form errors. -->
                                                     <div
                                                         id="card-errors"
+                                                        class="invalid-feedback"
                                                         role="alert"
                                                     ></div>
                                                 </div>
