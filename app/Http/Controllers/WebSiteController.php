@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Plan;
+use App\Addon;
+use App\Enums\AddonType;
 
 class WebSiteController extends Controller
 {
@@ -22,14 +24,17 @@ class WebSiteController extends Controller
     public function checkout(string $slug)
     {
         $plans = Plan::get(['name', 'slug', 'cost', 'is_primary']);
-        $slugs = $plans->pluck('slug')->toArray();
+        $plans_slugs = $plans->pluck('slug')->toArray();
 
-        if (in_array($slug, $slugs)) {
-            return view('checkout', ['plan' => $plans->firstWhere('slug', $slug)]);
+        if (in_array($slug, $plans_slugs)) {
+            $plan = $plans->firstWhere('slug', $slug);
+            $addons = Addon::whereType(AddonType::Subscription)->get(['name', 'code', 'description', 'cost']);
+            
+            return view('checkout', compact('plan', 'addons'));
         }
 
         $primary_slug = $plans->firstWhere('is_primary')->slug;
-        
+
         return redirect()->route('checkout', $primary_slug);
     }
 }

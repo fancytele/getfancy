@@ -17,3 +17,5 @@ Route::get('checkout/{slug}', 'WebSiteController@checkout')->name('checkout');
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::post('subscription', 'SubscriptionController@create')->name('subscription');

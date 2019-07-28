@@ -2313,6 +2313,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2326,6 +2345,10 @@ __webpack_require__.r(__webpack_exports__);
     },
     plan: {
       type: Object,
+      required: true
+    },
+    addons: {
+      type: Array,
       required: true
     }
   },
@@ -2376,9 +2399,7 @@ __webpack_require__.r(__webpack_exports__);
         state: '',
         zip_code: '',
         address: '',
-        multi_ring: false,
-        fraud_alert: false,
-        call_blocker: false
+        addons: []
       }
     };
   },
@@ -2413,6 +2434,7 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(data);
       })["catch"](function (error) {
         var data = error.response.data;
+        _this2.generalError = data.message;
         _this2.errors = data.errors;
       }).then(function () {
         _this2.laddaButton.stop();
@@ -2423,6 +2445,31 @@ __webpack_require__.r(__webpack_exports__);
   },
   mounted: function mounted() {
     this.laddaButton = Ladda.create(document.querySelector('#submit-payment'));
+  },
+  computed: {
+    summaryDetail: function summaryDetail() {
+      var _this3 = this;
+
+      var plan = {
+        name: this.plan.name,
+        cost: this.plan.cost
+      };
+      var summary = this.addons.filter(function (el) {
+        return _this3.checkout.addons.includes(el.code);
+      }).map(function (el) {
+        return {
+          name: el.name,
+          cost: el.cost
+        };
+      });
+      summary.unshift(plan);
+      return summary;
+    },
+    summaryTotal: function summaryTotal() {
+      return this.summaryDetail.reduce(function (prev, el) {
+        return prev + el.cost;
+      }, 0);
+    }
   }
 });
 
@@ -38909,199 +38956,103 @@ var render = function() {
                 _c("div", { staticClass: "pt-4" }, [
                   _vm._m(2),
                   _vm._v(" "),
-                  _c("div", [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c(
+                  _c(
+                    "div",
+                    _vm._l(_vm.addons, function(item) {
+                      return _c(
                         "div",
-                        { staticClass: "custom-control custom-switch" },
+                        { key: item.code, staticClass: "form-group" },
                         [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkout.multi_ring,
-                                expression: "checkout.multi_ring"
-                              }
-                            ],
-                            staticClass: "custom-control-input",
-                            attrs: {
-                              type: "checkbox",
-                              id: "multi_ring",
-                              name: "multi_ring"
-                            },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkout.multi_ring)
-                                ? _vm._i(_vm.checkout.multi_ring, null) > -1
-                                : _vm.checkout.multi_ring
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkout.multi_ring,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = null,
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      _vm.$set(
-                                        _vm.checkout,
-                                        "multi_ring",
-                                        $$a.concat([$$v])
-                                      )
-                                  } else {
-                                    $$i > -1 &&
-                                      _vm.$set(
-                                        _vm.checkout,
-                                        "multi_ring",
-                                        $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1))
-                                      )
+                          _c(
+                            "div",
+                            { staticClass: "custom-control custom-switch" },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.checkout.addons,
+                                    expression: "checkout.addons"
                                   }
-                                } else {
-                                  _vm.$set(_vm.checkout, "multi_ring", $$c)
+                                ],
+                                staticClass: "custom-control-input",
+                                attrs: {
+                                  type: "checkbox",
+                                  id: item.code,
+                                  name: item.code
+                                },
+                                domProps: {
+                                  value: item.code,
+                                  checked: Array.isArray(_vm.checkout.addons)
+                                    ? _vm._i(_vm.checkout.addons, item.code) >
+                                      -1
+                                    : _vm.checkout.addons
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$a = _vm.checkout.addons,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = item.code,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          _vm.$set(
+                                            _vm.checkout,
+                                            "addons",
+                                            $$a.concat([$$v])
+                                          )
+                                      } else {
+                                        $$i > -1 &&
+                                          _vm.$set(
+                                            _vm.checkout,
+                                            "addons",
+                                            $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1))
+                                          )
+                                      }
+                                    } else {
+                                      _vm.$set(_vm.checkout, "addons", $$c)
+                                    }
+                                  }
                                 }
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm._m(3)
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "custom-control-label",
+                                  attrs: { for: item.code }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                      " +
+                                      _vm._s(item.name) +
+                                      "\n                      "
+                                  ),
+                                  _c(
+                                    "small",
+                                    { staticClass: "d-block text-black-50" },
+                                    [_vm._v("$" + _vm._s(item.cost))]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
                         ]
                       )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c(
-                        "div",
-                        { staticClass: "custom-control custom-switch" },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkout.fraud_alert,
-                                expression: "checkout.fraud_alert"
-                              }
-                            ],
-                            staticClass: "custom-control-input",
-                            attrs: {
-                              type: "checkbox",
-                              id: "fraud_alert",
-                              name: "fraud_alert"
-                            },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkout.fraud_alert)
-                                ? _vm._i(_vm.checkout.fraud_alert, null) > -1
-                                : _vm.checkout.fraud_alert
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkout.fraud_alert,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = null,
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      _vm.$set(
-                                        _vm.checkout,
-                                        "fraud_alert",
-                                        $$a.concat([$$v])
-                                      )
-                                  } else {
-                                    $$i > -1 &&
-                                      _vm.$set(
-                                        _vm.checkout,
-                                        "fraud_alert",
-                                        $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1))
-                                      )
-                                  }
-                                } else {
-                                  _vm.$set(_vm.checkout, "fraud_alert", $$c)
-                                }
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm._m(4)
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "form-group" }, [
-                      _c(
-                        "div",
-                        { staticClass: "custom-control custom-switch" },
-                        [
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.checkout.call_blocker,
-                                expression: "checkout.call_blocker"
-                              }
-                            ],
-                            staticClass: "custom-control-input",
-                            attrs: {
-                              type: "checkbox",
-                              id: "call_blocker",
-                              name: "call_blocker"
-                            },
-                            domProps: {
-                              checked: Array.isArray(_vm.checkout.call_blocker)
-                                ? _vm._i(_vm.checkout.call_blocker, null) > -1
-                                : _vm.checkout.call_blocker
-                            },
-                            on: {
-                              change: function($event) {
-                                var $$a = _vm.checkout.call_blocker,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = null,
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      _vm.$set(
-                                        _vm.checkout,
-                                        "call_blocker",
-                                        $$a.concat([$$v])
-                                      )
-                                  } else {
-                                    $$i > -1 &&
-                                      _vm.$set(
-                                        _vm.checkout,
-                                        "call_blocker",
-                                        $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1))
-                                      )
-                                  }
-                                } else {
-                                  _vm.$set(_vm.checkout, "call_blocker", $$c)
-                                }
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm._m(5)
-                        ]
-                      )
-                    ])
-                  ])
+                    }),
+                    0
+                  )
                 ]),
                 _vm._v(" "),
                 _c("hr", { staticClass: "mx-n5" }),
                 _vm._v(" "),
                 _c("div", { staticClass: "pt-4" }, [
-                  _vm._m(6),
+                  _vm._m(3),
                   _vm._v(" "),
                   _c("div", [
                     _c(
@@ -39147,6 +39098,64 @@ var render = function() {
                 _c("hr", { staticClass: "mx-n5" }),
                 _vm._v(" "),
                 _c("div", { staticClass: "pt-4" }, [
+                  _c(
+                    "div",
+                    { staticClass: "d-lg-none" },
+                    [
+                      _c("h3", { staticClass: "font-italic h2" }, [
+                        _vm._v("Order Summary")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "transition-group",
+                        {
+                          staticClass: "list-unstyled text-black-50",
+                          attrs: { name: "fade", tag: "ul" }
+                        },
+                        [
+                          _vm._l(_vm.summaryDetail, function(item) {
+                            return _c(
+                              "li",
+                              {
+                                key: item.name,
+                                staticClass:
+                                  "align-items-center d-flex justify-content-between py-2"
+                              },
+                              [
+                                _vm._v(
+                                  "\n                    " +
+                                    _vm._s(item.name) +
+                                    "\n                    "
+                                ),
+                                _c("span", [_vm._v("$" + _vm._s(item.cost))])
+                              ]
+                            )
+                          }),
+                          _vm._v(" "),
+                          _c(
+                            "li",
+                            {
+                              key: "total",
+                              staticClass:
+                                "align-items-center border-top d-flex font-weight-bold justify-content-between py-3 text-body"
+                            },
+                            [
+                              _c("span", { staticClass: "h3 m-0" }, [
+                                _vm._v("TOTAL")
+                              ]),
+                              _vm._v(" "),
+                              _c("span", [
+                                _vm._v("$" + _vm._s(_vm.summaryTotal))
+                              ])
+                            ]
+                          )
+                        ],
+                        2
+                      )
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
                   _vm.generalError
                     ? _c(
                         "p",
@@ -39170,7 +39179,7 @@ var render = function() {
                     [_vm._v("Checkout")]
                   ),
                   _vm._v(" "),
-                  _vm._m(7)
+                  _vm._m(4)
                 ])
               ])
             ]
@@ -39181,7 +39190,7 @@ var render = function() {
           "div",
           {
             staticClass:
-              "bg-primary col-lg-4 d-none d-lg-block pt-4 rounded-right text-white"
+              "bg-primary col-lg-4 d-none d-lg-block position-relative pt-4 rounded-right text-white"
           },
           [
             _c("div", { staticClass: "card-body" }, [
@@ -39220,12 +39229,66 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(8),
+              _vm._m(5),
               _vm._v(" "),
               _c("hr", { staticClass: "border-white-50" }),
               _vm._v(" "),
-              _vm._m(9)
-            ])
+              _vm._m(6)
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "position-absolute pull-bottom pull-left mb-4 px-5 w-100"
+              },
+              [
+                _c("h3", { staticClass: "font-italic h2" }, [
+                  _vm._v("Order Summary")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "ul",
+                  { staticClass: "list-unstyled text-white-50" },
+                  [
+                    _vm._l(_vm.summaryDetail, function(item, index) {
+                      return _c(
+                        "li",
+                        {
+                          key: index,
+                          staticClass:
+                            "align-items-center d-flex justify-content-between py-2"
+                        },
+                        [
+                          _vm._v(
+                            "\n              " +
+                              _vm._s(item.name) +
+                              "\n              "
+                          ),
+                          _c("span", [_vm._v("$" + _vm._s(item.cost))])
+                        ]
+                      )
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "li",
+                      {
+                        staticClass:
+                          "align-items-center border-top border-white-50 d-flex font-weight-bold justify-content-between py-3 text-white"
+                      },
+                      [
+                        _c("span", { staticClass: "h3 m-0" }, [
+                          _vm._v("TOTAL")
+                        ]),
+                        _vm._v(" "),
+                        _c("span", [_vm._v("$" + _vm._s(_vm.summaryTotal))])
+                      ]
+                    )
+                  ],
+                  2
+                )
+              ]
+            )
           ]
         )
       ])
@@ -39271,45 +39334,6 @@ var staticRenderFns = [
       ]),
       _vm._v("\n                Additional Features\n              ")
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "custom-control-label", attrs: { for: "multi_ring" } },
-      [
-        _vm._v("\n                      Multi-Ring\n                      "),
-        _c("small", { staticClass: "d-block text-black-50" }, [_vm._v("$5")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "custom-control-label", attrs: { for: "fraud_alert" } },
-      [
-        _vm._v("\n                      Fraud Alert\n                      "),
-        _c("small", { staticClass: "d-block text-black-50" }, [_vm._v("$5")])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "custom-control-label", attrs: { for: "call_blocker" } },
-      [
-        _vm._v("\n                      Call Blocker\n                      "),
-        _c("small", { staticClass: "d-block text-black-50" }, [_vm._v("$5")])
-      ]
-    )
   },
   function() {
     var _vm = this

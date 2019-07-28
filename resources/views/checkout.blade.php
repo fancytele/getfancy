@@ -37,7 +37,8 @@
                 <div class="container">
                     <checkout-component :locale="'{{ app()->getLocale() }}'"
                                         :action="'{{ route('subscription') }}'"
-                                        :plan='@json($plan)'>
+                                        :plan='@json($plan)'
+                                        :addons='@json($addons)'>
                     </checkout-component>
                 </div>
             </section>

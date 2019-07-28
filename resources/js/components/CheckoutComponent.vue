@@ -282,48 +282,19 @@
                   Additional Features
                 </h3>
                 <div>
-                  <div class="form-group">
+                  <div class="form-group" v-for="item in addons" :key="item.code">
                     <div class="custom-control custom-switch">
                       <input
                         type="checkbox"
                         class="custom-control-input"
-                        id="multi_ring"
-                        name="multi_ring"
-                        v-model="checkout.multi_ring"
+                        :id="item.code"
+                        :name="item.code"
+                        :value="item.code"
+                        v-model="checkout.addons"
                       />
-                      <label class="custom-control-label" for="multi_ring">
-                        Multi-Ring
-                        <small class="d-block text-black-50">$5</small>
-                      </label>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="custom-control custom-switch">
-                      <input
-                        type="checkbox"
-                        class="custom-control-input"
-                        id="fraud_alert"
-                        name="fraud_alert"
-                        v-model="checkout.fraud_alert"
-                      />
-                      <label class="custom-control-label" for="fraud_alert">
-                        Fraud Alert
-                        <small class="d-block text-black-50">$5</small>
-                      </label>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <div class="custom-control custom-switch">
-                      <input
-                        type="checkbox"
-                        class="custom-control-input"
-                        id="call_blocker"
-                        name="call_blocker"
-                        v-model="checkout.call_blocker"
-                      />
-                      <label class="custom-control-label" for="call_blocker">
-                        Call Blocker
-                        <small class="d-block text-black-50">$5</small>
+                      <label class="custom-control-label" :for="item.code">
+                        {{ item.name }}
+                        <small class="d-block text-black-50">${{ item.cost }}</small>
                       </label>
                     </div>
                   </div>
@@ -367,6 +338,28 @@
 
               <!-- Submit -->
               <div class="pt-4">
+                <!-- Summary -->
+                <div class="d-lg-none">
+                  <h3 class="font-italic h2">Order Summary</h3>
+
+                  <transition-group name="fade" tag="ul" class="list-unstyled text-black-50">
+                    <li
+                      class="align-items-center d-flex justify-content-between py-2"
+                      v-for="item in summaryDetail"
+                      :key="item.name"
+                    >
+                      {{ item.name }}
+                      <span>${{ item.cost }}</span>
+                    </li>
+                    <li
+                      class="align-items-center border-top d-flex font-weight-bold justify-content-between py-3 text-body"
+                      key="total"
+                    >
+                      <span class="h3 m-0">TOTAL</span>
+                      <span>${{ summaryTotal }}</span>
+                    </li>
+                  </transition-group>
+                </div>
                 <p class="small text-center text-danger" v-if="generalError">{{ generalError }}</p>
                 <button
                   id="submit-payment"
@@ -394,7 +387,9 @@
         <!-- /Form -->
 
         <!-- Information -->
-        <div class="bg-primary col-lg-4 d-none d-lg-block pt-4 rounded-right text-white">
+        <div
+          class="bg-primary col-lg-4 d-none d-lg-block position-relative pt-4 rounded-right text-white"
+        >
           <div class="card-body">
             <div class="mb-4">
               <div>
@@ -464,7 +459,31 @@
               </blockquote>
             </div>
           </div>
+
+          <!-- Summary -->
+          <div class="position-absolute pull-bottom pull-left mb-4 px-5 w-100">
+            <h3 class="font-italic h2">Order Summary</h3>
+
+            <ul class="list-unstyled text-white-50">
+              <li
+                class="align-items-center d-flex justify-content-between py-2"
+                v-for="(item, index) in summaryDetail"
+                :key="index"
+              >
+                {{ item.name }}
+                <span>${{ item.cost }}</span>
+              </li>
+              <li
+                class="align-items-center border-top border-white-50 d-flex font-weight-bold justify-content-between py-3 text-white"
+              >
+                <span class="h3 m-0">TOTAL</span>
+                <span>${{ summaryTotal }}</span>
+              </li>
+            </ul>
+          </div>
         </div>
+        <!-- /Summary -->
+
         <!-- /Information -->
       </div>
     </div>
@@ -486,6 +505,10 @@ export default {
     },
     plan: {
       type: Object,
+      required: true
+    },
+    addons: {
+      type: Array,
       required: true
     }
   },
@@ -534,9 +557,7 @@ export default {
         state: '',
         zip_code: '',
         address: '',
-        multi_ring: false,
-        fraud_alert: false,
-        call_blocker: false
+        addons: []
       }
     };
   },
@@ -568,6 +589,7 @@ export default {
         .then(data => console.log(data))
         .catch(error => {
           const data = error.response.data;
+          this.generalError = data.message;
           this.errors = data.errors;
         })
         .then(() => {
@@ -578,6 +600,27 @@ export default {
   },
   mounted() {
     this.laddaButton = Ladda.create(document.querySelector('#submit-payment'));
+  },
+  computed: {
+    summaryDetail() {
+      const plan = {
+        name: this.plan.name,
+        cost: this.plan.cost
+      };
+
+      const summary = this.addons
+        .filter(el => this.checkout.addons.includes(el.code))
+        .map(el => {
+          return { name: el.name, cost: el.cost };
+        });
+
+      summary.unshift(plan);
+
+      return summary;
+    },
+    summaryTotal() {
+      return this.summaryDetail.reduce((prev, el) => prev + el.cost, 0);
+    }
   }
 };
 </script>

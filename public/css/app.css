@@ -12379,6 +12379,17 @@ a.text-white:focus {
   }
 }
 
+.fade-enter-active,
+.fade-leave-active {
+  -webkit-transition: opacity 0.3s ease-in;
+  transition: opacity 0.3s ease-in;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
+}
+
 .background-image {
   background-repeat: no-repeat;
   background-position: center;
@@ -12429,6 +12440,14 @@ a.text-white:focus {
 
 .blockquote-fancy .blockquote-footer:before {
   content: "";
+}
+
+.pull-left {
+  left: 0;
+}
+
+.pull-bottom {
+  bottom: 0;
 }
 
 .text-blue-solid {

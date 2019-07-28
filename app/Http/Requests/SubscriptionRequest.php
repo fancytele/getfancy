@@ -35,6 +35,7 @@ class SubscriptionRequest extends FormRequest
             'state' => ['required'],
             'zip_code' => ['required'],
             'address' => ['required', 'string'],
+            'addons.*' => 'exists:addons,code',
             'checkout_plan' => ['required', 'string', 'exists:plans,slug'],
             'stripe_token' => ['required', 'string']
         ];
