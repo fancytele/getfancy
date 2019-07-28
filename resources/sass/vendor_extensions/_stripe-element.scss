@@ -6,7 +6,3 @@
 .StripeElement--invalid {
   border-color: $danger;
 }
-
-.StripeElement--invalid + .invalid-feedback {
-  display: block;
-}
