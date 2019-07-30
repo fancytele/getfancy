@@ -10,8 +10,8 @@
                 <h2 class="display-4">
                   Checkout
                   <span class="d-block d-lg-none text-primary">
-                    {{ plan.name }}
-                    ${{ plan.cost }}
+                    {{ product.name }}
+                    ${{ product.cost }}
                   </span>
                 </h2>
               </div>
@@ -396,8 +396,8 @@
                 <span class="align-top d-inline-block h2 mb-0 plan-price-sign">$</span>
                 <span
                   class="d-inline-block display-1 font-weight-light mt-n3 plan-price-amount"
-                >{{ plan.cost }}</span>
-                <span class="d-inline-block h3 mb-0 plan-price-time text-white">/ {{ plan.slug }}</span>
+                >{{ product.cost }}</span>
+                <span class="d-inline-block h3 mb-0 plan-price-time text-white">/ {{ product.slug }}</span>
               </div>
               <p class="font-italic mb-0">Automatically renews</p>
             </div>
@@ -503,7 +503,7 @@ export default {
       type: String,
       required: true
     },
-    plan: {
+    product: {
       type: Object,
       required: true
     },
@@ -544,7 +544,7 @@ export default {
       stripeError: '',
       isProcessing: false,
       checkout: {
-        checkout_plan: this.plan.slug,
+        checkout_product: this.product.slug,
         stripe_token: '',
         first_name: '',
         last_name: '',
@@ -586,13 +586,14 @@ export default {
     processPayment() {
       axios
         .post(this.action, this.checkout)
-        .then(data => console.log(data))
+        .then(response => {
+          window.location.href = response.data.route;
+        })
         .catch(error => {
           const data = error.response.data;
           this.generalError = data.message;
           this.errors = data.errors;
-        })
-        .then(() => {
+
           this.laddaButton.stop();
           this.isProcessing = !this.isProcessing;
         });
@@ -603,9 +604,9 @@ export default {
   },
   computed: {
     summaryDetail() {
-      const plan = {
-        name: this.plan.name,
-        cost: this.plan.cost
+      const product = {
+        name: this.product.name,
+        cost: this.product.cost
       };
 
       const summary = this.addons
@@ -614,12 +615,14 @@ export default {
           return { name: el.name, cost: el.cost };
         });
 
-      summary.unshift(plan);
+      summary.unshift(product);
 
       return summary;
     },
     summaryTotal() {
-      return this.summaryDetail.reduce((prev, el) => prev + el.cost, 0);
+      return this.summaryDetail
+        .reduce((prev, el) => prev + el.cost, 0)
+        .toFixed(2);
     }
   }
 };

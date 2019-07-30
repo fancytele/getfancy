@@ -18,8 +18,8 @@ class CreateSubscriptionsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->string('name');
             $table->string('stripe_id')->collation('utf8mb4_bin');
-            $table->string('stripe_plan');
-            $table->integer('quantity');
+            $table->string('stripe_product');
+            $table->string('stripe_invoice');
             $table->timestamp('trial_ends_at')->nullable();
             $table->timestamp('ends_at')->nullable();
             $table->timestamps();

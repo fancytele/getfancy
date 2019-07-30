@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Plan extends Model
+class Product extends Model
 {
     protected $casts = [
         'is_primary' => 'boolean',

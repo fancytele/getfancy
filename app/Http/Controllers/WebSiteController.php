@@ -2,17 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Plan;
 use App\Addon;
+use App\Product;
 use App\Enums\AddonType;
 
 class WebSiteController extends Controller
 {
     public function index()
     {
-        $plans = Plan::get(['name', 'slug', 'cost', 'is_primary']);
+        $products = Product::get(['name', 'slug', 'cost', 'is_primary']);
 
-        return view('welcome', compact('plans'));
+        return view('welcome', compact('products'));
     }
 
     /**
@@ -23,17 +23,19 @@ class WebSiteController extends Controller
      */
     public function checkout(string $slug)
     {
-        $plans = Plan::get(['name', 'slug', 'cost', 'is_primary']);
-        $plans_slugs = $plans->pluck('slug')->toArray();
+        $products = Product::get(['name', 'slug', 'cost', 'is_primary']);
+        $products_slugs = $products->pluck('slug')->toArray();
 
-        if (in_array($slug, $plans_slugs)) {
-            $plan = $plans->firstWhere('slug', $slug);
-            $addons = Addon::whereType(AddonType::Subscription)->get(['name', 'code', 'description', 'cost']);
-            
-            return view('checkout', compact('plan', 'addons'));
+        if (in_array($slug, $products_slugs)) {
+            $product = $products->firstWhere('slug', $slug);
+            $addons = Addon::whereType(AddonType::Subscription)
+                ->orderBy('code')
+                ->get(['name', 'code', 'description', 'cost']);
+
+            return view('checkout', compact('product', 'addons'));
         }
 
-        $primary_slug = $plans->firstWhere('is_primary')->slug;
+        $primary_slug = $products->firstWhere('is_primary')->slug;
 
         return redirect()->route('checkout', $primary_slug);
     }

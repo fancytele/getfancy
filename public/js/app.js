@@ -2343,7 +2343,7 @@ __webpack_require__.r(__webpack_exports__);
       type: String,
       required: true
     },
-    plan: {
+    product: {
       type: Object,
       required: true
     },
@@ -2386,7 +2386,7 @@ __webpack_require__.r(__webpack_exports__);
       stripeError: '',
       isProcessing: false,
       checkout: {
-        checkout_plan: this.plan.slug,
+        checkout_product: this.product.slug,
         stripe_token: '',
         first_name: '',
         last_name: '',
@@ -2430,13 +2430,13 @@ __webpack_require__.r(__webpack_exports__);
     processPayment: function processPayment() {
       var _this2 = this;
 
-      axios.post(this.action, this.checkout).then(function (data) {
-        return console.log(data);
+      axios.post(this.action, this.checkout).then(function (response) {
+        window.location.href = response.data.route;
       })["catch"](function (error) {
         var data = error.response.data;
         _this2.generalError = data.message;
         _this2.errors = data.errors;
-      }).then(function () {
+
         _this2.laddaButton.stop();
 
         _this2.isProcessing = !_this2.isProcessing;
@@ -2450,9 +2450,9 @@ __webpack_require__.r(__webpack_exports__);
     summaryDetail: function summaryDetail() {
       var _this3 = this;
 
-      var plan = {
-        name: this.plan.name,
-        cost: this.plan.cost
+      var product = {
+        name: this.product.name,
+        cost: this.product.cost
       };
       var summary = this.addons.filter(function (el) {
         return _this3.checkout.addons.includes(el.code);
@@ -2462,13 +2462,13 @@ __webpack_require__.r(__webpack_exports__);
           cost: el.cost
         };
       });
-      summary.unshift(plan);
+      summary.unshift(product);
       return summary;
     },
     summaryTotal: function summaryTotal() {
       return this.summaryDetail.reduce(function (prev, el) {
         return prev + el.cost;
-      }, 0);
+      }, 0).toFixed(2);
     }
   }
 });
@@ -38361,9 +38361,9 @@ var render = function() {
                       [
                         _vm._v(
                           "\n                  " +
-                            _vm._s(_vm.plan.name) +
+                            _vm._s(_vm.product.name) +
                             "\n                  $" +
-                            _vm._s(_vm.plan.cost) +
+                            _vm._s(_vm.product.cost) +
                             "\n                "
                         )
                       ]
@@ -39211,7 +39211,7 @@ var render = function() {
                       staticClass:
                         "d-inline-block display-1 font-weight-light mt-n3 plan-price-amount"
                     },
-                    [_vm._v(_vm._s(_vm.plan.cost))]
+                    [_vm._v(_vm._s(_vm.product.cost))]
                   ),
                   _vm._v(" "),
                   _c(
@@ -39220,7 +39220,7 @@ var render = function() {
                       staticClass:
                         "d-inline-block h3 mb-0 plan-price-time text-white"
                     },
-                    [_vm._v("/ " + _vm._s(_vm.plan.slug))]
+                    [_vm._v("/ " + _vm._s(_vm.product.slug))]
                   )
                 ]),
                 _vm._v(" "),

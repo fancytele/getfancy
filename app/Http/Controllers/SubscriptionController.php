@@ -2,14 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Plan;
-use App\User;
+use App\Product;
+use App\Services\StripeService;
+use App\Services\UserService;
 use App\Http\Requests\SubscriptionRequest;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
 class SubscriptionController extends Controller
 {
+    private $stripeService;
+    private $userService;
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct(StripeService $stripeService, UserService $userService)
+    {
+        $this->stripeService = $stripeService;
+        $this->userService = $userService;
+    }
+
     /**
      * Create user and set subscription
      *
@@ -18,38 +33,45 @@ class SubscriptionController extends Controller
      */
     public function create(SubscriptionRequest $request)
     {
-        $plan = Plan::whereSlug($request->checkout_plan)->first();
+        $data = $request->all();
 
-        $user = User::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
+        // Create Stripe Customer
+        $stripe_customer = $this->stripeService->createCustomer($data);
 
-        $user->newSubscription($plan->slug, $plan->stripe_plan)
-            ->create($request->stripe_token, [
-                'name' => $request->first_name . ' ' . $request->last_name,
-                'email' => $request->email,
-                'address' => [
-                    'line1' => $request->address,
-                    'city' => $request->city,
-                    'country' => $request->country,
-                    'postal_code' => $request->zip_code
-                ],
-                'metadata' => [
-                    'professional_recordings' => true,
-                    'multi_ring' => false,
-                    'fraud_alert' => true,
-                    'call_blocker' => false,
-                    'additional_number' => false
-                ]
-            ]);
+        // Create Fancy User        
+        $user = $this->userService->createFromStripe($data, $stripe_customer);
 
-        $credentials = $user->only('email', 'password');
+        // Find product by slug
+        $product = Product::whereSlug($data["checkout_product"])->first();
 
+        // Get Stripe Product by Name
+        $stripe_product = $this->stripeService->getProductByName($product->name);
+
+        // Get all product Plans (base and features)
+        $stripe_plans = $this->stripeService->getProductPlansByNames(
+            $stripe_product->id,
+            Arr::prepend($data["addons"], $product->name)
+        );
+
+        $plans = $stripe_plans->map(function ($item) {
+            return ["plan" => $item->id];
+        })->toArray();
+
+        // Create Subscription
+        $stripe_subscription = $this->stripeService->createSubscription($stripe_customer->id, $plans);
+
+        // Create User subscription
+        $this->userService->createSubscription($product->name, $stripe_product, $stripe_subscription);
+
+        //TODO: 
+        // Create Email with custom Invoice ($stripe_subscription->latest_invoice)
+
+        // Login User and redirect to Dahsboard
+        $credentials = $user->model()->only("email", "password");
+
+        //TODO: Review why is not logged in the user
         if (Auth::attempt($credentials)) {
-            return redirect()->route('home');
+            return response()->json(['route' => route('home')]);
         }
     }
 }

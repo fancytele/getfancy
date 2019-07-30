@@ -16,35 +16,35 @@ class AddonsTableSeeder extends Seeder
         DB::table('addons')->insert([
             [
                 'name' => 'Professional Greeting/Custom Recordings',
-                'code' => 'CR',
+                'code' => 'F01',
                 'cost' => '8',
                 'description' => 'Create a Professional Custom Recording',
                 'type' => AddonType::OTF
             ],
             [
                 'name' => 'Multi-Ring',
-                'code' => 'MR',
+                'code' => 'F02',
                 'cost' => '5',
                 'description' => 'Multiple Ring',
                 'type' => AddonType::Subscription
             ],
             [
                 'name' => 'Fraud Alert',
-                'code' => 'FA',
+                'code' => 'F03',
                 'cost' => '5',
                 'description' => 'Make sure to be notice when a Fraud occurs',
                 'type' => AddonType::Subscription
             ],
             [
                 'name' => 'Call Blocker',
-                'code' => 'CB',
+                'code' => 'F04',
                 'cost' => '5',
                 'description' => 'Block any incoming call you want',
                 'type' => AddonType::Subscription
             ],
             [
                 'name' => 'Additional Numbers',
-                'code' => 'AN',
+                'code' => 'F05',
                 'cost' => '5',
                 'description' => 'Add any numbers you want. Only $5 per number',
                 'type' => AddonType::OTF

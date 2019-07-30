@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'first_name', 'last_name', 'email', 'password',
+        'first_name', 'last_name', 'email', 'password', 'stripe_id', 'card_brand', 'card_last_four'
     ];
 
     /**
@@ -36,8 +36,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * Get the user's full name.
+     *
+     * @return string
+     */
+    public function getFullNameAttribute()
+    {
+        return "{$this->first_name} {$this->last_name}";
+    }
+
     public function subscriptions()
     {
-        return $this->hasMany(Subscripion::class, $this->getForeignKey())->orderBy('created_at', 'desc');
+        return $this->hasMany(Subscription::class, $this->getForeignKey())->orderBy('created_at', 'desc');
     }
 }

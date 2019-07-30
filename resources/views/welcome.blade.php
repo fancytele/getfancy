@@ -266,16 +266,16 @@
                     <div class="col-md-8 offset-md-2">
                         <div data-aos="zoom-in">
                             <h2 class="display-1 text-primary plan-wrapper">
-                                @foreach ($plans as $plan)
+                                @foreach ($products as $product)
                                 <span
-                                    id="{{ $plan->slug }}"
-                                    class="plan-item{{ $plan->is_primary ? ' active' : '' }}"
+                                    id="{{ $product->slug }}"
+                                    class="plan-item{{ $product->is_primary ? ' active' : '' }}"
                                 >
                                     <span
                                         class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3"
                                     >$</span>
                                     <span
-                                        class="plan-amount">{{ $plan->cost }}</span>
+                                        class="plan-amount">{{ $product->cost }}</span>
                                 </span>
                                 @endforeach
                             </h2>
@@ -285,12 +285,12 @@
                                 role="group"
                                 aria-label="Our Plans Button Groups"
                             >
-                                @foreach ($plans as $plan)
+                                @foreach ($products as $product)
                                 <button
                                     type="button"
-                                    class="btn btn-outline-light{{ $plan->is_primary ? ' active' : '' }}"
-                                    data-type="{{ $plan->slug }}"
-                                >{{ $plan->name }}</button>
+                                    class="btn btn-outline-light{{ $product->is_primary ? ' active' : '' }}"
+                                    data-type="{{ $product->slug }}"
+                                >{{ $product->name }}</button>
                                 @endforeach
                             </div>
 
