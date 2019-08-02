@@ -54,20 +54,17 @@ class UserService
     /**
      * Create user Subscription with Stripe info
      *
-     * @param string $name
-     * @param StripeProduct $stripe_product
+     * @param int $product_id
+     * @param int $stripe_product_id
      * @param StripeSubscription $stripe_subscription
      * @return void
      */
-    public function createSubscription(
-        string $name,
-        StripeProduct $stripe_product,
-        StripeSubscription $stripe_subscription
-    ) {
+    public function createSubscription(int $product_id, int $stripe_product_id, StripeSubscription $stripe_subscription)
+    {
         $subscription = new Subscription([
-            "name" => $name,
+            "product_id" => $product_id,
             "stripe_id" => $stripe_subscription->id,
-            "stripe_product" => $stripe_product->id,
+            "stripe_product" => $stripe_product_id,
             "stripe_invoice" => $stripe_subscription->latest_invoice,
             "ends_at" => $stripe_subscription->current_period_end
         ]);

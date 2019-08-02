@@ -12,7 +12,7 @@ class Subscription extends Model
      * @var array
      */
     protected $fillable = [
-        "name", "stripe_id", "stripe_product", "stripe_invoice", "ends_at"
+        "product_id", "stripe_id", "stripe_product", "stripe_invoice", "ends_at"
     ];
 
     /**
@@ -23,4 +23,9 @@ class Subscription extends Model
     protected $dates = [
         "trial_ends_at", "ends_at", "created_at", "updated_at"
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

@@ -19,3 +19,7 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::post('subscription', 'SubscriptionController@create')->name('subscription');
+
+Route::prefix('emails')->group(function () {
+    Route::get('receipts/{receipt_id}', 'EmailController@receiptSubscription')->name('mail.receipt');
+});

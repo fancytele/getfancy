@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use App\Http\Requests\SubscriptionRequest;
 use App\Services\StripeService;
 use App\Services\UserService;
-use App\Http\Requests\SubscriptionRequest;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 
@@ -61,7 +61,7 @@ class SubscriptionController extends Controller
         $stripe_subscription = $this->stripeService->createSubscription($stripe_customer->id, $plans);
 
         // Create User subscription
-        $this->userService->createSubscription($product->name, $stripe_product, $stripe_subscription);
+        $user->createSubscription($product->id, $stripe_product->id, $stripe_subscription);
 
         //TODO: 
         // Create Email with custom Invoice ($stripe_subscription->latest_invoice)
