@@ -132,6 +132,17 @@ class StripeService
     }
 
     /**
+     * Get Subscription by Id
+     *
+     * @param string $subscription_id
+     * @return \Stripe\Subscription
+     */
+    public function getSubscription(string $subscription_id)
+    {
+        return StripeSubscription::retrieve($subscription_id, $this->getStripeKey());
+    }
+
+    /**
      * Get the Stripe API key.
      *
      * @return string

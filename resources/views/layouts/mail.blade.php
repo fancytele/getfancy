@@ -1,6 +1,5 @@
 <!DOCTYPE html
           PUBLIC "-//W3C//DTD XHTML 1.0 Transitional" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<!-- saved from url=(0114)file:///C:/Users/amadeusj5/Downloads/TEST%20-%20Your%20receipt%20from%20Hyper%20Telecom,%20LLC%20%232067-1148.html -->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"
       style="margin: 0;padding: 0;border: 0;" class="gr__dashboard_stripe_com">
 
@@ -390,7 +389,7 @@
                                         style="border: 0;border-collapse: collapse;margin: 0;padding: 0;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;width: 472px;font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, Ubuntu, sans-serif;mso-line-height-rule: exactly;vertical-align: middle;color: #8898aa;font-size: 12px;line-height: 16px;">
                                         You're receiving this email because you
                                         made a purchase at
-                                        <a href="http://dev.getfancy.co/"
+                                        <a href="{{ route('homepage') }}"
                                            style="-webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; outline: 0; text-decoration: none; color: #556cd6;">
                                             <span dir="ltr">Fancy</span>
                                         </a>

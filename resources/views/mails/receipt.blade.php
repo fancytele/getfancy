@@ -97,7 +97,7 @@
                                         <tr>
                                             <td class="Font Font--body Font--noWrap"
                                                 style="border: 0;border-collapse: collapse;margin: 0;padding: 0;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, Ubuntu, sans-serif;mso-line-height-rule: exactly;vertical-align: middle;color: #525f7f;font-size: 15px;line-height: 24px;white-space: nowrap;">
-                                                <span>{{ $receipt->customer_name }}</span>
+                                                <span>{{ $receipt->customer }}</span>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -117,7 +117,7 @@
                                         <tr>
                                             <td class="Font Font--body Font--noWrap"
                                                 style="border: 0;border-collapse: collapse;margin: 0;padding: 0;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, Ubuntu, sans-serif;mso-line-height-rule: exactly;vertical-align: middle;color: #525f7f;font-size: 15px;line-height: 24px;white-space: nowrap;">
-                                                ${{ $receipt->amount_paid }}
+                                                ${{ $receipt->amount }}
                                             </td>
                                         </tr>
                                     </tbody>
@@ -266,7 +266,7 @@
                                                 style="border: 0;border-collapse: collapse;margin: 0;padding: 0;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, Ubuntu, sans-serif;mso-line-height-rule: exactly;vertical-align: middle;color: #525f7f;font-size: 15px;line-height: 24px;">
                                                 <div
                                                      style="-ms-word-break: break-all;word-break: break-all;word-break: break-word;">
-                                                    {{ $product->name }}
+                                                    {{ $receipt->product->name }}
                                                     <span class="Content Font Font--mute Delink"
                                                           style="border: 0;border-collapse: collapse;margin: 0;padding: 0;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, Ubuntu, sans-serif;mso-line-height-rule: exactly;color: #8898aa;font-size: 14px;line-height: 14px;">
                                                         (plan)
@@ -281,7 +281,7 @@
                                             <td class="Table-amount Font Font--body"
                                                 align="right" valign="top"
                                                 style="border: 0;border-collapse: collapse;margin: 0;padding: 0;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, Ubuntu, sans-serif;mso-line-height-rule: exactly;vertical-align: middle;color: #525f7f;font-size: 15px;line-height: 24px;">
-                                                ${{ $product->amount }}
+                                                ${{ $receipt->product->amount }}
                                             </td>
                                         </tr>
                                         <tr>
@@ -298,7 +298,7 @@
                                                 &nbsp;
                                             </td>
                                         </tr>
-                                        @foreach ($plans as $plan)
+                                        @foreach ($receipt->plans as $plan)
                                         <tr>
                                             <td class="Table-description Font Font--body"
                                                 style="border: 0;border-collapse: collapse;margin: 0;padding: 0;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, Ubuntu, sans-serif;mso-line-height-rule: exactly;vertical-align: middle;color: #525f7f;font-size: 15px;line-height: 24px;">
@@ -368,7 +368,7 @@
                                             <td class="Table-amount Font Font--body Font--alt"
                                                 align="right" valign="top"
                                                 style="border: 0;border-collapse: collapse;margin: 0;padding: 0;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, Ubuntu, sans-serif;mso-line-height-rule: exactly;vertical-align: middle;color: #525f7f;font-size: 15px;line-height: 24px;font-weight: bold;">
-                                                ${{ $receipt->amount_paid }}
+                                                ${{ $receipt->amount }}
                                             </td>
                                         </tr>
                                         <tr>

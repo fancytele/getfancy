@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'WebSiteController@index');
+Route::get('/', 'WebSiteController@index')->name('homepage');
 Route::get('checkout/{slug}', 'WebSiteController@checkout')->name('checkout');
 
 Auth::routes();
@@ -23,3 +23,5 @@ Route::post('subscription', 'SubscriptionController@create')->name('subscription
 Route::prefix('emails')->group(function () {
     Route::get('receipts/{receipt_id}', 'EmailController@receiptSubscription')->name('mail.receipt');
 });
+
+Route::stripeWebhooks('stripe/webhook');

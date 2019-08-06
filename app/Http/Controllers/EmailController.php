@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\ReceiptSubscriptionMail;
 use App\Services\StripeService;
 use Stripe\Error\InvalidRequest as StripeInvalidRequest;
+use App\Services\ReceiptMailService;
 
 class EmailController extends Controller
 {
@@ -28,6 +29,8 @@ class EmailController extends Controller
             return abort(404);
         }
 
-        return new ReceiptSubscriptionMail($receipt);
+        $receipt_service = new ReceiptMailService($receipt->__toArray(true));
+
+        return new ReceiptSubscriptionMail($receipt_service->getDataToMail());
     }
 }

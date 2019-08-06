@@ -38,9 +38,6 @@ class SubscriptionController extends Controller
         // Create Stripe Customer
         $stripe_customer = $this->stripeService->createCustomer($data);
 
-        // Create Fancy User        
-        $user = $this->userService->createFromStripe($data, $stripe_customer);
-
         // Find product by slug
         $product = Product::whereSlug($data["checkout_product"])->first();
 
@@ -60,18 +57,15 @@ class SubscriptionController extends Controller
         // Create Subscription
         $stripe_subscription = $this->stripeService->createSubscription($stripe_customer->id, $plans);
 
+        // Create Fancy User        
+        $user = $this->userService->createFromStripe($data, $stripe_customer);
+
         // Create User subscription
         $user->createSubscription($product->id, $stripe_product->id, $stripe_subscription);
 
-        //TODO: 
-        // Create Email with custom Invoice ($stripe_subscription->latest_invoice)
-
         // Login User and redirect to Dahsboard
-        $credentials = $user->model()->only("email", "password");
+        Auth::login($user->model());
 
-        //TODO: Review why is not logged in the user
-        if (Auth::attempt($credentials)) {
-            return response()->json(['route' => route('home')]);
-        }
+        return response()->json(['route' => route('home')]);
     }
 }
