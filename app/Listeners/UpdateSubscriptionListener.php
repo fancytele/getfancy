@@ -3,16 +3,14 @@
 namespace App\Listeners;
 
 use App\Events\UpdateSubscriptionEvent;
-use Stripe\Subscription as StripeSubscription;
 use App\Subscription;
-use Illuminate\Support\Facades\Log;
 
 class UpdateSubscriptionListener
 {
     /**
      * An Stripe Subscription
      *
-     * @var StripeSubscription
+     * @var \Stripe\Subscription
      */
     protected $stripeSubscription;
 
@@ -36,10 +34,13 @@ class UpdateSubscriptionListener
     private function updateSubscription()
     {
         $subscription = Subscription::where('stripe_id', $this->stripeSubscription->id)->first();
+
+        // Subscription not found, cancel event 
+        if (!$subscription) {
+            return false;
+        }
+
         $ends_at = date($this->stripeSubscription->current_period_end);
-
-        Log::info('Subscription date: ' . $ends_at);
-
         $subscription->save(['ends_at', $ends_at]);
     }
 }
