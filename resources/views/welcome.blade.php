@@ -3,71 +3,48 @@
 
 <head>
     <meta charset="utf-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <title>GetFancy</title>
 
     <!-- Scripts -->
-    <script
-        src="{{ asset('js/home.js') }}"
-        defer
-    ></script>
+    <script src="{{ asset('js/home.js') }}" defer></script>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <link
-        rel="stylesheet"
-        href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css"
-    >
+    <link rel="stylesheet"
+          href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css">
 
-    <link
-        href="https://unpkg.com/aos@2.3.1/dist/aos.css"
-        rel="stylesheet"
-    >
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <!-- Styles -->
-    <link
-        href="{{ asset('css/app.css') }}"
-        rel="stylesheet"
-    >
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
 <body>
     @include('partials.header', ['show_nav' => true])
 
     <main class="overflow-hidden">
-        <section
-            id="home"
-            class="hero text-white d-flex align-items-center"
-            style="background-image: url(img/hero_blue.jpg)"
-        >
+        <section id="home" class="hero text-white d-flex align-items-center"
+                 style="background-image: url(img/hero_blue.jpg)">
             <div class="container">
-                <div
-                    class="hero-content"
-                    data-aos="zoom-in"
-                >
-                    <h3 class="display-3">Virtual Phone System</h3>
-                    <p>
-                        GetFancy is a virtual phone system for startups and
-                        small business
-                    </p>
+                <div class="hero-content" data-aos="zoom-in">
+                    <h3 class="display-3">@lang('Virtual Phone System')</h3>
+                    <p>@lang('Hero Message')</p>
                     <ul class="list-unstyled pl-3">
                         <li class="mb-3">
                             <i
-                                class="align-bottom h1 la la-check-circle mb-0 mr-2 text-info"></i>
+                               class="align-bottom h1 la la-check-circle mb-0 mr-2 text-info"></i>
                             Get a Toll Free, Local Phone Number.
                         </li>
                         <li class="mb-3">
                             <i
-                                class="align-bottom h1 la la-check-circle mb-0 mr-2 text-info"></i>
+                               class="align-bottom h1 la la-check-circle mb-0 mr-2 text-info"></i>
                             Create Custom Greetings, Unlimited Extensions.
                         </li>
                         <li>
                             <i
-                                class="align-bottom h1 la la-check-circle mb-0 mr-2 text-info"></i>
+                               class="align-bottom h1 la la-check-circle mb-0 mr-2 text-info"></i>
                             Get Voicemails by email, Manage Your Phone
                             System Online.
                         </li>
@@ -76,82 +53,44 @@
             </div>
         </section>
 
-        <section
-            id="features"
-            class="bg-white-ghost position-relative"
-        >
-            <div
-                class="background-image background-position-top d-lg-block d-none h-100 position-absolute position-bottom w-50-gutter"
-                style="background-image: url(img/feature-business-man.jpg)"
-            ></div>
+        <section id="features" class="bg-white-ghost position-relative">
+            <div class="background-image background-position-top d-lg-block d-none h-100 position-absolute position-bottom w-50-gutter"
+                 style="background-image: url(img/feature-business-man.jpg)">
+            </div>
             <div class="container">
                 <div class="row d-flex">
-                    <div class="col-lg-6 ml-auto getfancy-section">
+                    <div class="col-lg-6 ml-auto fancy-section">
                         <div data-aos="zoom-in">
-                            <h3 class="display-4 text-primary">Features</h3>
+                            <h3 class="display-4 text-primary">@lang('Features')
+                            </h3>
                             <p class="mb-5 text-blue-solid">
-                                Make it easy to provide your business powerful
-                                phone service. No complex hardware to install or
-                                mantain. GetFancy is simple to use and manage,
-                                requiring no technical expertise
+                                @lang('Feature Message')
                             </p>
                         </div>
                         <div class="row d-flex">
-                            <div
-                                class="col-md-6"
-                                data-aos="fade-right"
-                            >
-                                <h5 class="font-weight-bold">Work Anywhere</h5>
-                                <p>
-                                    Plug in your existing phone anyhwere and it
-                                    work just like
-                                    at
-                                    the office.
-                                </p>
-                            </div>
-                            <div
-                                class="col-md-6"
-                                data-aos="fade-left"
-                            >
-                                <h5 class="font-weight-bold">Relability</h5>
-                                <p>
-                                    Our proven 99.9% up-time and our system wide
-                                    redundancy
-                                    makes us
-                                    the most reliable cloud phone service
-                                    carrier in the nation.
-                                </p>
-                            </div>
-                            <div
-                                class="col-md-6"
-                                data-aos="fade-right"
-                            >
+                            <div class="col-md-6" data-aos="fade-right">
                                 <h5 class="font-weight-bold">
-                                    Management Tools
+                                    @lang('Work Anywhere')
                                 </h5>
-                                <p>
-                                    The management system allows you to change
-                                    or add
-                                    extensions,
-                                    create call log reports, manage incoming and
-                                    outgoing calls,
-                                    record phone calls and much, mucho more.
-                                </p>
+                                <p>@lang('Work Anywhere Message')</p>
                             </div>
-                            <div
-                                class="col-md-6"
-                                data-aos="fade-left"
-                            >
-                                <h5 class="font-weight-bold">Easy Setup</h5>
-                                <p>
-                                    No technical knowledge required! Our cloud
-                                    phone systems are
-                                    simple to install. Our support specialists
-                                    are available to
-                                    walk
-                                    you through using customer dashboard if
-                                    needed.
-                                </p>
+                            <div class="col-md-6" data-aos="fade-left">
+                                <h5 class="font-weight-bold">
+                                    @lang('Relability')
+                                </h5>
+                                <p>@lang('Relability Message')</p>
+                            </div>
+                            <div class="col-md-6" data-aos="fade-right">
+                                <h5 class="font-weight-bold">
+                                    @lang('Management Tools')
+                                </h5>
+                                <p>@lang('Management Tools Message')</p>
+                            </div>
+                            <div class="col-md-6" data-aos="fade-left">
+                                <h5 class="font-weight-bold">
+                                    @lang('Easy Setup')
+                                </h5>
+                                <p>@lang('Easy Setup Message')</p>
                             </div>
                         </div>
                     </div>
@@ -159,107 +98,68 @@
             </div>
         </section>
 
-        <section
-            id="how-it-works"
-            class="getfancy-section text-center"
-        >
+        <section id="how-it-works" class="fancy-section text-center">
             <div class="container">
-                <div
-                    class="mb-5 work-heading"
-                    data-aos="zoom-in"
-                >
-                    <h3 class="display-4 text-primary">How It Works</h3>
+                <div class="mb-5 work-heading" data-aos="zoom-in">
+                    <h3 class="display-4 text-primary">@lang('How It Works')
+                    </h3>
                     <p class="m-auto text-blue-solid">
-                        GetFancy is an all-in-one virtual phone service
-                        featuring
-                        auto-attendant, professional greeting and a simple web
-                        interface
-                        that allows you to easyly manage all of your business
-                        communications
-                        without hardware.
-                    </p>
+                        @lang('How It Works Message')</p>
                 </div>
                 <div class="row work-list">
-                    <div
-                        class="col-md-4 mb-3"
-                        data-aos="fade-up"
-                        data-aos-anchor-placement="center-bottom"
-                    >
+                    <div class="col-md-4 mb-3" data-aos="fade-up"
+                         data-aos-anchor-placement="center-bottom">
                         <i
-                            class="la la-mobile la-5x px-5 bg-lighter text-blue-solid"></i>
+                           class="la la-mobile la-5x px-5 bg-lighter text-blue-solid"></i>
                         <div class="mt-4">
                             <h5 class="font-weight-bold">
-                                Pick a number of your choice
+                                @lang('Pick a number of your choice')
                             </h5>
-                            <p>
-                                You can also port your number to GetFancy for
-                                free.
-                            </p>
+                            <p>@lang('Pick a number Message')</p>
                         </div>
                     </div>
-                    <div
-                        class="col-md-4 mb-3"
-                        data-aos="fade-up"
-                        data-aos-anchor-placement="center-bottom"
-                    >
+                    <div class="col-md-4 mb-3" data-aos="fade-up"
+                         data-aos-anchor-placement="center-bottom">
                         <i
-                            class="la la-microphone la-5x px-5 bg-lighter text-blue-solid"></i>
+                           class="la la-microphone la-5x px-5 bg-lighter text-blue-solid"></i>
                         <div class="mt-4">
                             <h5 class="font-weight-bold">
-                                Record greetings or use recording service
+                                @lang('Record greetings or use recording
+                                service')
                             </h5>
-                            <p>
-                                Create your custom main greeting for auto
-                                attendant.
-                            </p>
+                            <p>@lang('Record greetings Message')</p>
                         </div>
                     </div>
-                    <div
-                        class="col-md-4 mb-3"
-                        data-aos="fade-up"
-                        data-aos-anchor-placement="center-bottom"
-                    >
+                    <div class="col-md-4 mb-3" data-aos="fade-up"
+                         data-aos-anchor-placement="center-bottom">
                         <i
-                            class="la la-headphones la-5x px-5 bg-lighter text-blue-solid"></i>
+                           class="la la-headphones la-5x px-5 bg-lighter text-blue-solid"></i>
                         <div class="mt-4">
-                            <h5 class="font-weight-bold">Add extensions</h5>
-                            <p>
-                                Create & customize extensions to forward call
-                                anywhere, home, office or your mobile.
-                            </p>
+                            <h5 class="font-weight-bold">
+                                @lang('Add extensions')
+                            </h5>
+                            <p>@lang('Add extensions Message')</p>
                         </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section
-            id="testimonial"
-            class="getfancy-section text-white"
-        >
+        <section id="testimonial" class="fancy-section text-white">
             <div class="container py-5">
                 <blockquote class="blockquote mb-5 mt-4">
-                    <p>
-                        "GetFancy is amazing.
-                        <br>
-                        Decisions that used to take weeks, now only takes
-                        minutes and is available to everyone on my team."
-                    </p>
+                    <p>@lang('Testimony Message')</p>
                     <footer class="blockquote-footer">
-                        Cindy Smith, founder of Cool Starup
+                        @lang('Testimony Footer')
                     </footer>
                 </blockquote>
             </div>
         </section>
 
-        <section
-            id="plans"
-            class="getfancy-section pb-6 text-center"
-        >
-            <h3
-                class="display-4 mb-5 text-primary"
-                data-aos="zoom-in"
-            >Our Plans</h3>
+        <section id="plans" class="fancy-section pb-6 text-center">
+            <h3 class="display-4 mb-5 text-primary" data-aos="zoom-in">
+                @lang('Our Plans')
+            </h3>
 
             <div class="container">
                 <div class="row">
@@ -267,68 +167,48 @@
                         <div data-aos="zoom-in">
                             <h2 class="display-1 text-primary plan-wrapper">
                                 @foreach ($products as $product)
-                                <span
-                                    id="{{ $product->slug }}"
-                                    class="plan-item{{ $product->is_primary ? ' active' : '' }}"
-                                >
+                                <span id="{{ $product->slug }}"
+                                      class="plan-item{{ $product->is_primary ? ' active' : '' }}">
                                     <span
-                                        class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3"
-                                    >$</span>
+                                          class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3">$</span>
                                     <span
-                                        class="plan-amount">{{ $product->cost }}</span>
+                                          class="plan-amount">{{ $product->cost }}</span>
                                 </span>
                                 @endforeach
                             </h2>
 
-                            <div
-                                class="btn-group"
-                                role="group"
-                                aria-label="Our Plans Button Groups"
-                            >
+                            <div class="btn-group" role="group"
+                                 aria-label="Our Plans Button Groups">
                                 @foreach ($products as $product)
-                                <button
-                                    type="button"
-                                    class="btn btn-outline-light{{ $product->is_primary ? ' active' : '' }}"
-                                    data-type="{{ $product->slug }}"
-                                >{{ $product->name }}</button>
+                                <button type="button"
+                                        class="btn btn-outline-light{{ $product->is_primary ? ' active' : '' }}"
+                                        data-type="{{ $product->slug }}">{{ $product->name }}</button>
                                 @endforeach
                             </div>
 
                             <p>
                                 <small class="text-muted font-italic">
-                                    Variant time, same characteristics
+                                    @lang('Variant time, same characteristics')
                                 </small>
                             </p>
                         </div>
 
-                        <div
-                            class="my-5 row"
-                            data-aos="fade-up"
-                            data-aos-anchor-placement="center-bottom"
-                        >
+                        <div class="my-5 row" data-aos="fade-up"
+                             data-aos-anchor-placement="center-bottom">
                             <div class="col-md-6">
                                 <ul
                                     class="border-bottom border-top list-group list-group-flush">
                                     <li class="list-group-item">
-                                        <span
-                                            class="font-weight-bold">Unlimited</span>
-                                        extensions
+                                        @lang('Unlimited extensions')
                                     </li>
                                     <li class="list-group-item">
-                                        <span
-                                            class="font-weight-bold">Customer</span>
-                                        support
+                                        @lang('Customer support')
                                     </li>
                                     <li class="list-group-item">
-                                        <span class="font-weight-bold">
-                                            All minutes
-                                        </span>
-                                        = fixed
+                                        @lang('All minutes = fixed')
                                     </li>
                                     <li class="list-group-item">
-                                        <span
-                                            class="font-weight-bold">Choose</span>
-                                        your number
+                                        @lang('Choose your number')
                                     </li>
                                 </ul>
                             </div>
@@ -336,35 +216,23 @@
                                 <ul
                                     class="border-bottom border-sm-top list-group list-group-flush">
                                     <li class="list-group-item">
-                                        <span
-                                            class="font-weight-bold">Conference</span>
-                                        call
+                                        @lang('Conference call')
                                     </li>
                                     <li class="list-group-item">
-                                        <span
-                                            class="font-weight-bold">Custom</span>
-                                        voice
+                                        @lang('Custom voice')
                                     </li>
                                     <li class="list-group-item">
-                                        <span class="font-weight-bold">
-                                            Recording
-                                        </span>
-                                        voice
+                                        @lang('Recording voice')
                                     </li>
                                     <li class="list-group-item">
-                                        <span
-                                            class="font-weight-bold">Recording</span>
-                                        voicemail to Email
+                                        @lang('Recording voicemail to Email')
                                     </li>
                                 </ul>
                             </div>
                         </div>
 
-                        <a
-                            id="plan-buy"
-                            href="#"
-                            class="btn btn-primary px-7"
-                        >Buy now</a>
+                        <a id="plan-buy" href="#"
+                           class="btn btn-primary px-7">@lang('Buy now')</a>
                     </div>
                 </div>
             </div>
@@ -374,71 +242,54 @@
     <footer class="footer overflow-hidden text-white">
         <div class="container">
             <h3 class="display-4 font-weight-bold mb-4 text-center">
-                Contact Us
+                @lang('Contact Us')
             </h3>
 
-            <form
-                action=""
-                method="POST"
-                class="mb-5"
-                data-aos="flip-up"
-            >
+            <form action="" method="POST" class="mb-5" data-aos="flip-up">
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label
-                                        for="full_name"
-                                        class="sr-only"
-                                    >Full Name</label>
-                                    <input
-                                        type="text"
-                                        class="form-control w-100"
-                                        name="full_name"
-                                        id="full_name"
-                                        placeholder="Full Name"
-                                        required
-                                    >
+                                    <label for="full_name" class="sr-only">
+                                        @lang('Full Name')
+                                    </label>
+                                    <input type="text"
+                                           class="form-control w-100"
+                                           name="full_name" id="full_name"
+                                           placeholder="@lang('Full Name')"
+                                           required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label
-                                        for="email"
-                                        class="sr-only"
-                                    >E-mail</label>
-                                    <input
-                                        type="email"
-                                        class="form-control w-100"
-                                        name="email"
-                                        id="email"
-                                        placeholder="E-mail"
-                                        required
-                                    >
+                                    <label for="email" class="sr-only">
+                                        @lang('E-mail')
+                                    </label>
+                                    <input type="email"
+                                           class="form-control w-100"
+                                           name="email" id="email"
+                                           placeholder="@lang('E-mail')"
+                                           required>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label
-                                        for="message"
-                                        class="sr-only"
-                                    >Message</label>
-                                    <textarea
-                                        class="form-control"
-                                        name="message"
-                                        id="message"
-                                        rows="5"
-                                        placeholder="Mesage"
-                                        required
-                                    ></textarea>
+                                    <label for="message" class="sr-only">
+                                        @lang('Message')
+                                    </label>
+                                    <textarea class="form-control"
+                                              name="message" id="message"
+                                              rows="5"
+                                              placeholder="@lang('Message')"
+                                              required></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12 text-center">
-                                <button
-                                    type="submit"
-                                    class="btn btn-primary font-weight-bold px-6"
-                                >Submit</button>
+                                <button type="submit"
+                                        class="btn btn-primary font-weight-bold px-6">
+                                    @lang('Submit')
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -446,7 +297,7 @@
             </form>
 
             <p class="border-top pt-2 text-center">
-                <small>&copy; GetFancy 2019</small>
+                <small>&copy; Fancy 2019</small>
             </p>
         </div>
     </footer>

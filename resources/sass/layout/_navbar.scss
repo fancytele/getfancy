@@ -1,22 +1,22 @@
 .navbar {
   transition: background-color 0.3s;
 
-  .getfancy-logo {
+  .fancy-logo {
     max-height: 3rem;
     width: 6.25rem;
   }
 
-  .getfancy-dark-logo {
+  .fancy-dark-logo {
     display: none;
   }
 }
 
 .navbar-light {
-  .getfancy-dark-logo {
+  .fancy-dark-logo {
     display: block;
   }
 
-  .getfancy-white-logo {
+  .fancy-white-logo {
     display: none;
   }
 

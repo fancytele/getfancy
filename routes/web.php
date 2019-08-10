@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'WebSiteController@index')->name('homepage');
+Route::get('/js/lang.js', 'WebSiteController@localization')->name('assets.lang');
 Route::get('checkout/{slug}', 'WebSiteController@checkout')->name('checkout');
 
 Auth::routes();

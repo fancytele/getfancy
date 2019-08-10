@@ -17,9 +17,9 @@ require('bootstrap');
     const navbarLightClasses = 'bg-white navbar-light shadow';
 
     if (scroll >= 100) {
-      $('#getfancy-navbar').addClass(navbarLightClasses).removeClass(navbarDarkClass);
+      $('#fancy-navbar').addClass(navbarLightClasses).removeClass(navbarDarkClass);
     } else {
-      $('#getfancy-navbar').addClass(navbarDarkClass).removeClass(navbarLightClasses);
+      $('#fancy-navbar').addClass(navbarDarkClass).removeClass(navbarLightClasses);
     }
   }
 
@@ -50,8 +50,8 @@ require('bootstrap');
 
   $(document).ready(() => {
     // Set ScrollSpy
-    $('body').scrollspy({ target: "#getfancy-navbar", offset: 95 });
-    $("#getfancy-menu .nav-link").on('click', animateScrollSpy);
+    $('body').scrollspy({ target: "#fancy-navbar", offset: 95 });
+    $("#fancy-menu .nav-link").on('click', animateScrollSpy);
 
     // Listen Scroll event
     $(window).on('scroll', changeNavbarBg);

@@ -1,6 +1,6 @@
 <header>
     <nav
-        id="getfancy-navbar"
+        id="fancy-navbar"
         class="border-0 bg-transparent fixed-top navbar navbar-dark navbar-expand-md"
     >
         <div class="container">
@@ -9,12 +9,12 @@
                 href="{{ url('/') }}"
             >
                 <img
-                    class="getfancy-logo getfancy-white-logo"
+                    class="fancy-logo fancy-white-logo"
                     src="{{ URL::asset('img/logo-light.png') }}"
                     alt="Fancy Logo"
                 >
                 <img
-                    class="getfancy-logo getfancy-dark-logo"
+                    class="fancy-logo fancy-dark-logo"
                     src="{{ URL::asset('img/logo-primary.png') }}"
                     alt="Fancy Logo"
                 >
@@ -23,8 +23,8 @@
                 class="navbar-toggler"
                 type="button"
                 data-toggle="collapse"
-                data-target="#getfancy-menu"
-                aria-controls="getfancy-menu"
+                data-target="#fancy-menu"
+                aria-controls="fancy-menu"
                 aria-expanded="false"
                 aria-label="Toggle navigation"
             >
@@ -34,7 +34,7 @@
             @isset ($show_nav)
                 <div
                     class="collapse navbar-collapse"
-                    id="getfancy-menu"
+                    id="fancy-menu"
                 >
                     <ul class="navbar-nav ml-auto text-uppercase">
                         <li class="nav-item">
@@ -42,32 +42,32 @@
                                 class="nav-link"
                                 href="#home"
                             >
-                                Home <span class="sr-only">(current)</span>
+                                @lang('Home') <span class="sr-only">(current)</span>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a
                                 class="nav-link"
                                 href="#features"
-                            >Features</a>
+                            >@lang('Features')</a>
                         </li>
                         <li class="nav-item">
                             <a
                                 class="nav-link"
                                 href="#how-it-works"
-                            >How it Works</a>
+                            >@lang('How It Works')</a>
                         </li>
                         <li class="nav-item">
                             <a
                                 class="nav-link"
                                 href="#testimonial"
-                            >Testimonial</a>
+                            >@lang('Testimonial')</a>
                         </li>
                         <li class="nav-item">
                             <a
                                 class="nav-link"
                                 href="#plans"
-                            >Our Plans</a>
+                            >@lang('Our Plans')</a>
                         </li>
                     </ul>
                 </div>

@@ -12467,20 +12467,20 @@ a.text-white:focus {
   transition: background-color 0.3s;
 }
 
-.navbar .getfancy-logo {
+.navbar .fancy-logo {
   max-height: 3rem;
   width: 6.25rem;
 }
 
-.navbar .getfancy-dark-logo {
+.navbar .fancy-dark-logo {
   display: none;
 }
 
-.navbar-light .getfancy-dark-logo {
+.navbar-light .fancy-dark-logo {
   display: block;
 }
 
-.navbar-light .getfancy-white-logo {
+.navbar-light .fancy-white-logo {
   display: none;
 }
 
@@ -12595,7 +12595,7 @@ a.text-white:focus {
   padding-top: 3.8125rem;
 }
 
-.getfancy-section {
+.fancy-section {
   padding-bottom: 3rem;
   padding-top: 5rem;
 }

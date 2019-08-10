@@ -8,7 +8,7 @@
             <div class="card-body">
               <div>
                 <h2 class="display-4">
-                  Checkout
+                  {{ trans('Checkout') }}
                   <span class="d-block d-lg-none text-primary">
                     {{ product.name }}
                     ${{ product.cost }}
@@ -25,13 +25,13 @@
                     <i class="far fa-circle fa-stack-2x"></i>
                     <span class="fa-stack-1x">1</span>
                   </span>
-                  Create Account
+                  {{ trans('Create Account') }}
                 </h3>
 
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="first_name">First Name</label>
+                      <label for="first_name">{{ trans('First Name') }}</label>
                       <input
                         type="text"
                         class="form-control"
@@ -52,7 +52,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="last_name">Last Name</label>
+                      <label for="last_name">{{ trans('Last Name') }}</label>
                       <input
                         type="text"
                         class="form-control"
@@ -72,7 +72,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="email">E-mail</label>
+                      <label for="email">{{ trans('E-mail') }}</label>
                       <input
                         type="email"
                         class="form-control"
@@ -92,7 +92,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="email_confirmation">Verify E-mail</label>
+                      <label for="email_confirmation">{{ trans('Verify E-mail') }}</label>
                       <input
                         type="email"
                         class="form-control"
@@ -112,7 +112,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="password">Password</label>
+                      <label for="password">{{ trans('Password') }}</label>
                       <input
                         type="password"
                         class="form-control"
@@ -132,7 +132,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="password_confirmation">Confirm Password</label>
+                      <label for="password_confirmation">{{ trans('Confirm Password') }}</label>
                       <input
                         type="password"
                         class="form-control"
@@ -163,12 +163,12 @@
                     <i class="far fa-circle fa-stack-2x"></i>
                     <span class="fa-stack-1x">2</span>
                   </span>
-                  Your Billing Information
+                  {{ trans('Your Billing Information') }}
                 </h3>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="country">Country</label>
+                      <label for="country">{{ trans('Country') }}</label>
                       <input
                         type="text"
                         class="form-control"
@@ -188,7 +188,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="city">City</label>
+                      <label for="city">{{ trans('City') }}</label>
                       <input
                         type="text"
                         class="form-control"
@@ -208,7 +208,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="state">State, Providence, Region</label>
+                      <label for="state">{{ trans('State, Providence, Region') }}</label>
                       <input
                         type="text"
                         class="form-control"
@@ -228,7 +228,7 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="zip_code">Zip Code</label>
+                      <label for="zip_code">{{ trans('Zip Code') }}</label>
                       <input
                         type="text"
                         class="form-control"
@@ -248,7 +248,7 @@
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="address">Address</label>
+                      <label for="address">{{ trans('Address') }}</label>
                       <input
                         type="text"
                         class="form-control"
@@ -279,7 +279,7 @@
                     <i class="far fa-circle fa-stack-2x"></i>
                     <span class="fa-stack-1x">3</span>
                   </span>
-                  Additional Features
+                  {{ trans('Additional Features') }}
                 </h3>
                 <div>
                   <div class="form-group" v-for="item in addons" :key="item.code">
@@ -311,11 +311,11 @@
                     <i class="far fa-circle fa-stack-2x"></i>
                     <span class="fa-stack-1x">4</span>
                   </span>
-                  Your Payment Information
+                  {{ trans('Your Payment Information') }}
                 </h3>
                 <div>
                   <div class="form-group">
-                    <label for="credit-card">Credict Card</label>
+                    <label for="credit-card">{{ trans('Credit Card') }}</label>
                     <card
                       class="stripe-card"
                       :class="{ complete }"
@@ -340,7 +340,7 @@
               <div class="pt-4">
                 <!-- Summary -->
                 <div class="d-lg-none">
-                  <h3 class="font-italic h2">Order Summary</h3>
+                  <h3 class="font-italic h2">{{ trans('Order Summary') }}</h3>
 
                   <transition-group name="fade" tag="ul" class="list-unstyled text-black-50">
                     <li
@@ -360,6 +360,7 @@
                     </li>
                   </transition-group>
                 </div>
+
                 <p class="small text-center text-danger" v-if="generalError">{{ generalError }}</p>
                 <button
                   id="submit-payment"
@@ -367,17 +368,17 @@
                   class="btn btn-block btn-lg btn-primary font-weight-bold ladda-button py-3"
                   data-style="zoom-out"
                   :disabled="!complete"
-                >Checkout</button>
+                >{{ trans('Submit Checkout') }}</button>
                 <p class="mt-4 text-center">
                   <span class="align-middle h2 mb-0 text-primary">
                     <i class="fa-question-circle far"></i>
                   </span>
-                  <span class="font-weight-bold">Need any help?</span>
-                  Don't hesitate to
+                  <span class="font-weight-bold">{{ trans('Need any help?') }}</span>
+                  {{ trans("Don't hesitate to") }}
                   <a
                     href="mailto:info@getfancy.co"
                     class="text-body text-decoration-underline"
-                  >contact support!</a>
+                  >{{ trans('contact support') }}!</a>
                 </p>
               </div>
               <!-- /Submit -->
@@ -397,7 +398,9 @@
                 <span
                   class="d-inline-block display-1 font-weight-light mt-n3 plan-price-amount"
                 >{{ product.cost }}</span>
-                <span class="d-inline-block h3 mb-0 plan-price-time text-white">/ {{ product.slug }}</span>
+                <span
+                  class="d-inline-block h3 mb-0 plan-price-time text-lowercase text-white"
+                >/ {{ product.name }}</span>
               </div>
               <p class="font-italic mb-0">Automatically renews</p>
             </div>
@@ -407,37 +410,37 @@
                 <span class="mr-2">
                   <i class="far fa-check-circle"></i>
                 </span>
-                Unlimited extensions
+                <span v-html="trans('Unlimited extensions')"></span>
               </li>
               <li class="mb-2">
                 <span class="mr-2">
                   <i class="far fa-check-circle"></i>
                 </span>
-                Customer support
+                <span v-html="trans('Customer support')"></span>
               </li>
               <li class="mb-2">
                 <span class="mr-2">
                   <i class="far fa-check-circle"></i>
                 </span>
-                All minutes = fixed
+                <span v-html="trans('All minutes = fixed')"></span>
               </li>
               <li class="mb-2">
                 <span class="mr-2">
                   <i class="far fa-check-circle"></i>
                 </span>
-                Choose your number
+                <span v-html="trans('Choose your number')"></span>
               </li>
               <li class="mb-2">
                 <span class="mr-2">
                   <i class="far fa-check-circle"></i>
                 </span>
-                Conference call
+                <span v-html="trans('Conference call')"></span>
               </li>
               <li class="mb-2">
                 <span class="mr-2">
                   <i class="far fa-check-circle"></i>
                 </span>
-                More...
+                {{ trans('More') }}...
               </li>
             </ul>
 
@@ -462,24 +465,25 @@
 
           <!-- Summary -->
           <div class="position-absolute pull-bottom pull-left mb-4 px-5 w-100">
-            <h3 class="font-italic h2">Order Summary</h3>
+            <h3 class="font-italic h2">{{ trans('Order Summary') }}</h3>
 
-            <ul class="list-unstyled text-white-50">
+            <transition-group name="fade" tag="ul" class="list-unstyled text-white-50">
               <li
                 class="align-items-center d-flex justify-content-between py-2"
-                v-for="(item, index) in summaryDetail"
-                :key="index"
+                v-for="item in summaryDetail"
+                :key="item.name"
               >
                 {{ item.name }}
                 <span>${{ item.cost }}</span>
               </li>
               <li
                 class="align-items-center border-top border-white-50 d-flex font-weight-bold justify-content-between py-3 text-white"
+                key="total"
               >
                 <span class="h3 m-0">TOTAL</span>
                 <span>${{ summaryTotal }}</span>
               </li>
-            </ul>
+            </transition-group>
           </div>
         </div>
         <!-- /Summary -->

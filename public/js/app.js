@@ -2332,6 +2332,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -38354,7 +38358,11 @@ var render = function() {
               _c("div", { staticClass: "card-body" }, [
                 _c("div", [
                   _c("h2", { staticClass: "display-4" }, [
-                    _vm._v("\n                Checkout\n                "),
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.trans("Checkout")) +
+                        "\n                "
+                    ),
                     _c(
                       "span",
                       { staticClass: "d-block d-lg-none text-primary" },
@@ -38374,13 +38382,20 @@ var render = function() {
                 _c("hr"),
                 _vm._v(" "),
                 _c("div", { staticClass: "pt-4" }, [
-                  _vm._m(0),
+                  _c("h3", { staticClass: "ml-n2" }, [
+                    _vm._m(0),
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.trans("Create Account")) +
+                        "\n              "
+                    )
+                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "first_name" } }, [
-                          _vm._v("First Name")
+                          _vm._v(_vm._s(_vm.trans("First Name")))
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -38433,7 +38448,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "last_name" } }, [
-                          _vm._v("Last Name")
+                          _vm._v(_vm._s(_vm.trans("Last Name")))
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -38483,7 +38498,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "email" } }, [
-                          _vm._v("E-mail")
+                          _vm._v(_vm._s(_vm.trans("E-mail")))
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -38533,7 +38548,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "email_confirmation" } }, [
-                          _vm._v("Verify E-mail")
+                          _vm._v(_vm._s(_vm.trans("Verify E-mail")))
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -38585,7 +38600,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "password" } }, [
-                          _vm._v("Password")
+                          _vm._v(_vm._s(_vm.trans("Password")))
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -38637,7 +38652,7 @@ var render = function() {
                         _c(
                           "label",
                           { attrs: { for: "password_confirmation" } },
-                          [_vm._v("Confirm Password")]
+                          [_vm._v(_vm._s(_vm.trans("Confirm Password")))]
                         ),
                         _vm._v(" "),
                         _c("input", {
@@ -38695,13 +38710,20 @@ var render = function() {
                 _c("hr", { staticClass: "mx-n5" }),
                 _vm._v(" "),
                 _c("div", { staticClass: "pt-4" }, [
-                  _vm._m(1),
+                  _c("h3", { staticClass: "ml-n2" }, [
+                    _vm._m(1),
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.trans("Your Billing Information")) +
+                        "\n              "
+                    )
+                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "country" } }, [
-                          _vm._v("Country")
+                          _vm._v(_vm._s(_vm.trans("Country")))
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -38751,7 +38773,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "city" } }, [
-                          _vm._v("City")
+                          _vm._v(_vm._s(_vm.trans("City")))
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -38801,7 +38823,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "state" } }, [
-                          _vm._v("State, Providence, Region")
+                          _vm._v(_vm._s(_vm.trans("State, Providence, Region")))
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -38851,7 +38873,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-6" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "zip_code" } }, [
-                          _vm._v("Zip Code")
+                          _vm._v(_vm._s(_vm.trans("Zip Code")))
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -38901,7 +38923,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-12" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "address" } }, [
-                          _vm._v("Address")
+                          _vm._v(_vm._s(_vm.trans("Address")))
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -38954,7 +38976,14 @@ var render = function() {
                 _c("hr", { staticClass: "mx-n5" }),
                 _vm._v(" "),
                 _c("div", { staticClass: "pt-4" }, [
-                  _vm._m(2),
+                  _c("h3", { staticClass: "ml-n2" }, [
+                    _vm._m(2),
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.trans("Additional Features")) +
+                        "\n              "
+                    )
+                  ]),
                   _vm._v(" "),
                   _c(
                     "div",
@@ -39052,7 +39081,14 @@ var render = function() {
                 _c("hr", { staticClass: "mx-n5" }),
                 _vm._v(" "),
                 _c("div", { staticClass: "pt-4" }, [
-                  _vm._m(3),
+                  _c("h3", { staticClass: "ml-n2" }, [
+                    _vm._m(3),
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.trans("Your Payment Information")) +
+                        "\n              "
+                    )
+                  ]),
                   _vm._v(" "),
                   _c("div", [
                     _c(
@@ -39060,7 +39096,7 @@ var render = function() {
                       { staticClass: "form-group" },
                       [
                         _c("label", { attrs: { for: "credit-card" } }, [
-                          _vm._v("Credict Card")
+                          _vm._v(_vm._s(_vm.trans("Credit Card")))
                         ]),
                         _vm._v(" "),
                         _c("card", {
@@ -39103,7 +39139,7 @@ var render = function() {
                     { staticClass: "d-lg-none" },
                     [
                       _c("h3", { staticClass: "font-italic h2" }, [
-                        _vm._v("Order Summary")
+                        _vm._v(_vm._s(_vm.trans("Order Summary")))
                       ]),
                       _vm._v(" "),
                       _c(
@@ -39176,10 +39212,29 @@ var render = function() {
                         disabled: !_vm.complete
                       }
                     },
-                    [_vm._v("Checkout")]
+                    [_vm._v(_vm._s(_vm.trans("Submit Checkout")))]
                   ),
                   _vm._v(" "),
-                  _vm._m(4)
+                  _c("p", { staticClass: "mt-4 text-center" }, [
+                    _vm._m(4),
+                    _vm._v(" "),
+                    _c("span", { staticClass: "font-weight-bold" }, [
+                      _vm._v(_vm._s(_vm.trans("Need any help?")))
+                    ]),
+                    _vm._v(
+                      "\n                " +
+                        _vm._s(_vm.trans("Don't hesitate to")) +
+                        "\n                "
+                    ),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "text-body text-decoration-underline",
+                        attrs: { href: "mailto:info@getfancy.co" }
+                      },
+                      [_vm._v(_vm._s(_vm.trans("contact support")) + "!")]
+                    )
+                  ])
                 ])
               ])
             ]
@@ -39218,9 +39273,9 @@ var render = function() {
                     "span",
                     {
                       staticClass:
-                        "d-inline-block h3 mb-0 plan-price-time text-white"
+                        "d-inline-block h3 mb-0 plan-price-time text-lowercase text-white"
                     },
-                    [_vm._v("/ " + _vm._s(_vm.product.slug))]
+                    [_vm._v("/ " + _vm._s(_vm.product.name))]
                   )
                 ]),
                 _vm._v(" "),
@@ -39229,11 +39284,70 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(5),
+              _c("ul", { staticClass: "list-unstyled" }, [
+                _c("li", { staticClass: "mb-2" }, [
+                  _vm._m(5),
+                  _vm._v(" "),
+                  _c("span", {
+                    domProps: {
+                      innerHTML: _vm._s(_vm.trans("Unlimited extensions"))
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "mb-2" }, [
+                  _vm._m(6),
+                  _vm._v(" "),
+                  _c("span", {
+                    domProps: {
+                      innerHTML: _vm._s(_vm.trans("Customer support"))
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "mb-2" }, [
+                  _vm._m(7),
+                  _vm._v(" "),
+                  _c("span", {
+                    domProps: {
+                      innerHTML: _vm._s(_vm.trans("All minutes = fixed"))
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "mb-2" }, [
+                  _vm._m(8),
+                  _vm._v(" "),
+                  _c("span", {
+                    domProps: {
+                      innerHTML: _vm._s(_vm.trans("Choose your number"))
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "mb-2" }, [
+                  _vm._m(9),
+                  _vm._v(" "),
+                  _c("span", {
+                    domProps: {
+                      innerHTML: _vm._s(_vm.trans("Conference call"))
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "mb-2" }, [
+                  _vm._m(10),
+                  _vm._v(
+                    "\n              " +
+                      _vm._s(_vm.trans("More")) +
+                      "...\n            "
+                  )
+                ])
+              ]),
               _vm._v(" "),
               _c("hr", { staticClass: "border-white-50" }),
               _vm._v(" "),
-              _vm._m(6)
+              _vm._m(11)
             ]),
             _vm._v(" "),
             _c(
@@ -39244,18 +39358,21 @@ var render = function() {
               },
               [
                 _c("h3", { staticClass: "font-italic h2" }, [
-                  _vm._v("Order Summary")
+                  _vm._v(_vm._s(_vm.trans("Order Summary")))
                 ]),
                 _vm._v(" "),
                 _c(
-                  "ul",
-                  { staticClass: "list-unstyled text-white-50" },
+                  "transition-group",
+                  {
+                    staticClass: "list-unstyled text-white-50",
+                    attrs: { name: "fade", tag: "ul" }
+                  },
                   [
-                    _vm._l(_vm.summaryDetail, function(item, index) {
+                    _vm._l(_vm.summaryDetail, function(item) {
                       return _c(
                         "li",
                         {
-                          key: index,
+                          key: item.name,
                           staticClass:
                             "align-items-center d-flex justify-content-between py-2"
                         },
@@ -39273,6 +39390,7 @@ var render = function() {
                     _c(
                       "li",
                       {
+                        key: "total",
                         staticClass:
                           "align-items-center border-top border-white-50 d-flex font-weight-bold justify-content-between py-3 text-white"
                       },
@@ -39287,7 +39405,8 @@ var render = function() {
                   ],
                   2
                 )
-              ]
+              ],
+              1
             )
           ]
         )
@@ -39300,123 +39419,96 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h3", { staticClass: "ml-n2" }, [
-      _c("span", { staticClass: "fa-stack text-primary" }, [
-        _c("i", { staticClass: "far fa-circle fa-stack-2x" }),
-        _vm._v(" "),
-        _c("span", { staticClass: "fa-stack-1x" }, [_vm._v("1")])
-      ]),
-      _vm._v("\n                Create Account\n              ")
+    return _c("span", { staticClass: "fa-stack text-primary" }, [
+      _c("i", { staticClass: "far fa-circle fa-stack-2x" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "fa-stack-1x" }, [_vm._v("1")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h3", { staticClass: "ml-n2" }, [
-      _c("span", { staticClass: "fa-stack text-primary" }, [
-        _c("i", { staticClass: "far fa-circle fa-stack-2x" }),
-        _vm._v(" "),
-        _c("span", { staticClass: "fa-stack-1x" }, [_vm._v("2")])
-      ]),
-      _vm._v("\n                Your Billing Information\n              ")
+    return _c("span", { staticClass: "fa-stack text-primary" }, [
+      _c("i", { staticClass: "far fa-circle fa-stack-2x" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "fa-stack-1x" }, [_vm._v("2")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h3", { staticClass: "ml-n2" }, [
-      _c("span", { staticClass: "fa-stack text-primary" }, [
-        _c("i", { staticClass: "far fa-circle fa-stack-2x" }),
-        _vm._v(" "),
-        _c("span", { staticClass: "fa-stack-1x" }, [_vm._v("3")])
-      ]),
-      _vm._v("\n                Additional Features\n              ")
+    return _c("span", { staticClass: "fa-stack text-primary" }, [
+      _c("i", { staticClass: "far fa-circle fa-stack-2x" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "fa-stack-1x" }, [_vm._v("3")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("h3", { staticClass: "ml-n2" }, [
-      _c("span", { staticClass: "fa-stack text-primary" }, [
-        _c("i", { staticClass: "far fa-circle fa-stack-2x" }),
-        _vm._v(" "),
-        _c("span", { staticClass: "fa-stack-1x" }, [_vm._v("4")])
-      ]),
-      _vm._v("\n                Your Payment Information\n              ")
+    return _c("span", { staticClass: "fa-stack text-primary" }, [
+      _c("i", { staticClass: "far fa-circle fa-stack-2x" }),
+      _vm._v(" "),
+      _c("span", { staticClass: "fa-stack-1x" }, [_vm._v("4")])
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("p", { staticClass: "mt-4 text-center" }, [
-      _c("span", { staticClass: "align-middle h2 mb-0 text-primary" }, [
-        _c("i", { staticClass: "fa-question-circle far" })
-      ]),
-      _vm._v(" "),
-      _c("span", { staticClass: "font-weight-bold" }, [
-        _vm._v("Need any help?")
-      ]),
-      _vm._v("\n                Don't hesitate to\n                "),
-      _c(
-        "a",
-        {
-          staticClass: "text-body text-decoration-underline",
-          attrs: { href: "mailto:info@getfancy.co" }
-        },
-        [_vm._v("contact support!")]
-      )
+    return _c("span", { staticClass: "align-middle h2 mb-0 text-primary" }, [
+      _c("i", { staticClass: "fa-question-circle far" })
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("ul", { staticClass: "list-unstyled" }, [
-      _c("li", { staticClass: "mb-2" }, [
-        _c("span", { staticClass: "mr-2" }, [
-          _c("i", { staticClass: "far fa-check-circle" })
-        ]),
-        _vm._v("\n              Unlimited extensions\n            ")
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "mb-2" }, [
-        _c("span", { staticClass: "mr-2" }, [
-          _c("i", { staticClass: "far fa-check-circle" })
-        ]),
-        _vm._v("\n              Customer support\n            ")
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "mb-2" }, [
-        _c("span", { staticClass: "mr-2" }, [
-          _c("i", { staticClass: "far fa-check-circle" })
-        ]),
-        _vm._v("\n              All minutes = fixed\n            ")
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "mb-2" }, [
-        _c("span", { staticClass: "mr-2" }, [
-          _c("i", { staticClass: "far fa-check-circle" })
-        ]),
-        _vm._v("\n              Choose your number\n            ")
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "mb-2" }, [
-        _c("span", { staticClass: "mr-2" }, [
-          _c("i", { staticClass: "far fa-check-circle" })
-        ]),
-        _vm._v("\n              Conference call\n            ")
-      ]),
-      _vm._v(" "),
-      _c("li", { staticClass: "mb-2" }, [
-        _c("span", { staticClass: "mr-2" }, [
-          _c("i", { staticClass: "far fa-check-circle" })
-        ]),
-        _vm._v("\n              More...\n            ")
-      ])
+    return _c("span", { staticClass: "mr-2" }, [
+      _c("i", { staticClass: "far fa-check-circle" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "mr-2" }, [
+      _c("i", { staticClass: "far fa-check-circle" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "mr-2" }, [
+      _c("i", { staticClass: "far fa-check-circle" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "mr-2" }, [
+      _c("i", { staticClass: "far fa-check-circle" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "mr-2" }, [
+      _c("i", { staticClass: "far fa-check-circle" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "mr-2" }, [
+      _c("i", { staticClass: "far fa-check-circle" })
     ])
   },
   function() {
@@ -51651,6 +51743,10 @@ webpackContext.id = "./resources/js sync recursive \\.vue$/";
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+
+window.Vue.prototype.trans = function (string) {
+  return _.get(window.i18n, string) || string;
+};
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -51658,6 +51754,7 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
+
 
 var files = __webpack_require__("./resources/js sync recursive \\.vue$/");
 

@@ -17818,9 +17818,9 @@ __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap
     var navbarLightClasses = 'bg-white navbar-light shadow';
 
     if (scroll >= 100) {
-      $('#getfancy-navbar').addClass(navbarLightClasses).removeClass(navbarDarkClass);
+      $('#fancy-navbar').addClass(navbarLightClasses).removeClass(navbarDarkClass);
     } else {
-      $('#getfancy-navbar').addClass(navbarDarkClass).removeClass(navbarLightClasses);
+      $('#fancy-navbar').addClass(navbarDarkClass).removeClass(navbarLightClasses);
     }
   };
 
@@ -17848,10 +17848,10 @@ __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap
   $(document).ready(function () {
     // Set ScrollSpy
     $('body').scrollspy({
-      target: "#getfancy-navbar",
+      target: "#fancy-navbar",
       offset: 95
     });
-    $("#getfancy-menu .nav-link").on('click', animateScrollSpy); // Listen Scroll event
+    $("#fancy-menu .nav-link").on('click', animateScrollSpy); // Listen Scroll event
 
     $(window).on('scroll', changeNavbarBg);
     $('#plans .btn-group button').on('click', changePlan);

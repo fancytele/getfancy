@@ -7,6 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+window.Vue.prototype.trans = string => _.get(window.i18n, string) || string;
 
 /**
  * The following block of code may be used to automatically register your
