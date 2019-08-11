@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Fancy</title>
+    <title>{{ config('app.name') }}</title>
 
     <script src="https://js.stripe.com/v3/"></script>
 
@@ -35,7 +35,8 @@
 
             <section id="checkout" class="pt-7">
                 <div class="container">
-                    <checkout-component :locale="'{{ app()->getLocale() }}'"
+                    <checkout-component :support-email="'{{ config('fancy.email') }}'"
+                                        :locale="'{{ app()->getLocale() }}'"
                                         :action="'{{ route('subscription') }}'"
                                         :product='@json($product)'
                                         :addons='@json($addons)'>

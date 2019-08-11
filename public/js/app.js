@@ -2342,6 +2342,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    supportEmail: {
+      type: String,
+      required: true
+    },
     locale: {
       type: String,
       required: true
@@ -45181,7 +45185,7 @@ var render = function() {
                       "a",
                       {
                         staticClass: "text-body text-decoration-underline",
-                        attrs: { href: "mailto:info@getfancy.co" }
+                        attrs: { href: "mailto:" + _vm.supportEmail }
                       },
                       [_vm._v(_vm._s(_vm.trans("contact support")) + "!")]
                     )

@@ -1,3 +1,3 @@
-# GetFancy
+# Fancy
 
 Aplicación y Página Web

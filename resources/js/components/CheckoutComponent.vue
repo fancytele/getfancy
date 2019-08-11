@@ -376,7 +376,7 @@
                   <span class="font-weight-bold">{{ trans('Need any help?') }}</span>
                   {{ trans("Don't hesitate to") }}
                   <a
-                    href="mailto:info@getfancy.co"
+                    :href="`mailto:${supportEmail}`"
                     class="text-body text-decoration-underline"
                   >{{ trans('contact support') }}!</a>
                 </p>
@@ -502,6 +502,10 @@ import { Card, createToken } from 'vue-stripe-elements-plus';
 
 export default {
   props: {
+    supportEmail: {
+      type: String,
+      required: true
+    },
     locale: {
       type: String,
       required: true
