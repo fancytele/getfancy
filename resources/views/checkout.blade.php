@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>GetFancy</title>
+    <title>Fancy</title>
 
     <script src="https://js.stripe.com/v3/"></script>
 

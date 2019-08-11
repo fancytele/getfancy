@@ -7,6 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+// JSON lang
 window.Vue.prototype.trans = string => _.get(window.i18n, string) || string;
 
 /**

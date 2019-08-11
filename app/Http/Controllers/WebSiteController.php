@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Cache;
 
 class WebSiteController extends Controller
 {
+    /**
+     * Show Website homepage.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function index()
     {
         $products = Product::getWithLocal(['name', 'slug', 'cost', 'is_primary']);

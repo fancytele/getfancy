@@ -169,17 +169,18 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="country">{{ trans('Country') }}</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="country"
+                      <select2
                         name="country"
-                        placeholder="---"
-                        required
-                        v-model="checkout.country"
+                        id="country"
+                        class="form-control"
+                        :options="countries"
                         :class="{'is-invalid': errors.hasOwnProperty('country')}"
                         :readonly="isProcessing"
-                      />
+                        v-model="checkout.country"
+                        required
+                      >
+                        <option disabled value="">---</option>
+                      </select2>
                       <div
                         class="invalid-feedback"
                         v-if="errors.hasOwnProperty('country')"
@@ -254,7 +255,7 @@
                         class="form-control"
                         id="address"
                         name="address"
-                        placeholder="Street address, P.O. box, company name, c/o"
+                        :placeholder="trans('Street address, P.O. box, company name, c/o')"
                         required
                         v-model="checkout.address"
                         :class="{'is-invalid': errors.hasOwnProperty('address')}"
@@ -546,7 +547,8 @@ export default {
       generalError: '',
       errors: {},
       stripeError: '',
-      isProcessing: false,
+      isProcessing: true,
+      countries: [],
       checkout: {
         checkout_product: this.product.slug,
         stripe_token: '',
@@ -566,6 +568,22 @@ export default {
     };
   },
   methods: {
+    setCountryList() {
+      axios
+        .get('https://datahub.io/core/country-list/r/data.json')
+        .then(response => {
+          this.countries = response.data.map(el => {
+            return {
+              id: el.Code,
+              text: el.Name
+            };
+          });
+        })
+        .then(this.toggleProcessing);
+    },
+    toggleProcessing() {
+      this.isProcessing = !this.isProcessing;
+    },
     stripeChange($event) {
       this.complete = $event.complete;
       this.stripeError = $event.error ? $event.error.message : '';
@@ -575,7 +593,7 @@ export default {
         return;
       }
 
-      this.isProcessing = !this.isProcessing;
+      this.toggleProcessing();
       this.generalError = '';
       this.errors = {};
       this.laddaButton.start();
@@ -599,12 +617,13 @@ export default {
           this.errors = data.errors;
 
           this.laddaButton.stop();
-          this.isProcessing = !this.isProcessing;
+          this.toggleProcessing();
         });
     }
   },
   mounted() {
     this.laddaButton = Ladda.create(document.querySelector('#submit-payment'));
+    this.setCountryList();
   },
   computed: {
     summaryDetail() {
