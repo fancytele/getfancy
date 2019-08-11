@@ -2339,6 +2339,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -45151,7 +45154,17 @@ var render = function() {
                     ? _c(
                         "p",
                         { staticClass: "small text-center text-danger" },
-                        [_vm._v(_vm._s(_vm.generalError))]
+                        [
+                          _vm._v(
+                            "\n                " +
+                              _vm._s(_vm.trans(_vm.generalError)) +
+                              "\n                " +
+                              _vm._s(
+                                _vm.trans("Please review your information")
+                              ) +
+                              "\n              "
+                          )
+                        ]
                       )
                     : _vm._e(),
                   _vm._v(" "),

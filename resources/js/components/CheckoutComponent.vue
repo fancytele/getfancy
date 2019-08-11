@@ -361,7 +361,10 @@
                   </transition-group>
                 </div>
 
-                <p class="small text-center text-danger" v-if="generalError">{{ generalError }}</p>
+                <p class="small text-center text-danger" v-if="generalError">
+                  {{ trans(generalError) }}
+                  {{ trans('Please review your information') }}
+                </p>
                 <button
                   id="submit-payment"
                   type="submit"

@@ -73,5 +73,9 @@
     "year": "año",
     "two year": "dos años",
     "More": "Y más",
-    "Change Language": "Cambiar lenguaje"
+    
+    "Change Language": "Cambiar lenguaje",
+    "The given data was invalid.": "Los datos proporcionados no son válidos",
+    "Please review your information": "Por favor revise su información"
+
 }
