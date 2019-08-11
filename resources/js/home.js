@@ -56,6 +56,11 @@ require('bootstrap');
     // Listen Scroll event
     $(window).on('scroll', changeNavbarBg);
 
+    // Change localization listener
+    $('.locale').on('change', function () {
+      $(this).parents('form').first().submit();
+    });
+
     $('#plans .btn-group button').on('click', changePlan);
     $('#plans #plan-buy').click(redirectToCheckout);
 

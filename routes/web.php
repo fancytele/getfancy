@@ -11,9 +11,11 @@
 |
 */
 
-Route::get('/', 'WebSiteController@index')->name('homepage');
-Route::get('/js/lang.js', 'WebSiteController@localization')->name('assets.lang');
-Route::get('checkout/{slug}', 'WebSiteController@checkout')->name('checkout');
+Route::get('/', 'WebSiteController@index')->name('web.homepage');
+Route::get('checkout/{slug}', 'WebSiteController@checkout')->name('web.checkout');
+Route::post('locale', 'WebSiteController@changeLocalization')->name('web.locale');
+Route::get('js/lang.js', 'WebSiteController@getJSONLocalization')->name('web.lang');
+
 
 Auth::routes();
 

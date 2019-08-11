@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Addon;
 use App\Product;
 use App\Enums\AddonType;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\App;
+use Illuminate\Support\Str;
 
 class WebSiteController extends Controller
 {
@@ -43,7 +46,25 @@ class WebSiteController extends Controller
 
         $primary_slug = $products->firstWhere('is_primary')->slug;
 
-        return redirect()->route('checkout', $primary_slug);
+        return redirect()->route('web.checkout', $primary_slug);
+    }
+
+    /**
+     * Set App lang
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function changeLocalization(Request $request)
+    {
+        $locale = $request->locale;
+
+        if (Str::contains(config('fancy.supported_lang'), $locale)) {
+            App::setLocale($locale);
+            session()->put('locale', $locale);
+        }
+
+        return redirect()->back();
     }
 
     /**
@@ -51,7 +72,7 @@ class WebSiteController extends Controller
      *
      * return @string
      */
-    public function localization()
+    public function getJSONLocalization()
     {
         if (config('app.env') === 'local') {
             Cache::forget('lang-js');

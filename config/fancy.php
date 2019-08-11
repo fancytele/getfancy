@@ -23,5 +23,7 @@ return [
     | any other location as required by the application or its packages.
     |
     */
-    'phone' => env('FANCY_PHONE', '')
+    'phone' => env('FANCY_PHONE', ''),
+
+    'supported_lang' => env('FANCY_LANG', 'en')
 ];
