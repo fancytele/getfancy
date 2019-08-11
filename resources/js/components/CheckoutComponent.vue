@@ -10,7 +10,7 @@
                 <h2 class="display-4">
                   {{ trans('Checkout') }}
                   <span class="d-block d-lg-none text-primary">
-                    {{ product.name }}
+                    {{ trans(product.name) }}
                     ${{ product.cost }}
                   </span>
                 </h2>
@@ -179,7 +179,7 @@
                         v-model="checkout.country"
                         required
                       >
-                        <option disabled value="">---</option>
+                        <option disabled value>---</option>
                       </select2>
                       <div
                         class="invalid-feedback"
@@ -235,7 +235,6 @@
                         class="form-control"
                         id="zip_code"
                         name="zip_code"
-                        placeholder="---"
                         required
                         v-model="checkout.zip_code"
                         :class="{'is-invalid': errors.hasOwnProperty('zip_code')}"
@@ -349,7 +348,7 @@
                       v-for="item in summaryDetail"
                       :key="item.name"
                     >
-                      {{ item.name }}
+                      {{ trans(item.name) }}
                       <span>${{ item.cost }}</span>
                     </li>
                     <li
@@ -401,9 +400,12 @@
                 >{{ product.cost }}</span>
                 <span
                   class="d-inline-block h3 mb-0 plan-price-time text-lowercase text-white"
-                >/ {{ product.name }}</span>
+                >/ {{ trans(product.name) }}</span>
               </div>
-              <p class="font-italic mb-0">Automatically renews</p>
+              <p class="font-italic mb-0">
+                <span>{{ trans('Automatically renews every') }}</span>
+                <span>{{ trans(product.renew) }}</span>
+              </p>
             </div>
 
             <ul class="list-unstyled">
@@ -465,7 +467,7 @@
           </div>
 
           <!-- Summary -->
-          <div class="position-absolute pull-bottom pull-left mb-4 px-5 w-100">
+          <div class="summary-checkout position-absolute pull-left px-5 w-100">
             <h3 class="font-italic h2">{{ trans('Order Summary') }}</h3>
 
             <transition-group name="fade" tag="ul" class="list-unstyled text-white-50">
@@ -474,7 +476,7 @@
                 v-for="item in summaryDetail"
                 :key="item.name"
               >
-                {{ item.name }}
+                {{ trans(item.name) }}
                 <span>${{ item.cost }}</span>
               </li>
               <li

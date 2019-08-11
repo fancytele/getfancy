@@ -16,7 +16,7 @@ class WebSiteController extends Controller
      */
     public function index()
     {
-        $products = Product::getWithLocal(['name', 'slug', 'cost', 'is_primary']);
+        $products = Product::get(['name', 'slug', 'cost', 'is_primary']);
 
         return view('welcome', compact('products'));
     }
@@ -29,7 +29,7 @@ class WebSiteController extends Controller
      */
     public function checkout(string $slug)
     {
-        $products = Product::getWithLocal(['name', 'slug', 'cost', 'is_primary']);
+        $products = Product::get(['name', 'slug', 'cost', 'is_primary']);
         $products_slugs = $products->pluck('slug')->toArray();
 
         if (in_array($slug, $products_slugs)) {

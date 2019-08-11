@@ -2337,6 +2337,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -44316,7 +44318,7 @@ var render = function() {
                       [
                         _vm._v(
                           "\n                  " +
-                            _vm._s(_vm.product.name) +
+                            _vm._s(_vm.trans(_vm.product.name)) +
                             "\n                  $" +
                             _vm._s(_vm.product.cost) +
                             "\n                "
@@ -44842,7 +44844,6 @@ var render = function() {
                             type: "text",
                             id: "zip_code",
                             name: "zip_code",
-                            placeholder: "---",
                             required: "",
                             readonly: _vm.isProcessing
                           },
@@ -45110,7 +45111,7 @@ var render = function() {
                               [
                                 _vm._v(
                                   "\n                    " +
-                                    _vm._s(item.name) +
+                                    _vm._s(_vm.trans(item.name)) +
                                     "\n                    "
                                 ),
                                 _c("span", [_vm._v("$" + _vm._s(item.cost))])
@@ -45225,12 +45226,16 @@ var render = function() {
                       staticClass:
                         "d-inline-block h3 mb-0 plan-price-time text-lowercase text-white"
                     },
-                    [_vm._v("/ " + _vm._s(_vm.product.name))]
+                    [_vm._v("/ " + _vm._s(_vm.trans(_vm.product.name)))]
                   )
                 ]),
                 _vm._v(" "),
                 _c("p", { staticClass: "font-italic mb-0" }, [
-                  _vm._v("Automatically renews")
+                  _c("span", [
+                    _vm._v(_vm._s(_vm.trans("Automatically renews every")))
+                  ]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v(_vm._s(_vm.trans(_vm.product.renew)))])
                 ])
               ]),
               _vm._v(" "),
@@ -45304,7 +45309,7 @@ var render = function() {
               "div",
               {
                 staticClass:
-                  "position-absolute pull-bottom pull-left mb-4 px-5 w-100"
+                  "summary-checkout position-absolute pull-left px-5 w-100"
               },
               [
                 _c("h3", { staticClass: "font-italic h2" }, [
@@ -45329,7 +45334,7 @@ var render = function() {
                         [
                           _vm._v(
                             "\n              " +
-                              _vm._s(item.name) +
+                              _vm._s(_vm.trans(item.name)) +
                               "\n              "
                           ),
                           _c("span", [_vm._v("$" + _vm._s(item.cost))])
