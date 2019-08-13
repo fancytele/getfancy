@@ -39,7 +39,7 @@ class WebSiteController extends Controller
             $product = $products->firstWhere('slug', $slug);
             $addons = Addon::whereType(AddonType::Subscription)
                 ->orderBy('code')
-                ->getWithLocal(['name', 'code', 'description', 'cost']);
+                ->get(['name', 'code', 'description', 'cost']);
 
             return view('checkout', compact('product', 'addons'));
         }
@@ -79,7 +79,7 @@ class WebSiteController extends Controller
         }
 
         $strings = Cache::rememberForever('lang-js', function () {
-            $lang = config('app.locale');
+            $lang = App::getLocale();
             $files = glob(resource_path('lang/' . $lang . '.json'));
 
             if ($files) {

@@ -293,7 +293,7 @@
                         v-model="checkout.addons"
                       />
                       <label class="custom-control-label" :for="item.code">
-                        {{ item.name }}
+                        {{ trans(item.name) }}
                         <small class="d-block text-black-50">${{ item.cost }}</small>
                       </label>
                     </div>
