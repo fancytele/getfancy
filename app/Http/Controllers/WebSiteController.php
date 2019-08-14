@@ -61,6 +61,7 @@ class WebSiteController extends Controller
 
         if (Str::contains(config('fancy.supported_lang'), $locale)) {
             App::setLocale($locale);
+            Cache::forget('lang-js');
             session()->put('locale', $locale);
         }
 
@@ -74,10 +75,6 @@ class WebSiteController extends Controller
      */
     public function getJSONLocalization()
     {
-        if (config('app.env') === 'local') {
-            Cache::forget('lang-js');
-        }
-
         $strings = Cache::rememberForever('lang-js', function () {
             $lang = App::getLocale();
             $files = glob(resource_path('lang/' . $lang . '.json'));
