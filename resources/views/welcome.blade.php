@@ -35,18 +35,17 @@
                         <li class="mb-3">
                             <i
                                class="align-bottom h1 la la-check-circle mb-0 mr-2 text-info"></i>
-                            Get a Toll Free, Local Phone Number.
+                            @lang('Get a Toll Free, Local Phone Number.')
                         </li>
                         <li class="mb-3">
                             <i
                                class="align-bottom h1 la la-check-circle mb-0 mr-2 text-info"></i>
-                            Create Custom Greetings, Unlimited Extensions.
+                            @lang('Create Custom Greetings, Unlimited Extensions.')
                         </li>
                         <li>
                             <i
                                class="align-bottom h1 la la-check-circle mb-0 mr-2 text-info"></i>
-                            Get Voicemails by email, Manage Your Phone
-                            System Online.
+                            @lang('Get Voicemails by email, Manage Your Phone System Online.')
                         </li>
                     </ul>
                 </div>

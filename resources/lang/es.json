@@ -3,6 +3,9 @@
     "Testimonial": "Testimonios",
     "Virtual Phone System": "!No pierdas llamadas de clientes o potenciales negocios!",
     "Hero Message": "Haz que tu negocio suene profesional!",
+    "Get a Toll Free, Local Phone Number.": "Obtén un número de teléfono local gratuito.",
+    "Create Custom Greetings, Unlimited Extensions.": "Crea saludos personalizados y extensiones ilimitadas.",
+    "Get Voicemails by email, Manage Your Phone System Online.": "Obtén mensajes de voz por correo electrónico y administra tu sistema telefónico en línea.",
     "Features": "Características",
     "Feature Message": "Facilita la comunicación de tu negocio con un servicio telefónico conveniente. Sin hardware complejo para instalar o mantener. Fancy es fácil de usar y administrar, y no requiere experiencia técnica.",
     "Work Anywhere": "Trabajar en cualquier lugar",
@@ -42,7 +45,6 @@
     "E-mail": "Correo electrónico",
     "Message": "Mensaje",
     "Submit": "Enviar",
-
     "Checkout": "Verificar Pago",
     "Create Account": "Crear Cuenta",
     "First Name": "Nombres",
@@ -73,9 +75,7 @@
     "year": "año",
     "two year": "dos años",
     "More": "Y más",
-    
     "Change Language": "Cambiar lenguaje",
     "The given data was invalid.": "Los datos proporcionados no son válidos",
     "Please review your information": "Por favor revise su información"
-
 }
