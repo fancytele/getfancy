@@ -10,12 +10,13 @@
 
     <title>{{ config('app.name') }}</title>
 
-    <script src="https://js.stripe.com/v3/"></script>
 
     <!-- Scripts -->
-    <script src="/js/lang.js"></script>
-    <script src="{{ asset('js/home.js') }}" defer></script>
+    <script src="/js/lang.js" defer></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/home.js') }}" defer></script>
+
+    <script src="https://js.stripe.com/v3/"></script>
 
     <link rel="stylesheet"
           href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"

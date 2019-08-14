@@ -182,7 +182,7 @@
                                 @foreach ($products as $product)
                                 <button type="button"
                                         class="btn btn-outline-light{{ $product->is_primary ? ' active' : '' }}"
-                                        data-type="{{ $product->slug }}">{{ $product->name }}</button>
+                                        data-type="{{ $product->slug }}">@lang($product->name)</button>
                                 @endforeach
                             </div>
 
