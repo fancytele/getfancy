@@ -12443,6 +12443,10 @@ a.text-white:focus {
   content: "";
 }
 
+.fill-blue-solid {
+  fill: #1b5b9a;
+}
+
 .pull-left {
   left: 0;
 }
@@ -12567,6 +12571,10 @@ a.text-white:focus {
 .footer .form-control:-moz-placeholder,
 .footer .StripeElement:-moz-placeholder {
   color: #ddd !important;
+}
+
+.fancy-svg {
+  height: 5rem;
 }
 
 .feature-list {
