@@ -18,6 +18,14 @@
       visibility: visible;
       z-index: auto;
     }
+
+    .plan-save {
+      bottom: 0.625rem;
+      font-size: .8rem;
+      letter-spacing: 0.1px;
+      right: 0;
+      transform: translateX(110%);
+    }
   }
 
   .btn-group button {

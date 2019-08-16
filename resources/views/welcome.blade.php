@@ -242,6 +242,12 @@
                                           class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3">$</span>
                                     <span
                                           class="plan-amount">{{ $product->cost }}</span>
+                                    @if($product->discount)
+                                    <small
+                                           class="badge badge-pill badge-success font-weight-bold plan-save position-absolute px-3 py-2">
+                                        @lang('Save') {{ $product->discount }}
+                                    </small>
+                                    @endif
                                 </span>
                                 @endforeach
                             </h2>

@@ -12662,6 +12662,15 @@ a.text-white:focus {
   z-index: auto;
 }
 
+#plans .plan-wrapper .plan-save {
+  bottom: 0.625rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.1px;
+  right: 0;
+  -webkit-transform: translateX(110%);
+          transform: translateX(110%);
+}
+
 #plans .btn-group button {
   box-shadow: none;
   color: inherit;

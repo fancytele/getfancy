@@ -19,7 +19,7 @@ class WebSiteController extends Controller
      */
     public function index()
     {
-        $products = Product::get(['name', 'slug', 'cost', 'is_primary']);
+        $products = Product::get(['name', 'slug', 'cost', 'discount', 'is_primary']);
 
         return view('welcome', compact('products'));
     }

@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\ProductRenews;
+use Illuminate\Support\Facades\Log;
 
 class Product extends Model
 {
@@ -31,5 +32,16 @@ class Product extends Model
     public function getRenewAttribute()
     {
         return $this->attributes['renew'] = ProductRenews::getValue($this->name);
+    }
+
+    /**
+     * Get Discount with percentage
+     *
+     * @param  string  $value
+     * @return void
+     */
+    public function getDiscountAttribute($value)
+    {
+        return is_null($value) ? $value : $value . '%';
     }
 }
