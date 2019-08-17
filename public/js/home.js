@@ -17872,23 +17872,31 @@ __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap
     });
     $("#fancy-menu .nav-link").on('click', animateScrollSpy); // Listen Scroll event
 
-    $(window).on('scroll', changeNavbarBg); // Change localization listener
-
-    $('.locale').on('change', function () {
-      $(this).parents('form').first().submit();
-    });
+    $(window).on('scroll', changeNavbarBg);
     $('#plans .btn-group button').on('click', changePlan);
     $('#plans #plan-buy').click(redirectToCheckout); // Change Navbar color when scrolling
 
     changeNavbarBg(); // Init AOS Animation
 
-    AOS.init();
-    $(window).on('load resize orientationchange', function () {
+    if (typeof AOS !== 'undefined') {
+      AOS.init();
+    }
+
+    $(window).on('load', function () {
       // Normalize Testimonial Slides
       normalizeSlideHeights('#testimonial .carousel'); // Fix browser soft reload page
 
-      AOS.refresh();
-    });
+      if (typeof AOS !== 'undefined') {
+        AOS.refresh();
+      } // Change localization listener
+
+
+      $('.locale').on('change', function () {
+        $(this).parents('form').first().submit();
+      });
+    }); // Normalize Testimonial Slides on resize
+
+    $(window).on('resize orientationchange', normalizeSlideHeights.bind('#testimonial .carousel'));
   });
 })();
 

@@ -79,11 +79,6 @@ require('bootstrap');
     // Listen Scroll event
     $(window).on('scroll', changeNavbarBg);
 
-    // Change localization listener
-    $('.locale').on('change', function () {
-      $(this).parents('form').first().submit();
-    });
-
     $('#plans .btn-group button').on('click', changePlan);
     $('#plans #plan-buy').click(redirectToCheckout);
 
@@ -91,14 +86,26 @@ require('bootstrap');
     changeNavbarBg();
 
     // Init AOS Animation
-    AOS.init();
+    if (typeof AOS !== 'undefined') {
+      AOS.init();
+    }
 
-    $(window).on('load resize orientationchange', function () {
+    $(window).on('load', function () {
       // Normalize Testimonial Slides
       normalizeSlideHeights('#testimonial .carousel');
 
       // Fix browser soft reload page
-      AOS.refresh();
+      if (typeof AOS !== 'undefined') {
+        AOS.refresh();
+      }
+      
+      // Change localization listener
+      $('.locale').on('change', function () {
+        $(this).parents('form').first().submit();
+      });
     });
+
+    // Normalize Testimonial Slides on resize
+    $(window).on('resize orientationchange', normalizeSlideHeights.bind('#testimonial .carousel'));
   });
 })();
