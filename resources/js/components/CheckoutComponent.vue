@@ -4,7 +4,7 @@
       <div class="row">
         <!-- Form -->
         <div class="col-lg-8 pt-3">
-          <form :action="action" method="POST" id="payment-form" @submit.prevent="submit">
+          <form :action="action" id="payment-form" method="POST" @submit.prevent="submit">
             <div class="card-body">
               <div>
                 <h2 class="display-4">
@@ -344,9 +344,9 @@
 
                   <transition-group name="fade" tag="ul" class="list-unstyled text-black-50">
                     <li
-                      class="align-items-center d-flex justify-content-between py-2"
                       v-for="item in summaryDetail"
                       :key="item.name"
+                      class="align-items-center d-flex justify-content-between py-2"
                     >
                       {{ trans(item.name) }}
                       <span>${{ item.cost }}</span>
