@@ -57,6 +57,10 @@
   left: 0;
 }
 
+.pull-right-auto {
+  right: auto;
+}
+
 .pull-bottom {
   bottom: 0;
 }
@@ -71,4 +75,10 @@
 
 .w-60 {
   width: 60%;
+}
+
+.w-lg-50 {
+  @include media-breakpoint-up(sm) {
+    width: 50%;
+  }
 }

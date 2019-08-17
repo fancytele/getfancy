@@ -25,6 +25,7 @@
     @include('partials.header', ['show_nav' => true])
 
     <main class="overflow-hidden">
+        <!-- Hero Section -->
         <section id="home" class="hero text-white d-flex align-items-center"
                  style="background-image: url(img/hero_blue.jpg)">
             <div class="container">
@@ -53,7 +54,9 @@
                 </div>
             </div>
         </section>
+        <!-- / End Hero Section -->
 
+        <!-- Features Section -->
         <section id="features" class="bg-white-ghost position-relative">
             <div class="background-image background-position-top d-lg-block d-none h-100 position-absolute position-bottom w-50-gutter"
                  style="background-image: url(img/feature-business-man.jpg)">
@@ -98,7 +101,9 @@
                 </div>
             </div>
         </section>
+        <!-- / End Features Section -->
 
+        <!-- How It Works Section -->
         <section id="how-it-works" class="fancy-section text-center">
             <div class="container">
                 <div class="mb-5 work-heading" data-aos="zoom-in">
@@ -213,18 +218,65 @@
                 </div>
             </div>
         </section>
+        <!-- / End How It Works Section -->
 
+        <!-- Testimonials Section -->
         <section id="testimonial" class="fancy-section text-white">
             <div class="container py-5">
-                <blockquote class="blockquote mb-5 mt-4">
-                    <p>@lang('Testimony Message')</p>
-                    <footer class="blockquote-footer">
-                        @lang('Testimony Footer')
-                    </footer>
-                </blockquote>
+                <div class="m-auto text-center w-lg-50">
+                    <div id="carouselExampleFade" class="carousel slide"
+                         data-interval="false">
+                        <ol class="carousel-indicators m-0">
+                            <li data-target="#carouselExampleFade"
+                                data-slide-to="0" class="active"></li>
+                            <li data-target="#carouselExampleFade"
+                                data-slide-to="1"></li>
+                            <li data-target="#carouselExampleFade"
+                                data-slide-to="2"></li>
+                            <li data-target="#carouselExampleFade"
+                                data-slide-to="3"></li>
+                        </ol>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <blockquote class="blockquote mb-5 mt-4">
+                                    <p>@lang('Testimony1')</p>
+                                    <footer class="blockquote-footer">
+                                        @lang('Testimony Footer')
+                                    </footer>
+                                </blockquote>
+                            </div>
+                            <div class="carousel-item">
+                                <blockquote class="blockquote mb-5 mt-4">
+                                    <p>@lang('Testimony2')</p>
+                                    <footer class="blockquote-footer">
+                                        @lang('Testimony Footer')
+                                    </footer>
+                                </blockquote>
+                            </div>
+                            <div class="carousel-item">
+                                <blockquote class="blockquote mb-5 mt-4">
+                                    <p>@lang('Testimony3')</p>
+                                    <footer class="blockquote-footer">
+                                        @lang('Testimony Footer')
+                                    </footer>
+                                </blockquote>
+                            </div>
+                            <div class="carousel-item">
+                                <blockquote class="blockquote mb-5 mt-4">
+                                    <p>@lang('Testimony4')</p>
+                                    <footer class="blockquote-footer">
+                                        @lang('Testimony Footer')
+                                    </footer>
+                                </blockquote>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
+        <!-- / End Testimonials Section -->
 
+        <!-- Plans Section -->
         <section id="plans" class="fancy-section pb-6 text-center">
             <h3 class="display-4 mb-5 text-primary" data-aos="zoom-in">
                 @lang('Our Plans')
@@ -312,6 +364,7 @@
                 </div>
             </div>
         </section>
+        <!-- / End Plans Section -->
     </main>
 
     <footer class="footer overflow-hidden text-white">

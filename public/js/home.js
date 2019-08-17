@@ -17845,6 +17845,25 @@ __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap
     window.location.href = "/checkout/".concat(planType);
   };
 
+  var normalizeSlideHeights = function normalizeSlideHeights(element) {
+    if (!element) {
+      return false;
+    }
+
+    $(element).each(function () {
+      var items = $('.carousel-item', this);
+      console.table(items); // reset the height
+
+      items.css('min-height', 0);
+      var itemsHeight = items.map(function () {
+        return $(this).outerHeight();
+      }).get();
+      var maxHeight = Math.max.apply(null, itemsHeight); // set the height
+
+      items.css('height', maxHeight + 'px');
+    });
+  };
+
   $(document).ready(function () {
     // Set ScrollSpy
     $('body').scrollspy({
@@ -17859,12 +17878,17 @@ __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap
       $(this).parents('form').first().submit();
     });
     $('#plans .btn-group button').on('click', changePlan);
-    $('#plans #plan-buy').click(redirectToCheckout);
-    changeNavbarBg();
+    $('#plans #plan-buy').click(redirectToCheckout); // Change Navbar color when scrolling
 
-    if (typeof AOS !== 'undefined') {
-      AOS.init();
-    }
+    changeNavbarBg(); // Init AOS Animation
+
+    AOS.init();
+    $(window).on('load resize orientationchange', function () {
+      // Normalize Testimonial Slides
+      normalizeSlideHeights('#testimonial .carousel'); // Fix browser soft reload page
+
+      AOS.refresh();
+    });
   });
 })();
 

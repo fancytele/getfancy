@@ -44302,7 +44302,7 @@ var render = function() {
           _c(
             "form",
             {
-              attrs: { action: _vm.action, method: "POST", id: "payment-form" },
+              attrs: { action: _vm.action, id: "payment-form", method: "POST" },
               on: {
                 submit: function($event) {
                   $event.preventDefault()

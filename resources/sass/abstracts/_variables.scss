@@ -6,9 +6,9 @@ $blue: #0193fe;
 $black: #000;
 $gray-200: #d2ddec;
 
-$primary:       #704895;
-$secondary:     #F3a3b4;
-$info:          #bbdff7;
+$primary: #704895;
+$secondary: #f3a3b4;
+$info: #bbdff7;
 
 // Custom color system
 $blue-solid: #1b5b9a;
@@ -26,3 +26,6 @@ $navbar-light-color: rgba($black, 0.9);
 $navbar-light-hover-color: rgba($black, 0.9);
 
 $font-size-base: 1rem !default; // 16px
+
+// Carousel
+$carousel-transition-duration: 0.8s !default;
