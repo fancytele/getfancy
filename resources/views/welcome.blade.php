@@ -89,8 +89,9 @@
                             </path>
                         </svg>
                         @lang('Thank you'),
-                        <span class="d-block">@lang('an agent will call
-                            you')!!!</span>
+                        <span class="d-block">
+                            @lang('an agent will call you')!!!
+                        </span>
                     </h3>
                 </div>
             </form>
@@ -227,8 +228,7 @@
                            class="la la-microphone la-5x px-5 bg-lighter text-blue-solid"></i>
                         <div class="mt-4">
                             <h5 class="font-weight-bold">
-                                @lang('Record greetings or use recording
-                                service')
+                                @lang('Record greetings or use recording service')
                             </h5>
                             <p>@lang('Record greetings Message')</p>
                         </div>
