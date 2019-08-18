@@ -1,0 +1,114 @@
+.call-you-box {
+  bottom: 41.6px;
+  right: 41.6px;
+  transition: opacity 0.2s ease-in-out, visibility 0.2s ease-in-out;
+  z-index: 1;
+
+  &.active {
+    .call-you-content {
+      animation: fadeInUp 0.3s cubic-bezier(0.25, 0.1, 0.25, 1);
+      display: block;
+      visibility: visible;
+    }
+
+    .call-you-button .la-phone {
+      display: none;
+    }
+
+    .call-you-button .la-times {
+      display: block;
+    }
+  }
+
+  &.success .call-you-message {
+    transform: translateY(0);
+  }
+
+  .call-you-content {
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px,
+      rgba(0, 0, 0, 0.2) 0px 11px 15px -7px;
+    display: none;
+    margin-bottom: 20px;
+    visibility: hidden;
+    width: 300px;
+  }
+
+  .call-you-title {
+    color: white;
+    margin: 0;
+    padding: 20px 25px;
+  }
+
+  .call-you-button {
+    box-shadow: rgba(0, 0, 0, 0.14) 0px 24px 38px 3px, rgba(0, 0, 0, 0.12) 0px 9px 46px 8px,
+      rgba(0, 0, 0, 0.2) 0px 11px 15px -7px;
+    padding: 11px 13px;
+    float: right;
+
+    &:hover {
+      &:before,
+      &:after {
+        animation: fadeInTwo 2s infinite both;
+        border-radius: 50%;
+        border-right: 2px solid #ffffff;
+        content: "";
+        height: 20px;
+        left: 40%;
+        opacity: 0;
+        position: absolute;
+        top: 20%;
+        transform: rotate(-40deg);
+        width: 20px;
+      }
+
+      &:after {
+        animation: fadeInOne 2s infinite both;
+        width: 15px;
+        height: 15px;
+        left: 40%;
+        top: 28%;
+      }
+
+      .la-phone {
+        animation: shake 2s infinite cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+      }
+    }
+
+    .la {
+      font-size: 2rem;
+    }
+
+    .la-phone {
+      bottom: -2px;
+      left: -2px;
+      position: relative;
+    }
+
+    .la-times {
+      display: none;
+      padding-top: 3.5px;
+    }
+  }
+
+  .call-you-message {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    transform: translateY(100%);
+    transition: transform 0.5s;
+    z-index: 1;
+
+    .call-you-message-text {
+      font-weight: lighter;
+      padding-left: 50px;
+      width: 80%;
+    }
+
+    .call-you-message-icon {
+      left: 0;
+      height: 45px;
+      margin-top: -8px;
+    }
+  }
+}

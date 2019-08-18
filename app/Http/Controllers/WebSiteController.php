@@ -5,9 +5,11 @@ namespace App\Http\Controllers;
 use App\Addon;
 use App\Product;
 use App\Enums\AddonType;
+use App\Mail\HaveUsCallYouMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class WebSiteController extends Controller
@@ -47,6 +49,22 @@ class WebSiteController extends Controller
         $primary_slug = $products->firstWhere('is_primary')->slug;
 
         return redirect()->route('web.checkout', $primary_slug);
+    }
+
+    /**
+     * Send Email to Support about new User who wants to be call
+     *
+     * @param Request $request
+     * @return Illuminate\Http\JsonResponse
+     */
+    public function callYou(Request $request)
+    {
+        $name = $request->name;
+        $phone = $request->phone;
+
+        Mail::send(new HaveUsCallYouMail($name, $phone));
+
+        return response()->json(['message' => 'success']);
     }
 
     /**

@@ -1,28 +1,8 @@
-window.Popper = require('popper.js').default;
-window.$ = window.jQuery = require('jquery');
-
-require('bootstrap');
+import './bootstrap';
+import './helpers';
+import axios from 'axios';
 
 (function () {
-  const animateScrollSpy = function (event) {
-    if (this.hash !== "" && this.hash !== window.location.hash) {
-      event.preventDefault();
-      $('html, body').animate({ scrollTop: $(this.hash).offset().top - 83 }, 800);
-    }
-  }
-
-  const changeNavbarBg = function () {
-    const scroll = $(window).scrollTop();
-    const navbarDarkClass = 'border-0 bg-transparent navbar-dark';
-    const navbarLightClasses = 'bg-white navbar-light shadow';
-
-    if (scroll >= 100) {
-      $('#fancy-navbar').addClass(navbarLightClasses).removeClass(navbarDarkClass);
-    } else {
-      $('#fancy-navbar').addClass(navbarDarkClass).removeClass(navbarLightClasses);
-    }
-  }
-
   const changePlan = function (e) {
     const activeClass = 'active';
 
@@ -55,7 +35,6 @@ require('bootstrap');
 
     $(element).each(function () {
       var items = $('.carousel-item', this);
-      console.table(items);
 
       // reset the height
       items.css('min-height', 0);
@@ -72,18 +51,45 @@ require('bootstrap');
   }
 
   $(document).ready(() => {
-    // Set ScrollSpy
-    $('body').scrollspy({ target: "#fancy-navbar", offset: 95 });
-    $("#fancy-menu .nav-link").on('click', animateScrollSpy);
-
-    // Listen Scroll event
-    $(window).on('scroll', changeNavbarBg);
-
     $('#plans .btn-group button').on('click', changePlan);
     $('#plans #plan-buy').click(redirectToCheckout);
 
-    // Change Navbar color when scrolling
-    changeNavbarBg();
+    $('#have-us-call-you .call-you-button').click(function () {
+      $('#have-us-call-you').toggleClass('active').find('input:first').focus();
+
+      if (!$('#have-us-call-you').hasClass('active')) {
+        Ladda.stopAll();
+        $('#have-us-call-you input[type="text"]').val('').removeAttr("disabled");
+        $('#have-us-call-you').removeClass('success');
+      }
+    });
+
+    $('#have-us-call-you form').submit(function (e) {
+      e.preventDefault();
+
+      let data = $(this).serializeArrayToJSON();
+
+      // Disable after getting data (or it will be empty)
+      $('#have-us-call-you .call-you-button').attr("disabled", true);
+      $('#have-us-call-you input[type="text"]').attr("disabled", true);
+      $('#have-us-call-you .call-you-error').addClass('d-none');
+
+      axios.post('/call-you', data)
+        .then(function () {
+          $('#have-us-call-you').addClass('success');
+        })
+        .catch(function () {
+          if (typeof Ladda !== 'undefined') {
+            Ladda.stopAll();
+          }
+
+          $('#have-us-call-you .call-you-error').removeClass('d-none');
+          $('#have-us-call-you input[type="text"]').removeAttr("disabled");
+        })
+        .then(function () {
+          $('#have-us-call-you .call-you-button').removeAttr("disabled");
+        });
+    })
 
     // Init AOS Animation
     if (typeof AOS !== 'undefined') {
@@ -98,11 +104,11 @@ require('bootstrap');
       if (typeof AOS !== 'undefined') {
         AOS.refresh();
       }
-      
-      // Change localization listener
-      $('.locale').on('change', function () {
-        $(this).parents('form').first().submit();
-      });
+
+      // Automatically trigger the loading animation on click
+      if (typeof Ladda !== 'undefined') {
+        Ladda.bind('button[type=submit]');
+      }
     });
 
     // Normalize Testimonial Slides on resize
