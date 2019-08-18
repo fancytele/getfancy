@@ -18,8 +18,10 @@
                 <select name="lang" id="locale-sm"
                         class="form-control form-control-sm locale"
                         class="form-control form-control-sm">
-                    <option value="en">EN</option>
-                    <option value="es" selected="" disabled="">ES</option>
+                    <option value="en" @if (App::isLocale('en')) selected
+                            disabled @endif>EN</option>
+                    <option value="es" @if (App::isLocale('es')) selected
+                            disabled @endif>ES</option>
                 </select>
             </form>
             <button class="navbar-toggler" type="button" data-toggle="collapse"

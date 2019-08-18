@@ -51,7 +51,7 @@
                 <div class="call-you-error d-none small text-danger">
                     @lang('An error has ocurred, please try again')
                 </div>
-                
+
                 <button type="submit"
                         class="btn btn-lg btn-outline-primary ladda-button ml-auto mt-2"
                         data-style="zoom-out" data-spinner-color="#704895">
@@ -89,7 +89,8 @@
                             </path>
                         </svg>
                         @lang('Thank you'),
-                        <span class="d-block">@lang('an agent will call you')!!!</span>
+                        <span class="d-block">@lang('an agent will call
+                            you')!!!</span>
                     </h3>
                 </div>
             </form>
@@ -436,7 +437,9 @@
                         </div>
 
                         <a id="plan-buy" href="#"
-                           class="btn btn-primary px-7">@lang('Buy now')</a>
+                           class="btn btn-primary px-7 rounded-pill">
+                            @lang('Buy now')
+                        </a>
                     </div>
                 </div>
             </div>
