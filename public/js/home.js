@@ -37524,13 +37524,156 @@ if (token) {
 
 /***/ }),
 
+/***/ "./resources/js/haveUsCallYou.js":
+/*!***************************************!*\
+  !*** ./resources/js/haveUsCallYou.js ***!
+  \***************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+
+
+var HaveUsCallYou =
+/*#__PURE__*/
+function () {
+  function HaveUsCallYou(element, buttonCall, error) {
+    _classCallCheck(this, HaveUsCallYou);
+
+    this._element = document.querySelector(element);
+    this._buttonCall = this._element.querySelector(buttonCall);
+    this._error = this._element.querySelector(error);
+    this._form = this._element.querySelector('form');
+    this._inputs = this._element.querySelectorAll('input[type="text"]');
+    this._activeClass = 'active';
+    this._succesClass = 'success';
+
+    this._buttonCall.addEventListener('click', this.fireButtonCall.bind(this));
+  }
+
+  _createClass(HaveUsCallYou, [{
+    key: "fireButtonCall",
+    value: function fireButtonCall() {
+      this.toggleElement();
+      this.clearInputs();
+      this.enableInputs();
+      this.removeSuccess();
+
+      if (this._element.classList.contains(this._activeClass)) {
+        if (typeof Ladda !== 'undefined') {
+          Ladda.stopAll();
+        }
+
+        this.focusFirstInput();
+      }
+    }
+  }, {
+    key: "enableButtonCall",
+    value: function enableButtonCall() {
+      this._buttonCall.removeAttribute('disabled');
+    }
+  }, {
+    key: "disableButtonCall",
+    value: function disableButtonCall() {
+      this._buttonCall.setAttribute('disabled', 'disabled');
+    }
+  }, {
+    key: "submit",
+    value: function submit(callback) {
+      this._form.addEventListener('submit', this.fireForm.bind(this, callback));
+    }
+  }, {
+    key: "fireForm",
+    value: function fireForm(callback, e) {
+      e.preventDefault();
+      var data = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["serializeArrayToJSON"])(this._form);
+      this.disableInputs();
+      this.disableButtonCall();
+
+      this._error.classList.add('d-none');
+
+      callback(data);
+    }
+  }, {
+    key: "toggleElement",
+    value: function toggleElement() {
+      this._element.classList.toggle(this._activeClass);
+    }
+  }, {
+    key: "focusFirstInput",
+    value: function focusFirstInput() {
+      this._element.querySelector('input').focus();
+    }
+  }, {
+    key: "clearInputs",
+    value: function clearInputs() {
+      this._inputs.forEach(function (el) {
+        return el.value = '';
+      });
+    }
+  }, {
+    key: "enableInputs",
+    value: function enableInputs() {
+      this._inputs.forEach(function (el) {
+        return el.removeAttribute('disabled');
+      });
+    }
+  }, {
+    key: "disableInputs",
+    value: function disableInputs() {
+      this._inputs.forEach(function (el) {
+        return el.setAttribute('disabled', 'disabled');
+      });
+    }
+  }, {
+    key: "makeSuccess",
+    value: function makeSuccess() {
+      this._element.classList.add(this._succesClass);
+    }
+  }, {
+    key: "removeSuccess",
+    value: function removeSuccess() {
+      this._element.classList.remove(this._succesClass);
+    }
+  }, {
+    key: "showMessageError",
+    value: function showMessageError() {
+      if (typeof Ladda !== 'undefined') {
+        Ladda.stopAll();
+      }
+
+      this._error.classList.remove('d-none');
+
+      this.enableInputs();
+    }
+  }]);
+
+  return HaveUsCallYou;
+}();
+
+/* harmony default export */ __webpack_exports__["default"] = (HaveUsCallYou);
+
+/***/ }),
+
 /***/ "./resources/js/helpers.js":
 /*!*********************************!*\
   !*** ./resources/js/helpers.js ***!
   \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: serializeArray, serializeArrayToJSON */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "serializeArray", function() { return serializeArray; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "serializeArrayToJSON", function() { return serializeArrayToJSON; });
 // Define Jquery Helper to serialize Form Data into JSON
 jQuery.fn.extend({
   serializeArrayToJSON: function serializeArrayToJSON() {
@@ -37541,6 +37684,51 @@ jQuery.fn.extend({
     }, {});
   }
 });
+/*!
+ * Serialize all form data into an array
+ * (c) 2018 Chris Ferdinandi, MIT License, https://gomakethings.com
+ * @param  {Node}   form The form to serialize
+ * @return {String}      The serialized form data
+ */
+
+var serializeArray = function serializeArray(form) {
+  // Setup our serialized data
+  var serialized = []; // Loop through each field in the form
+
+  for (var i = 0; i < form.elements.length; i++) {
+    var field = form.elements[i]; // Don't serialize fields without a name, submits, buttons, file and reset inputs, and disabled fields
+
+    if (!field.name || field.disabled || field.type === 'file' || field.type === 'reset' || field.type === 'submit' || field.type === 'button') continue; // If a multi-select, get all selections
+
+    if (field.type === 'select-multiple') {
+      for (var n = 0; n < field.options.length; n++) {
+        if (!field.options[n].selected) continue;
+        serialized.push({
+          name: field.name,
+          value: field.options[n].value
+        });
+      }
+    } // Convert field data to a query string
+    else if (field.type !== 'checkbox' && field.type !== 'radio' || field.checked) {
+        serialized.push({
+          name: field.name,
+          value: field.value
+        });
+      }
+  }
+
+  return serialized;
+};
+
+function serializeArrayToJSON(form) {
+  var data = serializeArray(form);
+  return data.reduce(function (obj, item) {
+    obj[item.name] = item.value;
+    return obj;
+  }, {});
+}
+
+
 
 /***/ }),
 
@@ -37555,10 +37743,9 @@ jQuery.fn.extend({
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_bootstrap__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
-/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_helpers__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _haveUsCallYou__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./haveUsCallYou */ "./resources/js/haveUsCallYou.js");
 
 
 
@@ -37605,34 +37792,16 @@ __webpack_require__.r(__webpack_exports__);
 
   $(document).ready(function () {
     $('#plans .btn-group button').on('click', changePlan);
-    $('#plans #plan-buy').click(redirectToCheckout);
-    $('#have-us-call-you .call-you-button').click(function () {
-      $('#have-us-call-you').toggleClass('active').find('input:first').focus();
+    $('#plans #plan-buy').click(redirectToCheckout); // Have Us Call You
 
-      if (!$('#have-us-call-you').hasClass('active')) {
-        Ladda.stopAll();
-        $('#have-us-call-you input[type="text"]').val('').removeAttr("disabled");
-        $('#have-us-call-you').removeClass('success');
-      }
-    });
-    $('#have-us-call-you form').submit(function (e) {
-      e.preventDefault();
-      var data = $(this).serializeArrayToJSON(); // Disable after getting data (or it will be empty)
-
-      $('#have-us-call-you .call-you-button').attr("disabled", true);
-      $('#have-us-call-you input[type="text"]').attr("disabled", true);
-      $('#have-us-call-you .call-you-error').addClass('d-none');
-      axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/call-you', data).then(function () {
-        $('#have-us-call-you').addClass('success');
+    var haveUsCallYou = new _haveUsCallYou__WEBPACK_IMPORTED_MODULE_2__["default"]('#have-us-call-you', '.call-you-button', '.call-you-error');
+    haveUsCallYou.submit(function (data) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/call-you', data).then(function () {
+        return haveUsCallYou.makeSuccess();
       })["catch"](function () {
-        if (typeof Ladda !== 'undefined') {
-          Ladda.stopAll();
-        }
-
-        $('#have-us-call-you .call-you-error').removeClass('d-none');
-        $('#have-us-call-you input[type="text"]').removeAttr("disabled");
+        return haveUsCallYou.showMessageError();
       }).then(function () {
-        $('#have-us-call-you .call-you-button').removeAttr("disabled");
+        return haveUsCallYou.enableButtonCall();
       });
     }); // Init AOS Animation
 

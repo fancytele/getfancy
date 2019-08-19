@@ -1,6 +1,6 @@
 import './bootstrap';
-import './helpers';
 import axios from 'axios';
+import HaveUsCallYou from './haveUsCallYou';
 
 (function () {
   const changePlan = function (e) {
@@ -54,42 +54,15 @@ import axios from 'axios';
     $('#plans .btn-group button').on('click', changePlan);
     $('#plans #plan-buy').click(redirectToCheckout);
 
-    $('#have-us-call-you .call-you-button').click(function () {
-      $('#have-us-call-you').toggleClass('active').find('input:first').focus();
+    // Have Us Call You
+    let haveUsCallYou = new HaveUsCallYou('#have-us-call-you', '.call-you-button', '.call-you-error');
 
-      if (!$('#have-us-call-you').hasClass('active')) {
-        Ladda.stopAll();
-        $('#have-us-call-you input[type="text"]').val('').removeAttr("disabled");
-        $('#have-us-call-you').removeClass('success');
-      }
-    });
-
-    $('#have-us-call-you form').submit(function (e) {
-      e.preventDefault();
-
-      let data = $(this).serializeArrayToJSON();
-
-      // Disable after getting data (or it will be empty)
-      $('#have-us-call-you .call-you-button').attr("disabled", true);
-      $('#have-us-call-you input[type="text"]').attr("disabled", true);
-      $('#have-us-call-you .call-you-error').addClass('d-none');
-
+    haveUsCallYou.submit(function (data) {
       axios.post('/call-you', data)
-        .then(function () {
-          $('#have-us-call-you').addClass('success');
-        })
-        .catch(function () {
-          if (typeof Ladda !== 'undefined') {
-            Ladda.stopAll();
-          }
-
-          $('#have-us-call-you .call-you-error').removeClass('d-none');
-          $('#have-us-call-you input[type="text"]').removeAttr("disabled");
-        })
-        .then(function () {
-          $('#have-us-call-you .call-you-button').removeAttr("disabled");
-        });
-    })
+        .then(() => haveUsCallYou.makeSuccess())
+        .catch(() => haveUsCallYou.showMessageError())
+        .then(() => haveUsCallYou.enableButtonCall());
+    });
 
     // Init AOS Animation
     if (typeof AOS !== 'undefined') {
