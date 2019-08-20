@@ -55,7 +55,7 @@ class WebSiteController extends Controller
      * Send Email to Support about new User who wants to be call
      *
      * @param Request $request
-     * @return Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\JsonResponse
      */
     public function callYou(Request $request)
     {
