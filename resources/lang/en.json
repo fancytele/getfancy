@@ -22,6 +22,6 @@
     "Custom voice": "<span class=\"font-weight-bold\">Custom</span> voice",
     "Recording voice": "<span class=\"font-weight-bold\">Recording</span> voice",
     "Recording voicemail to Email": "<span class=\"font-weight-bold\">Recording</span> voicemail to Email",
-    "contactUsSuccessMessage": "We've received your message. We'll contact you in short",
+    "contactUsSuccessMessage": "We’ll contact you shortly”",
     "contactUsErrorMessage": "An error has ocurred, please try again"
 }
