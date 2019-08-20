@@ -37796,7 +37796,7 @@ __webpack_require__.r(__webpack_exports__);
 
     var haveUsCallYou = new _haveUsCallYou__WEBPACK_IMPORTED_MODULE_2__["default"]('#have-us-call-you', '.call-you-button', '.call-you-error');
     haveUsCallYou.submit(function (data) {
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/call-you', data).then(function () {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/callyou', data).then(function () {
         return haveUsCallYou.makeSuccess();
       })["catch"](function () {
         return haveUsCallYou.showMessageError();
