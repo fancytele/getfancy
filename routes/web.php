@@ -14,7 +14,7 @@
 Route::get('/', 'WebSiteController@index')->name('web.homepage');
 Route::get('checkout/{slug}', 'WebSiteController@checkout')->name('web.checkout');
 Route::post('locale', 'WebSiteController@changeLocalization')->name('web.locale');
-Route::post('callyou', 'WebsiteController@callYou')->name('web.callyou');
+Route::post('callyou', 'WebSiteController@callYou')->name('web.callyou');
 Route::get('js/lang.js', 'WebSiteController@getJSONLocalization')->name('web.lang');
 
 
