@@ -2,6 +2,7 @@ import './bootstrap';
 import axios from 'axios';
 import HaveUsCallYou from './haveUsCallYou';
 import navbarCollapse from './navbarCollapse';
+import contactUs from './contactUs';
 
 (function () {
   const changePlan = function (e) {
@@ -67,6 +68,16 @@ import navbarCollapse from './navbarCollapse';
 
     // NavbarCollapse
     navbarCollapse('.navbar .navbar-collapse', '.navbar .navbar-toggler');
+
+    // ContactUs Form
+    let contactForm = contactUs('footer form');
+
+    contactForm.submit((data) => {
+      axios.post('contactus', data)
+        .then(() => contactForm.showSuccessMessage())
+        .catch(() => contactForm.showErrorMessage())
+        .then(() => contactForm.enableSubmit());
+    })
 
     // Init AOS Animation
     if (typeof AOS !== 'undefined') {

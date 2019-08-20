@@ -37524,6 +37524,91 @@ if (token) {
 
 /***/ }),
 
+/***/ "./resources/js/contactUs.js":
+/*!***********************************!*\
+  !*** ./resources/js/contactUs.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _helpers__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers */ "./resources/js/helpers.js");
+var _this = undefined;
+
+
+
+var contactUs = function contactUs(formClass) {
+  var element = document.querySelector(formClass);
+  var inputs = element.querySelectorAll('input');
+  var textarea = element.querySelector('textarea');
+  var messageElement = element.querySelector('.text-message');
+
+  var fireForm = function fireForm(callback, e) {
+    e.preventDefault();
+    var data = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["serializeArrayToJSON"])(element);
+    disableForm();
+    hideMessage();
+    callback(data);
+  };
+
+  var disableForm = function disableForm() {
+    inputs.forEach(function (el) {
+      return el.setAttribute('disabled', 'disabled');
+    });
+    textarea.setAttribute('disabled', 'disabled');
+  };
+
+  var hideMessage = function hideMessage() {
+    messageElement.classList = 'd-none';
+  };
+
+  var renderMessage = function renderMessage(text) {
+    messageElement.innerHTML = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["trans"])(text);
+  }; // Public
+
+
+  var submit = function submit(callback) {
+    element.addEventListener('submit', fireForm.bind(_this, callback));
+  };
+
+  var showSuccessMessage = function showSuccessMessage() {
+    var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'contactUsSuccessMessage';
+    renderMessage(text);
+    messageElement.classList = '';
+  };
+
+  var showErrorMessage = function showErrorMessage() {
+    var text = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 'contactUsErrorMessage';
+    renderMessage(text);
+    messageElement.classList = 'text-danger';
+  };
+
+  var enableSubmit = function enableSubmit() {
+    if (typeof Ladda !== 'undefined') {
+      Ladda.stopAll();
+    }
+
+    inputs.forEach(function (el) {
+      el.removeAttribute('disabled');
+      el.value = '';
+    });
+    textarea.removeAttribute('disabled');
+    textarea.value = '';
+  };
+
+  return {
+    submit: submit,
+    showSuccessMessage: showSuccessMessage,
+    showErrorMessage: showErrorMessage,
+    enableSubmit: enableSubmit
+  };
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (contactUs);
+
+/***/ }),
+
 /***/ "./resources/js/haveUsCallYou.js":
 /*!***************************************!*\
   !*** ./resources/js/haveUsCallYou.js ***!
@@ -37671,30 +37756,20 @@ function () {
 /*!*********************************!*\
   !*** ./resources/js/helpers.js ***!
   \*********************************/
-/*! exports provided: serializeArray, serializeArrayToJSON */
+/*! exports provided: serializeArray, serializeArrayToJSON, trans */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "serializeArray", function() { return serializeArray; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "serializeArrayToJSON", function() { return serializeArrayToJSON; });
-// Define Jquery Helper to serialize Form Data into JSON
-jQuery.fn.extend({
-  serializeArrayToJSON: function serializeArrayToJSON() {
-    var data = $(this).serializeArray();
-    return data.reduce(function (obj, item) {
-      obj[item.name] = item.value;
-      return obj;
-    }, {});
-  }
-});
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "trans", function() { return trans; });
 /*!
  * Serialize all form data into an array
  * (c) 2018 Chris Ferdinandi, MIT License, https://gomakethings.com
  * @param  {Node}   form The form to serialize
  * @return {String}      The serialized form data
  */
-
 var serializeArray = function serializeArray(form) {
   // Setup our serialized data
   var serialized = []; // Loop through each field in the form
@@ -37732,6 +37807,10 @@ function serializeArrayToJSON(form) {
   }, {});
 }
 
+var trans = function trans(string) {
+  return _.get(window.i18n, string) || string;
+};
+
 
 
 /***/ }),
@@ -37751,6 +37830,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _haveUsCallYou__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./haveUsCallYou */ "./resources/js/haveUsCallYou.js");
 /* harmony import */ var _navbarCollapse__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./navbarCollapse */ "./resources/js/navbarCollapse.js");
+/* harmony import */ var _contactUs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./contactUs */ "./resources/js/contactUs.js");
+
 
 
 
@@ -37811,7 +37892,18 @@ __webpack_require__.r(__webpack_exports__);
       });
     }); // NavbarCollapse
 
-    Object(_navbarCollapse__WEBPACK_IMPORTED_MODULE_3__["default"])('.navbar .navbar-collapse', '.navbar .navbar-toggler'); // Init AOS Animation
+    Object(_navbarCollapse__WEBPACK_IMPORTED_MODULE_3__["default"])('.navbar .navbar-collapse', '.navbar .navbar-toggler'); // ContactUs Form
+
+    var contactForm = Object(_contactUs__WEBPACK_IMPORTED_MODULE_4__["default"])('footer form');
+    contactForm.submit(function (data) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('contactus', data).then(function () {
+        return contactForm.showSuccessMessage();
+      })["catch"](function () {
+        return contactForm.showErrorMessage();
+      }).then(function () {
+        return contactForm.enableSubmit();
+      });
+    }); // Init AOS Animation
 
     if (typeof AOS !== 'undefined') {
       AOS.init();

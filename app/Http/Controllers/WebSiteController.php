@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Addon;
 use App\Product;
 use App\Enums\AddonType;
+use App\Mail\ContactUsMail;
 use App\Mail\HaveUsCallYouMail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
@@ -63,6 +64,17 @@ class WebSiteController extends Controller
         $phone = $request->phone;
 
         Mail::send(new HaveUsCallYouMail($name, $phone));
+
+        return response()->json(['message' => 'success']);
+    }
+
+    public function contactUs(Request $request)
+    {
+        $name = $request->name;
+        $email = $request->email;
+        $message = $request->message;
+
+        Mail::send(new ContactUsMail($name, $email, $message));
 
         return response()->json(['message' => 'success']);
     }

@@ -11,6 +11,7 @@
     <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
+    <script src="/js/lang.js" defer></script>
     <script src="{{ asset('js/home.js') }}" defer></script>
     <script src="{{ asset('js/navbar.js') }}" defer></script>
 
@@ -453,18 +454,19 @@
                 @lang('Contact Us')
             </h3>
 
-            <form action="" method="POST" class="mb-5" data-aos="flip-up">
+            <form action="contactus" method="POST" class="mb-5"
+                  data-aos="flip-up">
                 <div class="row">
                     <div class="col-md-8 offset-md-2">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="full_name" class="sr-only">
+                                    <label for="name" class="sr-only">
                                         @lang('Full Name')
                                     </label>
                                     <input type="text"
                                            class="form-control w-100"
-                                           name="full_name" id="full_name"
+                                           name="name" id="name"
                                            placeholder="@lang('Full Name')"
                                            required>
                                 </div>
@@ -492,6 +494,9 @@
                                               placeholder="@lang('Message')"
                                               required></textarea>
                                 </div>
+                            </div>
+                            <div class="text-center w-100">
+                                <p class="d-none text-message"></p>
                             </div>
                             <div class="col-md-12 text-center">
                                 <button type="submit"
