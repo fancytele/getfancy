@@ -1,6 +1,7 @@
 import './bootstrap';
 import axios from 'axios';
 import HaveUsCallYou from './haveUsCallYou';
+import navbarCollapse from './navbarCollapse';
 
 (function () {
   const changePlan = function (e) {
@@ -63,6 +64,9 @@ import HaveUsCallYou from './haveUsCallYou';
         .catch(() => haveUsCallYou.showMessageError())
         .then(() => haveUsCallYou.enableButtonCall());
     });
+
+    // NavbarCollapse
+    navbarCollapse('.navbar .navbar-collapse', '.navbar .navbar-toggler');
 
     // Init AOS Animation
     if (typeof AOS !== 'undefined') {

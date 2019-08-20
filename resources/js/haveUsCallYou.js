@@ -16,10 +16,12 @@ class HaveUsCallYou {
   }
 
   fireButtonCall() {
-    this.toggleElement();
     this.clearInputs();
     this.enableInputs();
     this.removeSuccess();
+    this.hideMessageError();
+
+    this.toggleElement();
 
     if (this._element.classList.contains(this._activeClass)) {
       if (typeof Ladda !== 'undefined') {
@@ -49,7 +51,7 @@ class HaveUsCallYou {
 
     this.disableInputs();
     this.disableButtonCall();
-    this._error.classList.add('d-none');
+    this.hideMessageError();
 
     callback(data);
   }
@@ -89,6 +91,11 @@ class HaveUsCallYou {
 
     this._error.classList.remove('d-none');
     this.enableInputs();
+  }
+
+  hideMessageError() {
+    this._error.classList.add('d-none');
+
   }
 }
 

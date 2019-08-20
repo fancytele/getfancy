@@ -37562,10 +37562,11 @@ function () {
   _createClass(HaveUsCallYou, [{
     key: "fireButtonCall",
     value: function fireButtonCall() {
-      this.toggleElement();
       this.clearInputs();
       this.enableInputs();
       this.removeSuccess();
+      this.hideMessageError();
+      this.toggleElement();
 
       if (this._element.classList.contains(this._activeClass)) {
         if (typeof Ladda !== 'undefined') {
@@ -37597,9 +37598,7 @@ function () {
       var data = Object(_helpers__WEBPACK_IMPORTED_MODULE_0__["serializeArrayToJSON"])(this._form);
       this.disableInputs();
       this.disableButtonCall();
-
-      this._error.classList.add('d-none');
-
+      this.hideMessageError();
       callback(data);
     }
   }, {
@@ -37653,6 +37652,11 @@ function () {
       this._error.classList.remove('d-none');
 
       this.enableInputs();
+    }
+  }, {
+    key: "hideMessageError",
+    value: function hideMessageError() {
+      this._error.classList.add('d-none');
     }
   }]);
 
@@ -37746,6 +37750,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _haveUsCallYou__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./haveUsCallYou */ "./resources/js/haveUsCallYou.js");
+/* harmony import */ var _navbarCollapse__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./navbarCollapse */ "./resources/js/navbarCollapse.js");
+
 
 
 
@@ -37803,7 +37809,9 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function () {
         return haveUsCallYou.enableButtonCall();
       });
-    }); // Init AOS Animation
+    }); // NavbarCollapse
+
+    Object(_navbarCollapse__WEBPACK_IMPORTED_MODULE_3__["default"])('.navbar .navbar-collapse', '.navbar .navbar-toggler'); // Init AOS Animation
 
     if (typeof AOS !== 'undefined') {
       AOS.init();
@@ -37826,6 +37834,56 @@ __webpack_require__.r(__webpack_exports__);
     $(window).on('resize orientationchange', normalizeSlideHeights.bind('#testimonial .carousel'));
   });
 })();
+
+/***/ }),
+
+/***/ "./resources/js/navbarCollapse.js":
+/*!****************************************!*\
+  !*** ./resources/js/navbarCollapse.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var _this = undefined;
+
+var navbarCollapse = function navbarCollapse(classElement, toggleClass) {
+  var body = document.querySelector('body');
+  var element = document.querySelector(classElement);
+  var toggleElement = document.querySelector(toggleClass);
+  var closeButton = element.querySelector('.close');
+
+  var registerEvents = function registerEvents() {
+    toggleElement.addEventListener('click', showCollapse.bind(_this));
+    closeButton.addEventListener('click', closeCollapse.bind(_this));
+    document.addEventListener('click', navigateTo.bind(_this));
+  };
+
+  var showCollapse = function showCollapse() {
+    body.classList.add('overflow-collapse');
+  };
+
+  var closeCollapse = function closeCollapse() {
+    element.classList.remove('show');
+    body.classList.remove('overflow-collapse');
+  };
+
+  var navigateTo = function navigateTo() {
+    // Allow only nav-link
+    if (!event.target.matches("".concat(classElement, " .nav-link"))) return;
+    event.preventDefault();
+    closeCollapse();
+  };
+
+  var init = function init() {
+    registerEvents();
+  };
+
+  init();
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (navbarCollapse);
 
 /***/ }),
 

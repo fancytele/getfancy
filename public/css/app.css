@@ -12921,6 +12921,80 @@ a.text-white:focus {
   }
 }
 
+@media (max-width: 767.98px) {
+  .overflow-collapse {
+    overflow: hidden;
+  }
+}
+
+.navbar-collapse .close {
+  color: #FFFFFF;
+  display: none;
+  font-size: 4rem;
+  opacity: 1;
+  position: fixed;
+  right: 1.875rem;
+  top: 1.25rem;
+}
+
+@media (max-width: 767.98px) {
+  .navbar-collapse {
+    background-color: rgba(0, 0, 0, 0.85);
+    bottom: 0;
+    display: -webkit-box;
+    display: flex;
+    left: 0;
+    position: fixed;
+    right: 0;
+    top: 0;
+    -webkit-animation-duration: 0.5s;
+            animation-duration: 0.5s;
+    -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+    -webkit-animation-name: fadeIn;
+            animation-name: fadeIn;
+  }
+
+  .navbar-collapse.collapsing {
+    display: none;
+    height: 100%;
+    transition: none;
+    -webkit-transition: none;
+  }
+
+  .navbar-collapse .close {
+    display: block;
+  }
+
+  .navbar-collapse ul {
+    margin: 0;
+    position: fixed;
+    text-align: center;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+            transform: translateY(-50%);
+    width: 100%;
+  }
+
+  .navbar-collapse ul .nav-item {
+    padding-bottom: 1.5rem;
+  }
+
+  .navbar-collapse ul .nav-link {
+    color: #FFFFFF !important;
+    display: inline-block;
+    font-size: 1rem;
+  }
+
+  .navbar-collapse ul .nav-link:after {
+    background-color: #fff;
+  }
+
+  .navbar-collapse ul .nav-link.active:before {
+    content: none;
+  }
+}
+
 #plans .plan-wrapper {
   height: 4.375rem;
   position: relative;

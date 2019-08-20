@@ -16,8 +16,8 @@
                 <label class="sr-only" for="locale-sm">
                     Cambiar lenguaje </label>
                 <select name="lang" id="locale-sm"
-                        class="form-control form-control-sm locale"
-                        class="form-control form-control-sm">
+                        class="form-control locale"
+                        class="form-control">
                     <option value="en" @if (App::isLocale('en')) selected
                             disabled @endif>EN</option>
                     <option value="es" @if (App::isLocale('es')) selected
@@ -32,6 +32,9 @@
 
             <div class="collapse navbar-collapse flex-column align-items-end"
                  id="fancy-menu">
+                <button type="button" class="close" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
                 <form method="POST" action="/locale"
                       class="d-none d-md-block pr-3">
                     @csrf
