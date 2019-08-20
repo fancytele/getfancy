@@ -14,9 +14,9 @@
             <form method="POST" action="/locale" class="d-md-none ml-auto pr-3">
                 @csrf
                 <label class="sr-only" for="locale-sm">
-                    Cambiar lenguaje </label>
-                <select name="lang" id="locale-sm"
-                        class="form-control locale"
+                    Cambiar lenguaje
+                </label>
+                <select name="locale" id="locale-sm" class="form-control locale"
                         class="form-control">
                     <option value="en" @if (App::isLocale('en')) selected
                             disabled @endif>EN</option>
