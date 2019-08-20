@@ -102,13 +102,14 @@
     .call-you-message-text {
       font-weight: lighter;
       padding-left: 50px;
+      transform: translateY(-1rem);
       width: 80%;
     }
 
     .call-you-message-icon {
+      bottom: 0;
       left: 0;
       height: 45px;
-      margin-top: -8px;
     }
   }
 }

@@ -32,7 +32,7 @@
     <div id="have-us-call-you" class="call-you-box position-fixed">
         <div class="bg-white call-you-content rounded">
             <h3 class="bg-primary call-you-title rounded-top">
-                @lang('Have us call you')
+                @lang('Have us call you!')
             </h3>
 
             <form action="/callyou" method="POST"
@@ -89,9 +89,9 @@
                                 C238.392,265.165,218.32,273.759,190.383,278.671z">
                             </path>
                         </svg>
-                        @lang('Thank you'),
-                        <span class="d-block">
-                            @lang('an agent will call you')!!!
+                        @lang('Thank you!'),
+                        <span class="d-block font-weight-light h4 mb-0 mt-2">
+                            @lang('One of our agents will call you shortly!')
                         </span>
                     </h3>
                 </div>
