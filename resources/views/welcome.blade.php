@@ -34,7 +34,7 @@
                 @lang('Have us call you')
             </h3>
 
-            <form action="/call-you" method="POST"
+            <form action="/callyou" method="POST"
                   class="overflow-hidden p-4 position-relative">
                 <div class="form-group">
                     <label for="name" class="m-0">@lang('Name')</label>

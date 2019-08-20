@@ -58,7 +58,7 @@ import HaveUsCallYou from './haveUsCallYou';
     let haveUsCallYou = new HaveUsCallYou('#have-us-call-you', '.call-you-button', '.call-you-error');
 
     haveUsCallYou.submit(function (data) {
-      axios.post('/call-you', data)
+      axios.post('/callyou', data)
         .then(() => haveUsCallYou.makeSuccess())
         .catch(() => haveUsCallYou.showMessageError())
         .then(() => haveUsCallYou.enableButtonCall());
