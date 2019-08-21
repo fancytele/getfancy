@@ -24,12 +24,13 @@
                             disabled @endif>ES</option>
                 </select>
             </form>
-            <button class="navbar-toggler" type="button" data-toggle="collapse"
-                    data-target="#fancy-menu" aria-controls="fancy-menu"
-                    aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
+            @isset ($show_nav)
+                <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#fancy-menu" aria-controls="fancy-menu"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            @endif
             <div class="collapse navbar-collapse flex-column align-items-end"
                  id="fancy-menu">
                 <button type="button" class="close" aria-label="Close">
@@ -51,30 +52,29 @@
                     </select>
                 </form>
                 @isset ($show_nav)
-
-                <ul class="navbar-nav ml-auto text-uppercase">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#home">
-                            @lang('Home') <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="#features">@lang('Features')</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#how-it-works">
-                            @lang('How It Works')
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link"
-                           href="#testimonial">@lang('Testimonial')</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#plans">@lang('Our Plans')</a>
-                    </li>
-                </ul>
+                    <ul class="navbar-nav ml-auto text-uppercase">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#home">
+                                @lang('Home') <span class="sr-only">(current)</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                            href="#features">@lang('Features')</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#how-it-works">
+                                @lang('How It Works')
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link"
+                            href="#testimonial">@lang('Testimonial')</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#plans">@lang('Our Plans')</a>
+                        </li>
+                    </ul>
                 @endif
             </div>
         </div>
