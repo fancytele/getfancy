@@ -471,9 +471,7 @@
 
             <div class="mt-6">
               <blockquote class="blockquote blockquote-fancy">
-                <p
-                  class="font-italic"
-                >Like you, our mission is to connect people, therefore the needs of our clients come first.</p>
+                <p class="font-italic">{{ trans('checkoutTestimonial') }}</p>
                 <footer class="blockquote-footer font-weight-bold text-white">
                   <img
                     class="mr-3 rounded-circle w-15"

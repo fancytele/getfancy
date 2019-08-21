@@ -2358,8 +2358,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -45388,7 +45386,19 @@ var render = function() {
               _vm._v(" "),
               _c("hr", { staticClass: "border-white-50" }),
               _vm._v(" "),
-              _vm._m(11)
+              _c("div", { staticClass: "mt-6" }, [
+                _c(
+                  "blockquote",
+                  { staticClass: "blockquote blockquote-fancy" },
+                  [
+                    _c("p", { staticClass: "font-italic" }, [
+                      _vm._v(_vm._s(_vm.trans("checkoutTestimonial")))
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(11)
+                  ]
+                )
+              ])
             ]),
             _vm._v(" "),
             _c(
@@ -45556,31 +45566,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mt-6" }, [
-      _c("blockquote", { staticClass: "blockquote blockquote-fancy" }, [
-        _c("p", { staticClass: "font-italic" }, [
-          _vm._v(
-            "Like you, our mission is to connect people, therefore the needs of our clients come first."
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "footer",
-          { staticClass: "blockquote-footer font-weight-bold text-white" },
-          [
-            _c("img", {
-              staticClass: "mr-3 rounded-circle w-15",
-              attrs: {
-                src:
-                  "https://media.licdn.com/dms/image/C5103AQGWZc65_HDAOQ/profile-displayphoto-shrink_800_800/0?e=1568246400&v=beta&t=hpibmKZIeORLRXDltT5pp196r-q2IR9Bd-8EJ25gDj8",
-                alt: "Johnny Bosche"
-              }
-            }),
-            _vm._v("\n                Johnny Bosche\n              ")
-          ]
-        )
-      ])
-    ])
+    return _c(
+      "footer",
+      { staticClass: "blockquote-footer font-weight-bold text-white" },
+      [
+        _c("img", {
+          staticClass: "mr-3 rounded-circle w-15",
+          attrs: {
+            src:
+              "https://media.licdn.com/dms/image/C5103AQGWZc65_HDAOQ/profile-displayphoto-shrink_800_800/0?e=1568246400&v=beta&t=hpibmKZIeORLRXDltT5pp196r-q2IR9Bd-8EJ25gDj8",
+            alt: "Johnny Bosche"
+          }
+        }),
+        _vm._v("\n                Johnny Bosche\n              ")
+      ]
+    )
   }
 ]
 render._withStripped = true

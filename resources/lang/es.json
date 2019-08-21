@@ -26,7 +26,7 @@
     "How It Works Message": "Fancy es un servicio de teléfono virtual todo-en-uno que ofrece atención automática, atención profesional y una interfaz web simple que te permite administrar fácilmente todas las comunicaciones de tu empresa sin ningún hardware.",
     "Pick a number of your choice": "Elige un número de su elección",
     "Pick a number Message": "Obtén un número de teléfono local de tu elección. También puedes transferir tu número a Fancy de forma gratuita.",
-    "Record greetings or use recording service": "Graba saludos o utilizar el servicio de grabación",
+    "Record greetings or use recording service": "Graba tu mensaje o utiliza nuestro servicio profesional.",
     "Record greetings Message": "Crea tu saludo principal personalizado para el operador automático. También puedes utilizar nuestro servicio de grabación automática para grabar tus saludos de manera profesional.",
     "Add extensions": "Añadir extensiones",
     "Add extensions Message": "Crea y personaliza extensiones para reenviar llamadas a cualquier lugar: casa, oficina o su móvil. Crea instantáneamente extensiones de departamento y extensiones de empleado.",
@@ -87,6 +87,7 @@
     "year": "año",
     "two year": "dos años",
     "More": "Y más",
+    "checkoutTestimonial": "Al igual que tú, nuestra misión es conectar a las personas, por lo tanto, las necesidades de nuestros clientes son lo primero.",
     "Change Language": "Cambiar lenguaje",
     "The given data was invalid.": "Los datos proporcionados no son válidos",
     "Please review your information": "Por favor revise su información"

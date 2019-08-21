@@ -127,8 +127,7 @@
                         <li>
                             <i
                                class="align-bottom h1 la la-check-circle mb-0 mr-2 text-info"></i>
-                            @lang('Get Voicemails by email, Manage Your Phone
-                            System Online.')
+                            @lang('Get Voicemails by email, Manage Your Phone System Online.')
                         </li>
                     </ul>
                 </div>
