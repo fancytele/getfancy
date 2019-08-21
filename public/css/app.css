@@ -12595,6 +12595,12 @@ a.text-white:focus {
   content: "";
 }
 
+@media (min-width: 768px) {
+  .display-md-3 {
+    font-size: 2.625rem;
+  }
+}
+
 .fill-blue-solid {
   fill: #1b5b9a;
 }
@@ -12624,9 +12630,29 @@ a.text-white:focus {
 }
 
 @media (min-width: 576px) {
-  .w-lg-50 {
+  .w-sm-50 {
     width: 50%;
   }
+}
+
+@media (min-width: 992px) {
+  .w-lg-75 {
+    width: 75%;
+  }
+}
+
+.img-shadow {
+  position: relative;
+}
+
+.img-shadow:before {
+  background-color: rgba(0, 0, 0, 0.7);
+  bottom: 0;
+  content: "";
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
 }
 
 .navbar {
@@ -12885,6 +12911,7 @@ a.text-white:focus {
   background-position: center center;
   height: 80vh;
   min-height: 28.75rem;
+  max-height: 35rem;
   padding-top: 3.8125rem;
 }
 

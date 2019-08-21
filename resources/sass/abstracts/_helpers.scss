@@ -49,6 +49,12 @@
   }
 }
 
+.display-md-3 {
+  @include media-breakpoint-up(md) {
+    font-size: $display3-size;
+  }
+}
+
 .fill-blue-solid {
   fill: $blue-solid;
 }
@@ -77,8 +83,28 @@
   width: 60%;
 }
 
-.w-lg-50 {
+.w-sm-50 {
   @include media-breakpoint-up(sm) {
     width: 50%;
+  }
+}
+
+.w-lg-75 {
+  @include media-breakpoint-up(lg) {
+    width: 75%;
+  }
+}
+
+.img-shadow {
+  position: relative;
+
+  &:before {
+    background-color: rgba(#000, 0.7);
+    bottom: 0;
+    content: "";
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
   }
 }

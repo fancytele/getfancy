@@ -106,11 +106,11 @@
 
     <main class="overflow-hidden">
         <!-- Hero Section -->
-        <section id="home" class="hero text-white d-flex align-items-center"
-                 style="background-image: url(img/hero_blue.jpg)">
+        <section id="home" class="align-items-center d-flex hero img-shadow text-white"
+                 style="background-image: url(img/hero_old_phone.jpg)">
             <div class="container">
-                <div class="hero-content" data-aos="zoom-in">
-                    <h3 class="display-3">
+                <div class="hero-content w-lg-75" data-aos="zoom-in">
+                    <h3 class="display-4 display-md-3">
                         @lang('Need a Virtual Phone System?')
                     </h3>
                     <p>@lang('Hero Message')</p>
@@ -297,7 +297,7 @@
         <!-- Testimonials Section -->
         <section id="testimonial" class="fancy-section text-white">
             <div class="container py-5">
-                <div class="m-auto text-center w-lg-50">
+                <div class="m-auto text-center w-sm-50">
                     <div id="carouselExampleFade" class="carousel slide"
                          data-interval="false">
                         <ol class="carousel-indicators m-0">
