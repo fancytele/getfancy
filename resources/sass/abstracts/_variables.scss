@@ -14,6 +14,12 @@ $info: #bbdff7;
 $blue-solid: #1b5b9a;
 $white-ghost: #f6f7fb;
 
+// Body
+//
+// Settings for the `<body>` element.
+
+$body-color: $blue-solid !default;
+
 // Navs
 $navbar-nav-link-padding-x: 0.8rem;
 $font-family-sans-serif: "Cerebri Sans", sans-serif !default;

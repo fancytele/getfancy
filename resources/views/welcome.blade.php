@@ -152,27 +152,27 @@
                         </div>
                         <div class="row d-flex">
                             <div class="col-md-6" data-aos="fade-right">
-                                <h5 class="font-weight-bold">
+                                <h4 class="font-weight-bold">
                                     @lang('Work Anywhere')
-                                </h5>
+                                </h4>
                                 <p>@lang('Work Anywhere Message')</p>
                             </div>
                             <div class="col-md-6" data-aos="fade-left">
-                                <h5 class="font-weight-bold">
+                                <h4 class="font-weight-bold">
                                     @lang('Relability')
-                                </h5>
+                                </h4>
                                 <p>@lang('Relability Message')</p>
                             </div>
                             <div class="col-md-6" data-aos="fade-right">
-                                <h5 class="font-weight-bold">
+                                <h4 class="font-weight-bold">
                                     @lang('Management Tools')
-                                </h5>
+                                </h4>
                                 <p>@lang('Management Tools Message')</p>
                             </div>
                             <div class="col-md-6" data-aos="fade-left">
-                                <h5 class="font-weight-bold">
+                                <h4 class="font-weight-bold">
                                     @lang('Easy Setup')
-                                </h5>
+                                </h4>
                                 <p>@lang('Easy Setup Message')</p>
                             </div>
                         </div>
@@ -216,9 +216,9 @@
                             </g>
                         </svg>
                         <div class="mt-4">
-                            <h5 class="font-weight-bold">
+                            <h4 class="font-weight-bold">
                                 @lang('Pick a number of your choice')
-                            </h5>
+                            </h4>
                             <p>@lang('Pick a number Message')</p>
                         </div>
                     </div>
@@ -227,9 +227,9 @@
                         <i
                            class="la la-microphone la-5x px-5 bg-lighter text-blue-solid"></i>
                         <div class="mt-4">
-                            <h5 class="font-weight-bold">
+                            <h4 class="font-weight-bold">
                                 @lang('Record greetings or use recording service')
-                            </h5>
+                            </h4>
                             <p>@lang('Record greetings Message')</p>
                         </div>
                     </div>
@@ -287,9 +287,9 @@
                         {{-- <i
                            class="la la-headphones la-5x px-5 bg-lighter text-blue-solid"></i> --}}
                         <div class="mt-4">
-                            <h5 class="font-weight-bold">
+                            <h4 class="font-weight-bold">
                                 @lang('Add extensions')
-                            </h5>
+                            </h4>
                             <p>@lang('Add extensions Message')</p>
                         </div>
                     </div>
@@ -392,7 +392,7 @@
                             </div>
 
                             <p>
-                                <small class="text-muted font-italic">
+                                <small class="font-italic font-weight-bold">
                                     @lang('Variant time, same characteristics')
                                 </small>
                             </p>
