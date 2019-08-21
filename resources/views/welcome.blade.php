@@ -110,24 +110,20 @@
                  style="background-image: url(img/hero_blue.jpg)">
             <div class="container">
                 <div class="hero-content" data-aos="zoom-in">
-                    <h3 class="display-3">@lang('Virtual Phone System')</h3>
+                    <h3 class="display-3">
+                        @lang('Need a Virtual Phone System?')
+                    </h3>
                     <p>@lang('Hero Message')</p>
                     <ul class="list-unstyled pl-3">
                         <li class="mb-3">
                             <i
                                class="align-bottom h1 la la-check-circle mb-0 mr-2 text-info"></i>
-                            @lang('Get a Toll Free, Local Phone Number.')
-                        </li>
-                        <li class="mb-3">
-                            <i
-                               class="align-bottom h1 la la-check-circle mb-0 mr-2 text-info"></i>
-                            @lang('Create Custom Greetings, Unlimited
-                            Extensions.')
+                            @lang('heroFeature1')
                         </li>
                         <li>
                             <i
                                class="align-bottom h1 la la-check-circle mb-0 mr-2 text-info"></i>
-                            @lang('Get Voicemails by email, Manage Your Phone System Online.')
+                            @lang('heroFeature2')
                         </li>
                     </ul>
                 </div>
