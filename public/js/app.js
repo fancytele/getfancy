@@ -2383,6 +2383,10 @@ __webpack_require__.r(__webpack_exports__);
     addons: {
       type: Array,
       required: true
+    },
+    recaptchaKey: {
+      type: String,
+      required: true
     }
   },
   components: {
@@ -45197,7 +45201,7 @@ var render = function() {
                       _c("vue-recaptcha", {
                         ref: "recaptcha",
                         staticClass: "d-flex justify-content-center",
-                        attrs: { sitekey: _vm.$RECATPCHA_HTML_KEY },
+                        attrs: { sitekey: _vm.recaptchaKey },
                         on: { verify: _vm.onVerify, expired: _vm.onExpired }
                       }),
                       _vm._v(" "),
@@ -58015,8 +58019,6 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 window.Vue.prototype.trans = function (string) {
   return _.get(window.i18n, string) || string;
 };
-
-window.Vue.prototype.$RECATPCHA_HTML_KEY = "6LfEBrQUAAAAAPtlU4hpPuU1dDRm5-w9dpD_Rk5n";
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -58024,6 +58026,7 @@ window.Vue.prototype.$RECATPCHA_HTML_KEY = "6LfEBrQUAAAAAPtlU4hpPuU1dDRm5-w9dpD_
  *
  * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
  */
+
 
 var files = __webpack_require__("./resources/js sync recursive \\.vue$/");
 

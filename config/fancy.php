@@ -33,11 +33,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Fancy Recaptcha Secret Key
+    |--------------------------------------------------------------------------
+    |
+    | This is the Recaptcha Secret Key
+    |
+    */
+    'recaptcha_secret_key' => env('RECATPCHA_SECRET_KEY', ''),
+
+    /*
+    |--------------------------------------------------------------------------
     | Fancy Recaptcha Site Key
     |--------------------------------------------------------------------------
     |
     | This is the Recaptcha Site Key
     |
     */
-    'recaptcha_key' => env('RECATPCHA_SITE_KEY', ''),
+    'recaptcha_site_key' => env('RECATPCHA_SITE_KEY', ''),
 ];

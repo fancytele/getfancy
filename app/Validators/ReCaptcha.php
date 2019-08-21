@@ -12,7 +12,7 @@ class ReCaptcha
 
         $response = $client->post('https://www.google.com/recaptcha/api/siteverify', [
             'form_params' => [
-                'secret' => config('fancy.recaptcha_key'),
+                'secret' => config('fancy.recaptcha_secret_key'),
                 'response' => $value
             ]
         ]);

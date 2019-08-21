@@ -41,6 +41,7 @@
                     <checkout-component :support-email="'{{ config('fancy.email') }}'"
                                         :locale="'{{ app()->getLocale() }}'"
                                         :action="'{{ route('subscription') }}'"
+                                        :recaptcha-key="'{{ config('fancy.recaptcha_site_key') }}'"
                                         :product='@json($product)'
                                         :addons='@json($addons)'>
                     </checkout-component>

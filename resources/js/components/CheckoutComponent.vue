@@ -367,7 +367,7 @@
                 <div class="mb-4">
                   <vue-recaptcha
                     ref="recaptcha"
-                    :sitekey="$RECATPCHA_HTML_KEY"
+                    :sitekey="recaptchaKey"
                     @verify="onVerify"
                     @expired="onExpired"
                     class="d-flex justify-content-center"
@@ -541,6 +541,10 @@ export default {
     },
     addons: {
       type: Array,
+      required: true
+    },
+    recaptchaKey: {
+      type: String,
       required: true
     }
   },
