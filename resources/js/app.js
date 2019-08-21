@@ -7,8 +7,11 @@
 require('./bootstrap');
 
 window.Vue = require('vue');
+
 // JSON lang
 window.Vue.prototype.trans = string => _.get(window.i18n, string) || string;
+
+window.Vue.prototype.$RECATPCHA_HTML_KEY = process.env.MIX_RECATPCHA_HTML_KEY
 
 /**
  * The following block of code may be used to automatically register your

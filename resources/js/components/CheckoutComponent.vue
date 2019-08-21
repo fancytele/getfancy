@@ -47,7 +47,7 @@
                       <div
                         class="invalid-feedback"
                         v-if="errors.hasOwnProperty('first_name')"
-                      >{{ errors.first_name }}</div>
+                      >{{ errors.first_name[0] }}</div>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -67,7 +67,7 @@
                       <div
                         class="invalid-feedback"
                         v-if="errors.hasOwnProperty('last_name')"
-                      >{{ errors.last_name }}</div>
+                      >{{ errors.last_name[0] }}</div>
                     </div>
                   </div>
                   <div class="col-md-6">
@@ -112,7 +112,10 @@
                   </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label for="password">{{ trans('Password') }}</label>
+                      <label for="password">
+                        {{ trans('Password') }}
+                        <small class="text-muted">(min: 8)</small>
+                      </label>
                       <input
                         type="password"
                         class="form-control"
@@ -361,6 +364,20 @@
                   </transition-group>
                 </div>
 
+                <div class="mb-4">
+                  <vue-recaptcha
+                    ref="recaptcha"
+                    :sitekey="$RECATPCHA_HTML_KEY"
+                    @verify="onVerify"
+                    @expired="onExpired"
+                    class="d-flex justify-content-center"
+                  ></vue-recaptcha>
+                  <div
+                    class="d-block invalid-feedback text-center"
+                    v-if="errors.hasOwnProperty('recaptcha')"
+                  >{{ errors.recaptcha[0] }}</div>
+                </div>
+
                 <p class="small text-center text-danger" v-if="generalError">
                   {{ trans(generalError) }}
                   {{ trans('Please review your information') }}
@@ -370,7 +387,7 @@
                   type="submit"
                   class="btn btn-block btn-lg btn-primary font-weight-bold ladda-button py-3"
                   data-style="zoom-out"
-                  :disabled="!complete"
+                  :disabled="!complete || !checkout.recaptcha"
                 >{{ trans('Submit Checkout') }}</button>
                 <p class="mt-4 text-center">
                   <span class="align-middle h2 mb-0 text-primary">
@@ -501,6 +518,7 @@
 </template>
 
 <script>
+import VueRecaptcha from 'vue-recaptcha';
 import { Card, createToken } from 'vue-stripe-elements-plus';
 
 export default {
@@ -526,7 +544,10 @@ export default {
       required: true
     }
   },
-  components: { Card },
+  components: {
+    Card,
+    VueRecaptcha
+  },
   data() {
     return {
       laddaButton: null,
@@ -572,7 +593,8 @@ export default {
         state: '',
         zip_code: '',
         address: '',
-        addons: []
+        addons: [],
+        recaptcha: ''
       }
     };
   },
@@ -627,7 +649,18 @@ export default {
 
           this.laddaButton.stop();
           this.toggleProcessing();
+          this.resetRecaptcha();
         });
+    },
+    onVerify: function(response) {
+      this.checkout.recaptcha = response;
+    },
+    onExpired: function() {
+      this.checkout.recaptcha = '';
+    },
+    resetRecaptcha() {
+      this.checkout.recaptcha = '';
+      this.$refs.recaptcha.reset();
     }
   },
   mounted() {

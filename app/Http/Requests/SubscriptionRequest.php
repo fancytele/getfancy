@@ -37,7 +37,8 @@ class SubscriptionRequest extends FormRequest
             'address' => ['required', 'string'],
             'addons.*' => 'exists:addons,code',
             'checkout_product' => ['required', 'string', 'exists:products,slug'],
-            'stripe_token' => ['required', 'string']
+            'stripe_token' => ['required', 'string'],
+            'recaptcha' => ['required', 'recaptcha']
         ];
     }
 }

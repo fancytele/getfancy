@@ -6,9 +6,7 @@ return [
     | Fancy Email Info
     |--------------------------------------------------------------------------
     |
-    | This value is the name of your application. This value is used when the
-    | framework needs to place the application's name in a notification or
-    | any other location as required by the application or its packages.
+    | This value is the support Email of Fancy
     |
     */
     'email' => env('FANCY_EMAIL', ''),
@@ -18,12 +16,28 @@ return [
     | Fancy Phone Info
     |--------------------------------------------------------------------------
     |
-    | This value is the name of your application. This value is used when the
-    | framework needs to place the application's name in a notification or
-    | any other location as required by the application or its packages.
+    | This value is the phone of Fancy
     |
     */
     'phone' => env('FANCY_PHONE', ''),
 
-    'supported_lang' => env('FANCY_LANG', 'en')
+    /*
+    |--------------------------------------------------------------------------
+    | Fancy Supported Langs
+    |--------------------------------------------------------------------------
+    |
+    | This is the list of locales supported separated by comma
+    |
+    */
+    'supported_lang' => env('FANCY_LANG', 'en'),
+
+    /*
+    |--------------------------------------------------------------------------
+    | Fancy Recaptcha Site Key
+    |--------------------------------------------------------------------------
+    |
+    | This is the Recaptcha Site Key
+    |
+    */
+    'recaptcha_key' => env('RECATPCHA_SITE_KEY', ''),
 ];
