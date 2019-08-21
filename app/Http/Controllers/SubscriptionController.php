@@ -66,6 +66,6 @@ class SubscriptionController extends Controller
         // Login User and redirect to Dahsboard
         Auth::login($user->model());
 
-        return response()->json(['route' => route('home')]);
+        return response()->json(['route' => route('web.homepage')]);
     }
 }
