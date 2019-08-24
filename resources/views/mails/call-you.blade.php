@@ -10,5 +10,5 @@
 
 <p>
     <span style="font-weight: bold">Date: </span>
-    <span>{{ date("m/d/Y H:i:s") }}</span>
+    <span>{{ date("m/d/Y H:i:s") }} {{ config('app.timezone') }}</span>
 </p>

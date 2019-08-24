@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "imask": "^5.2.0",
         "ladda": "^2.0.1",
         "select2": "^4.0.8",
         "vue-recaptcha": "^1.2.0",

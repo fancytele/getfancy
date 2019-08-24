@@ -3,6 +3,7 @@ import axios from 'axios';
 import HaveUsCallYou from './haveUsCallYou';
 import navbarCollapse from './navbarCollapse';
 import contactUs from './contactUs';
+import IMask from 'imask';
 
 (function () {
   const changePlan = function (e) {
@@ -57,6 +58,10 @@ import contactUs from './contactUs';
     $('#plans #plan-buy').click(redirectToCheckout);
 
     // Have Us Call You
+    const element = document.querySelector('#have-us-call-you #phone');
+    const maskOptions = { mask: '(000) 000-0000' };
+    IMask(element, maskOptions);
+
     let haveUsCallYou = new HaveUsCallYou('#have-us-call-you', '.call-you-button', '.call-you-error');
 
     haveUsCallYou.submit(function (data) {

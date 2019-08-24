@@ -7,7 +7,7 @@ class HaveUsCallYou {
     this._error = this._element.querySelector(error);
 
     this._form = this._element.querySelector('form');
-    this._inputs = this._element.querySelectorAll('input[type="text"]');
+    this._inputs = this._element.querySelectorAll('input');
 
     this._activeClass = 'active';
     this._succesClass = 'success';

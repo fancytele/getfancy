@@ -46,7 +46,7 @@
                     <label for="phone" class="m-0">
                         @lang('Phone Number')
                     </label>
-                    <input type="text" class="form-control" name="phone"
+                   <input type="tel" class="form-control" name="phone" placeholder="(000) 000-0000"
                            id="phone" required>
                 </div>
                 <div class="call-you-error d-none small text-danger">
