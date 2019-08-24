@@ -39,7 +39,6 @@ import IMask from 'imask';
     $(element).each(function () {
       var items = $('.carousel-item', this);
 
-      // reset the height
       items.css('min-height', 0);
 
       const itemsHeight = items.map(function () {
@@ -48,7 +47,6 @@ import IMask from 'imask';
 
       var maxHeight = Math.max.apply(null, itemsHeight);
 
-      // set the height
       items.css('height', maxHeight + 'px');
     })
   }
@@ -89,18 +87,18 @@ import IMask from 'imask';
       AOS.init();
     }
 
-    $(window).on('load', function () {
-      // Normalize Testimonial Slides
-      normalizeSlideHeights('#testimonial .carousel');
+    // Normalize Testimonial Slides
+    normalizeSlideHeights('#testimonial .carousel');
 
+    // Automatically trigger the loading animation on click
+    if (typeof Ladda !== 'undefined') {
+      Ladda.bind('button[type=submit]');
+    }
+
+    $(window).on('load', function () {
       // Fix browser soft reload page
       if (typeof AOS !== 'undefined') {
         AOS.refresh();
-      }
-
-      // Automatically trigger the loading animation on click
-      if (typeof Ladda !== 'undefined') {
-        Ladda.bind('button[type=submit]');
       }
     });
 

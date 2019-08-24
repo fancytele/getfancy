@@ -127,10 +127,8 @@
 
     $(window).on('scroll', changeNavbarBg); // Change localization listener
 
-    $(window).on('load', function () {
-      $('.locale').on('change', function () {
-        $(this).parents('form').first().submit();
-      });
+    $('.locale').on('change', function () {
+      $(this).parents('form').first().submit();
     });
   });
 })();
