@@ -86,6 +86,21 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./resources/js/checkout.js":
+/*!**********************************!*\
+  !*** ./resources/js/checkout.js ***!
+  \**********************************/
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./navbar */ "./resources/js/navbar.js");
+
+$(document).ready(_navbar__WEBPACK_IMPORTED_MODULE_0__["default"].init);
+
+/***/ }),
+
 /***/ "./resources/js/navbar.js":
 /*!********************************!*\
   !*** ./resources/js/navbar.js ***!
@@ -136,13 +151,13 @@ var init = function init() {
 /***/ }),
 
 /***/ 2:
-/*!**************************************!*\
-  !*** multi ./resources/js/navbar.js ***!
-  \**************************************/
+/*!****************************************!*\
+  !*** multi ./resources/js/checkout.js ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/resources/js/navbar.js */"./resources/js/navbar.js");
+module.exports = __webpack_require__(/*! /var/www/resources/js/checkout.js */"./resources/js/checkout.js");
 
 
 /***/ })

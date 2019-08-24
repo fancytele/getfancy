@@ -1,9 +1,12 @@
 import './bootstrap';
+
 import axios from 'axios';
-import HaveUsCallYou from './haveUsCallYou';
-import navbarCollapse from './navbarCollapse';
-import contactUs from './contactUs';
 import IMask from 'imask';
+
+import contactUs from './contactUs';
+import haveUsCallYou from './haveUsCallYou';
+import navbar from './navbar';
+import navbarCollapse from './navbarCollapse';
 
 (function () {
   const changePlan = function (e) {
@@ -52,17 +55,19 @@ import IMask from 'imask';
   }
 
   $(document).ready(() => {
+    navbar.init();
+
     $('#plans .btn-group button').on('click', changePlan);
     $('#plans #plan-buy').click(redirectToCheckout);
 
     // Have Us Call You
-    const element = document.querySelector('#have-us-call-you #phone');
+    const phoneInput = document.querySelector('#have-us-call-you #phone');
     const maskOptions = { mask: '(000) 000-0000' };
-    IMask(element, maskOptions);
+    IMask(phoneInput, maskOptions);
 
-    let haveUsCallYou = new HaveUsCallYou('#have-us-call-you', '.call-you-button', '.call-you-error');
+    haveUsCallYou.init('#have-us-call-you', '.call-you-button', '.call-you-error');
 
-    haveUsCallYou.submit(function (data) {
+    haveUsCallYou.submit((data) => {
       axios.post('/callyou', data)
         .then(() => haveUsCallYou.makeSuccess())
         .catch(() => haveUsCallYou.showMessageError())
@@ -73,13 +78,13 @@ import IMask from 'imask';
     navbarCollapse('.navbar .navbar-collapse', '.navbar .navbar-toggler');
 
     // ContactUs Form
-    let contactForm = contactUs('footer form');
+    contactUs.init('footer form');
 
-    contactForm.submit((data) => {
+    contactUs.submit((data) => {
       axios.post('contactus', data)
-        .then(() => contactForm.showSuccessMessage())
-        .catch(() => contactForm.showErrorMessage())
-        .then(() => contactForm.enableSubmit());
+        .then(() => contactUs.showSuccessMessage())
+        .catch(() => contactUs.showErrorMessage())
+        .then(() => contactUs.enableSubmit());
     })
 
     // Init AOS Animation

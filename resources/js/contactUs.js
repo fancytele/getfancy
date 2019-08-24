@@ -1,70 +1,74 @@
 import { serializeArrayToJSON, trans } from "./helpers";
 
-const contactUs = (formClass) => {
-  const element = document.querySelector(formClass);
-  const inputs = element.querySelectorAll('input');
-  const textarea = element.querySelector('textarea');
-  const messageElement = element.querySelector('.text-message');
+let _element;
+let _inputs;
+let _textarea;
+let _message_element;
 
-  const fireForm = (callback, e) => {
-    e.preventDefault();
+const _fireForm = (callback, e) => {
+  e.preventDefault();
 
-    let data = serializeArrayToJSON(element);
+  let data = serializeArrayToJSON(_element);
 
-    disableForm();
-    hideMessage();
+  _disableForm();
+  _hideMessage();
 
-    callback(data);
+  callback(data);
+}
+
+const _disableForm = () => {
+  _inputs.forEach(el => el.setAttribute('disabled', 'disabled'));
+  _textarea.setAttribute('disabled', 'disabled');
+}
+
+const _hideMessage = () => {
+  _message_element.classList = 'd-none';
+}
+
+const _renderMessage = (text) => {
+  _message_element.innerHTML = trans(text);
+}
+
+// Public
+const enableSubmit = () => {
+  if (typeof Ladda !== 'undefined') {
+    Ladda.stopAll();
   }
 
-  const disableForm = () => {
-    inputs.forEach(el => el.setAttribute('disabled', 'disabled'));
-    textarea.setAttribute('disabled', 'disabled');
-  }
+  _inputs.forEach(el => {
+    el.removeAttribute('disabled');
+    el.value = ''
+  });
 
-  const hideMessage = () => {
-    messageElement.classList = 'd-none';
-  }
+  _textarea.removeAttribute('disabled');
+  _textarea.value = '';
+}
 
-  const renderMessage = (text) => {
-    messageElement.innerHTML = trans(text);
-  }
+const init = (formClass) => {
+  _element = document.querySelector(formClass);
+  _inputs = _element.querySelectorAll('input');
+  _textarea = _element.querySelector('textarea');
+  _message_element = _element.querySelector('.text-message');
+}
 
-  // Public
-  const submit = (callback) => {
-    element.addEventListener('submit', fireForm.bind(this, callback));
-  }
+const showErrorMessage = (text = 'contactUsErrorMessage') => {
+  _renderMessage(text);
+  _message_element.classList = 'text-danger';
+}
 
-  const showSuccessMessage = (text = 'contactUsSuccessMessage') => {
-    renderMessage(text);
-    messageElement.classList = '';
-  }
+const showSuccessMessage = (text = 'contactUsSuccessMessage') => {
+  _renderMessage(text);
+  _message_element.classList = '';
+}
 
-  const showErrorMessage = (text = 'contactUsErrorMessage') => {
-    renderMessage(text);
-    messageElement.classList = 'text-danger';
-  }
+const submit = (callback) => {
+  _element.addEventListener('submit', _fireForm.bind(this, callback));
+}
 
-  const enableSubmit = () => {
-    if (typeof Ladda !== 'undefined') {
-      Ladda.stopAll();
-    }
-
-    inputs.forEach(el => {
-      el.removeAttribute('disabled');
-      el.value = ''
-    });
-
-    textarea.removeAttribute('disabled');
-    textarea.value = '';
-  }
-
-  return {
-    submit,
-    showSuccessMessage,
-    showErrorMessage,
-    enableSubmit
-  };
+export default {
+  enableSubmit,
+  init,
+  showErrorMessage,
+  showSuccessMessage,
+  submit,
 };
-
-export default contactUs;

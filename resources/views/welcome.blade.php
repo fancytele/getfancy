@@ -13,7 +13,6 @@
     <!-- Scripts -->
     <script src="/js/lang.js" defer></script>
     <script src="{{ asset('js/home.js') }}" defer></script>
-    <script src="{{ asset('js/navbar.js') }}" defer></script>
 
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 

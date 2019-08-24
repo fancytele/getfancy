@@ -1,102 +1,113 @@
 import { serializeArrayToJSON } from './helpers';
 
-class HaveUsCallYou {
-  constructor(element, buttonCall, error) {
-    this._element = document.querySelector(element);
-    this._buttonCall = this._element.querySelector(buttonCall);
-    this._error = this._element.querySelector(error);
+let _element;
+let _buttonCall;
 
-    this._form = this._element.querySelector('form');
-    this._inputs = this._element.querySelectorAll('input');
+let _error;
+let _form;
+let _inputs;
 
-    this._activeClass = 'active';
-    this._succesClass = 'success';
+const _activeClass = 'active';
+const _succesClass = 'success';
 
-    this._buttonCall.addEventListener('click', this.fireButtonCall.bind(this));
-  }
+const _fireButtonCall = () => {
+  _clearInputs();
+  _enableInputs();
+  _removeSuccess();
+  _hideMessageError();
 
-  fireButtonCall() {
-    this.clearInputs();
-    this.enableInputs();
-    this.removeSuccess();
-    this.hideMessageError();
+  _toggleElement();
 
-    this.toggleElement();
-
-    if (this._element.classList.contains(this._activeClass)) {
-      if (typeof Ladda !== 'undefined') {
-        Ladda.stopAll();
-      }
-
-      this.focusFirstInput();
-    }
-  }
-
-  enableButtonCall() {
-    this._buttonCall.removeAttribute('disabled');
-  }
-
-  disableButtonCall() {
-    this._buttonCall.setAttribute('disabled', 'disabled');
-  }
-
-  submit(callback) {
-    this._form.addEventListener('submit', this.fireForm.bind(this, callback));
-  }
-
-  fireForm(callback, e) {
-    e.preventDefault();
-
-    let data = serializeArrayToJSON(this._form);
-
-    this.disableInputs();
-    this.disableButtonCall();
-    this.hideMessageError();
-
-    callback(data);
-  }
-
-  toggleElement() {
-    this._element.classList.toggle(this._activeClass);
-  }
-
-  focusFirstInput() {
-    this._element.querySelector('input').focus();
-  }
-
-  clearInputs() {
-    this._inputs.forEach(el => el.value = '');
-  }
-
-  enableInputs() {
-    this._inputs.forEach(el => el.removeAttribute('disabled'));
-  }
-
-  disableInputs() {
-    this._inputs.forEach(el => el.setAttribute('disabled', 'disabled'));
-  }
-
-  makeSuccess() {
-    this._element.classList.add(this._succesClass);
-  }
-
-  removeSuccess() {
-    this._element.classList.remove(this._succesClass);
-  }
-
-  showMessageError() {
+  if (_element.classList.contains(_activeClass)) {
     if (typeof Ladda !== 'undefined') {
       Ladda.stopAll();
     }
 
-    this._error.classList.remove('d-none');
-    this.enableInputs();
-  }
-
-  hideMessageError() {
-    this._error.classList.add('d-none');
-
+    _focusFirstInput();
   }
 }
 
-export default HaveUsCallYou;
+const _disableButtonCall = () => {
+  _buttonCall.setAttribute('disabled', 'disabled');
+}
+
+const _fireForm = (callback, e) => {
+  e.preventDefault();
+
+  let data = serializeArrayToJSON(_form);
+
+  _disableInputs();
+  _disableButtonCall();
+  _hideMessageError();
+
+  callback(data);
+}
+
+const _toggleElement = () => {
+  _element.classList.toggle(_activeClass);
+}
+
+const _focusFirstInput = () => {
+  _element.querySelector('input').focus();
+}
+
+const _clearInputs = () => {
+  _inputs.forEach(el => el.value = '');
+}
+
+const _enableInputs = () => {
+  _inputs.forEach(el => el.removeAttribute('disabled'));
+}
+
+const _disableInputs = () => {
+  _inputs.forEach(el => el.setAttribute('disabled', 'disabled'));
+}
+
+const _removeSuccess = () => {
+  _element.classList.remove(_succesClass);
+}
+
+const _hideMessageError = () => {
+  _error.classList.add('d-none');
+}
+
+// Public
+const enableButtonCall = () => {
+  _buttonCall.removeAttribute('disabled');
+}
+
+const init = (element, buttonCall, error) => {
+  _element = document.querySelector(element);
+  _buttonCall = _element.querySelector(buttonCall);
+
+  _error = _element.querySelector(error);
+  _form = _element.querySelector('form');
+  _inputs = _element.querySelectorAll('input');
+
+  _buttonCall.addEventListener('click', _fireButtonCall);
+};
+
+const makeSuccess = () => {
+  _element.classList.add(_succesClass);
+}
+
+const showMessageError = () => {
+  if (typeof Ladda !== 'undefined') {
+    Ladda.stopAll();
+  }
+
+  _error.classList.remove('d-none');
+  _enableInputs();
+}
+
+const submit = (callback) => {
+  _form.addEventListener('submit', _fireForm.bind(this, callback));
+}
+
+export default {
+  enableButtonCall,
+  init,
+  makeSuccess,
+  showMessageError,
+  submit,
+}
