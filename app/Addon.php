@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Enums\AddonType;
 use Illuminate\Database\Eloquent\Model;
 
 class Addon extends Model
@@ -19,5 +20,16 @@ class Addon extends Model
             $item->name = __($item->name);
             $item->description = __($item->description);
         });
+    }
+
+    /**
+     * Scope a query to only include subscriptions type.
+     *
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeSubscription($query)
+    {
+        return $query->whereType(AddonType::Subscription);
     }
 }

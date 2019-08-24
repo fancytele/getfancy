@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Addon;
 use App\Product;
-use App\Enums\AddonType;
 use App\Mail\ContactUsMail;
 use App\Mail\HaveUsCallYouMail;
 use Illuminate\Http\Request;
@@ -35,21 +34,18 @@ class WebSiteController extends Controller
      */
     public function checkout(string $slug)
     {
-        $products = Product::get(['name', 'slug', 'cost', 'is_primary']);
-        $products_slugs = $products->pluck('slug')->toArray();
+        $products = Product::all();
 
-        if (in_array($slug, $products_slugs)) {
-            $product = $products->firstWhere('slug', $slug);
-            $addons = Addon::whereType(AddonType::Subscription)
-                ->orderBy('code')
-                ->get(['name', 'code', 'description', 'cost']);
+        if (!$products->contains('slug', $slug)) {
+            $primary_slug = $products->firstWhere('is_primary')->slug;
 
-            return view('checkout', compact('product', 'addons'));
+            return redirect()->route('web.checkout', $primary_slug);
         }
 
-        $primary_slug = $products->firstWhere('is_primary')->slug;
+        $product = $products->firstWhere('slug', $slug);
+        $addons = Addon::subscription()->orderBy('code')->get();
 
-        return redirect()->route('web.checkout', $primary_slug);
+        return view('checkout', compact('product', 'addons'));
     }
 
     /**
@@ -60,14 +56,17 @@ class WebSiteController extends Controller
      */
     public function callYou(Request $request)
     {
-        $name = $request->name;
-        $phone = $request->phone;
-
-        Mail::send(new HaveUsCallYouMail($name, $phone));
+        Mail::send(new HaveUsCallYouMail($request->name, $request->phone));
 
         return response()->json(['message' => 'success']);
     }
 
+    /**
+     * Send Email to Support about new User who wants to Contact Us
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function contactUs(Request $request)
     {
         $name = $request->name;
