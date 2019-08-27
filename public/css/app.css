@@ -16444,7 +16444,7 @@ button:focus {
   position: absolute;
   width: 0;
   height: 0;
-  background-image: url(/images/avatar-status.svg?0719ebadf08ee43ac1843790f4e6267a), url(/images/avatar-group.svg?f820c01cfcfc25ca72c82482afcab188), url(/images/avatar-group-hover.svg?461a1636d4f82e977b8d17a682dbd9d3), url(/images/avatar-group-hover-last.svg?bcc03febeabf2ba8dd8fe936e05831e8);
+  background-image: url(/images/avatar-status.svg?7ca4c2012feeb8ac3a01a078c0177b36), url(/images/avatar-group.svg?936a2d3aedfe174ffaf564808de152fe), url(/images/avatar-group-hover.svg?672e50f73963cf97baae196cf2c7a7bd), url(/images/avatar-group-hover-last.svg?6ac726130dcb2db3245cbd2b42a47685);
 }
 
 .avatar-img {
@@ -16480,8 +16480,8 @@ button:focus {
 
 .avatar-online .avatar-img,
 .avatar-offline .avatar-img {
-  -webkit-mask-image: url(/images/avatar-status.svg?0719ebadf08ee43ac1843790f4e6267a);
-          mask-image: url(/images/avatar-status.svg?0719ebadf08ee43ac1843790f4e6267a);
+  -webkit-mask-image: url(/images/avatar-status.svg?7ca4c2012feeb8ac3a01a078c0177b36);
+          mask-image: url(/images/avatar-status.svg?7ca4c2012feeb8ac3a01a078c0177b36);
   -webkit-mask-size: 100% 100%;
           mask-size: 100% 100%;
 }
@@ -16586,8 +16586,8 @@ button:focus {
 }
 
 .avatar-group .avatar:not(:last-child) {
-  -webkit-mask-image: url(/images/avatar-group.svg?f820c01cfcfc25ca72c82482afcab188);
-          mask-image: url(/images/avatar-group.svg?f820c01cfcfc25ca72c82482afcab188);
+  -webkit-mask-image: url(/images/avatar-group.svg?936a2d3aedfe174ffaf564808de152fe);
+          mask-image: url(/images/avatar-group.svg?936a2d3aedfe174ffaf564808de152fe);
   -webkit-mask-size: 100% 100%;
           mask-size: 100% 100%;
 }
@@ -16599,15 +16599,15 @@ button:focus {
 }
 
 .avatar-group .avatar:hover + .avatar {
-  -webkit-mask-image: url(/images/avatar-group-hover.svg?461a1636d4f82e977b8d17a682dbd9d3);
-          mask-image: url(/images/avatar-group-hover.svg?461a1636d4f82e977b8d17a682dbd9d3);
+  -webkit-mask-image: url(/images/avatar-group-hover.svg?672e50f73963cf97baae196cf2c7a7bd);
+          mask-image: url(/images/avatar-group-hover.svg?672e50f73963cf97baae196cf2c7a7bd);
   -webkit-mask-size: 100% 100%;
           mask-size: 100% 100%;
 }
 
 .avatar-group .avatar:hover + .avatar:last-child {
-  -webkit-mask-image: url(/images/avatar-group-hover-last.svg?bcc03febeabf2ba8dd8fe936e05831e8);
-          mask-image: url(/images/avatar-group-hover-last.svg?bcc03febeabf2ba8dd8fe936e05831e8);
+  -webkit-mask-image: url(/images/avatar-group-hover-last.svg?6ac726130dcb2db3245cbd2b42a47685);
+          mask-image: url(/images/avatar-group-hover-last.svg?6ac726130dcb2db3245cbd2b42a47685);
 }
 
 .chart {
@@ -16767,8 +16767,8 @@ button:focus {
 }
 
 .icon.active > .fe {
-  -webkit-mask-image: url(/images/icon-status.svg?26af34e14f99808e440bd10e6159ddee);
-          mask-image: url(/images/icon-status.svg?26af34e14f99808e440bd10e6159ddee);
+  -webkit-mask-image: url(/images/icon-status.svg?c971ca1909311eb4bd25cf62905f6d03);
+          mask-image: url(/images/icon-status.svg?c971ca1909311eb4bd25cf62905f6d03);
   -webkit-mask-size: 100% 100%;
           mask-size: 100% 100%;
 }

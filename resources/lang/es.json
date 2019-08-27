@@ -1,4 +1,6 @@
 {
+    "Login": "Iniciar Sesión",
+    "Logout": "Cerrar Sesión",
     "Home": "Inicio",
     "Testimonial": "Testimonios",
     "Have us call you!": "¡Nosotros te llamamos!",
@@ -52,6 +54,8 @@
     "Contact Us": "¿Quieres saber más? Contáctanos",
     "Full Name": "Nombre completo",
     "E-mail": "Correo electrónico",
+    "Enter your password": "Ingresa tu Contraseña",
+    "Forgot Your Password?": "¿Olvidaste tu contraseña?",
     "Message": "Mensaje",
     "Submit": "Enviar",
     "contactUsSuccessMessage": "Te contactaremos en breve.",
@@ -89,5 +93,9 @@
     "checkoutTestimonial": "Al igual que tú, nuestra misión es conectar a las personas, por lo tanto, las necesidades de nuestros clientes son lo primero.",
     "Change Language": "Cambiar lenguaje",
     "The given data was invalid.": "Los datos proporcionados no son válidos",
-    "Please review your information": "Por favor revise su información"
+    "Please review your information": "Por favor revise su información",
+    "Don't have an account yet?": "¿Aún no tienes una cuenta?",
+    "Checkout here": "Registrate aquí",
+    "Welcome": "Bienvenido",
+    "Search": "Buscar"
 }

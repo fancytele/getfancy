@@ -23,7 +23,7 @@ class WebSiteController extends Controller
     {
         $products = Product::get(['name', 'slug', 'cost', 'discount', 'is_primary']);
 
-        return view('welcome', compact('products'));
+        return view('home', compact('products'));
     }
 
     /**
