@@ -41831,7 +41831,15 @@ __webpack_require__.r(__webpack_exports__);
   };
 
   $(document).ready(function () {
-    _navbar__WEBPACK_IMPORTED_MODULE_5__["default"].init();
+    _navbar__WEBPACK_IMPORTED_MODULE_5__["default"].init(); // Get Started buton
+
+    $('#home #get-started').click(function (e) {
+      e.preventDefault();
+      var target = e.target.attributes.href.value;
+      $('html, body').animate({
+        scrollTop: $(e.target.attributes.href.value).offset().top - 120
+      }, 800);
+    });
     $('#plans .btn-group button').on('click', changePlan);
     $('#plans #plan-buy').click(redirectToCheckout); // Have Us Call You
 
@@ -41901,7 +41909,7 @@ var animateScrollSpy = function animateScrollSpy(event) {
   if (this.hash !== "" && this.hash !== window.location.hash) {
     event.preventDefault();
     $('html, body').animate({
-      scrollTop: $(this.hash).offset().top - 83
+      scrollTop: $(this.hash).offset().top - 120
     }, 800);
   }
 };

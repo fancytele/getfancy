@@ -223,6 +223,7 @@
                         </p>
                         <div class="d-inline-block">
                             <a href="#plans"
+                            id="get-started"
                                class="btn btn-block btn-lg btn-primary px-6 rounded text-uppercase">
                                 Get Started
                             </a>

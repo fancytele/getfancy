@@ -57,6 +57,14 @@ import navbarCollapse from './navbarCollapse';
   $(document).ready(() => {
     navbar.init();
 
+    // Get Started buton
+    $('#home #get-started').click(e => {
+      e.preventDefault();
+
+      const target = e.target.attributes.href.value;
+      $('html, body').animate({ scrollTop: $(e.target.attributes.href.value).offset().top - 120 }, 800);
+    })
+
     $('#plans .btn-group button').on('click', changePlan);
     $('#plans #plan-buy').click(redirectToCheckout);
 

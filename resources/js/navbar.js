@@ -1,7 +1,7 @@
 const animateScrollSpy = function (event) {
   if (this.hash !== "" && this.hash !== window.location.hash) {
     event.preventDefault();
-    $('html, body').animate({ scrollTop: $(this.hash).offset().top - 83 }, 800);
+    $('html, body').animate({ scrollTop: $(this.hash).offset().top - 120 }, 800);
   }
 }
 
