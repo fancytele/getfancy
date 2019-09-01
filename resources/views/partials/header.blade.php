@@ -1,34 +1,18 @@
 <header>
     <nav id="fancy-navbar"
-         class="border-0 bg-transparent fixed-top navbar navbar-dark navbar-expand-md">
-        <div class="container">
-            <a class="font-weight-bold navbar-brand py-3 text-uppercase"
-               href="{{ url('/') }}">
-                <img class="fancy-logo fancy-white-logo"
-                     src="{{ URL::asset('img/logo-light.png') }}"
-                     alt="Fancy Logo">
-                <img class="fancy-logo fancy-dark-logo"
+         class="bg-transparent border-0 fixed-top navbar navbar-dark navbar-expand-md pt-4">
+        <div class="align-items-end container d-flex">
+            <a href="{{ url('/') }}">
+                {{-- TODO: Change to SVG --}}
+                <img class="fancy-logo"
                      src="{{ URL::asset('img/logo-primary.png') }}"
                      alt="Fancy Logo">
             </a>
-            <form method="POST" action="/locale" class="d-md-none ml-auto pr-3">
-                @csrf
-                <label class="sr-only" for="locale-sm">
-                    Cambiar lenguaje
-                </label>
-                <select name="locale" id="locale-sm" class="form-control locale"
-                        class="form-control">
-                    <option value="en" @if (App::isLocale('en')) selected
-                            disabled @endif>EN</option>
-                    <option value="es" @if (App::isLocale('es')) selected
-                            disabled @endif>ES</option>
-                </select>
-            </form>
             @isset ($show_nav)
             <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#fancy-menu" aria-controls="fancy-menu"
                     aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+                <i class="font-weight-bold la la-2x la-bars text-primary"></i>
             </button>
             @endif
             <div class="collapse navbar-collapse flex-column align-items-end"
@@ -36,59 +20,64 @@
                 <button type="button" class="close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <div class="d-flex">
-                    @guest
-                        <a href="{{ route('admin.login') }}"
-                            class="btn btn-primary btn-sm mr-3">
-                            @lang('Login')
-                        </a>
-                    @endguest
-
-                    @auth
-                        <a href="{{ route('admin.dashboard') }}"
-                            class="btn btn-primary btn-sm mr-3">
-                            @lang('Dashboard')
-                        </a>
-                    @endauth
-                    <form method="POST" action="/locale"
-                          class="d-none d-md-block pr-3">
-                        @csrf
-                        <label class="sr-only" for="locale-md">
-                            @lang('Change Language')
-                        </label>
-                        <select name="locale" id="locale-md"
-                                class="form-control form-control-sm locale"
-                                class="form-control form-control-sm">
-                            <option value="en" @if (App::isLocale('en'))
-                                    selected disabled @endif>EN</option>
-                            <option value="es" @if (App::isLocale('es'))
-                                    selected disabled @endif>ES</option>
-                        </select>
-                    </form>
+                <div class="d-md-flex d-none mb-4 small">
+                    @if(App::isLocale('en'))
+                    <span class="text-muted">English</span>
+                    @else
+                    <a href="{{ route('web.locale', 'en') }}" class="text-body">
+                        English
+                    </a>
+                    @endif
+                    <span class="px-3">|</span>
+                    @if(App::isLocale('es'))
+                    <span class="text-muted">Español</span>
+                    @else
+                    <a href="{{ route('web.locale', 'es') }}" class="text-body">
+                        Español
+                    </a>
+                    @endif
                 </div>
                 @isset ($show_nav)
-                <ul class="navbar-nav ml-auto text-uppercase">
+                <ul
+                    class="align-items-center d-flex ml-auto navbar-nav text-lowercase">
                     <li class="nav-item">
-                        <a class="nav-link" href="#home">
-                            @lang('Home') <span class="sr-only">(current)</span>
+                        <a class="font-weight-bold nav-link text-body"
+                           href="#features">
+                            @lang('Features')
+                            <span class="sr-only">(current)</span>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
-                           href="#features">@lang('Features')</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#how-it-works">
+                        <a class="font-weight-bold nav-link text-body"
+                           href="#how-it-works">
                             @lang('How It Works')
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link"
-                           href="#testimonial">@lang('Testimonial')</a>
+                        <a class="font-weight-bold nav-link text-body"
+                           href="#plans">@lang('Our Plans')</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#plans">@lang('Our Plans')</a>
+                        <a class="font-weight-bold nav-link text-body"
+                           href="#testimonial">@lang('Testimonial')</a>
                     </li>
+                    @guest
+                    <li class="nav-item">
+                        <a href="{{ route('admin.login') }}"
+                           class="btn btn-primary btn-sm px-4 py-2 text-capitalize">
+                            @lang('Login')
+                        </a>
+                    </li>
+                    @endguest
+
+                    @auth
+                    <li class="nav-item">
+                        <a href="{{ route('admin.dashboard') }}"
+                           class="btn btn-primary btn-sm px-3 py-2 text-capitalize">
+                            @lang('Dashboard')
+                        </a>
+                    </li>
+                    @endauth
                 </ul>
                 @endif
             </div>

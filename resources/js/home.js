@@ -85,7 +85,7 @@ import navbarCollapse from './navbarCollapse';
         .then(() => contactUs.showSuccessMessage())
         .catch(() => contactUs.showErrorMessage())
         .then(() => contactUs.enableSubmit());
-    })
+    });
 
     // Init AOS Animation
     if (typeof AOS !== 'undefined') {

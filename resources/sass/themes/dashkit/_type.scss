@@ -108,3 +108,13 @@ a, button {
   font-weight: 600;
   font-style: normal;
 }
+
+
+// Include Oxyen Font
+
+@font-face {
+  font-family: 'Oxygen';
+  src: url('#{$path-to-fonts}/Oxygen/Oxygen-Bold.ttf');
+  font-weight: 700;
+  font-style: bold;
+}

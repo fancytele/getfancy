@@ -1,27 +1,6 @@
-.work-heading {
-  @include media-breakpoint-up(sm) {
-    margin: 0 auto;
-    width: 85%;
-  }
-
-  @include media-breakpoint-up(lg) {
-    margin: 0 auto;
-    width: 60%;
-  }
-}
-
 .work-list {
-  position: relative;
-
-  @include media-breakpoint-up(md) {
-    &:before {
-      content: "";
-      background-color: #ededed;
-      height: 0.0625rem;
-      left: 15%;
-      position: absolute;
-      top: 15%;
-      width: 70%;
-    }
+  .work-item-left {
+    margin-right: 1.25rem;
+    width: 2.8125rem;
   }
 }
