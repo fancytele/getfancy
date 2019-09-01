@@ -20,13 +20,11 @@
 
 // Components
 @import "components/call-you";
-@import "components/fancy-svg";
-@import "components/features";
 @import "components/hero";
 @import "components/how-it-works";
 @import "components/navbar-collapse";
 @import "components/plan-item";
-@import "components/testimonial";
+@import "components/quote";
 
 // Pages
 @import "pages/checkout";
@@ -35,6 +33,7 @@
 @import "themes/dashkit/dashkit";
 
 // Vendor Extensions
+@import "vendor_extensions/carousel";
 @import "vendor_extensions/stripe-element";
 
 @import "~ladda/dist/ladda-themeless.min";

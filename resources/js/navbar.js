@@ -22,10 +22,6 @@ const init = () => {
 
   $("#fancy-menu .nav-link").on('click', animateScrollSpy);
 
-  $('.locale').on('change', function () {
-    $(this).parents('form').first().submit();
-  });
-
   $(window).on('scroll', changeNavbarBg);
 
   changeNavbarBg();

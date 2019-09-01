@@ -41924,9 +41924,6 @@ var init = function init() {
     offset: 95
   });
   $("#fancy-menu .nav-link").on('click', animateScrollSpy);
-  $('.locale').on('change', function () {
-    $(this).parents('form').first().submit();
-  });
   $(window).on('scroll', changeNavbarBg);
   changeNavbarBg();
 };

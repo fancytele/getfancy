@@ -5,26 +5,6 @@
 
 // General
 
-.avatar {
-  position: relative;
-  display: inline-block;
-  width: $avatar-size-base;
-  height: $avatar-size-base;
-  font-size: $avatar-size-base / 3;
-
-  // Loads mask images so they don't lag on hover
-
-  &:after {
-    content: '';
-    position: absolute;
-    width: 0; height: 0;
-    background-image: url(#{$path-to-img}/masks/avatar-status.svg),
-                      url(#{$path-to-img}/masks/avatar-group.svg),
-                      url(#{$path-to-img}/masks/avatar-group-hover.svg),
-                      url(#{$path-to-img}/masks/avatar-group-hover-last.svg);
-  }
-}
-
 .avatar-img {
   width: 100%;
   height: 100%;
@@ -42,23 +22,6 @@
 
 
 // Status
-
-.avatar-online,
-.avatar-offline {
-
-  &::before {
-    content: '';
-    position: absolute;
-    bottom: 5%; right: 5%;
-    width: 20%; height: 20%;
-    border-radius: 50%;
-  }
-
-  .avatar-img {
-    mask-image: url(#{$path-to-img}/masks/avatar-status.svg);
-    mask-size: 100% 100%;
-  }
-}
 
 .avatar-online::before {
   background-color: $success;
@@ -165,28 +128,4 @@
   .avatar-xxl + .avatar-xxl {
     margin-left: -$avatar-size-xxl / 4;
   }
-
-  // Add some spacing between avatars
-
-  .avatar:not(:last-child) {
-    mask-image: url(#{$path-to-img}/masks/avatar-group.svg);
-    mask-size: 100% 100%;
-  }
-
-  // Bring an avatar to front on hover
-
-  .avatar:hover {
-    mask-image: none;
-    z-index: 1;
-
-    + .avatar {
-      mask-image: url(#{$path-to-img}/masks/avatar-group-hover.svg);
-      mask-size: 100% 100%;
-
-      &:last-child {
-        mask-image: url(#{$path-to-img}/masks/avatar-group-hover-last.svg);
-      }
-    }
-  }
-
 }
