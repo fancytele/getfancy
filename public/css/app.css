@@ -13076,6 +13076,22 @@ a.text-white:focus {
   z-index: 1;
 }
 
+.summary .locale span {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.summary .locale a {
+  color: #fff;
+}
+
+.summary .navbar-light span {
+  color: #95AAC9;
+}
+
+.summary .navbar-light a {
+  color: #1d2c3c;
+}
+
 .summary-checkout {
   bottom: 7.3125rem;
 }

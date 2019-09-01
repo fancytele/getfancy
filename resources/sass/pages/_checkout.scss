@@ -1,3 +1,23 @@
+.summary .locale {
+  span {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  a {
+    color: #fff;
+  }
+}
+
+.summary .navbar-light {
+  span {
+    color: $gray-600;
+  }
+
+  a {
+    color: $body-color;
+  }
+}
+
 .summary-checkout {
   bottom: 7.3125rem;
 }
