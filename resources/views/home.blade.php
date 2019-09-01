@@ -212,25 +212,20 @@
                     <div class="col-md-7">
                         <h1
                             class="display-3 font-heading font-weight-bold line-height-md text-primary">
-                            looking for a
-                            <br>
-                            Virtual Phone System?
+                            @lang('Hero Title')
                         </h1>
                         <p class="my-md-5 w-75">
-                            The fanciest call management solution for
-                            small, medium & large business,
-                            with the best deals in the market.
+                            @lang('Hero Message')
                         </p>
                         <div class="d-inline-block">
-                            <a href="#plans"
-                            id="get-started"
+                            <a href="#plans" id="get-started"
                                class="btn btn-block btn-lg btn-primary px-6 rounded text-uppercase">
-                                Get Started
+                                @lang('Get Started')
                             </a>
                             <p class="mb-0">
                                 <small class="text-muted">
-                                    Different plans, same benefits. Cancel any
-                                    time.
+                                    @lang('Different plans, same benefits').
+                                    @lang('Cancel any time').
                                 </small>
                             </p>
                         </div>
@@ -250,12 +245,11 @@
             <div class="fancy-section">
                 <div class="container">
                     <div class="text-center" data-aos="fade-up">
-                        <h2 class="display-4 font-heading">Features</h2>
+                        <h2 class="display-4 font-heading">
+                            @lang('Features')
+                        </h2>
                         <p class="m-auto text-info w-lg-75">
-                            Make it easy to provide your business powerful phone
-                            service. No complex hardware to install or maintain.
-                            Fancy is simple to use and manage, requiring no
-                            technical expertise.
+                            @lang('Feature Message')
                         </p>
                     </div>
                     <div class="mt-7 row">
@@ -267,10 +261,11 @@
                                        class="la la-globe position-relative top-1"></i>
                                 </span>
                             </div>
-                            <h4 class="font-weight-bold">Work anywhere</h4>
+                            <h4 class="font-weight-bold">
+                                @lang('Work anywhere')
+                            </h4>
                             <p>
-                                Plug in your existing phone anywhere and it work
-                                just like at the office.
+                                @lang('Work anywhere Message')
                             </p>
                         </div>
                         <div class="col-md-4 mb-3" data-aos="fade-up">
@@ -281,12 +276,11 @@
                                        class="la la-globe position-relative top-1"></i>
                                 </span>
                             </div>
-                            <h4 class="font-weight-bold">Management Tools</h4>
+                            <h4 class="font-weight-bold">
+                                @lang('Management tools')
+                            </h4>
                             <p>
-                                The management system allows you to change
-                                or add extensions, create call log reports,
-                                manage incoming and outgoing calls,
-                                record phone calls and much, much more.
+                                @lang('Management tools Message')
                             </p>
                         </div>
                         <div class="col-md-4 mb3" data-aos="fade-up">
@@ -297,11 +291,11 @@
                                        class="la la-globe position-relative top-1"></i>
                                 </span>
                             </div>
-                            <h4 class="font-weight-bold">Relability</h4>
+                            <h4 class="font-weight-bold">
+                                @lang('Relability')
+                            </h4>
                             <p>
-                                Our proven 99.9% up-time and our system wide
-                                redundancy makes us the most reliable cloud
-                                phone service carrier in the nation.
+                                @lang('Relability Message')
                             </p>
                         </div>
                     </div>
@@ -318,7 +312,7 @@
         <section id="how-it-works" class="fancy-section">
             <div class="container pb-5" data-aos="fade-up">
                 <h2 class="display-4 font-heading mb-6 text-primary">
-                    How It Works
+                    @lang('How It Works')
                 </h2>
                 <div class="row">
                     <div class="col-md-6 col-lg-5">
@@ -330,11 +324,10 @@
                                 </div>
                                 <div class="media-body">
                                     <h4 class="mt-0">
-                                        Pick a number of your choice
+                                        @lang('Pick a number of your choice')
                                     </h4>
                                     <small>
-                                        You can also port your number to Fancy
-                                        for free.
+                                        @lang('Pick a number Message')
                                     </small>
                                 </div>
                             </div>
@@ -346,12 +339,10 @@
                                 </div>
                                 <div class="media-body">
                                     <h4 class="mt-0">
-                                        Record greetings or use recording
-                                        service
+                                        @lang('Record greetings')
                                     </h4>
                                     <small>
-                                        Create your custom main greeting for
-                                        auto attendant.
+                                        @lang('Record greetings Message')
                                     </small>
                                 </div>
                             </div>
@@ -362,12 +353,10 @@
                                 </div>
                                 <div class="media-body">
                                     <h4 class="mt-0">
-                                        Add extensions
+                                        @lang('Add extensions')
                                     </h4>
                                     <small>
-                                        Create & customize extensions to forward
-                                        call anywhere, home, office or your
-                                        mobile.
+                                        @lang('Add extensions Message')
                                     </small>
                                 </div>
                             </div>
@@ -385,18 +374,15 @@
                                    class="la la-3x la-quote-left text-info quote-icon"></i>
                                 <blockquote class="quote-cite">
                                     <p class="font-italic">
-                                        We are a people company. We are a family
-                                        company. Like you, our mission is to
-                                        connect people, therefore the needs of
-                                        our clients come first.
+                                        @lang('Quote1')
                                     </p>
                                     <p class="font-italic">
-                                        We are proud of our customers and their
-                                        growth, and would love to work with you.
+                                        @lang('Quote2')
                                     </p>
                                     <footer>
-                                        <strong class="d-block">Johnny
-                                            Bosche</strong>
+                                        <strong class="d-block">
+                                            Johnny Bosche
+                                        </strong>
                                         CEO, Fancy
                                     </footer>
                                 </blockquote>
@@ -509,7 +495,7 @@
                     <div class="col-md-6">
                         <div class="pt-md-6 px-4 px-sm-0 py-4">
                             <h2 class="display-3 font-heading mb-0 text-white">
-                                What people think of
+                                @lang('What people think of')
                             </h2>
                             <img src="{{ asset('/img/logo-light.png') }}"
                                  alt="Logo Secondary" class="mt-3">
@@ -532,10 +518,8 @@
                                                 </p>
                                                 <footer>
                                                     <strong class="d-block">
-                                                        @lang('Testimony
-                                                        Footer')
+                                                        Cindy Smith
                                                     </strong>
-                                                    Founder, Cool Starup
                                                 </footer>
                                             </blockquote>
                                         </div>
@@ -554,10 +538,8 @@
                                                 </p>
                                                 <footer>
                                                     <strong class="d-block">
-                                                        @lang('Testimony
-                                                        Footer')
+                                                        Cindy Smith
                                                     </strong>
-                                                    Founder, Cool Starup
                                                 </footer>
                                             </blockquote>
                                         </div>
@@ -576,10 +558,8 @@
                                                 </p>
                                                 <footer>
                                                     <strong class="d-block">
-                                                        @lang('Testimony
-                                                        Footer')
+                                                        Cindy Smith
                                                     </strong>
-                                                    Founder, Cool Starup
                                                 </footer>
                                             </blockquote>
                                         </div>
@@ -598,10 +578,8 @@
                                                 </p>
                                                 <footer>
                                                     <strong class="d-block">
-                                                        @lang('Testimony
-                                                        Footer')
+                                                        Cindy Smith
                                                     </strong>
-                                                    Founder, Cool Starup
                                                 </footer>
                                             </blockquote>
                                         </div>
