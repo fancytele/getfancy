@@ -41766,24 +41766,120 @@ var trans = function trans(string) {
 
 /***/ }),
 
-/***/ "./resources/js/home.js":
-/*!******************************!*\
-  !*** ./resources/js/home.js ***!
-  \******************************/
+/***/ "./resources/js/navbar.js":
+/*!********************************!*\
+  !*** ./resources/js/navbar.js ***!
+  \********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var animateScrollSpy = function animateScrollSpy(event) {
+  if (this.hash !== "" && this.hash !== window.location.hash) {
+    event.preventDefault();
+    $('html, body').animate({
+      scrollTop: $(this.hash).offset().top - 120
+    }, 800);
+  }
+};
+
+var changeNavbarBg = function changeNavbarBg() {
+  var scroll = $(window).scrollTop();
+  var navbarDarkClass = 'border-0 bg-transparent navbar-dark';
+  var navbarLightClasses = 'bg-white navbar-light shadow';
+
+  if (scroll >= 100) {
+    $('#fancy-navbar').addClass(navbarLightClasses).removeClass(navbarDarkClass);
+  } else {
+    $('#fancy-navbar').addClass(navbarDarkClass).removeClass(navbarLightClasses);
+  }
+};
+
+var init = function init() {
+  $('body').scrollspy({
+    target: "#fancy-navbar",
+    offset: 95
+  });
+  $("#fancy-menu .nav-link").on('click', animateScrollSpy);
+  $(window).on('scroll', changeNavbarBg);
+  changeNavbarBg();
+};
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  init: init
+});
+
+/***/ }),
+
+/***/ "./resources/js/navbarCollapse.js":
+/*!****************************************!*\
+  !*** ./resources/js/navbarCollapse.js ***!
+  \****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+var _this = undefined;
+
+var navbarCollapse = function navbarCollapse(classElement, toggleClass) {
+  var body = document.querySelector('body');
+  var element = document.querySelector(classElement);
+  var toggleElement = document.querySelector(toggleClass);
+  var closeButton = element.querySelector('.close');
+
+  var registerEvents = function registerEvents() {
+    toggleElement.addEventListener('click', showCollapse.bind(_this));
+    closeButton.addEventListener('click', closeCollapse.bind(_this));
+    document.addEventListener('click', navigateTo.bind(_this));
+  };
+
+  var showCollapse = function showCollapse() {
+    body.classList.add('overflow-collapse');
+  };
+
+  var closeCollapse = function closeCollapse() {
+    element.classList.remove('show');
+    body.classList.remove('overflow-collapse');
+  };
+
+  var navigateTo = function navigateTo() {
+    // Allow only nav-link
+    if (!event.target.matches("".concat(classElement, " .nav-link"))) return;
+    event.preventDefault();
+    closeCollapse();
+  };
+
+  var init = function init() {
+    registerEvents();
+  };
+
+  init();
+};
+
+/* harmony default export */ __webpack_exports__["default"] = (navbarCollapse);
+
+/***/ }),
+
+/***/ "./resources/js/pages/home.js":
+/*!************************************!*\
+  !*** ./resources/js/pages/home.js ***!
+  \************************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+/* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../bootstrap */ "./resources/js/bootstrap.js");
 /* harmony import */ var _bootstrap__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_bootstrap__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var imask__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! imask */ "./node_modules/imask/dist/imask.esm.js");
-/* harmony import */ var _contactUs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./contactUs */ "./resources/js/contactUs.js");
-/* harmony import */ var _haveUsCallYou__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./haveUsCallYou */ "./resources/js/haveUsCallYou.js");
-/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./navbar */ "./resources/js/navbar.js");
-/* harmony import */ var _navbarCollapse__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./navbarCollapse */ "./resources/js/navbarCollapse.js");
+/* harmony import */ var _contactUs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../contactUs */ "./resources/js/contactUs.js");
+/* harmony import */ var _haveUsCallYou__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../haveUsCallYou */ "./resources/js/haveUsCallYou.js");
+/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../navbar */ "./resources/js/navbar.js");
+/* harmony import */ var _navbarCollapse__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../navbarCollapse */ "./resources/js/navbarCollapse.js");
 
 
 
@@ -41896,110 +41992,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/navbar.js":
-/*!********************************!*\
-  !*** ./resources/js/navbar.js ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var animateScrollSpy = function animateScrollSpy(event) {
-  if (this.hash !== "" && this.hash !== window.location.hash) {
-    event.preventDefault();
-    $('html, body').animate({
-      scrollTop: $(this.hash).offset().top - 120
-    }, 800);
-  }
-};
-
-var changeNavbarBg = function changeNavbarBg() {
-  var scroll = $(window).scrollTop();
-  var navbarDarkClass = 'border-0 bg-transparent navbar-dark';
-  var navbarLightClasses = 'bg-white navbar-light shadow';
-
-  if (scroll >= 100) {
-    $('#fancy-navbar').addClass(navbarLightClasses).removeClass(navbarDarkClass);
-  } else {
-    $('#fancy-navbar').addClass(navbarDarkClass).removeClass(navbarLightClasses);
-  }
-};
-
-var init = function init() {
-  $('body').scrollspy({
-    target: "#fancy-navbar",
-    offset: 95
-  });
-  $("#fancy-menu .nav-link").on('click', animateScrollSpy);
-  $(window).on('scroll', changeNavbarBg);
-  changeNavbarBg();
-};
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-  init: init
-});
-
-/***/ }),
-
-/***/ "./resources/js/navbarCollapse.js":
-/*!****************************************!*\
-  !*** ./resources/js/navbarCollapse.js ***!
-  \****************************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var _this = undefined;
-
-var navbarCollapse = function navbarCollapse(classElement, toggleClass) {
-  var body = document.querySelector('body');
-  var element = document.querySelector(classElement);
-  var toggleElement = document.querySelector(toggleClass);
-  var closeButton = element.querySelector('.close');
-
-  var registerEvents = function registerEvents() {
-    toggleElement.addEventListener('click', showCollapse.bind(_this));
-    closeButton.addEventListener('click', closeCollapse.bind(_this));
-    document.addEventListener('click', navigateTo.bind(_this));
-  };
-
-  var showCollapse = function showCollapse() {
-    body.classList.add('overflow-collapse');
-  };
-
-  var closeCollapse = function closeCollapse() {
-    element.classList.remove('show');
-    body.classList.remove('overflow-collapse');
-  };
-
-  var navigateTo = function navigateTo() {
-    // Allow only nav-link
-    if (!event.target.matches("".concat(classElement, " .nav-link"))) return;
-    event.preventDefault();
-    closeCollapse();
-  };
-
-  var init = function init() {
-    registerEvents();
-  };
-
-  init();
-};
-
-/* harmony default export */ __webpack_exports__["default"] = (navbarCollapse);
-
-/***/ }),
-
 /***/ 1:
-/*!************************************!*\
-  !*** multi ./resources/js/home.js ***!
-  \************************************/
+/*!******************************************!*\
+  !*** multi ./resources/js/pages/home.js ***!
+  \******************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/resources/js/home.js */"./resources/js/home.js");
+module.exports = __webpack_require__(/*! /var/www/resources/js/pages/home.js */"./resources/js/pages/home.js");
 
 
 /***/ })

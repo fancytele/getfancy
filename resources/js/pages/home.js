@@ -1,12 +1,12 @@
-import './bootstrap';
+import '../bootstrap';
 
 import axios from 'axios';
 import IMask from 'imask';
 
-import contactUs from './contactUs';
-import haveUsCallYou from './haveUsCallYou';
-import navbar from './navbar';
-import navbarCollapse from './navbarCollapse';
+import contactUs from '../contactUs';
+import haveUsCallYou from '../haveUsCallYou';
+import navbar from '../navbar';
+import navbarCollapse from '../navbarCollapse';
 
 (function () {
   const changePlan = function (e) {

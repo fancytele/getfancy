@@ -10,15 +10,18 @@
 
     <title>{{ config('app.name') }} - @lang('Login')</title>
 
+    <!-- Links -->
+    <script src="{{ asset('js/login.js') }}"></script>
+
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
-<body class="d-flex align-items-center bg-auth">
-    <div class="container-fluid">
-        <div class="row align-items-center justify-content-center">
-            <div class="col-12 col-md-5 col-lg-6 col-xl-4 px-lg-6 my-5">
-
+<body
+      class="d-flex align-items-center bg-auth border-top border-top-2 border-primary">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-5 col-xl-4 my-5">
                 <div class="text-center">
                     <a href="{{ route('web.homepage') }}">
                         <img class="w-50"
@@ -28,7 +31,7 @@
                 </div>
 
                 <p class="text-muted text-center mb-5">
-                    @lang('Login')
+                    @lang('Access to your dashboard').
                 </p>
 
                 <!-- Form -->
@@ -90,8 +93,10 @@
                     </div>
 
                     <!-- Submit -->
-                    <button class="btn btn-lg btn-block btn-primary mb-3">
-                        @lang('Login')
+                    <button type="submit"
+                            class="btn btn-lg btn-block btn-primary ladda-button mb-3"
+                            data-style="zoom-out">
+                        <span class="ladda-label">@lang('Login')</span>
                     </button>
 
                     <!-- Link -->
@@ -104,15 +109,6 @@
                     </p>
 
                 </form>
-
-            </div>
-            <div class="col-12 col-md-7 col-lg-6 col-xl-8 d-none d-lg-block">
-
-                <!-- Image -->
-                <div class="bg-cover vh-100 mt-n1 mr-n3"
-                     style="background-image: url({{ asset('/img/covers/auth-side-cover.jpg') }});">
-                </div>
-
             </div>
         </div> <!-- / .row -->
     </div>
