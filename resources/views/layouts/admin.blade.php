@@ -88,6 +88,33 @@
                             </div>
                         </div>
                     </form>
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="#sidebarDashboards"
+                               data-toggle="collapse" role="button"
+                               aria-expanded="true"
+                               aria-controls="sidebarDashboards">
+                                <i class="fe fe-home"></i> Dashboards
+                            </a>
+                            <div class="collapse show" id="sidebarDashboards">
+                                <ul class="nav nav-sm flex-column">
+                                    <li class="nav-item">
+                                        <a href="index.html"
+                                           class="nav-link active">
+                                            Default
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="dashboard-alt.html"
+                                           class="nav-link ">
+                                            Alternative
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
                 </div> <!-- / .navbar-collapse -->
             </div>
         </nav>
@@ -107,7 +134,8 @@
                             <!-- Input -->
                             <input type="search"
                                    class="form-control form-control-prepended search"
-                                   placeholder="@lang('Search')" aria-label="Search">
+                                   placeholder="@lang('Search')"
+                                   aria-label="Search">
                             <div class="input-group-prepend">
                                 <div class="input-group-text">
                                     <i class="fe fe-search"></i>

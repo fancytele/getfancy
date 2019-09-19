@@ -1,0 +1,18 @@
+// Bootstrap functions
+@import ".~bootstrap/scss/functions";
+
+// Custom variables
+@import "abstracts/variables";
+
+// Dashkit variables
+@import "themes/dashkit/variables";
+
+// Bootstrap core
+@import ".~bootstrap/scss/bootstrap";
+
+// Themes
+@import "themes/dashkit/dashkit";
+
+// Vendor Extensions
+@import "~ladda/dist/ladda-themeless.min";
+@import "~select2/dist/css/select2.min.css";

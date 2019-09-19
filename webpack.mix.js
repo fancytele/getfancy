@@ -15,5 +15,6 @@ mix.js('resources/js/app.js', 'public/js')
   .js('resources/js/pages/home.js', 'public/js')
   .js('resources/js/pages/login.js', 'public/js')
   .js('resources/js/pages/checkout.js', 'public/js')
-  .sass('resources/sass/app.scss', 'public/css')
+  .sass('resources/sass/web/main.scss', 'public/css/web.css')
+  .sass('resources/sass/app/main.scss', 'public/css/app.css')
   .copyDirectory('resources/img', 'public/img');

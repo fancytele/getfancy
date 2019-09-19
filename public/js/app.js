@@ -2346,18 +2346,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -44374,7 +44362,14 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "pt-4" }, [
                   _c("h3", { staticClass: "ml-n2" }, [
-                    _vm._m(0),
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "border border-2 border-primary checkout-step mr-2 rounded-circle text-primary"
+                      },
+                      [_vm._v("1")]
+                    ),
                     _vm._v(
                       "\n                " +
                         _vm._s(_vm.trans("Create Account")) +
@@ -44709,7 +44704,14 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "pt-4" }, [
                   _c("h3", { staticClass: "ml-n2" }, [
-                    _vm._m(1),
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "border border-2 border-primary checkout-step mr-2 rounded-circle text-primary"
+                      },
+                      [_vm._v("2")]
+                    ),
                     _vm._v(
                       "\n                " +
                         _vm._s(_vm.trans("Your Billing Information")) +
@@ -44977,7 +44979,14 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "pt-4" }, [
                   _c("h3", { staticClass: "ml-n2" }, [
-                    _vm._m(2),
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "border border-2 border-primary checkout-step mr-2 rounded-circle text-primary"
+                      },
+                      [_vm._v("3")]
+                    ),
                     _vm._v(
                       "\n                " +
                         _vm._s(_vm.trans("Additional Features")) +
@@ -45082,7 +45091,14 @@ var render = function() {
                 _vm._v(" "),
                 _c("div", { staticClass: "pt-4" }, [
                   _c("h3", { staticClass: "ml-n2" }, [
-                    _vm._m(3),
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "border border-2 border-primary checkout-step mr-2 rounded-circle text-primary"
+                      },
+                      [_vm._v("4")]
+                    ),
                     _vm._v(
                       "\n                " +
                         _vm._s(_vm.trans("Your Payment Information")) +
@@ -45251,7 +45267,7 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("p", { staticClass: "mt-4 text-center" }, [
-                    _vm._m(4),
+                    _vm._m(0),
                     _vm._v(" "),
                     _c("span", { staticClass: "font-weight-bold" }, [
                       _vm._v(_vm._s(_vm.trans("Need any help?")))
@@ -45325,7 +45341,7 @@ var render = function() {
               _vm._v(" "),
               _c("ul", { staticClass: "list-unstyled" }, [
                 _c("li", { staticClass: "mb-2" }, [
-                  _vm._m(5),
+                  _vm._m(1),
                   _vm._v(" "),
                   _c("span", {
                     domProps: {
@@ -45335,7 +45351,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("li", { staticClass: "mb-2" }, [
-                  _vm._m(6),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c("span", {
                     domProps: {
@@ -45345,7 +45361,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("li", { staticClass: "mb-2" }, [
-                  _vm._m(7),
+                  _vm._m(3),
                   _vm._v(" "),
                   _c("span", {
                     domProps: {
@@ -45355,7 +45371,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("li", { staticClass: "mb-2" }, [
-                  _vm._m(8),
+                  _vm._m(4),
                   _vm._v(" "),
                   _c("span", {
                     domProps: {
@@ -45365,7 +45381,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("li", { staticClass: "mb-2" }, [
-                  _vm._m(9),
+                  _vm._m(5),
                   _vm._v(" "),
                   _c("span", {
                     domProps: {
@@ -45375,7 +45391,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("li", { staticClass: "mb-2" }, [
-                  _vm._m(10),
+                  _vm._m(6),
                   _vm._v(
                     "\n              " +
                       _vm._s(_vm.trans("More")) +
@@ -45395,7 +45411,7 @@ var render = function() {
                       _vm._v(_vm._s(_vm.trans("checkoutTestimonial")))
                     ]),
                     _vm._v(" "),
-                    _vm._m(11)
+                    _vm._m(7)
                   ]
                 )
               ])
@@ -45470,46 +45486,6 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "fa-stack text-primary" }, [
-      _c("i", { staticClass: "far fa-circle fa-stack-2x" }),
-      _vm._v(" "),
-      _c("span", { staticClass: "fa-stack-1x" }, [_vm._v("1")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "fa-stack text-primary" }, [
-      _c("i", { staticClass: "far fa-circle fa-stack-2x" }),
-      _vm._v(" "),
-      _c("span", { staticClass: "fa-stack-1x" }, [_vm._v("2")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "fa-stack text-primary" }, [
-      _c("i", { staticClass: "far fa-circle fa-stack-2x" }),
-      _vm._v(" "),
-      _c("span", { staticClass: "fa-stack-1x" }, [_vm._v("3")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "fa-stack text-primary" }, [
-      _c("i", { staticClass: "far fa-circle fa-stack-2x" }),
-      _vm._v(" "),
-      _c("span", { staticClass: "fa-stack-1x" }, [_vm._v("4")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c("span", { staticClass: "align-middle h2 mb-0 text-primary" }, [
       _c("i", { staticClass: "fa-question-circle far" })
     ])
@@ -45572,11 +45548,7 @@ var staticRenderFns = [
       [
         _c("img", {
           staticClass: "mr-3 rounded-circle w-15",
-          attrs: {
-            src:
-              "https://media.licdn.com/dms/image/C5103AQGWZc65_HDAOQ/profile-displayphoto-shrink_800_800/0?e=1568246400&v=beta&t=hpibmKZIeORLRXDltT5pp196r-q2IR9Bd-8EJ25gDj8",
-            alt: "Johnny Bosche"
-          }
+          attrs: { src: "/img/web/johnny-bosche.jpg", alt: "Johnny Bosche" }
         }),
         _vm._v("\n                Johnny Bosche\n              ")
       ]
@@ -58242,10 +58214,21 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
+/***/ "./resources/sass/app/main.scss":
+/*!**************************************!*\
+  !*** ./resources/sass/app/main.scss ***!
+  \**************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./resources/sass/web/main.scss":
+/*!**************************************!*\
+  !*** ./resources/sass/web/main.scss ***!
+  \**************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -58254,14 +58237,15 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/*!*************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/web/main.scss ./resources/sass/app/main.scss ***!
+  \*************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\sass\web\main.scss */"./resources/sass/web/main.scss");
+module.exports = __webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\sass\app\main.scss */"./resources/sass/app/main.scss");
 
 
 /***/ })
