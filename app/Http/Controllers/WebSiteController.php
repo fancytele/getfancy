@@ -116,6 +116,7 @@ class WebSiteController extends Controller
         });
 
         header('Content-Type: text/javascript');
-        return 'window.i18n = ' . json_encode($strings) . ';';
+        echo 'window.i18n = ' . json_encode($strings) . ';';
+        exit();
     }
 }
