@@ -21,10 +21,7 @@
               <!-- Create Account -->
               <div class="pt-4">
                 <h3 class="ml-n2">
-                  <span class="fa-stack text-primary">
-                    <i class="far fa-circle fa-stack-2x"></i>
-                    <span class="fa-stack-1x">1</span>
-                  </span>
+                  <span class="border border-2 border-primary checkout-step mr-2 rounded-circle text-primary">1</span>
                   {{ trans('Create Account') }}
                 </h3>
 
@@ -162,10 +159,7 @@
               <!-- Billing Information -->
               <div class="pt-4">
                 <h3 class="ml-n2">
-                  <span class="fa-stack text-primary">
-                    <i class="far fa-circle fa-stack-2x"></i>
-                    <span class="fa-stack-1x">2</span>
-                  </span>
+                  <span class="border border-2 border-primary checkout-step mr-2 rounded-circle text-primary">2</span>
                   {{ trans('Your Billing Information') }}
                 </h3>
                 <div class="row">
@@ -278,10 +272,7 @@
               <!-- Additional Features -->
               <div class="pt-4">
                 <h3 class="ml-n2">
-                  <span class="fa-stack text-primary">
-                    <i class="far fa-circle fa-stack-2x"></i>
-                    <span class="fa-stack-1x">3</span>
-                  </span>
+                  <span class="border border-2 border-primary checkout-step mr-2 rounded-circle text-primary">3</span>
                   {{ trans('Additional Features') }}
                 </h3>
                 <div>
@@ -310,10 +301,7 @@
               <!-- Payment Information -->
               <div class="pt-4">
                 <h3 class="ml-n2">
-                  <span class="fa-stack text-primary">
-                    <i class="far fa-circle fa-stack-2x"></i>
-                    <span class="fa-stack-1x">4</span>
-                  </span>
+                  <span class="border border-2 border-primary checkout-step mr-2 rounded-circle text-primary">4</span>
                   {{ trans('Your Payment Information') }}
                 </h3>
                 <div>
@@ -475,7 +463,7 @@
                 <footer class="blockquote-footer font-weight-bold text-white">
                   <img
                     class="mr-3 rounded-circle w-15"
-                    src="https://media.licdn.com/dms/image/C5103AQGWZc65_HDAOQ/profile-displayphoto-shrink_800_800/0?e=1568246400&v=beta&t=hpibmKZIeORLRXDltT5pp196r-q2IR9Bd-8EJ25gDj8"
+                    src="/img/web/johnny-bosche.jpg"
                     alt="Johnny Bosche"
                   />
                   Johnny Bosche

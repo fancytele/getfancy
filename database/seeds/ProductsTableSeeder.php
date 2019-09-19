@@ -17,6 +17,7 @@ class ProductsTableSeeder extends Seeder
                 'name' => 'Monthly',
                 'slug' => 'monthly',
                 'cost' => '9.99',
+                'discount' => null,
                 'is_primary' => false
             ],
             [
@@ -27,8 +28,8 @@ class ProductsTableSeeder extends Seeder
                 'is_primary' => true
             ],
             [
-                'name' => 'Biannually',
-                'slug' => 'biannually',
+                'name' => 'Biennially',
+                'slug' => 'biennially',
                 'cost' => '159',
                 'discount' => 26,
                 'is_primary' => false

@@ -3,7 +3,6 @@
 // Extended from Bootstrap
 //
 
-
 //
 // Bootstrap Overrides =======================
 //
@@ -12,7 +11,6 @@
   border-width: 0 0 $border-width 0;
   border-style: solid;
 }
-
 
 // Navbar dark
 
@@ -50,14 +48,11 @@
 }
 
 .navbar-dark.navbar-expand {
-
   @each $breakpoint, $value in $grid-breakpoints {
     $prev: breakpoint-prev($breakpoint, $grid-breakpoints);
 
     &-#{$breakpoint} {
-
       @include media-breakpoint-down(#{$prev}) {
-
         .navbar-nav .dropdown-item {
           color: $navbar-dark-color;
 
@@ -65,7 +60,7 @@
             color: $navbar-dark-hover-color;
           }
         }
-        
+
         .navbar-nav .show > .nav-link,
         .navbar-nav .dropdown-item.active,
         .navbar-nav .dropdown-item:active {
@@ -75,7 +70,6 @@
     }
   }
 }
-
 
 // Navbar light
 
@@ -112,7 +106,6 @@
   border-top-color: $navbar-light-divider-color;
 }
 
-
 // Navbar brand
 
 .navbar-brand {
@@ -125,7 +118,6 @@
   max-height: 1.5rem;
 }
 
-
 // Navbar collapse
 
 .navbar-collapse {
@@ -137,14 +129,13 @@
   // Spacer to replace margin / padding as those
   // cause .navbar-collapse to "jump" when collapsing
   &:before {
-    content: '';
+    content: "";
     display: block;
     border-top-width: $border-width;
     border-top-style: solid;
     margin: $navbar-padding-y (-$navbar-padding-x);
   }
 }
-
 
 // Navbar navigaton
 
@@ -161,7 +152,7 @@
     position: relative;
 
     &:before {
-      content: '';
+      content: "";
       position: absolute;
       left: 0;
       top: $nav-link-padding-y;
@@ -171,16 +162,18 @@
   }
 }
 
+.navbar-dark .navbar-nav .nav-link.active:before {
+  border-left-color: $white;
+}
 
 // Navbar icons
 
 .navbar-nav .nav-link > .fe {
   min-width: $navbar-icon-min-width;
-  padding-bottom: .125em;
+  padding-bottom: 0.125em;
   font-size: $font-size-lg;
   line-height: ($font-size-base * $line-height-base);
 }
-
 
 // Navbar dropdowns
 
@@ -193,14 +186,11 @@
 }
 
 .navbar-expand {
-
   @each $breakpoint, $value in $grid-breakpoints {
     $prev: breakpoint-prev($breakpoint, $grid-breakpoints);
 
     &-#{$breakpoint} {
-
       @include media-breakpoint-down(#{$prev}) {
-
         .navbar-nav .dropdown-menu {
           background-color: transparent;
         }
@@ -209,17 +199,13 @@
   }
 }
 
-
 // Expanded
-// 
+//
 // Expanded navbar specific styles
-        
+
 .navbar-expand {
-
   @each $breakpoint, $value in $grid-breakpoints {
-
     &-#{$breakpoint} {
-
       @include media-breakpoint-up(#{$breakpoint}) {
         padding-left: 0;
         padding-right: 0;
@@ -231,7 +217,7 @@
 
         .navbar-collapse {
           flex-grow: inherit;
-          
+
           &:before {
             display: none;
           }
@@ -243,10 +229,9 @@
         }
 
         .navbar-nav .nav-link {
-
           // Increase $nav-link-padding-y value to align the underline
           // with the bottom of the navbar
-          padding: .625rem $navbar-nav-link-padding-x;
+          padding: 0.625rem $navbar-nav-link-padding-x;
 
           &.active {
             position: relative;
@@ -261,13 +246,18 @@
             }
           }
         }
-        
+
+        &.navbar-dark .navbar-nav .nav-link.active:before {
+          border-left-color: $white;
+        }
+
         // Toggle dropdown on hover
         @if ($navbar-dropdown-toggle-on-hover) {
-          .dropup, .dropright, .dropdown, .dropleft {
-
+          .dropup,
+          .dropright,
+          .dropdown,
+          .dropleft {
             @include hover {
-
               > .dropdown-menu {
                 display: block;
               }
@@ -287,7 +277,6 @@
   }
 }
 
-
 //
 // Dashkit ===================================
 //
@@ -299,7 +288,6 @@
 .navbar[class*="fixed-"] {
   z-index: $zindex-fixed;
 }
-
 
 // Navbar overflow
 //
@@ -330,13 +318,11 @@
   padding-bottom: ($nav-link-padding-y + $navbar-padding-y);
 
   &.active {
-
     &:before {
       bottom: 0;
     }
   }
 }
-
 
 // Navbar breadcrumb
 //
@@ -345,7 +331,6 @@
 .navbar-breadcrumb {
   padding: $navbar-breadcrumb-padding-y $navbar-breadcrumb-padding-x;
 }
-
 
 // Navbar user
 //
@@ -359,13 +344,11 @@
 }
 
 .navbar-user .dropdown-toggle {
-
   // Remove the default dropdown arrow
   &:after {
     display: none;
   }
 }
-
 
 // Navbar link icon
 
@@ -374,31 +357,27 @@
   min-width: $navbar-icon-min-width;
 }
 
-
 // Vertical
 //
 // Creates a vertically aligned version of the navbar
 
 .navbar-vertical {
-
   .navbar-nav .nav-link {
     display: flex;
     align-items: center;
   }
 
   .navbar-nav .nav-link[data-toggle="collapse"] {
-
     &:after {
       display: block;
-      content: '\e92e';
-      font-family: 'Feather';
+      content: "\e92e";
+      font-family: "Feather";
       margin-left: auto;
-      transition: transform .2s;
+      transition: transform 0.2s;
     }
 
     // Expanded
     &[aria-expanded="true"] {
-
       &:after {
         transform: rotate(-180deg);
       }
@@ -420,24 +399,21 @@
     padding-bottom: $nav-link-padding-y;
     font-size: $font-size-xs;
     text-transform: uppercase;
-    letter-spacing: .04em;
+    letter-spacing: 0.04em;
   }
 
-
   // Expanded
-  // 
+  //
   // Expanded navbar specific styles
-  
+
   &.navbar-expand {
-
     @each $breakpoint, $value in $grid-breakpoints {
-
       &-#{$breakpoint} {
-
         @include media-breakpoint-up(#{$breakpoint}) {
           display: block;
           position: fixed;
-          top: 0; bottom: 0;
+          top: 0;
+          bottom: 0;
           width: 100%;
           max-width: $navbar-vertical-width;
           padding-left: $navbar-vertical-padding-x;
@@ -493,15 +469,21 @@
             padding: $nav-link-padding-y $navbar-vertical-padding-x;
 
             &.active {
-
+              font-weight: bold;
+              
               &:before {
                 top: $nav-link-padding-y;
                 bottom: $nav-link-padding-y;
-                left: 0; right: auto;
+                left: 0;
+                right: auto;
                 border-left: 2px solid $primary;
                 border-bottom: 0;
               }
             }
+          }
+
+          &.navbar-dark .navbar-nav .nav-link.active:before {
+            border-left-color: $white;
           }
 
           // Second level
@@ -546,23 +528,18 @@
   }
 }
 
-
 // Vertical small
 //
 // Creates a small vertion of the vertical navbar
 
 .navbar-vertical-sm {
-
   // Expanded
-  // 
+  //
   // Expanded navbar specific styles
-  
+
   &.navbar-expand {
-
     @each $breakpoint, $value in $grid-breakpoints {
-
       &-#{$breakpoint} {
-
         @include media-breakpoint-up(#{$breakpoint}) {
           max-width: $navbar-vertical-width-sm;
           padding-left: $navbar-vertical-padding-x-sm;
@@ -599,7 +576,6 @@
           }
 
           .navbar-nav > .nav-item > .dropdown-toggle {
-
             &::after {
               display: none;
             }

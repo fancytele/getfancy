@@ -5,13 +5,14 @@
 @import "abstracts/variables";
 
 // Dashkit variables
-@import "themes/dashkit/variables";
+@import "../app/themes/dashkit/variables";
 
 // Bootstrap core
 @import ".~bootstrap/scss/bootstrap";
 
 // Abstracts
 @import "abstracts/animation";
+@import "abstracts/fonts";
 @import "abstracts/helpers";
 
 // Layout
@@ -25,16 +26,16 @@
 @import "components/navbar-collapse";
 @import "components/plan-item";
 @import "components/quote";
+@import "../app/themes/dashkit/custom-switch";
+@import "../app/themes/dashkit/utilities/borders";
 
 // Pages
 @import "pages/checkout";
 
-// Themes
-@import "themes/dashkit/dashkit";
-
 // Vendor Extensions
 @import "vendor_extensions/carousel";
 @import "vendor_extensions/stripe-element";
+@import "../app/themes/dashkit/vendors/select2";
 
 @import "~ladda/dist/ladda-themeless.min";
 @import "~select2/dist/css/select2.min.css";

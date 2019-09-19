@@ -5,6 +5,12 @@
   min-height: 15rem;
 }
 
+.bg-cover {
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
+
 .skew-section-primary {
   height: 57.5rem;
   left: 0;

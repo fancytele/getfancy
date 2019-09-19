@@ -11,9 +11,16 @@ const mix = require('laravel-mix');
  |
  */
 
+// General
 mix.js('resources/js/app.js', 'public/js')
-  .js('resources/js/pages/home.js', 'public/js')
-  .js('resources/js/pages/login.js', 'public/js')
-  .js('resources/js/pages/checkout.js', 'public/js')
-  .sass('resources/sass/app.scss', 'public/css')
   .copyDirectory('resources/img', 'public/img');
+
+// Web
+mix.js('resources/js/web/home.js', 'public/js')
+  .js('resources/js/web/checkout.js', 'public/js')
+  .sass('resources/sass/web/main.scss', 'public/css/web.css')
+
+// App
+mix.js('resources/js/app/login.js', 'public/js')
+  .js(['resources/js/app/admin.js'], 'public/js/admin.js')
+  .sass('resources/sass/app/main.scss', 'public/css/app.css');

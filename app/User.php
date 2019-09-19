@@ -4,10 +4,11 @@ namespace App;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use HasRoles, Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -49,5 +50,11 @@ class User extends Authenticatable
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class, $this->getForeignKey())->orderBy('created_at', 'desc');
+    }
+
+    public function getAvatarAttribute()
+    {
+        //TODO: Implement Avatar user when managing Profile
+        return asset('img/app/avatar.png');
     }
 }
