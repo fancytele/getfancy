@@ -12,6 +12,7 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/admin.js') }}" defer></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -20,7 +21,7 @@
 <body>
     <div id="app">
         <!-- SIDEBAR NAVIGATION -->
-        <nav class="navbar navbar-vertical fixed-left navbar-expand-md navbar-light"
+        <nav class="bg-primary  fixed-left navbar navbar-dark navbar-expand-md navbar-vertical"
              id="sidebar">
             <div class="container-fluid">
 
@@ -34,7 +35,7 @@
 
                 <!-- Brand -->
                 <a class="navbar-brand" href="{{ route('web.homepage') }}">
-                    <img src="{{ asset('img/logo-primary.png') }}" class="navbar-brand-img 
+                    <img src="{{ asset('img/logo-light.png') }}" class="navbar-brand-img 
                       mx-auto" alt="...">
                 </a>
 
@@ -48,23 +49,19 @@
                         <a href="#" id="sidebarIcon" class="dropdown-toggle"
                            role="button" data-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
-                            <div class="avatar avatar-sm avatar-online">
-                                <img src="{{ asset('img/avatars/profiles/avatar-1.jpg') }}"
+                            <div
+                                 class="avatar avatar-sm avatar-online d-inline-block">
+                                <img src="{{ Auth::user()->avatar }}"
                                      class="avatar-img rounded-circle"
-                                     alt="...">
+                                     alt="{{ Auth::user()->full_name }} avatar">
                             </div>
                         </a>
 
                         <!-- Menu -->
                         <div class="dropdown-menu dropdown-menu-right"
                              aria-labelledby="sidebarIcon">
-                            <a href="profile-posts.html"
-                               class="dropdown-item">Profile</a>
-                            <a href="settings.html"
-                               class="dropdown-item">Settings</a>
-                            <hr class="dropdown-divider">
-                            <a href="sign-in.html"
-                               class="dropdown-item">Logout</a>
+                            <a href="{{ route('admin.logout') }}"
+                               class="dropdown-item logout-action">Logout</a>
                         </div>
 
                     </div>
@@ -90,30 +87,37 @@
                     </form>
 
                     <ul class="navbar-nav">
+                        @hasanyrole('admin|agent')
                         <li class="nav-item">
                             <a class="nav-link" href="#sidebarDashboards"
                                data-toggle="collapse" role="button"
-                               aria-expanded="true"
+                               aria-expanded="false"
                                aria-controls="sidebarDashboards">
-                                <i class="fe fe-home"></i> Dashboards
+                                <i class="fe fe-home"></i> User Management
                             </a>
-                            <div class="collapse show" id="sidebarDashboards">
+                            <div class="collapse" id="sidebarDashboards">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
-                                        <a href="index.html"
-                                           class="nav-link active">
-                                            Default
+                                        <a href="#" class="nav-link">
+                                            Users
+                                        </a>
+                                    </li>
+                                    @role('admin')
+                                    <li class="nav-item">
+                                        <a href="#" class="nav-link ">
+                                            Agent
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="dashboard-alt.html"
-                                           class="nav-link ">
-                                            Alternative
+                                        <a href="#" class="nav-link">
+                                            Admin
                                         </a>
                                     </li>
+                                    @endrole
                                 </ul>
                             </div>
                         </li>
+                        @endhasanyrole
                     </ul>
                 </div> <!-- / .navbar-collapse -->
             </div>
@@ -152,27 +156,20 @@
 
                             <!-- Toggle -->
                             <a href="#"
-                               class="avatar avatar-sm avatar-online dropdown-toggle"
+                               class="avatar avatar-sm avatar-online dropdown-toggle d-inline-block"
                                role="button" data-toggle="dropdown"
                                aria-haspopup="true" aria-expanded="false">
-                                <img src="{{ asset('img/avatars/profiles/avatar-1.jpg') }}"
-                                     alt="..."
+                                <img src="{{ Auth::user()->avatar }}"
+                                     alt="{{ Auth::user()->full_name }} avatar"
                                      class="avatar-img rounded-circle">
                             </a>
 
                             <!-- Menu -->
                             <div class="dropdown-menu dropdown-menu-right">
                                 <a href="{{ route('admin.logout') }}"
-                                   class="dropdown-item"
-                                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                   class="dropdown-item logout-action">
                                     @lang('Logout')
                                 </a>
-
-                                <form id="logout-form"
-                                      action="{{ route('admin.logout') }}"
-                                      method="POST" style="display: none;">
-                                    @csrf
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -209,6 +206,11 @@
             @yield('content')
         </main>
     </div>
+
+    <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
+          class="d-none">
+        @csrf
+    </form>
 </body>
 
 </html>

@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -652,10 +652,10 @@ function convertOffset(x, y, degrees) {
 
 /***/ }),
 
-/***/ "./resources/js/pages/login.js":
-/*!*************************************!*\
-  !*** ./resources/js/pages/login.js ***!
-  \*************************************/
+/***/ "./resources/js/app/login.js":
+/*!***********************************!*\
+  !*** ./resources/js/app/login.js ***!
+  \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -685,14 +685,14 @@ window.Ladda = __webpack_require__(/*! ladda */ "./node_modules/ladda/js/ladda.j
 
 /***/ }),
 
-/***/ 2:
-/*!*******************************************!*\
-  !*** multi ./resources/js/pages/login.js ***!
-  \*******************************************/
+/***/ 3:
+/*!*****************************************!*\
+  !*** multi ./resources/js/app/login.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\js\pages\login.js */"./resources/js/pages/login.js");
+module.exports = __webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\js\app\login.js */"./resources/js/app/login.js");
 
 
 /***/ })

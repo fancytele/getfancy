@@ -13,10 +13,10 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        $admin = Role::create(['name' => 'Admin']);
-        $agent = Role::create(['name' => 'Agent']);
+        $admin = Role::create(['name' => 'admin']);
+        $agent = Role::create(['name' => 'agent']);
 
-        Role::create(['name' => 'User']);
+        Role::create(['name' => 'user']);
 
         $admin_permissions = [
             'create admin', 'update admin', 'view admin', 'remove admin',

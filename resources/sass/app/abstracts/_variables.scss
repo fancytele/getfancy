@@ -5,6 +5,7 @@ $path-to-img: "../../img" !default;
 $blue: #0193fe;
 $black: #1d2c3c;
 $gray-200: #d2ddec;
+$gray-400: #d2ddec;
 
 $primary: #704895;
 $secondary: #f3a3b4;
@@ -15,26 +16,11 @@ $blue-solid: #1b5b9a;
 $white-ghost: #f6f7fb;
 
 // Navs
-$navbar-nav-link-padding-x: 0.8rem;
 $font-family-sans-serif: "Cerebri Sans", sans-serif;
 $font-family-headng: "Oxygen", sans-serif;
 
-// Navbar
-$navbar-dark-color: #fff;
-$navbar-dark-hover-color: #fff;
+// Nav bar
+$navbar-dark-color: $gray-400;
 
-$navbar-light-color: rgba($black, 0.9);
-$navbar-light-hover-color: rgba($black, 0.9);
-
-$font-size-base: 1rem !default; // 16px
-
-// Carousel
-$carousel-transition-duration: 0.8s;
-$carousel-indicator-height: 30px;
-$carousel-indicator-active-bg: $primary;
-$carousel-indicator-bg: #fff;
-
+// Text
 $text-muted: #b0b0b1;
-$line-height-md: 1.3;
-
-$grid-gutter-width: 30px;

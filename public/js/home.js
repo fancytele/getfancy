@@ -41862,10 +41862,10 @@ var navbarCollapse = function navbarCollapse(classElement, toggleClass) {
 
 /***/ }),
 
-/***/ "./resources/js/pages/home.js":
-/*!************************************!*\
-  !*** ./resources/js/pages/home.js ***!
-  \************************************/
+/***/ "./resources/js/web/home.js":
+/*!**********************************!*\
+  !*** ./resources/js/web/home.js ***!
+  \**********************************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -41993,13 +41993,13 @@ __webpack_require__.r(__webpack_exports__);
 /***/ }),
 
 /***/ 1:
-/*!******************************************!*\
-  !*** multi ./resources/js/pages/home.js ***!
-  \******************************************/
+/*!****************************************!*\
+  !*** multi ./resources/js/web/home.js ***!
+  \****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\js\pages\home.js */"./resources/js/pages/home.js");
+module.exports = __webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\js\web\home.js */"./resources/js/web/home.js");
 
 
 /***/ })

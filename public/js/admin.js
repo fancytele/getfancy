@@ -81,80 +81,40 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 4);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ "./resources/js/navbar.js":
-/*!********************************!*\
-  !*** ./resources/js/navbar.js ***!
-  \********************************/
-/*! exports provided: default */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ "./resources/js/app/admin.js":
+/*!***********************************!*\
+  !*** ./resources/js/app/admin.js ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
 
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-var animateScrollSpy = function animateScrollSpy(event) {
-  if (this.hash !== "" && this.hash !== window.location.hash) {
-    event.preventDefault();
-    $('html, body').animate({
-      scrollTop: $(this.hash).offset().top - 120
-    }, 800);
-  }
-};
-
-var changeNavbarBg = function changeNavbarBg() {
-  var scroll = $(window).scrollTop();
-  var navbarDarkClass = 'border-0 bg-transparent navbar-dark';
-  var navbarLightClasses = 'bg-white navbar-light shadow';
-
-  if (scroll >= 100) {
-    $('#fancy-navbar').addClass(navbarLightClasses).removeClass(navbarDarkClass);
-  } else {
-    $('#fancy-navbar').addClass(navbarDarkClass).removeClass(navbarLightClasses);
-  }
-};
-
-var init = function init() {
-  $('body').scrollspy({
-    target: "#fancy-navbar",
-    offset: 95
+window.onload = function () {
+  var logoutItems = document.querySelectorAll('.logout-action');
+  logoutItems.forEach(function (el) {
+    el.addEventListener('click', logout);
   });
-  $("#fancy-menu .nav-link").on('click', animateScrollSpy);
-  $(window).on('scroll', changeNavbarBg);
-  changeNavbarBg();
 };
 
-/* harmony default export */ __webpack_exports__["default"] = ({
-  init: init
-});
+function logout(event) {
+  event.preventDefault();
+  document.getElementById('logout-form').submit();
+}
 
 /***/ }),
 
-/***/ "./resources/js/web/checkout.js":
-/*!**************************************!*\
-  !*** ./resources/js/web/checkout.js ***!
-  \**************************************/
-/*! no exports provided */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _navbar__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../navbar */ "./resources/js/navbar.js");
-
-$(document).ready(_navbar__WEBPACK_IMPORTED_MODULE_0__["default"].init);
-
-/***/ }),
-
-/***/ 2:
-/*!********************************************!*\
-  !*** multi ./resources/js/web/checkout.js ***!
-  \********************************************/
+/***/ 4:
+/*!*****************************************!*\
+  !*** multi ./resources/js/app/admin.js ***!
+  \*****************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\js\web\checkout.js */"./resources/js/web/checkout.js");
+module.exports = __webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\js\app\admin.js */"./resources/js/app/admin.js");
 
 
 /***/ })

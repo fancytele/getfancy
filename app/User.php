@@ -51,4 +51,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Subscription::class, $this->getForeignKey())->orderBy('created_at', 'desc');
     }
+
+    public function getAvatarAttribute()
+    {
+        //TODO: Implement Avatar user when managing Profile
+        return asset('img/app/avatar.png');
+    }
 }
