@@ -41999,7 +41999,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/resources/js/pages/home.js */"./resources/js/pages/home.js");
+module.exports = __webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\js\pages\home.js */"./resources/js/pages/home.js");
 
 
 /***/ })

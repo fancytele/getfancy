@@ -692,7 +692,7 @@ window.Ladda = __webpack_require__(/*! ladda */ "./node_modules/ladda/js/ladda.j
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/resources/js/pages/login.js */"./resources/js/pages/login.js");
+module.exports = __webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\js\pages\login.js */"./resources/js/pages/login.js");
 
 
 /***/ })
