@@ -74,7 +74,7 @@
                             {{ $user->full_name }}</td>
                         <td class="align-middle orders-email">{{ $user->email }}
                         </td>
-                        <td class="align-middle orders-login">
+                        <td class="align-middle orders-last-login">
                             {{ optional($user->last_login)->diffForHumans() }}
                         </td>
                         <td class="align-middle orders-status">
