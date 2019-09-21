@@ -17630,6 +17630,20 @@ button:focus {
   font-size: inherit;
 }
 
+.table-row-counter {
+  counter-reset: row-num;
+}
+
+.table-row-counter tbody tr {
+  counter-increment: row-num;
+}
+
+.table-row-counter tbody tr th:first-child:before,
+.table-row-counter tbody tr td:first-child:before {
+  content: counter(row-num);
+  font-weight: bold;
+}
+
 /*!
  * Ladda
  * http://lab.hakim.se/ladda

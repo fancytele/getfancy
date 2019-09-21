@@ -29,7 +29,8 @@
             </div> <!-- / .row -->
         </div>
         <div class="table-responsive">
-            <table class="table table-hover table-sm table-nowrap card-table">
+            <table
+                   class="card-table table table-hover table-sm table-nowrap table-row-counter">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -65,15 +66,18 @@
                 <tbody class="list">
                     @foreach($users as $key => $user)
                     <tr>
-                        <th scope="row" class="align-middle">
-                            {{ $key + 1 }}
-                        </th>
-                        <td class="orders-name">{{ $user->full_name }}</td>
-                        <td class="orders-email">{{ $user->email }}</td>
-                        <td class="orders-login">
+                        <td scope="row" class="align-middle">
+                            <span class="sr-only"
+                                  aria-label="Default row number">{{ $key + 1 }}</span>
+                        </td>
+                        <td class="align-middle orders-name">
+                            {{ $user->full_name }}</td>
+                        <td class="align-middle orders-email">{{ $user->email }}
+                        </td>
+                        <td class="align-middle orders-login">
                             {{ optional($user->last_login)->diffForHumans }}
                         </td>
-                        <td class="orders-status">
+                        <td class="align-middle orders-status">
                             @if($user->is_active)
                             <div
                                  class="badge badge-soft-success font-size-inherit">
