@@ -115,7 +115,7 @@
     "Active": "Activo",
     "Inactive": "Inactivo",
     "Delete": "Eliminar",
-    "Delete element": "Eliminar elemento",
+    "Delete agent": "Eliminar agente",
     "Restore": "Activar",
-    "Restore element": "Activar elemento"
+    "Restore agent": "Activar agente"
 }

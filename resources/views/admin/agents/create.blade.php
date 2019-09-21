@@ -5,9 +5,8 @@
 
 @section('content')
 <div class="container-fluid">
-    <a href="{{ route('admin.agents.index') }}"
-       class="btn btn-link mb-3">
-       <i class="fe fe-arrow-left mr-2"></i>
+    <a href="{{ route('admin.agents.index') }}" class="btn btn-link mb-3">
+        <i class="fe fe-arrow-left mr-2"></i>
         @lang('Return to list')
     </a>
     <div class="row">
@@ -60,7 +59,8 @@
                         </div>
 
                         <button type="submit"
-                                class="btn btn-primary px-4">@lang('Create')</button>
+                                class="btn btn-primary ladda-button px-4"
+                                data-style="zoom-out">@lang('Create')</button>
                     </form>
                 </div>
             </div>

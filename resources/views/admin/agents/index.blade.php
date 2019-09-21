@@ -22,7 +22,7 @@
                         <div class="col">
                             <input type="search"
                                    class="form-control form-control-flush search"
-                                   placeholder="Search">
+                                   placeholder="@lang('Search')">
                         </div>
                     </form>
                 </div>
@@ -143,7 +143,7 @@
                            class="display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "></i>
                         <div>
                             <h3 class="mb-0">
-                                @lang('Delete element')?
+                                @lang('Delete agent')?
                             </h3>
                             <p class="agent-email text-black-50"></p>
                         </div>
@@ -186,7 +186,7 @@
                            class="display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "></i>
                         <div>
                             <h3 class="mb-0">
-                                @lang('Restore element')?
+                                @lang('Restore agent')?
                             </h3>
                             <p class="agent-email text-black-50"></p>
                         </div>
