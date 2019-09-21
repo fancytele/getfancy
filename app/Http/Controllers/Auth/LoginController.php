@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -35,5 +37,17 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         return view('admin.auth.login');
+    }
+
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    function authenticated(Request $request, $user)
+    {
+        $user->update(['last_login' => Carbon::now()->toDateTimeString()]);
     }
 }

@@ -75,7 +75,7 @@
                         <td class="align-middle orders-email">{{ $user->email }}
                         </td>
                         <td class="align-middle orders-login">
-                            {{ optional($user->last_login)->diffForHumans }}
+                            {{ optional($user->last_login)->diffForHumans() }}
                         </td>
                         <td class="align-middle orders-status">
                             @if($user->is_active)
