@@ -33,7 +33,7 @@
                 </button>
 
                 <!-- Brand -->
-                <a class="navbar-brand" href="{{ route('web.homepage') }}">
+                <a class="navbar-brand" href="{{ route('admin.dashboard') }}">
                     <img src="{{ asset('img/logo-light.png') }}" class="navbar-brand-img 
                       mx-auto" alt="Fancy Logo Light">
                 </a>
@@ -86,15 +86,22 @@
                     </form>
 
                     <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link "
+                               href="{{ route('admin.dashboard') }}">
+                                <i class="fe fe-home"></i> Dashboard
+                            </a>
+                        </li>
                         @hasanyrole('admin|agent')
                         <li class="nav-item">
-                            <a class="nav-link" href="#sidebarDashboards"
+                            <a class="nav-link" href="#sidebarUsers"
                                data-toggle="collapse" role="button"
                                aria-expanded="false"
-                               aria-controls="sidebarDashboards">
-                                <i class="fe fe-home"></i> @lang('User management')
+                               aria-controls="sidebarUsers">
+                                <i class="fe fe-users"></i>
+                                @lang('User management')
                             </a>
-                            <div class="collapse" id="sidebarDashboards">
+                            <div class="collapse" id="sidebarUsers">
                                 <ul class="nav nav-sm flex-column">
                                     <li class="nav-item">
                                         <a href="#" class="nav-link">

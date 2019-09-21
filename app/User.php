@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Enums\Role;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -106,5 +107,23 @@ class User extends Authenticatable
     public static function generatePassword()
     {
         return bcrypt(str_random(35));
+    }
+
+    /**
+     * Get count grouped by roles, except Admins
+     *
+     * @return mixed
+     */
+    public static function countByRole()
+    {
+        return static::selectRaw('roles.name as role, count(users.id) as count')
+            ->join('model_has_roles', 'model_has_roles.model_id', '=', 'users.id')
+            ->join('roles', 'roles.id', '=', 'model_has_roles.role_id')
+            ->whereNull('users.deleted_at')
+            ->where('model_has_roles.model_type', 'App\\User')
+            ->where('roles.guard_name', 'web')
+            ->where('roles.name', '<>', Role::Admin)
+            ->groupBy('roles.id')
+            ->get();
     }
 }
