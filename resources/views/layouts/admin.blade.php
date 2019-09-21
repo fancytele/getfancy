@@ -92,7 +92,7 @@
                                data-toggle="collapse" role="button"
                                aria-expanded="false"
                                aria-controls="sidebarDashboards">
-                                <i class="fe fe-home"></i> User Management
+                                <i class="fe fe-home"></i> @lang('User management')
                             </a>
                             <div class="collapse" id="sidebarDashboards">
                                 <ul class="nav nav-sm flex-column">
@@ -105,12 +105,7 @@
                                     <li class="nav-item">
                                         <a href="{{ route('admin.agents.index') }}"
                                            class="nav-link ">
-                                            Agent
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            Admin
+                                            Agents
                                         </a>
                                     </li>
                                     @endrole
@@ -204,7 +199,7 @@
 
                     <!-- Body -->
                     <div class="header-body">
-                        <div class="row align-items-end">
+                        <div class="row align-items-center">
                             <div class="col">
 
                                 @hasSection ('page-subtitle')
@@ -219,6 +214,11 @@
                                     @yield('page-title')
                                 </h1>
                             </div>
+                            @hasSection('header-action')
+                            <div class="col-auto">
+                                @yield('header-action')
+                            </div>
+                            @endif
                         </div> <!-- / .row -->
                     </div> <!-- / .header-body -->
 

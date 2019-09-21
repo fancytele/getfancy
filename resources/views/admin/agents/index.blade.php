@@ -1,14 +1,18 @@
 @extends('layouts.admin')
 
 @section('page-subtitle', __('User management'))
-@section('page-title', __('List'))
+
+@section('page-title', __('Agent list'))
+
+@section('header-action')
+<a href="{{ route('admin.agents.create') }}" class="btn btn-primary">
+    <i class="fe fe-user-plus mr-2"></i>
+    @lang('Create agent')
+</a>
+@endsection
 
 @section('content')
 <div class="container-fluid">
-    <a href="{{ route('admin.agents.create') }}" class="btn btn-primary mb-3">
-        <i class="fe fe-user-plus mr-2"></i>
-        @lang('Create agent')
-    </a>
     <div class="card" data-toggle="lists"
          data-options='{"valueNames": ["orders-name", "orders-email", "orders-last-login", "orders-status"]}'>
         <div class="card-header">

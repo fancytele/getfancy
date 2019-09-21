@@ -17644,6 +17644,11 @@ button:focus {
   font-weight: bold;
 }
 
+.navbar-dark.navbar-vertical {
+  border: 0;
+  box-shadow: inset -8px 0 10px -6px rgba(0, 0, 0, 0.3);
+}
+
 /*!
  * Ladda
  * http://lab.hakim.se/ladda
