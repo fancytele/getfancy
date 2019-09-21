@@ -12,14 +12,13 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-    <script src="{{ asset('js/admin.js') }}" defer></script>
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
 <body>
-    <div id="app">
+    <div id="app" v-cloak>
         <!-- SIDEBAR NAVIGATION -->
         <nav class="bg-primary  fixed-left navbar navbar-dark navbar-expand-md navbar-vertical"
              id="sidebar">
@@ -36,7 +35,7 @@
                 <!-- Brand -->
                 <a class="navbar-brand" href="{{ route('web.homepage') }}">
                     <img src="{{ asset('img/logo-light.png') }}" class="navbar-brand-img 
-                      mx-auto" alt="...">
+                      mx-auto" alt="Fancy Logo Light">
                 </a>
 
                 <!-- User (xs) -->
@@ -53,7 +52,7 @@
                                  class="avatar avatar-sm avatar-online d-inline-block">
                                 <img src="{{ Auth::user()->avatar }}"
                                      class="avatar-img rounded-circle"
-                                     alt="{{ Auth::user()->full_name }} avatar">
+                                     alt="{{ Auth::user()->display_name }} avatar">
                             </div>
                         </a>
 
@@ -93,7 +92,7 @@
                                data-toggle="collapse" role="button"
                                aria-expanded="false"
                                aria-controls="sidebarDashboards">
-                                <i class="fe fe-home"></i> User Management
+                                <i class="fe fe-home"></i> @lang('User management')
                             </a>
                             <div class="collapse" id="sidebarDashboards">
                                 <ul class="nav nav-sm flex-column">
@@ -104,13 +103,9 @@
                                     </li>
                                     @role('admin')
                                     <li class="nav-item">
-                                        <a href="#" class="nav-link ">
-                                            Agent
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="#" class="nav-link">
-                                            Admin
+                                        <a href="{{ route('admin.agents.index') }}"
+                                           class="nav-link ">
+                                            Agents
                                         </a>
                                     </li>
                                     @endrole
@@ -119,6 +114,25 @@
                         </li>
                         @endhasanyrole
                     </ul>
+
+                    <!-- Push content down -->
+                    <div class="mt-auto"></div>
+
+                    <div class="mb-3 text-center text-white">
+                        @if(App::isLocale('en'))
+                        <span class="text-muted">English</span>
+                        @else
+                        <a href="{{ route('web.locale', 'en') }}"
+                           class="text-white">English</a>
+                        @endif
+                        <span class="px-3">|</span>
+                        @if(App::isLocale('es'))
+                        <span class="text-muted">Español</span>
+                        @else
+                        <a href="{{ route('web.locale', 'es') }}"
+                           class="text-white">Español</a>
+                        @endif
+                    </div>
                 </div> <!-- / .navbar-collapse -->
             </div>
         </nav>
@@ -131,9 +145,8 @@
 
                     <!-- Form -->
                     <form class="form-inline mr-4 d-none d-md-flex">
-                        <div class="input-group input-group-flush input-group-merge"
-                             data-toggle="lists"
-                             data-options='{"valueNames": ["name"]}'>
+                        <div
+                             class="input-group input-group-flush input-group-merge">
 
                             <!-- Input -->
                             <input type="search"
@@ -155,13 +168,17 @@
                         <div class="dropdown">
 
                             <!-- Toggle -->
-                            <a href="#"
-                               class="avatar avatar-sm avatar-online dropdown-toggle d-inline-block"
-                               role="button" data-toggle="dropdown"
-                               aria-haspopup="true" aria-expanded="false">
-                                <img src="{{ Auth::user()->avatar }}"
-                                     alt="{{ Auth::user()->full_name }} avatar"
-                                     class="avatar-img rounded-circle">
+                            <a href="#" class="dropdown-toggle" role="button"
+                               data-toggle="dropdown" aria-haspopup="true"
+                               aria-expanded="false">
+                                <span class="align-middle mr-2">
+                                    {{ Auth::user()->display_name }}
+                                </span>
+                                <span class="avatar avatar-sm d-inline-block">
+                                    <img src="{{ Auth::user()->avatar }}"
+                                         alt="{{ Auth::user()->display_name }} avatar"
+                                         class="avatar-img rounded-circle">
+                                </span>
                             </a>
 
                             <!-- Menu -->
@@ -182,7 +199,7 @@
 
                     <!-- Body -->
                     <div class="header-body">
-                        <div class="row align-items-end">
+                        <div class="row align-items-center">
                             <div class="col">
 
                                 @hasSection ('page-subtitle')
@@ -197,20 +214,32 @@
                                     @yield('page-title')
                                 </h1>
                             </div>
+                            @hasSection('header-action')
+                            <div class="col-auto">
+                                @yield('header-action')
+                            </div>
+                            @endif
                         </div> <!-- / .row -->
                     </div> <!-- / .header-body -->
 
                 </div>
             </div> <!-- / .header -->
 
+            @includeWhen(session('alert'), 'partials.alert', ['alert' =>
+            session('alert')])
+
             @yield('content')
         </main>
     </div>
 
+    <!-- Logout Form -->
     <form id="logout-form" action="{{ route('admin.logout') }}" method="POST"
           class="d-none">
         @csrf
     </form>
+    <!-- / Logout Form -->
+
+    <script src="{{ asset('js/admin.js') }}" defer></script>
 </body>
 
 </html>

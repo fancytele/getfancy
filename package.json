@@ -26,6 +26,7 @@
     "dependencies": {
         "imask": "^5.2.0",
         "ladda": "^2.0.1",
+        "list.js": "^1.5.0",
         "select2": "^4.0.8",
         "vue-recaptcha": "^1.2.0",
         "vue-stripe-elements-plus": "^0.2.10"

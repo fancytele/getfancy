@@ -3054,7 +3054,7 @@ select.form-control:focus::-ms-value {
 .col-form-label-sm {
   padding-top: calc(0.125rem + 1px);
   padding-bottom: calc(0.125rem + 1px);
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   line-height: 1.75;
 }
 
@@ -3080,7 +3080,7 @@ select.form-control:focus::-ms-value {
 .form-control-sm {
   height: calc(1.75em + 0.25rem + 2px);
   padding: 0.125rem 0.5rem;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   line-height: 1.75;
   border-radius: 0.25rem;
 }
@@ -3177,7 +3177,7 @@ textarea.form-control {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: 0.1rem;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   line-height: 1.5;
   color: #FFFFFF;
   background-color: #00d97e;
@@ -3306,7 +3306,7 @@ textarea.form-control {
   max-width: 100%;
   padding: 0.25rem 0.5rem;
   margin-top: 0.1rem;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   line-height: 1.5;
   color: #FFFFFF;
   background-color: #e63757;
@@ -4251,7 +4251,7 @@ fieldset:disabled a.btn {
 .btn-sm,
 .btn-group-sm > .btn {
   padding: 0.125rem 0.5rem;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   line-height: 1.75;
   border-radius: 0.25rem;
 }
@@ -4553,7 +4553,7 @@ input[type=button].btn-block {
   display: block;
   padding: 0.5rem 1.5rem;
   margin-bottom: 0;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   color: inherit;
   white-space: nowrap;
 }
@@ -4859,7 +4859,7 @@ input[type=button].btn-block {
 .input-group-sm > .input-group-prepend > .btn,
 .input-group-sm > .input-group-append > .btn {
   padding: 0.125rem 0.5rem;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   line-height: 1.75;
   border-radius: 0.25rem;
 }
@@ -5095,7 +5095,7 @@ input[type=button].btn-block {
   padding-top: 0.125rem;
   padding-bottom: 0.125rem;
   padding-left: 0.5rem;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
 }
 
 .custom-select-lg {
@@ -6258,7 +6258,7 @@ input[type=button].btn-block {
 
 .pagination-sm .page-link {
   padding: 0.25rem 0.5rem;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   line-height: 1.75;
 }
 
@@ -7380,7 +7380,7 @@ a.close.disabled {
   }
 
   .modal-sm {
-    max-width: 300px;
+    max-width: 400px;
   }
 }
 
@@ -7416,7 +7416,7 @@ a.close.disabled {
   word-spacing: normal;
   white-space: normal;
   line-break: auto;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   word-wrap: break-word;
   opacity: 0;
 }
@@ -7541,7 +7541,7 @@ a.close.disabled {
   word-spacing: normal;
   white-space: normal;
   line-break: auto;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   word-wrap: break-word;
   background-color: #FFFFFF;
   background-clip: padding-box;
@@ -13458,7 +13458,7 @@ a.text-white:focus {
 }
 
 .breadcrumb-sm {
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
 }
 
 .btn-white {
@@ -14286,7 +14286,7 @@ a.text-white:focus {
 }
 
 .nav-sm .nav-link {
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
 }
 
 .nav.btn-group .btn-white.active {
@@ -16009,7 +16009,7 @@ body {
 .table thead th {
   background-color: #F9FBFD;
   text-transform: uppercase;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   color: #b0b0b1;
@@ -16017,7 +16017,7 @@ body {
 }
 
 .table-sm {
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
 }
 
 .table-sm thead th {
@@ -16521,7 +16521,7 @@ button:focus {
 }
 
 .chart.chart-appended {
-  height: calc(300px - 3.7187500005rem);
+  height: calc(300px - 3.8125rem);
 }
 
 .chart-sm {
@@ -16529,7 +16529,7 @@ button:focus {
 }
 
 .chart-sm.chart-appended {
-  height: calc(225px - 3.7187500005rem);
+  height: calc(225px - 3.8125rem);
 }
 
 .chart-sparkline {
@@ -16543,7 +16543,7 @@ button:focus {
   -webkit-box-pack: center;
           justify-content: center;
   margin-top: 2.5rem;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   text-align: center;
   color: #b0b0b1;
 }
@@ -16597,7 +16597,7 @@ button:focus {
 }
 
 .comment-text {
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
 }
 
 .comment-text:last-child {
@@ -17171,7 +17171,7 @@ button:focus {
 .ql-tooltip .ql-preview {
   width: 100%;
   padding: 0.125rem 0.5rem;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   line-height: 1.75;
   border-radius: 0.25rem;
   -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -17195,7 +17195,7 @@ button:focus {
   padding-top: calc(0.125rem + 1px);
   padding-bottom: calc(0.125rem + 1px);
   background-color: transparent;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   line-height: 1.75;
   border: none;
   color: #1d2c3c;
@@ -17228,7 +17228,7 @@ button:focus {
   border: 1px solid transparent;
   cursor: pointer;
   padding: 0.125rem 0.5rem;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   line-height: 1.75;
   border-radius: 0.25rem;
   -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
@@ -17544,7 +17544,7 @@ button:focus {
   border: none;
   border-radius: 0.25rem;
   line-height: 1.40625rem;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   color: #1d2c3c;
 }
 
@@ -17575,7 +17575,7 @@ button:focus {
 .select2-container--default .select2-search--dropdown .select2-search__field {
   height: calc(1.75em + 0.25rem + 2px);
   padding: 0.125rem 0.5rem;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   line-height: 1.75;
   border-radius: 0.25rem;
 }
@@ -17585,7 +17585,7 @@ button:focus {
 .form-control-sm + .select2-container--default .select2-selection--multiple {
   height: calc(1.75em + 0.25rem + 2px);
   padding: 0.125rem 0.5rem;
-  font-size: 0.8125000003rem;
+  font-size: 0.875rem;
   line-height: 1.75;
   border-radius: 0.25rem;
 }
@@ -17596,7 +17596,7 @@ button:focus {
 }
 
 .form-control-sm + .select2-container--default .select2-selection--multiple .select2-selection__choice {
-  line-height: 1.4218750005rem;
+  line-height: 1.53125rem;
 }
 
 .form-control-lg + .select2-container .select2-selection--single,
@@ -17624,6 +17624,29 @@ button:focus {
 
 .is-invalid ~ .select2 .select2-selection {
   border-color: #E63757 !important;
+}
+
+.font-size-inherit {
+  font-size: inherit;
+}
+
+.table-row-counter {
+  counter-reset: row-num;
+}
+
+.table-row-counter tbody tr {
+  counter-increment: row-num;
+}
+
+.table-row-counter tbody tr th:first-child:before,
+.table-row-counter tbody tr td:first-child:before {
+  content: counter(row-num);
+  font-weight: bold;
+}
+
+.navbar-dark.navbar-vertical {
+  border: 0;
+  box-shadow: inset -8px 0 10px -6px rgba(0, 0, 0, 0.3);
 }
 
 /*!

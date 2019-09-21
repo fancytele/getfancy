@@ -26,11 +26,22 @@ Route::post('subscription', 'SubscriptionController@create')->name('subscription
 |
 */
 Route::prefix('admin')->group(function () {
+    // Auth
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('admin.login.show')->middleware('guest');
     Route::post('login', 'Auth\LoginController@login')->name('admin.login');
+    Route::post('logout', 'Auth\LoginController@logout')->name('admin.logout');
+    Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+    Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
+
+    // Dashboard
     Route::get('dashboard', 'Admin\DashboardController@index')->name('admin.dashboard');
 
-    Route::post('logout', 'Auth\LoginController@logout')->name('admin.logout');
+    // User Management
+    Route::prefix('users')->group(function () {
+        Route::post('agents/{agent}/reset_password', 'Admin\Users\AgentController@resetPassword')->name('admin.agents.reset_password');
+        Route::post('agents/{agent}/restore', 'Admin\Users\AgentController@restore')->name('admin.agents.restore');
+        Route::resource('agents', 'Admin\Users\AgentController', ['as' => 'admin'])->except(['show']);
+    });
 });
 
 
