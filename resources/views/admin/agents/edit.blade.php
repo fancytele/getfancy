@@ -96,6 +96,8 @@
                       method="POST">
                     @csrf
 
+                    <input type="hidden" name="email" value="{{ $agent->email }}">
+                    
                     <div class="d-flex my-3 pl-4 pt-4">
                         <i
                            class="display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "></i>

@@ -6,9 +6,13 @@ use App\Enums\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AgentRequest;
 use App\User;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Http\Request;
 
 class AgentController extends Controller
 {
+    use SendsPasswordResetEmails;
+
     /**
      * Create a new controller instance.
      *
@@ -53,11 +57,12 @@ class AgentController extends Controller
         $agent->first_name = $request->first_name;
         $agent->last_name = $request->last_name;
         $agent->email = $request->email;
-        //TODO: Generate random password and send One Time Password email
-        $agent->password = bcrypt('agent123');
+        $agent->password = $agent->generatePassword();
 
         $agent->save();
         $agent->assignRole(Role::Agent);
+
+        $this->sendResetLinkEmail($request);
 
         return response()
             ->redirectToRoute('admin.agents.index')
@@ -136,10 +141,12 @@ class AgentController extends Controller
      * @param  \App\User $agent
      * @return \Illuminate\Http\Response
      */
-    public function resetPassword(User $agent)
+    public function resetPassword(Request $request, User $agent)
     {
-        //TODO: Generate random password and send One Time Password email
-        $agent->save(['password', bcrypt('agent123')]);
+        $agent->password = $agent->generatePassword();
+        $agent->save();
+
+        $this->sendResetLinkEmail($request);
 
         return response()->redirectToRoute('admin.agents.index')->with('alert', [
             'type' => 'success',

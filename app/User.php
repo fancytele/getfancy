@@ -90,4 +90,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Subscription::class, $this->getForeignKey())->orderBy('created_at', 'desc');
     }
+
+    /**
+     * Generate random encrypted password. 
+     *
+     * @return void
+     */
+    public static function generatePassword()
+    {
+        return bcrypt(str_random(35));
+    }
 }
