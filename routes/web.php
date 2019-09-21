@@ -31,6 +31,13 @@ Route::prefix('admin')->group(function () {
     Route::get('dashboard', 'Admin\DashboardController@index')->name('admin.dashboard');
 
     Route::post('logout', 'Auth\LoginController@logout')->name('admin.logout');
+
+    // User Management
+    Route::prefix('users')->group(function () {
+        Route::post('agents/{agent}/reset_password', 'Admin\Users\AgentController@resetPassword')->name('admin.agents.reset_password');
+        Route::post('agents/{agent}/restore', 'Admin\Users\AgentController@restore')->name('admin.agents.restore');
+        Route::resource('agents', 'Admin\Users\AgentController', ['as' => 'admin'])->except(['show']);
+    });
 });
 
 

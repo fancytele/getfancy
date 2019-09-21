@@ -6,7 +6,6 @@ use App\User;
 use App\Subscription;
 use Illuminate\Support\Facades\Hash;
 use Stripe\Customer as StripeCustomer;
-use Stripe\Product as StripeProduct;
 use Stripe\Subscription as StripeSubscription;
 
 class UserService
