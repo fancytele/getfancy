@@ -21,11 +21,12 @@ window.onload = function () {
   $('#delete-element, #restore-element').on('show.bs.modal', function (event) {
     var element = $(event.relatedTarget);
     var elementName = element.data('name')
-    var agentEmail = element.data('email');
-    var agentAction = element.data('action');
+    var elementDetail = element.data('detail');
+    var elementAction = element.data('action');
 
     var modal = $(this);
-    modal.find('.element-email').text(agentEmail);
-    modal.find('form').attr('action', agentAction);
+    modal.find('.element-name').text(elementName);
+    modal.find('.element-detail').text(elementDetail);
+    modal.find('form').attr('action', elementAction);
   });
 };

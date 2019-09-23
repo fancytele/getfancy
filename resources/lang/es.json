@@ -99,6 +99,7 @@
     "Search": "Buscar",
     "Access to your dashboard": "Accede a tu dashboard",
     "User management": "Administración de usuarios",
+    "No agents yet": "No hay agentes",
     "Create agent": "Crear agente",
     "View": "Ver",
     "Edit": "Editar",
@@ -130,5 +131,13 @@
     "Next": "Siguiente",
     "Product": "Producto",
     "User created": "Usuario creado",
-    "User created messsage": "Un correo ha sido enviado al Usuario para completar su registro"
+    "User created messsage": "Un correo ha sido enviado al Usuario para completar su registro",
+    "Agent": "Agente",
+    "User": "Usuario",
+    "success": "exitoso",
+    "Agente created": "Agente creado",
+    "Agent updated": "Agente actualizado",
+    "Agent inactivated": "Agente inhabilitado",
+    "Agent restored": "Agente habilitado",
+    "Agent password reseted": "Contraseña reiniciada"
 }

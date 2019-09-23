@@ -5,9 +5,9 @@
             <i class="fe fe-{{ $alert['icon'] ?? 'check-circle' }} h2 mr-2"></i>
             <span class="align-text-top">
                 <strong class="text-capitalize">
-                    {{ $alert['title'] ?? $alert['type'] }}!
+                    @lang($alert['title'] ?? $alert['type'])!
                 </strong>
-                {{ $alert['message'] }}
+                @lang($alert['message']).
             </span>
         </h4>
         <button type="button" class="close" data-dismiss="alert"

@@ -30,8 +30,8 @@ class AgentController extends Controller
      */
     public function index()
     {;
-        $users = User::role(Role::Agent)->withTrashed()->get();
-        return view('admin.agents.index', compact('users'));
+        $agents = User::role(Role::Agent)->withTrashed()->get();
+        return view('admin.agents.index', compact('agents'));
     }
 
     /**
@@ -97,7 +97,7 @@ class AgentController extends Controller
 
         return response()->redirectToRoute('admin.agents.index')->with('alert', [
             'type' => 'success',
-            'message' => 'Agent updated.'
+            'message' => 'Agent updated'
         ]);
     }
 
@@ -113,8 +113,8 @@ class AgentController extends Controller
 
         return response()->redirectToRoute('admin.agents.index')->with('alert', [
             'type' => 'danger',
-            'title' => 'Success',
-            'message' => 'Agent inactivated.'
+            'title' => 'success',
+            'message' => 'Agent inactivated'
         ]);
     }
 
@@ -131,7 +131,7 @@ class AgentController extends Controller
 
         return response()->redirectToRoute('admin.agents.index')->with('alert', [
             'type' => 'success',
-            'message' => 'Agent restored.'
+            'message' => 'Agent restored'
         ]);
     }
 
@@ -150,7 +150,7 @@ class AgentController extends Controller
 
         return response()->redirectToRoute('admin.agents.index')->with('alert', [
             'type' => 'success',
-            'message' => 'Agent password reseted.'
+            'message' => 'Agent password reseted'
         ]);
     }
 }

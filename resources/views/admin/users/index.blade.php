@@ -33,7 +33,7 @@
             </div>
         </div>
     </div> <!-- / .row -->
-    @endempty
+    @endif
 
     @if($users->isNotEmpty ())
     <div class="card" data-toggle="lists"
@@ -127,17 +127,19 @@
                             <a href="{{ route('admin.users.destroy', $user->id) }}"
                                class="font-weight-normal h5 px-2"
                                data-toggle="modal" data-backdrop="static"
-                               data-target="#delete-user"
-                               data-user-email="{{ $user->email }}"
-                               data-user-action="{{ route('admin.users.destroy', $user->id) }}">
+                               data-target="#delete-element"
+                               data-name="@lang('User')"
+                               data-detail="{{ $user->email }}"
+                               data-action="{{ route('admin.users.destroy', $user->id) }}">
                                 @lang('Delete')
                             </a>
                             @else
                             <a href="{{ route('admin.users.restore', $user->id) }}"
                                class="font-weight-normal h5 px-2"
                                data-toggle="modal" data-backdrop="static"
-                               data-target="#restore-user"
-                               data-user-email="{{ $user->email }}"
+                               data-target="#restore-element"
+                               data-name="@lang('User')"
+                               data-detail="{{ $user->email }}"
                                data-user-action="{{ route('admin.users.restore', $user->id) }}">
                                 @lang('Restore')
                             </a>
@@ -152,90 +154,10 @@
     @endif
 </div>
 
+<!-- Modals -->
 @if($users->isNotEmpty ())
-<!-- Modal -->
-<div class="modal fade" id="delete-user" tabindex="-1" role="dialog"
-     aria-labelledby="delete-user-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body p-0">
-                <button type="button" class="close mr-3 mt-3"
-                        data-dismiss="modal" aria-label="Close">
-                    <i class="fe fe-x-circle"></i>
-                </button>
-                <form action="/" method="POST" class="mb-0">
-                    @csrf
-                    @method('DELETE')
-
-                    <div class="d-flex my-3 pl-4 pt-4">
-                        <i
-                           class="display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "></i>
-                        <div>
-                            <h3 class="mb-0">
-                                @lang('Delete user')?
-                            </h3>
-                            <p class="user-email text-black-50"></p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex overflow-hidden rounded-bottom">
-                        <button type="button"
-                                class="btn btn-lg btn-outline-light rounded-0 text-body w-50"
-                                data-dismiss="modal">
-                            @lang('Cancel')
-                        </button>
-                        <button type="submit"
-                                class="btn btn-lg btn-danger ladda-button rounded-0 w-50"
-                                data-style="zoom-out">
-                            @lang('Delete')
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="restore-user" tabindex="-1" role="dialog"
-     aria-labelledby="restore-user-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body p-0">
-                <button type="button" class="close mr-3 mt-3"
-                        data-dismiss="modal" aria-label="Close">
-                    <i class="fe fe-x-circle"></i>
-                </button>
-                <form action="/" method="POST" class="mb-0">
-                    @csrf
-
-                    <div class="d-flex my-3 pl-4 pt-4">
-                        <i
-                           class="display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "></i>
-                        <div>
-                            <h3 class="mb-0">
-                                @lang('Restore user')?
-                            </h3>
-                            <p class="user-email text-black-50"></p>
-                        </div>
-                    </div>
-
-                    <div class="d-flex overflow-hidden rounded-bottom">
-                        <button type="button"
-                                class="btn btn-lg btn-outline-light rounded-0 text-body w-50"
-                                data-dismiss="modal">
-                            @lang('Cancel')
-                        </button>
-                        <button type="submit"
-                                class="btn btn-lg btn-success ladda-button rounded-0 w-50"
-                                data-style="zoom-out">
-                            @lang('Restore')
-                        </button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
+@include('partials.delete-element')
+@include('partials.restore-element')
 @endif
+
 @endsection
