@@ -107,14 +107,14 @@
                                     <li class="nav-item">
                                         <a href="{{ route('admin.users.index') }}"
                                            class="nav-link">
-                                            Users
+                                            @lang('Users')
                                         </a>
                                     </li>
                                     @role('admin')
                                     <li class="nav-item">
                                         <a href="{{ route('admin.agents.index') }}"
                                            class="nav-link ">
-                                            Agents
+                                            @lang('Agents')
                                         </a>
                                     </li>
                                     @endrole
