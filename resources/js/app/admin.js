@@ -17,14 +17,15 @@ window.onload = function () {
     Ladda.bind('button[type=submit]');
   }
 
-  // Agent Delete
-  $('#delete-agent, #restore-agent').on('show.bs.modal', function (event) {
+  // Delte and Retore element
+  $('#delete-element, #restore-element').on('show.bs.modal', function (event) {
     var element = $(event.relatedTarget);
-    var agentEmail = element.data('agent-email');
-    var agentAction = element.data('agent-action');
+    var elementName = element.data('name')
+    var agentEmail = element.data('email');
+    var agentAction = element.data('action');
 
     var modal = $(this);
-    modal.find('.agent-email').text(agentEmail);
+    modal.find('.element-email').text(agentEmail);
     modal.find('form').attr('action', agentAction);
   });
 };

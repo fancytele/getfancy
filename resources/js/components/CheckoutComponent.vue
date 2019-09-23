@@ -158,9 +158,9 @@
 
               <!-- Billing Information -->
               <div class="pt-4">
-                <h3 class="ml-n2">
+                <h3 class="ml-n2 text-capitalize">
                   <span class="border border-2 border-primary checkout-step mr-2 rounded-circle text-primary">2</span>
-                  {{ trans('Your Billing Information') }}
+                  {{ trans('Billing information') }}
                 </h3>
                 <div class="row">
                   <div class="col-md-6">
@@ -300,9 +300,9 @@
 
               <!-- Payment Information -->
               <div class="pt-4">
-                <h3 class="ml-n2">
+                <h3 class="ml-n2 text-capitalize">
                   <span class="border border-2 border-primary checkout-step mr-2 rounded-circle text-primary">4</span>
-                  {{ trans('Your Payment Information') }}
+                  {{ trans('Payment information') }}
                 </h3>
                 <div>
                   <div class="form-group">
