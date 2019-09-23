@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enums\Role;
 use App\User;
 use App\Subscription;
 use Illuminate\Support\Facades\Hash;
@@ -35,6 +36,7 @@ class UserService
     public function create(array $options)
     {
         $this->model = User::create($options);
+        $this->model->assignRole(Role::User);
 
         return $this;
     }
@@ -61,10 +63,10 @@ class UserService
     public function createSubscription(int $product_id, string $stripe_product_id, StripeSubscription $stripe_subscription)
     {
         $subscription = new Subscription([
-            "product_id" => $product_id,
-            "stripe_id" => $stripe_subscription->id,
-            "stripe_product" => $stripe_product_id,
-            "ends_at" => $stripe_subscription->current_period_end
+            'product_id' => $product_id,
+            'stripe_id' => $stripe_subscription->id,
+            'stripe_product' => $stripe_product_id,
+            'ends_at' => $stripe_subscription->current_period_end
         ]);
 
         $this->model->subscriptions()->save($subscription);
@@ -83,16 +85,22 @@ class UserService
     private function buildUserWithStripePayload(array $user_options, StripeCustomer $stripe_customer)
     {
         $stripe_id = $stripe_customer->id;
-        $card = $stripe_customer->sources->data["0"]; // Get always default Card
+        $card = $stripe_customer->sources->data['0']; // Get always default Card
 
-        return [
-            "first_name" => $user_options["first_name"],
-            "last_name" => $user_options["last_name"],
-            "email" => $user_options["email"],
-            "password" => Hash::make($user_options["password"]),
-            "stripe_id" => $stripe_id,
-            "card_brand" => $card->brand,
-            "card_last_four" => $card->last4
+        $payload = [
+            'first_name' => $user_options['first_name'],
+            'last_name' => $user_options['last_name'],
+            'email' => $user_options['email'],
+            'password' => User::generatePassword(),
+            'stripe_id' => $stripe_id,
+            'card_brand' => $card->brand,
+            'card_last_four' => $card->last4
         ];
+
+        if (isset($user_options['password'])) {
+            $payload['password'] = Hash::make($user_options['password']);
+        }
+
+        return $payload;
     }
 }

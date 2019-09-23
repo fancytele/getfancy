@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\Permission;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -15,10 +16,10 @@ class AgentRequest extends FormRequest
     public function authorize()
     {
         if ($this->agent) {
-            return $this->user()->can('update agent');
+            return $this->user()->can(Permission::UPDATE_AGENT);
         }
 
-        return $this->user()->can('create agent');
+        return $this->user()->can(Permission::CREATE_AGENT);
     }
 
     /**

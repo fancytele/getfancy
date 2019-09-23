@@ -11,12 +11,12 @@
     <title>{{ config('app.name') }}</title>
 
     <!-- Scripts -->
-    <script src="/js/lang.js" defer></script>
+    <script src="{{ asset('js/lang.js') }}" defer></script>
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="{{ asset('js/checkout.js') }}" defer></script>
 
     <script src="https://js.stripe.com/v3/"></script>
-    <script src="{{ 'https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit&hl=' . app()->getLocale()}}"
+    <script src="https://www.google.com/recaptcha/api.js?onload=vueRecaptchaApiLoaded&render=explicit&hl={{ app()->getLocale() }}"
             async defer>
     </script>
 

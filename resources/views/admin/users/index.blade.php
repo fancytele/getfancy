@@ -2,32 +2,32 @@
 
 @section('page-subtitle', __('User management'))
 
-@section('page-title', __('Agent list'))
+@section('page-title', __('User list'))
 
-@if($agents->isNotEmpty ())
+@if($users->isNotEmpty ())
 @section('header-action')
-<a href="{{ route('admin.agents.create') }}" class="btn btn-primary">
+<a href="{{ route('admin.users.create') }}" class="btn btn-primary">
     <i class="fe fe-user-plus mr-2"></i>
-    @lang('Create agent')
+    @lang('Create user')
 </a>
 @endsection
 @endif
 
 @section('content')
 <div class="container-fluid">
-    @if($agents->isEmpty())
+    @if($users->isEmpty())
     <div class="row">
         <div class="col-12">
             <div class="card card-flush">
                 <div class="card-body text-center">
                     <h1 class="display-4">
-                        @lang('No agents yet'). 😭
+                        @lang('No users yet'). 😭
                     </h1>
 
-                    <a href="{{ route('admin.agents.create') }}"
+                    <a href="{{ route('admin.users.create') }}"
                        class="btn btn-primary">
                         <i class="fe fe-user-plus mr-2"></i>
-                        @lang('Create agent')
+                        @lang('Create user')
                     </a>
                 </div>
             </div>
@@ -35,7 +35,7 @@
     </div> <!-- / .row -->
     @endif
 
-    @if($agents->isNotEmpty ())
+    @if($users->isNotEmpty ())
     <div class="card" data-toggle="lists"
          data-options='{"valueNames": ["orders-name", "orders-email", "orders-last-login", "orders-status"]}'>
         <div class="card-header">
@@ -91,22 +91,21 @@
                     </tr>
                 </thead>
                 <tbody class="list">
-                    @foreach($agents as $key => $agent)
+                    @foreach($users as $key => $user)
                     <tr>
                         <td scope="row" class="align-middle">
                             <span class="sr-only"
                                   aria-label="Default row number">{{ $key + 1 }}</span>
                         </td>
                         <td class="align-middle orders-name">
-                            {{ $agent->full_name }}</td>
-                        <td class="align-middle orders-email">
-                            {{ $agent->email }}
+                            {{ $user->full_name }}</td>
+                        <td class="align-middle orders-email">{{ $user->email }}
                         </td>
                         <td class="align-middle orders-last-login">
-                            {{ optional($agent->last_login)->diffForHumans() }}
+                            {{ optional($user->last_login)->diffForHumans() }}
                         </td>
                         <td class="align-middle orders-status">
-                            @if($agent->is_active)
+                            @if($user->is_active)
                             <div
                                  class="badge badge-soft-success font-size-inherit">
                                 @lang('Active')
@@ -119,29 +118,29 @@
                             @endif
                         </td>
                         <td class="align-middle">
-                            @if($agent->is_active)
-                            <a href="{{ route('admin.agents.edit', $agent->id) }}"
+                            @if($user->is_active)
+                            <a href="{{ route('admin.users.edit', $user->id) }}"
                                class="font-weight-normal h5 px-2">
                                 @lang('Edit')
                             </a>
                             |
-                            <a href="{{ route('admin.agents.destroy', $agent->id) }}"
+                            <a href="{{ route('admin.users.destroy', $user->id) }}"
                                class="font-weight-normal h5 px-2"
                                data-toggle="modal" data-backdrop="static"
                                data-target="#delete-element"
-                               data-name="@lang('Agent')"
-                               data-detail="{{ $agent->email }}"
-                               data-action="{{ route('admin.agents.destroy', $agent->id) }}">
+                               data-name="@lang('User')"
+                               data-detail="{{ $user->email }}"
+                               data-action="{{ route('admin.users.destroy', $user->id) }}">
                                 @lang('Delete')
                             </a>
                             @else
-                            <a href="{{ route('admin.agents.restore', $agent->id) }}"
+                            <a href="{{ route('admin.users.restore', $user->id) }}"
                                class="font-weight-normal h5 px-2"
                                data-toggle="modal" data-backdrop="static"
                                data-target="#restore-element"
-                               data-name="@lang('Agent')"
-                               data-detail="{{ $agent->email }}"
-                               data-action="{{ route('admin.agents.restore', $agent->id) }}">
+                               data-name="@lang('User')"
+                               data-detail="{{ $user->email }}"
+                               data-user-action="{{ route('admin.users.restore', $user->id) }}">
                                 @lang('Restore')
                             </a>
                             @endif
@@ -156,7 +155,7 @@
 </div>
 
 <!-- Modals -->
-@if($agents->isNotEmpty ())
+@if($users->isNotEmpty ())
 @include('partials.delete-element')
 @include('partials.restore-element')
 @endif

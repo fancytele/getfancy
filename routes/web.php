@@ -38,9 +38,15 @@ Route::prefix('admin')->group(function () {
 
     // User Management
     Route::prefix('users')->group(function () {
+        // Agents
         Route::post('agents/{agent}/reset_password', 'Admin\Users\AgentController@resetPassword')->name('admin.agents.reset_password');
         Route::post('agents/{agent}/restore', 'Admin\Users\AgentController@restore')->name('admin.agents.restore');
         Route::resource('agents', 'Admin\Users\AgentController', ['as' => 'admin'])->except(['show']);
+        
+        // Users
+        Route::post('users/{user}/reset_password', 'Admin\Users\UserController@resetPassword')->name('admin.users.reset_password');
+        Route::post('users/{user}/restore', 'Admin\Users\UserController@restore')->name('admin.users.restore');
+        Route::resource('users', 'Admin\Users\UserController', ['as' => 'admin'])->except(['show']);
     });
 });
 

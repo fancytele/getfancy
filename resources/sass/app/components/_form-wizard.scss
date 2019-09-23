@@ -1,0 +1,47 @@
+.form-wizard .form-step {
+  background-color: $white;
+  border: 1px solid $card-border-color;
+  border-radius: $card-border-radius;
+  cursor: pointer;
+  height: 100%;
+  margin-bottom: 0;
+  opacity: 0.5;
+
+  .form-step-number {
+    border: 2px solid $primary;
+    border-radius: 50%;
+    color: $primary;
+    font-size: $h3-font-size;
+    font-weight: bold;
+    padding: 1px 6px;
+  }
+
+  .form-step-description {
+    color: $text-muted;
+    margin-bottom: 0;
+  }
+
+  &.active {
+    background-color: $primary;
+    color: $white;
+    cursor: default;
+    opacity: 1;
+
+    .form-step-number {
+      border-color: $white;
+      color: $white;
+    }
+
+    .form-step-description {
+      color: rgba($white, 0.5);
+    }
+  }
+
+  &.completed {
+    opacity: 1;
+
+    &:hover {
+      box-shadow: inset 0 0 0.5rem rgba($black, 0.15);
+    }
+  }
+}
