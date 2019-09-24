@@ -14,14 +14,14 @@ class UserService
     /**
      * User model
      *
-     * @var App\Model;
+     * @var \App\User;
      */
     private $model;
 
     /**
      * Get User model
      *
-     * @return App\User
+     * @return \App\User
      */
     public function model()
     {
