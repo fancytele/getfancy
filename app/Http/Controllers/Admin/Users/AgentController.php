@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Admin\Users;
 use App\Enums\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AgentRequest;
+use App\Mail\WelcomeMail;
 use App\User;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class AgentController extends Controller
 {
@@ -62,7 +64,7 @@ class AgentController extends Controller
         $agent->save();
         $agent->assignRole(Role::Agent);
 
-        $this->sendResetLinkEmail($request);
+        Mail::to($agent)->send(new WelcomeMail($agent));
 
         return response()
             ->redirectToRoute('admin.agents.index')

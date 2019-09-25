@@ -6,6 +6,7 @@ use App\Addon;
 use App\Enums\Role;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Mail\WelcomeMail;
 use App\Product;
 use App\Services\StripeService;
 use App\Services\UserService;
@@ -13,6 +14,7 @@ use App\User;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
@@ -61,7 +63,7 @@ class UserController extends Controller
     public function store(UserRequest $request)
     {
         $data = $request->all();
-        
+
         $stripe_service = new StripeService();
 
         // Create Stripe Customer
@@ -94,7 +96,7 @@ class UserController extends Controller
         $user->createSubscription($product->id, $stripe_product->id, $stripe_subscription);
 
         // Send reset password to new user
-        $this->sendResetLinkEmail($request);
+        Mail::to($user->model())->send(new WelcomeMail($user->model()));
 
         return response()->json(['success' => true]);
     }
