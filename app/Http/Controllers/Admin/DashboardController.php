@@ -28,7 +28,22 @@ class DashboardController extends Controller
     public function index()
     {
         if (Auth::user()->hasRole(Role::User)) {
-            return view('admin.dashboard');
+            $faker = \Faker\Factory::create();
+            $calls = collect([]);
+            
+            for ($i = 0; $i < 10; $i++) {
+                $calls->add([
+                    'started_at' => \Carbon\Carbon::instance($faker->dateTimeThisYear())->toFormattedDateString(),
+                    'duration' => $faker->numberBetween(1, 5) . ':' . $faker->numberBetween(1, 60),
+                    'source' => $faker->tollFreePhoneNumber,
+                    'destination' => 'sip:' . $faker->e164PhoneNumber . '@' . $faker->ipv4,
+                    'attemp_number' => $faker->numberBetween(1, 2),
+                    'success' => $faker->boolean(90)
+                ]);
+            }
+
+            $calls = $calls->sortByDesc('started_at')->values();
+            return view('admin.dashboard', compact('calls'));
         }
 
         $users = User::countByRole();

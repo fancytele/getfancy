@@ -1,8 +1,102 @@
-import './sortList';
+import Chart from 'chart.js';
+
+import './dashkit/dashkit.chart-extensions';
+import './dashkit/dashkit.chart';
+import './dashkit/dashkit.flatpickr';
+import './dashkit/dashkit.sortList';
 
 function logout(event) {
   event.preventDefault();
   document.getElementById('logout-form').submit();
+}
+
+function initCallsChar(chart) {
+  new Chart(chart, {
+    type: 'bar',
+    options: {
+      scales: {
+        yAxes: [{
+          ticks: {
+            callback: function (value) {
+              if (!(value % 10)) {
+                return value + ' calls'
+              }
+            }
+          }
+        }]
+      },
+      tooltips: {
+        callbacks: {
+          label: function (item, data) {
+            var label = data.datasets[item.datasetIndex].label || '';
+            var yLabel = item.yLabel;
+            var content = '';
+
+            if (data.datasets.length > 1) {
+              content += '<span class="popover-body-label mr-auto">' + label + '</span>';
+            }
+
+            content += '<span class="popover-body-value">' + yLabel + ' calls</span>';
+            return content;
+          }
+        }
+      }
+    },
+    data: {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+      datasets: [{
+        label: 'Calls',
+        data: [23, 35, 30, 33, 45, 28, 23, 29, 48]
+      }]
+    }
+  });
+}
+
+function initExtensionsChar(chart) {
+  new Chart(chart, {
+    type: 'doughnut',
+    options: {
+      tooltips: {
+        callbacks: {
+          title: function (item, data) {
+            var title = data.labels[item[0].index];
+            return title;
+          },
+          label: function (item, data) {
+            var value = data.datasets[0].data[item.index];
+            var content = '';
+
+            content += '<span class="popover-body-value">' + value + '%</span>';
+            return content;
+          }
+        }
+      }
+    },
+    data: {
+      labels: ['Sales', 'Support', 'Accounting'],
+      datasets: [{
+        data: [60, 25, 15],
+        backgroundColor: [
+          '#704895',
+          '#a381c2',
+          '#D2DDEC'
+        ]
+      }]
+    }
+  });
+}
+
+// User Dashboard
+const callChart = document.getElementById('callsChart');
+
+if (typeof callChart !== 'undefined' && callChart) {
+  initCallsChar(callChart);
+}
+
+const extensionChart = document.getElementById('extensionsChart');
+
+if (typeof extensionChart !== 'undefined' && extensionChart) {
+  initExtensionsChar(extensionChart);
 }
 
 window.onload = function () {
@@ -19,12 +113,12 @@ window.onload = function () {
 
   // Delte and Retore element
   $('#delete-element, #restore-element').on('show.bs.modal', function (event) {
-    var element = $(event.relatedTarget);
-    var elementName = element.data('name')
-    var elementDetail = element.data('detail');
-    var elementAction = element.data('action');
+    const element = $(event.relatedTarget);
+    const elementName = element.data('name')
+    const elementDetail = element.data('detail');
+    const elementAction = element.data('action');
 
-    var modal = $(this);
+    const modal = $(this);
     modal.find('.element-name').text(elementName);
     modal.find('.element-detail').text(elementDetail);
     modal.find('form').attr('action', elementAction);
