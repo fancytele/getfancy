@@ -11,6 +11,10 @@
   width: 100% !important;
 }
 
+.select2-container--default.select2-container--disabled .select2-selection--single {
+  background-color: $white;
+}
+
 .select2-container .select2-selection--single,
 .select2-container--default.select2-container--focus .select2-selection--multiple,
 .select2-container--default .select2-selection--multiple,
@@ -98,7 +102,7 @@
 
   @include hover-focus {
     background-color: $dropdown-link-active-bg;
-    color: $dropdown-link-active-color; 
+    color: $dropdown-link-active-color;
   }
 }
 
@@ -107,7 +111,7 @@
   color: $dropdown-link-active-color;
 }
 
-.select2-container--default .select2-results__option[aria-disabled=true] {
+.select2-container--default .select2-results__option[aria-disabled="true"] {
   color: $dropdown-link-disabled-color;
 }
 
@@ -119,14 +123,14 @@
 
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
   display: block;
-  margin: 0 0 -.25rem -.25rem;
+  margin: 0 0 -0.25rem -0.25rem;
   padding: 0;
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
   display: inline-flex;
-  padding: 0 .5rem;
-  margin: 0 0 .25rem .25rem;
+  padding: 0 0.5rem;
+  margin: 0 0 0.25rem 0.25rem;
   background-color: $light;
   border: none;
   border-radius: $border-radius-sm;
@@ -137,7 +141,7 @@
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
   order: 2;
-  margin-left: .5rem;
+  margin-left: 0.5rem;
   color: $text-muted;
 
   &:hover {
@@ -146,7 +150,7 @@
 }
 
 .select2-container .select2-search--inline .select2-search__field {
-  margin: 0 0 .25rem .25rem;
+  margin: 0 0 0.25rem 0.25rem;
 }
 
 .select2-selection[aria-expanded="true"] {
@@ -167,7 +171,6 @@
   line-height: $input-line-height-sm;
   @include border-radius($input-border-radius-sm);
 }
-
 
 // Sizing
 //
@@ -210,7 +213,6 @@
 .form-control-lg + .select2-container--default .select2-selection--multiple .select2-selection__choice {
   line-height: ($input-line-height-lg * $font-size-lg);
 }
-
 
 // Validation
 

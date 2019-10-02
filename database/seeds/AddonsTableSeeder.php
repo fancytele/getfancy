@@ -26,21 +26,21 @@ class AddonsTableSeeder extends Seeder
                 'code' => 'F02',
                 'cost' => '5',
                 'description' => 'Multiple Ring',
-                'type' => AddonType::Subscription
+                'type' => AddonType::SUBSCRIPTION
             ],
             [
                 'name' => 'Fraud Alert',
                 'code' => 'F03',
                 'cost' => '5',
                 'description' => 'Make sure to be notice when a Fraud occurs',
-                'type' => AddonType::Subscription
+                'type' => AddonType::SUBSCRIPTION
             ],
             [
                 'name' => 'Call Blocker',
                 'code' => 'F04',
                 'cost' => '5',
                 'description' => 'Block any incoming call you want',
-                'type' => AddonType::Subscription
+                'type' => AddonType::SUBSCRIPTION
             ],
             [
                 'name' => 'Additional Numbers',

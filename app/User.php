@@ -23,6 +23,9 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'company_name',
+        'company_phone',
+        'company_contact_name',
         'stripe_id',
         'card_brand',
         'card_last_four',
@@ -98,6 +101,14 @@ class User extends Authenticatable
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class, $this->getForeignKey())->orderBy('created_at', 'desc');
+    }
+
+    /**
+     * Get the addresses for the user.
+     */
+    public function addresses()
+    {
+        return $this->hasMany(Address::class);
     }
 
     /**

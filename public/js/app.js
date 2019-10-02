@@ -2918,6 +2918,214 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -2948,6 +3156,10 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       laddaButton: null,
+      isProcessing: true,
+      isUserCreated: false,
+      errors: {},
+      sameAddress: false,
       steps: [{
         id: 'plans',
         title: 'Plan & features',
@@ -2958,20 +3170,46 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         id: 'personal-information',
         title: 'Personal information',
-        description: 'User information and billing address',
+        description: 'User and Company information',
         isActive: false,
         isCompleted: false,
-        required: ['first_name', 'last_name', 'email', 'email_confirmation', 'country', 'city', 'state', 'zip_code', 'address']
+        required: ['first_name', 'last_name', 'email', 'email_confirmation', 'company_name', 'company_phone', 'company_country', 'company_city', 'company_state', 'company_zip_code', 'company_address1']
       }, {
         id: 'payment-information',
         title: 'Payment information',
-        description: 'Credic card and summary',
+        description: 'Billing address and credic card',
         isActive: false,
         isCompleted: false,
-        required: []
+        required: ['billing_country', 'billing_city', 'billing_state', 'billing_zip_code', 'billing_address1']
       }],
       currentStep: {},
-      errors: {},
+      countries: [],
+      stripe: {
+        key: "pk_TMBfEj9GXcGCePpgJAFLIb8tHWpEA",
+        options: {
+          elements: {
+            locale: this.locale
+          },
+          style: {
+            base: {
+              color: '#32325d',
+              fontFamily: '"Cerebri Sans", sans-serif',
+              fontSmoothing: 'antialiased',
+              fontSize: '16px',
+              '::placeholder': {
+                color: '#b1c2d9'
+              }
+            },
+            invalid: {
+              color: '#e63757',
+              iconColor: '#e63757'
+            }
+          },
+          hidePostalCode: true
+        },
+        validationCompleted: false,
+        stripeError: ''
+      },
       user: {
         product: this.products[0].slug,
         addons: [],
@@ -2979,39 +3217,23 @@ __webpack_require__.r(__webpack_exports__);
         last_name: '',
         email: '',
         email_confirmation: '',
-        country: null,
-        city: '',
-        state: '',
-        zip_code: '',
-        address: ''
-      },
-      countries: [],
-      isProcessing: true,
-      stripe: "pk_TMBfEj9GXcGCePpgJAFLIb8tHWpEA",
-      stripeOptions: {
-        elements: {
-          locale: this.locale
-        },
-        style: {
-          base: {
-            color: '#32325d',
-            fontFamily: '"Cerebri Sans", sans-serif',
-            fontSmoothing: 'antialiased',
-            fontSize: '16px',
-            '::placeholder': {
-              color: '#b1c2d9'
-            }
-          },
-          invalid: {
-            color: '#e63757',
-            iconColor: '#e63757'
-          }
-        },
-        hidePostalCode: true
-      },
-      complete: false,
-      stripeError: '',
-      isUserCreated: false
+        company_name: '',
+        company_phone: '',
+        company_contact_name: '',
+        company_country: '',
+        company_city: '',
+        company_state: '',
+        company_zip_code: '',
+        company_address1: '',
+        company_address2: '',
+        billing_country: '',
+        billing_city: '',
+        billing_state: '',
+        billing_zip_code: '',
+        billing_address1: '',
+        billing_address2: '',
+        stripe_token: ''
+      }
     };
   },
   methods: {
@@ -3025,11 +3247,15 @@ __webpack_require__.r(__webpack_exports__);
             text: el.Name
           };
         });
-      }).then(this.toggleProcessing);
+      }).then(function () {
+        _this.user.country = _this.countries[0].id;
+
+        _this.toggleProcessing();
+      });
     },
     stripeChange: function stripeChange($event) {
-      this.complete = $event.complete;
-      this.stripeError = $event.error ? $event.error.message : '';
+      this.stripe.validationCompleted = $event.complete;
+      this.stripe.error = $event.error ? $event.error.message : '';
     },
     toggleProcessing: function toggleProcessing() {
       this.isProcessing = !this.isProcessing;
@@ -3084,6 +3310,10 @@ __webpack_require__.r(__webpack_exports__);
 
       this.currentStep = step;
       this.currentStep.isActive = true;
+
+      if (step.id === this.steps[this.steps.length - 1].id) {
+        this.toggleSameAddress();
+      }
     },
     goToPreviousStep: function goToPreviousStep() {
       var _this4 = this;
@@ -3105,6 +3335,16 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!this.isLastStep) {
         this.changeToStep(this.steps[currentStepIndex + 1]);
+      }
+    },
+    toggleSameAddress: function toggleSameAddress() {
+      if (this.sameAddress) {
+        this.user.billing_country = this.user.company_country;
+        this.user.billing_city = this.user.company_city;
+        this.user.billing_state = this.user.company_state;
+        this.user.billing_zip_code = this.user.company_zip_code;
+        this.user.billing_address1 = this.user.company_address1;
+        this.user.billing_address2 = this.user.company_address2;
       }
     },
     submit: function submit() {
@@ -3139,7 +3379,10 @@ __webpack_require__.r(__webpack_exports__);
         });
       })["catch"](function (error) {
         var data = error.response.data;
-        _this7.errors = data.errors;
+
+        if (data.errors) {
+          _this7.errors = data.errors;
+        }
 
         _this7.laddaButton.stop();
 
@@ -46270,795 +46513,1358 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "card" }, [
       _c("div", { staticClass: "card-body" }, [
-        _c(
-          "form",
-          {
-            attrs: {
-              action: _vm.action,
-              id: "create-user-form",
-              method: "POST"
+        _c("div", { attrs: { id: "create-user-form" } }, [
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.currentStep.id === "plans",
+                  expression: "currentStep.id === 'plans'"
+                }
+              ]
             },
-            on: {
-              submit: function($event) {
-                $event.preventDefault()
-                return _vm.submit($event)
-              }
-            }
-          },
-          [
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.currentStep.id === "plans",
-                    expression: "currentStep.id === 'plans'"
-                  }
-                ]
-              },
-              [
+            [
+              _c("div", { staticClass: "row" }, [
+                _c(
+                  "div",
+                  { staticClass: "col-lg-6 col-xl-4" },
+                  [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "product" } }, [
+                        _vm._v(_vm._s(_vm.trans("Product")))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.user.product,
+                              expression: "user.product"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.errors.hasOwnProperty("product")
+                          },
+                          attrs: {
+                            name: "product",
+                            id: "product",
+                            required: "",
+                            autofocus: ""
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.user,
+                                "product",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.products, function(product) {
+                          return _c(
+                            "option",
+                            {
+                              key: product.slug,
+                              domProps: { value: product.slug }
+                            },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.trans(product.name)) +
+                                  " - $" +
+                                  _vm._s(_vm.trans(product.cost))
+                              )
+                            ]
+                          )
+                        }),
+                        0
+                      ),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("product")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.product[0]))
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c("p", [_vm._v(_vm._s(_vm.trans("Additional Features")))]),
+                    _vm._v(" "),
+                    _vm._l(_vm.addons, function(addon) {
+                      return _c(
+                        "div",
+                        { key: addon.code, staticClass: "form-group" },
+                        [
+                          _c(
+                            "div",
+                            { staticClass: "custom-control custom-switch" },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.user.addons,
+                                    expression: "user.addons"
+                                  }
+                                ],
+                                staticClass: "custom-control-input",
+                                attrs: {
+                                  type: "checkbox",
+                                  id: addon.code,
+                                  name: addon.code,
+                                  "aria-describedby": addon.code + "-help-block"
+                                },
+                                domProps: {
+                                  value: addon.code,
+                                  checked: Array.isArray(_vm.user.addons)
+                                    ? _vm._i(_vm.user.addons, addon.code) > -1
+                                    : _vm.user.addons
+                                },
+                                on: {
+                                  change: function($event) {
+                                    var $$a = _vm.user.addons,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = addon.code,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          _vm.$set(
+                                            _vm.user,
+                                            "addons",
+                                            $$a.concat([$$v])
+                                          )
+                                      } else {
+                                        $$i > -1 &&
+                                          _vm.$set(
+                                            _vm.user,
+                                            "addons",
+                                            $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1))
+                                          )
+                                      }
+                                    } else {
+                                      _vm.$set(_vm.user, "addons", $$c)
+                                    }
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "custom-control-label",
+                                  attrs: { for: addon.code }
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                    " +
+                                      _vm._s(_vm.trans(addon.name)) +
+                                      " - $" +
+                                      _vm._s(addon.cost) +
+                                      "\n                    "
+                                  ),
+                                  _c(
+                                    "span",
+                                    {
+                                      staticClass: "form-text text-muted",
+                                      attrs: { id: addon.code + "-help-block" }
+                                    },
+                                    [
+                                      _vm._v(
+                                        _vm._s(addon.name) + " description text"
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ]
+                          )
+                        ]
+                      )
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "col-lg-5 col-xl-6 mt-4 mt-lg-0 offset-lg-1" },
+                  [
+                    _c("p", { staticClass: "font-weight-normal h3" }, [
+                      _vm._v(_vm._s(_vm.trans("Features")))
+                    ]),
+                    _vm._v(" "),
+                    _c("ul", { staticClass: "list-unstyled" }, [
+                      _c("li", { staticClass: "pb-3" }, [
+                        _c("i", { staticClass: "fe fe-check-circle" }),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.trans("Unlimited extensions"))
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "pb-3" }, [
+                        _c("i", { staticClass: "fe fe-check-circle" }),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.trans("Customer support"))
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "pb-3" }, [
+                        _c("i", { staticClass: "fe fe-check-circle" }),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.trans("All minutes = fixed"))
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "pb-3" }, [
+                        _c("i", { staticClass: "fe fe-check-circle" }),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.trans("Choose your number"))
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "pb-3" }, [
+                        _c("i", { staticClass: "fe fe-check-circle" }),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.trans("Conference call"))
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "pb-3" }, [
+                        _c("i", { staticClass: "fe fe-check-circle" }),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.trans("Custom voice"))
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "pb-3" }, [
+                        _c("i", { staticClass: "fe fe-check-circle" }),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.trans("Recording voice"))
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "pb-3" }, [
+                        _c("i", { staticClass: "fe fe-check-circle" }),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(
+                              _vm.trans("Recording voicemail to Email")
+                            )
+                          }
+                        })
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.currentStep.id === "personal-information",
+                  expression: "currentStep.id === 'personal-information'"
+                }
+              ]
+            },
+            [
+              _c("fieldset", [
+                _c("legend", [
+                  _vm._v(_vm._s(_vm.trans("Personal information")))
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
-                  _c(
-                    "div",
-                    { staticClass: "col-lg-6 col-xl-4" },
-                    [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "product" } }, [
-                          _vm._v(_vm._s(_vm.trans("Product")))
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "first_name" } }, [
+                        _vm._v(_vm._s(_vm.trans("First Name")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.first_name,
+                            expression: "user.first_name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty("first_name")
+                        },
+                        attrs: {
+                          type: "text",
+                          id: "first_name",
+                          name: "first_name",
+                          required: ""
+                        },
+                        domProps: { value: _vm.user.first_name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "first_name",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("first_name")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.first_name[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "last_name" } }, [
+                        _vm._v(_vm._s(_vm.trans("Last Name")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.last_name,
+                            expression: "user.last_name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty("last_name")
+                        },
+                        attrs: {
+                          type: "text",
+                          id: "last_name",
+                          name: "last_name",
+                          required: ""
+                        },
+                        domProps: { value: _vm.user.last_name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.user, "last_name", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("last_name")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.last_name[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "email" } }, [
+                        _vm._v(_vm._s(_vm.trans("E-mail")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.email,
+                            expression: "user.email"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty("email")
+                        },
+                        attrs: {
+                          type: "email",
+                          id: "email",
+                          name: "email",
+                          required: ""
+                        },
+                        domProps: { value: _vm.user.email },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(_vm.user, "email", $event.target.value)
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("email")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.email[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "email_confirmation" } }, [
+                        _vm._v(_vm._s(_vm.trans("Verify E-mail")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.email_confirmation,
+                            expression: "user.email_confirmation"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty(
+                            "email_confirmation"
+                          )
+                        },
+                        attrs: {
+                          type: "email",
+                          id: "email_confirmation",
+                          name: "email_confirmation",
+                          required: ""
+                        },
+                        domProps: { value: _vm.user.email_confirmation },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "email_confirmation",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("email_confirmation")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.email_confirmation[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("fieldset", { staticClass: "mt-4" }, [
+                _c("legend", [
+                  _vm._v(_vm._s(_vm.trans("Business information")))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "company_name" } }, [
+                        _vm._v(_vm._s(_vm.trans("Company name")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.company_name,
+                            expression: "user.company_name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty(
+                            "company_name"
+                          )
+                        },
+                        attrs: {
+                          type: "text",
+                          id: "company_name",
+                          name: "company_name",
+                          required: ""
+                        },
+                        domProps: { value: _vm.user.company_name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "company_name",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("company_name")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.company_name[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "company_phone" } }, [
+                        _vm._v(_vm._s(_vm.trans("Company phone")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.company_phone,
+                            expression: "user.company_phone"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty(
+                            "company_phone"
+                          )
+                        },
+                        attrs: {
+                          type: "tel",
+                          id: "company_phone",
+                          name: "company_phone",
+                          required: ""
+                        },
+                        domProps: { value: _vm.user.company_phone },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "company_phone",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("company_phone")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.company_phone[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-4" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "company_contact_name" } }, [
+                        _vm._v(_vm._s(_vm.trans("Company contact name")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.company_contact_name,
+                            expression: "user.company_contact_name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty(
+                            "company_contact_name"
+                          )
+                        },
+                        attrs: {
+                          type: "text",
+                          id: "company_contact_name",
+                          name: "company_contact_name"
+                        },
+                        domProps: { value: _vm.user.company_contact_name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "company_contact_name",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("company_contact_name")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.company_contact_name[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", { attrs: { for: "company_country" } }, [
+                          _vm._v(_vm._s(_vm.trans("Country")))
                         ]),
                         _vm._v(" "),
                         _c(
-                          "select",
+                          "select2",
                           {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.user.product,
-                                expression: "user.product"
-                              }
-                            ],
                             staticClass: "form-control",
                             class: {
-                              "is-invalid": _vm.errors.hasOwnProperty("product")
+                              "is-invalid select2-hidden-accessible": _vm.errors.hasOwnProperty(
+                                "company_country"
+                              ),
+                              "form-control select2-hidden-accessible": !_vm.errors.hasOwnProperty(
+                                "company_country"
+                              )
                             },
                             attrs: {
-                              name: "product",
-                              id: "product",
-                              required: "",
-                              autofocus: ""
+                              name: "company_country",
+                              id: "company_country",
+                              options: _vm.countries,
+                              required: ""
                             },
-                            on: {
-                              change: function($event) {
-                                var $$selectedVal = Array.prototype.filter
-                                  .call($event.target.options, function(o) {
-                                    return o.selected
-                                  })
-                                  .map(function(o) {
-                                    var val = "_value" in o ? o._value : o.value
-                                    return val
-                                  })
-                                _vm.$set(
-                                  _vm.user,
-                                  "product",
-                                  $event.target.multiple
-                                    ? $$selectedVal
-                                    : $$selectedVal[0]
-                                )
-                              }
+                            model: {
+                              value: _vm.user.company_country,
+                              callback: function($$v) {
+                                _vm.$set(_vm.user, "company_country", $$v)
+                              },
+                              expression: "user.company_country"
                             }
                           },
-                          _vm._l(_vm.products, function(product) {
-                            return _c(
-                              "option",
-                              {
-                                key: product.slug,
-                                domProps: { value: product.slug }
-                              },
-                              [
-                                _vm._v(
-                                  _vm._s(_vm.trans(product.name)) +
-                                    " - $" +
-                                    _vm._s(_vm.trans(product.cost))
-                                )
-                              ]
-                            )
-                          }),
-                          0
-                        ),
-                        _vm._v(" "),
-                        _vm.errors.hasOwnProperty("product")
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(_vm._s(_vm.errors.product[0]))
-                            ])
-                          : _vm._e()
-                      ]),
-                      _vm._v(" "),
-                      _c("p", [
-                        _vm._v(_vm._s(_vm.trans("Additional Features")))
-                      ]),
-                      _vm._v(" "),
-                      _vm._l(_vm.addons, function(addon) {
-                        return _c(
-                          "div",
-                          { key: addon.code, staticClass: "form-group" },
                           [
                             _c(
-                              "div",
-                              { staticClass: "custom-control custom-switch" },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.user.addons,
-                                      expression: "user.addons"
-                                    }
-                                  ],
-                                  staticClass: "custom-control-input",
-                                  attrs: {
-                                    type: "checkbox",
-                                    id: addon.code,
-                                    name: addon.code,
-                                    "aria-describedby":
-                                      addon.code + "-help-block"
-                                  },
-                                  domProps: {
-                                    value: addon.code,
-                                    checked: Array.isArray(_vm.user.addons)
-                                      ? _vm._i(_vm.user.addons, addon.code) > -1
-                                      : _vm.user.addons
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      var $$a = _vm.user.addons,
-                                        $$el = $event.target,
-                                        $$c = $$el.checked ? true : false
-                                      if (Array.isArray($$a)) {
-                                        var $$v = addon.code,
-                                          $$i = _vm._i($$a, $$v)
-                                        if ($$el.checked) {
-                                          $$i < 0 &&
-                                            _vm.$set(
-                                              _vm.user,
-                                              "addons",
-                                              $$a.concat([$$v])
-                                            )
-                                        } else {
-                                          $$i > -1 &&
-                                            _vm.$set(
-                                              _vm.user,
-                                              "addons",
-                                              $$a
-                                                .slice(0, $$i)
-                                                .concat($$a.slice($$i + 1))
-                                            )
-                                        }
-                                      } else {
-                                        _vm.$set(_vm.user, "addons", $$c)
-                                      }
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "custom-control-label",
-                                    attrs: { for: addon.code }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                    " +
-                                        _vm._s(_vm.trans(addon.name)) +
-                                        " - $" +
-                                        _vm._s(addon.cost) +
-                                        "\n                    "
-                                    ),
-                                    _c(
-                                      "span",
-                                      {
-                                        staticClass: "form-text text-muted",
-                                        attrs: {
-                                          id: addon.code + "-help-block"
-                                        }
-                                      },
-                                      [
-                                        _vm._v(
-                                          _vm._s(addon.name) +
-                                            " description text"
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ]
+                              "option",
+                              { attrs: { disabled: "", value: "" } },
+                              [_vm._v("---")]
                             )
                           ]
-                        )
-                      })
-                    ],
-                    2
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass: "col-lg-5 col-xl-6 mt-4 mt-lg-0 offset-lg-1"
-                    },
-                    [
-                      _c("p", { staticClass: "font-weight-normal h3" }, [
-                        _vm._v(_vm._s(_vm.trans("Features")))
-                      ]),
-                      _vm._v(" "),
-                      _c("ul", { staticClass: "list-unstyled" }, [
-                        _c("li", { staticClass: "pb-3" }, [
-                          _c("i", { staticClass: "fe fe-check-circle" }),
-                          _vm._v(" "),
-                          _c("span", {
-                            domProps: {
-                              innerHTML: _vm._s(
-                                _vm.trans("Unlimited extensions")
-                              )
-                            }
-                          })
-                        ]),
+                        ),
                         _vm._v(" "),
-                        _c("li", { staticClass: "pb-3" }, [
-                          _c("i", { staticClass: "fe fe-check-circle" }),
-                          _vm._v(" "),
-                          _c("span", {
-                            domProps: {
-                              innerHTML: _vm._s(_vm.trans("Customer support"))
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "pb-3" }, [
-                          _c("i", { staticClass: "fe fe-check-circle" }),
-                          _vm._v(" "),
-                          _c("span", {
-                            domProps: {
-                              innerHTML: _vm._s(
-                                _vm.trans("All minutes = fixed")
-                              )
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "pb-3" }, [
-                          _c("i", { staticClass: "fe fe-check-circle" }),
-                          _vm._v(" "),
-                          _c("span", {
-                            domProps: {
-                              innerHTML: _vm._s(_vm.trans("Choose your number"))
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "pb-3" }, [
-                          _c("i", { staticClass: "fe fe-check-circle" }),
-                          _vm._v(" "),
-                          _c("span", {
-                            domProps: {
-                              innerHTML: _vm._s(_vm.trans("Conference call"))
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "pb-3" }, [
-                          _c("i", { staticClass: "fe fe-check-circle" }),
-                          _vm._v(" "),
-                          _c("span", {
-                            domProps: {
-                              innerHTML: _vm._s(_vm.trans("Custom voice"))
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "pb-3" }, [
-                          _c("i", { staticClass: "fe fe-check-circle" }),
-                          _vm._v(" "),
-                          _c("span", {
-                            domProps: {
-                              innerHTML: _vm._s(_vm.trans("Recording voice"))
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c("li", { staticClass: "pb-3" }, [
-                          _c("i", { staticClass: "fe fe-check-circle" }),
-                          _vm._v(" "),
-                          _c("span", {
-                            domProps: {
-                              innerHTML: _vm._s(
-                                _vm.trans("Recording voicemail to Email")
-                              )
-                            }
-                          })
-                        ])
-                      ])
-                    ]
-                  )
-                ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.currentStep.id === "personal-information",
-                    expression: "currentStep.id === 'personal-information'"
-                  }
-                ]
-              },
-              [
-                _c("fieldset", [
-                  _c("legend", [
-                    _vm._v(_vm._s(_vm.trans("Personal information")))
+                        _vm.errors.hasOwnProperty("company_country")
+                          ? _c("div", { staticClass: "invalid-feedback" }, [
+                              _vm._v(_vm._s(_vm.errors.company_country[0]))
+                            ])
+                          : _vm._e()
+                      ],
+                      1
+                    )
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "first_name" } }, [
-                          _vm._v(_vm._s(_vm.trans("First Name")))
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.first_name,
-                              expression: "user.first_name"
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "company_city" } }, [
+                        _vm._v(_vm._s(_vm.trans("City")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.company_city,
+                            expression: "user.company_city"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty(
+                            "company_city"
+                          )
+                        },
+                        attrs: {
+                          type: "text",
+                          id: "company_city",
+                          name: "company_city",
+                          required: ""
+                        },
+                        domProps: { value: _vm.user.company_city },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.errors.hasOwnProperty(
-                              "first_name"
+                            _vm.$set(
+                              _vm.user,
+                              "company_city",
+                              $event.target.value
                             )
-                          },
-                          attrs: {
-                            type: "text",
-                            id: "first_name",
-                            name: "first_name",
-                            required: ""
-                          },
-                          domProps: { value: _vm.user.first_name },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.user,
-                                "first_name",
-                                $event.target.value
-                              )
-                            }
                           }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.hasOwnProperty("first_name")
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(_vm._s(_vm.errors.first_name[0]))
-                            ])
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "last_name" } }, [
-                          _vm._v(_vm._s(_vm.trans("Last Name")))
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.last_name,
-                              expression: "user.last_name"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.errors.hasOwnProperty("last_name")
-                          },
-                          attrs: {
-                            type: "text",
-                            id: "last_name",
-                            name: "last_name",
-                            required: ""
-                          },
-                          domProps: { value: _vm.user.last_name },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.user,
-                                "last_name",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.hasOwnProperty("last_name")
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(_vm._s(_vm.errors.last_name[0]))
-                            ])
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "email" } }, [
-                          _vm._v(_vm._s(_vm.trans("E-mail")))
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.email,
-                              expression: "user.email"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.errors.hasOwnProperty("email")
-                          },
-                          attrs: {
-                            type: "email",
-                            id: "email",
-                            name: "email",
-                            required: ""
-                          },
-                          domProps: { value: _vm.user.email },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.user, "email", $event.target.value)
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.hasOwnProperty("email")
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(_vm._s(_vm.errors.email[0]))
-                            ])
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "email_confirmation" } }, [
-                          _vm._v(_vm._s(_vm.trans("Verify E-mail")))
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.email_confirmation,
-                              expression: "user.email_confirmation"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.errors.hasOwnProperty(
-                              "email_confirmation"
-                            )
-                          },
-                          attrs: {
-                            type: "email",
-                            id: "email_confirmation",
-                            name: "email_confirmation",
-                            required: ""
-                          },
-                          domProps: { value: _vm.user.email_confirmation },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.user,
-                                "email_confirmation",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.hasOwnProperty("email_confirmation")
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(_vm._s(_vm.errors.email_confirmation[0]))
-                            ])
-                          : _vm._e()
-                      ])
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("company_city")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.company_city[0]))
+                          ])
+                        : _vm._e()
                     ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "company_state" } }, [
+                        _vm._v(_vm._s(_vm.trans("State, Providence, Region")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.company_state,
+                            expression: "user.company_state"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty(
+                            "company_state"
+                          )
+                        },
+                        attrs: {
+                          type: "text",
+                          id: "company_state",
+                          name: "company_state",
+                          required: ""
+                        },
+                        domProps: { value: _vm.user.company_state },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "company_state",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("company_state")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.company_state[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "company_zip_code" } }, [
+                        _vm._v(_vm._s(_vm.trans("Zip Code")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.company_zip_code,
+                            expression: "user.company_zip_code"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty(
+                            "company_zip_code"
+                          )
+                        },
+                        attrs: {
+                          type: "number",
+                          id: "company_zip_code",
+                          name: "company_zip_code",
+                          required: ""
+                        },
+                        domProps: { value: _vm.user.company_zip_code },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "company_zip_code",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("company_zip_code")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.company_zip_code[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "company_address1" } }, [
+                        _vm._v(_vm._s(_vm.trans("Address")) + " 1")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.company_address1,
+                            expression: "user.company_address1"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty(
+                            "company_address1"
+                          )
+                        },
+                        attrs: {
+                          type: "text",
+                          id: "company_address1",
+                          name: "company_address1",
+                          required: "",
+                          placeholder: _vm.trans(
+                            "Street address, P.O. box, company name, c/o"
+                          )
+                        },
+                        domProps: { value: _vm.user.company_address1 },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "company_address1",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("company_address1")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.company_address1[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "company_address2" } }, [
+                        _vm._v(_vm._s(_vm.trans("Address")) + " 2")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.company_address2,
+                            expression: "user.company_address2"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "company_address2",
+                          name: "company_address2",
+                          placeholder: _vm.trans(
+                            "Apartment, suite, unit, building, floor, etc"
+                          )
+                        },
+                        domProps: { value: _vm.user.company_address2 },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "company_address2",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ])
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              directives: [
+                {
+                  name: "show",
+                  rawName: "v-show",
+                  value: _vm.currentStep.id === "payment-information",
+                  expression: "currentStep.id === 'payment-information'"
+                }
+              ]
+            },
+            [
+              _c("fieldset", [
+                _c("legend", [
+                  _vm._v(_vm._s(_vm.trans("Billing information")))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("div", { staticClass: "custom-control custom-switch" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.sameAddress,
+                          expression: "sameAddress"
+                        }
+                      ],
+                      staticClass: "custom-control-input",
+                      attrs: {
+                        type: "checkbox",
+                        id: "same-address",
+                        name: "same-address"
+                      },
+                      domProps: {
+                        checked: Array.isArray(_vm.sameAddress)
+                          ? _vm._i(_vm.sameAddress, null) > -1
+                          : _vm.sameAddress
+                      },
+                      on: {
+                        change: [
+                          function($event) {
+                            var $$a = _vm.sameAddress,
+                              $$el = $event.target,
+                              $$c = $$el.checked ? true : false
+                            if (Array.isArray($$a)) {
+                              var $$v = null,
+                                $$i = _vm._i($$a, $$v)
+                              if ($$el.checked) {
+                                $$i < 0 && (_vm.sameAddress = $$a.concat([$$v]))
+                              } else {
+                                $$i > -1 &&
+                                  (_vm.sameAddress = $$a
+                                    .slice(0, $$i)
+                                    .concat($$a.slice($$i + 1)))
+                              }
+                            } else {
+                              _vm.sameAddress = $$c
+                            }
+                          },
+                          function($event) {
+                            return _vm.toggleSameAddress()
+                          }
+                        ]
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "custom-control-label",
+                        attrs: { for: "same-address" }
+                      },
+                      [
+                        _vm._v(
+                          _vm._s(_vm.trans("Same as Company address")) + "?"
+                        )
+                      ]
+                    )
                   ])
                 ]),
                 _vm._v(" "),
-                _c("fieldset", { staticClass: "mt-4" }, [
-                  _c("legend", [
-                    _vm._v(_vm._s(_vm.trans("Billing information")))
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c(
+                      "div",
+                      { staticClass: "form-group" },
+                      [
+                        _c("label", { attrs: { for: "billing_country" } }, [
+                          _vm._v(_vm._s(_vm.trans("Country")))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "select2",
+                          {
+                            staticClass:
+                              "form-control select2-hidden-accessible",
+                            class: {
+                              "is-invalid select2-hidden-accessible": _vm.errors.hasOwnProperty(
+                                "billing_country"
+                              ),
+                              "form-control select2-hidden-accessible": !_vm.errors.hasOwnProperty(
+                                "billing_country"
+                              )
+                            },
+                            attrs: {
+                              name: "billing_country",
+                              id: "billing_country",
+                              options: _vm.countries,
+                              disabled: _vm.sameAddress,
+                              required: ""
+                            },
+                            model: {
+                              value: _vm.user.billing_country,
+                              callback: function($$v) {
+                                _vm.$set(_vm.user, "billing_country", $$v)
+                              },
+                              expression: "user.billing_country"
+                            }
+                          },
+                          [
+                            _c(
+                              "option",
+                              { attrs: { disabled: "", value: "" } },
+                              [_vm._v("---")]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _vm.errors.hasOwnProperty("billing_country")
+                          ? _c("div", { staticClass: "invalid-feedback" }, [
+                              _vm._v(_vm._s(_vm.errors.billing_country[0]))
+                            ])
+                          : _vm._e()
+                      ],
+                      1
+                    )
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c(
-                        "div",
-                        { staticClass: "form-group" },
-                        [
-                          _c("label", { attrs: { for: "country" } }, [
-                            _vm._v(_vm._s(_vm.trans("Country")))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "select2",
-                            {
-                              staticClass: "form-control",
-                              class: {
-                                "is-invalid": _vm.errors.hasOwnProperty(
-                                  "country"
-                                )
-                              },
-                              attrs: {
-                                name: "country",
-                                id: "country",
-                                options: _vm.countries,
-                                required: ""
-                              },
-                              model: {
-                                value: _vm.user.country,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.user, "country", $$v)
-                                },
-                                expression: "user.country"
-                              }
-                            },
-                            [
-                              _c(
-                                "option",
-                                { attrs: { disabled: "", value: "" } },
-                                [_vm._v("---")]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _vm.errors.hasOwnProperty("country")
-                            ? _c("div", { staticClass: "invalid-feedback" }, [
-                                _vm._v(_vm._s(_vm.errors.country[0]))
-                              ])
-                            : _vm._e()
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "billing_city" } }, [
+                        _vm._v(_vm._s(_vm.trans("City")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.billing_city,
+                            expression: "user.billing_city"
+                          }
                         ],
-                        1
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "city" } }, [
-                          _vm._v(_vm._s(_vm.trans("City")))
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.city,
-                              expression: "user.city"
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty(
+                            "billing_city"
+                          )
+                        },
+                        attrs: {
+                          type: "text",
+                          id: "billing_city",
+                          name: "billing_city",
+                          required: "",
+                          disabled: _vm.sameAddress
+                        },
+                        domProps: { value: _vm.user.billing_city },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
                             }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.errors.hasOwnProperty("city")
-                          },
-                          attrs: {
-                            type: "text",
-                            id: "city",
-                            name: "city",
-                            required: ""
-                          },
-                          domProps: { value: _vm.user.city },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.user, "city", $event.target.value)
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.hasOwnProperty("city")
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(_vm._s(_vm.errors.city[0]))
-                            ])
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "state" } }, [
-                          _vm._v(_vm._s(_vm.trans("State, Providence, Region")))
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.state,
-                              expression: "user.state"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.errors.hasOwnProperty("state")
-                          },
-                          attrs: {
-                            type: "text",
-                            id: "state",
-                            name: "state",
-                            required: ""
-                          },
-                          domProps: { value: _vm.user.state },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.user, "state", $event.target.value)
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.hasOwnProperty("state")
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(_vm._s(_vm.errors.state[0]))
-                            ])
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "zip_code" } }, [
-                          _vm._v(_vm._s(_vm.trans("Zip Code")))
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.zip_code,
-                              expression: "user.zip_code"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.errors.hasOwnProperty("zip_code")
-                          },
-                          attrs: {
-                            type: "text",
-                            id: "zip_code",
-                            name: "zip_code",
-                            required: ""
-                          },
-                          domProps: { value: _vm.user.zip_code },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.user,
-                                "zip_code",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.hasOwnProperty("zip_code")
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(_vm._s(_vm.errors.zip_code[0]))
-                            ])
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-12" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "address" } }, [
-                          _vm._v(_vm._s(_vm.trans("Address")))
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.address,
-                              expression: "user.address"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.errors.hasOwnProperty("address")
-                          },
-                          attrs: {
-                            type: "text",
-                            id: "address",
-                            name: "address",
-                            required: "",
-                            placeholder: _vm.trans(
-                              "Street address, P.O. box, company name, c/o"
+                            _vm.$set(
+                              _vm.user,
+                              "billing_city",
+                              $event.target.value
                             )
-                          },
-                          domProps: { value: _vm.user.address },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(_vm.user, "address", $event.target.value)
-                            }
                           }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.hasOwnProperty("address")
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(_vm._s(_vm.errors.address[0]))
-                            ])
-                          : _vm._e()
-                      ])
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("billing_city")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.billing_city[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "billing_state" } }, [
+                        _vm._v(_vm._s(_vm.trans("State, Providence, Region")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.billing_state,
+                            expression: "user.billing_state"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty(
+                            "billing_state"
+                          )
+                        },
+                        attrs: {
+                          type: "text",
+                          id: "billing_state",
+                          name: "billing_state",
+                          required: "",
+                          disabled: _vm.sameAddress
+                        },
+                        domProps: { value: _vm.user.billing_state },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "billing_state",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("billing_state")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.billing_state[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "billing_zip_code" } }, [
+                        _vm._v(_vm._s(_vm.trans("Zip Code")))
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.billing_zip_code,
+                            expression: "user.billing_zip_code"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty(
+                            "billing_zip_code"
+                          )
+                        },
+                        attrs: {
+                          type: "number",
+                          id: "billing_zip_code",
+                          name: "billing_zip_code",
+                          required: "",
+                          disabled: _vm.sameAddress
+                        },
+                        domProps: { value: _vm.user.billing_zip_code },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "billing_zip_code",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("billing_zip_code")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.billing_zip_code[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "billing_address1" } }, [
+                        _vm._v(_vm._s(_vm.trans("Address")) + " 1")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.billing_address1,
+                            expression: "user.billing_address1"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty(
+                            "billing_address1"
+                          )
+                        },
+                        attrs: {
+                          type: "text",
+                          id: "billing_address1",
+                          name: "billing_address1",
+                          required: "",
+                          disabled: _vm.sameAddress,
+                          placeholder: _vm.trans(
+                            "Street address, P.O. box, company name, c/o"
+                          )
+                        },
+                        domProps: { value: _vm.user.billing_address1 },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "billing_address1",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("billing_address1")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(_vm._s(_vm.errors.billing_address1[0]))
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "billing_address2" } }, [
+                        _vm._v(_vm._s(_vm.trans("Address")) + " 2")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.billing_address2,
+                            expression: "user.billing_address2"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "billing_address2",
+                          name: "billing_address2",
+                          disabled: _vm.sameAddress,
+                          placeholder: _vm.trans(
+                            "Apartment, suite, unit, building, floor, etc"
+                          )
+                        },
+                        domProps: { value: _vm.user.billing_address2 },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "billing_address2",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
                     ])
                   ])
                 ])
-              ]
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                directives: [
-                  {
-                    name: "show",
-                    rawName: "v-show",
-                    value: _vm.currentStep.id === "payment-information",
-                    expression: "currentStep.id === 'payment-information'"
-                  }
-                ]
-              },
-              [
+              ]),
+              _vm._v(" "),
+              _c("fieldset", { staticClass: "mt-4" }, [
+                _c("legend", [
+                  _vm._v(_vm._s(_vm.trans("Payment information")))
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-lg-6 col-xl-4" }, [
+                  _c("div", { staticClass: "col-lg-6" }, [
                     _c(
                       "div",
                       { staticClass: "form-group" },
@@ -47069,10 +47875,10 @@ var render = function() {
                         _vm._v(" "),
                         _c("card", {
                           staticClass: "stripe-card",
-                          class: { complete: _vm.complete },
+                          class: { complete: _vm.stripe.validationCompleted },
                           attrs: {
-                            stripe: _vm.stripe,
-                            options: _vm.stripeOptions
+                            stripe: _vm.stripe.key,
+                            options: _vm.stripe.options
                           },
                           on: { change: _vm.stripeChange }
                         }),
@@ -47084,83 +47890,104 @@ var render = function() {
                               {
                                 name: "show",
                                 rawName: "v-show",
-                                value: _vm.stripeError,
-                                expression: "stripeError"
+                                value: _vm.stripe.error !== "",
+                                expression: "stripe.error !== ''"
                               }
                             ],
                             staticClass: "d-block invalid-feedback",
                             attrs: { id: "card-errors", role: "alert" }
                           },
-                          [_vm._v(_vm._s(_vm.stripeError))]
+                          [_vm._v(_vm._s(_vm.stripe.error))]
                         )
                       ],
                       1
                     )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", {
-                    staticClass: "col-lg-5 col-xl-6 mt-4 mt-lg-0 offset-lg-1"
-                  })
+                  ])
                 ])
-              ]
+              ])
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "card-footer mt-4 pb-0 pl-0" }, [
+            _vm.hasPreviousStep
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-light mr-3 px-4",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.goToPreviousStep()
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(_vm.trans("Previous")))]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            !_vm.isLastStep
+              ? _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary px-4",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        return _vm.goToNextStep()
+                      }
+                    }
+                  },
+                  [_vm._v(_vm._s(_vm.trans("Next")))]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c(
+              "button",
+              {
+                directives: [
+                  {
+                    name: "show",
+                    rawName: "v-show",
+                    value: _vm.isLastStep,
+                    expression: "isLastStep"
+                  }
+                ],
+                staticClass: "btn btn-primary ladda-button px-4",
+                attrs: {
+                  type: "submit",
+                  id: "submit-create-user",
+                  "data-style": "zoom-out"
+                },
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    return _vm.submit()
+                  }
+                }
+              },
+              [_vm._v(_vm._s(_vm.trans("Create")))]
             ),
             _vm._v(" "),
-            _c("div", { staticClass: "card-footer mt-4 pb-0 pl-0" }, [
-              _vm.hasPreviousStep
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-light mr-3 px-4",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.goToPreviousStep()
-                        }
-                      }
-                    },
-                    [_vm._v(_vm._s(_vm.trans("Previous")))]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              !_vm.isLastStep
-                ? _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary px-4",
-                      attrs: { type: "button" },
-                      on: {
-                        click: function($event) {
-                          return _vm.goToNextStep()
-                        }
-                      }
-                    },
-                    [_vm._v(_vm._s(_vm.trans("Next")))]
-                  )
-                : _vm._e(),
-              _vm._v(" "),
-              _c(
-                "button",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.isLastStep,
-                      expression: "isLastStep"
-                    }
-                  ],
-                  staticClass: "btn btn-primary ladda-button px-4",
-                  attrs: {
-                    type: "submit",
-                    id: "submit-create-user",
-                    "data-style": "zoom-out"
-                  }
-                },
-                [_vm._v(_vm._s(_vm.trans("Create")))]
-              )
-            ])
-          ]
-        )
+            Object.keys(_vm.errors).length > 0
+              ? _c(
+                  "p",
+                  {
+                    staticClass:
+                      "d-inline-block mb-0 ml-lg-3 mt-3 mt-lg-0 text-danger"
+                  },
+                  [
+                    _vm._v(
+                      _vm._s(
+                        _vm.trans(
+                          "Something went wrong, please review all the steps"
+                        )
+                      )
+                    )
+                  ]
+                )
+              : _vm._e()
+          ])
+        ])
       ])
     ]),
     _vm._v(" "),
@@ -59991,9 +60818,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\js\app.js */"./resources/js/app.js");
-__webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\sass\web\main.scss */"./resources/sass/web/main.scss");
-module.exports = __webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\sass\app\main.scss */"./resources/sass/app/main.scss");
+__webpack_require__(/*! /var/www/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /var/www/resources/sass/web/main.scss */"./resources/sass/web/main.scss");
+module.exports = __webpack_require__(/*! /var/www/resources/sass/app/main.scss */"./resources/sass/app/main.scss");
 
 
 /***/ })

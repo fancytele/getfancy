@@ -30,6 +30,6 @@ class Addon extends Model
      */
     public function scopeSubscription($query)
     {
-        return $query->whereType(AddonType::Subscription);
+        return $query->whereType(AddonType::SUBSCRIPTION);
     }
 }

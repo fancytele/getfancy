@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Address;
+use App\Enums\AddressType;
 use App\Enums\Role;
 use App\User;
 use App\Subscription;
@@ -49,7 +51,10 @@ class UserService
      */
     public function createFromStripe(array $user_options, StripeCustomer $stripe_customer)
     {
-        return $this->create($this->buildUserWithStripePayload($user_options, $stripe_customer));
+        $this->create($this->buildUserWithStripePayload($user_options, $stripe_customer));
+        $this->syncAddresses($user_options);
+
+        return $this;
     }
 
     /**
@@ -58,6 +63,7 @@ class UserService
      * @param int $product_id
      * @param string $stripe_product_id
      * @param StripeSubscription $stripe_subscription
+     * 
      * @return void
      */
     public function createSubscription(int $product_id, string $stripe_product_id, StripeSubscription $stripe_subscription)
@@ -92,6 +98,9 @@ class UserService
             'last_name' => $user_options['last_name'],
             'email' => $user_options['email'],
             'password' => User::generatePassword(),
+            'company_name' => $user_options['company_name'] ?? null,
+            'company_phone' => $user_options['company_phone'] ?? null,
+            'company_contact_name' => $user_options['company_contact_name'] ?? null,
             'stripe_id' => $stripe_id,
             'card_brand' => $card->brand,
             'card_last_four' => $card->last4
@@ -102,5 +111,43 @@ class UserService
         }
 
         return $payload;
+    }
+
+    /**
+     * Sync Addresses when they exists
+     *
+     * @param array $user_options
+     */
+    private function syncAddresses(array $user_options)
+    {
+        $addresses = [];
+
+        if (isset($user_options['company_country'])) {
+            $addresses[] = new Address([
+                'address1' => $user_options['company_address1'],
+                'address2' => $user_options['company_address2'],
+                'country' => $user_options['company_country'],
+                'city' => $user_options['company_city'],
+                'state' => $user_options['company_state'],
+                'zip_code' => $user_options['company_zip_code'],
+                'type' => AddressType::COMPANY
+            ]);
+        }
+
+        if (isset($user_options['billing_country'])) {
+            $addresses[] = new Address([
+                'address1' => $user_options['billing_address1'],
+                'address2' => $user_options['billing_address2'],
+                'country' => $user_options['billing_country'],
+                'city' => $user_options['billing_city'],
+                'state' => $user_options['billing_state'],
+                'zip_code' => $user_options['billing_zip_code'],
+                'type' => AddressType::BILLING
+            ]);
+        }
+
+        if (count($addresses) > 0) {
+            $this->model->addresses()->saveMany($addresses);
+        }
     }
 }

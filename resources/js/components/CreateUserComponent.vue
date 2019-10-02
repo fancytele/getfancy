@@ -24,7 +24,7 @@
 
     <div class="card">
       <div class="card-body">
-        <form :action="action" id="create-user-form" method="POST" @submit.prevent="submit">
+        <div id="create-user-form">
           <div v-show="currentStep.id === 'plans'">
             <div class="row">
               <div class="col-lg-6 col-xl-4">
@@ -195,99 +195,165 @@
             </fieldset>
 
             <fieldset class="mt-4">
-              <legend>{{ trans('Billing information') }}</legend>
+              <legend>{{ trans('Business information') }}</legend>
               <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="company_name">{{ trans('Company name') }}</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="company_name"
+                      name="company_name"
+                      required
+                      :class="{'is-invalid': errors.hasOwnProperty('company_name')}"
+                      v-model="user.company_name"
+                    />
+                    <div
+                      class="invalid-feedback"
+                      v-if="errors.hasOwnProperty('company_name')"
+                    >{{ errors.company_name[0] }}</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="company_phone">{{ trans('Company phone') }}</label>
+                    <input
+                      type="tel"
+                      class="form-control"
+                      id="company_phone"
+                      name="company_phone"
+                      required
+                      :class="{'is-invalid': errors.hasOwnProperty('company_phone')}"
+                      v-model="user.company_phone"
+                    />
+                    <div
+                      class="invalid-feedback"
+                      v-if="errors.hasOwnProperty('company_phone')"
+                    >{{ errors.company_phone[0] }}</div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="company_contact_name">{{ trans('Company contact name') }}</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="company_contact_name"
+                      name="company_contact_name"
+                      :class="{'is-invalid': errors.hasOwnProperty('company_contact_name')}"
+                      v-model="user.company_contact_name"
+                    />
+                    <div
+                      class="invalid-feedback"
+                      v-if="errors.hasOwnProperty('company_contact_name')"
+                    >{{ errors.company_contact_name[0] }}</div>
+                  </div>
+                </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="country">{{ trans('Country') }}</label>
+                    <label for="company_country">{{ trans('Country') }}</label>
                     <select2
-                      name="country"
-                      id="country"
+                      name="company_country"
+                      id="company_country"
                       class="form-control"
                       :options="countries"
-                      :class="{'is-invalid': errors.hasOwnProperty('country')}"
-                      v-model="user.country"
+                      :class="{'is-invalid select2-hidden-accessible': errors.hasOwnProperty('company_country'), 'form-control select2-hidden-accessible': !errors.hasOwnProperty('company_country')}"
+                      v-model="user.company_country"
                       required
                     >
                       <option disabled value>---</option>
                     </select2>
                     <div
                       class="invalid-feedback"
-                      v-if="errors.hasOwnProperty('country')"
-                    >{{ errors.country[0] }}</div>
+                      v-if="errors.hasOwnProperty('company_country')"
+                    >{{ errors.company_country[0] }}</div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="city">{{ trans('City') }}</label>
+                    <label for="company_city">{{ trans('City') }}</label>
                     <input
                       type="text"
                       class="form-control"
-                      id="city"
-                      name="city"
+                      id="company_city"
+                      name="company_city"
                       required
-                      :class="{'is-invalid': errors.hasOwnProperty('city')}"
-                      v-model="user.city"
+                      :class="{'is-invalid': errors.hasOwnProperty('company_city')}"
+                      v-model="user.company_city"
                     />
                     <div
                       class="invalid-feedback"
-                      v-if="errors.hasOwnProperty('city')"
-                    >{{ errors.city[0] }}</div>
+                      v-if="errors.hasOwnProperty('company_city')"
+                    >{{ errors.company_city[0] }}</div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="state">{{ trans('State, Providence, Region') }}</label>
+                    <label for="company_state">{{ trans('State, Providence, Region') }}</label>
                     <input
                       type="text"
                       class="form-control"
-                      id="state"
-                      name="state"
+                      id="company_state"
+                      name="company_state"
                       required
-                      :class="{'is-invalid': errors.hasOwnProperty('state')}"
-                      v-model="user.state"
+                      :class="{'is-invalid': errors.hasOwnProperty('company_state')}"
+                      v-model="user.company_state"
                     />
                     <div
                       class="invalid-feedback"
-                      v-if="errors.hasOwnProperty('state')"
-                    >{{ errors.state[0] }}</div>
+                      v-if="errors.hasOwnProperty('company_state')"
+                    >{{ errors.company_state[0] }}</div>
                   </div>
                 </div>
                 <div class="col-md-6">
                   <div class="form-group">
-                    <label for="zip_code">{{ trans('Zip Code') }}</label>
+                    <label for="company_zip_code">{{ trans('Zip Code') }}</label>
                     <input
-                      type="text"
+                      type="number"
                       class="form-control"
-                      id="zip_code"
-                      name="zip_code"
+                      id="company_zip_code"
+                      name="company_zip_code"
                       required
-                      :class="{'is-invalid': errors.hasOwnProperty('zip_code')}"
-                      v-model="user.zip_code"
+                      :class="{'is-invalid': errors.hasOwnProperty('company_zip_code')}"
+                      v-model="user.company_zip_code"
                     />
                     <div
                       class="invalid-feedback"
-                      v-if="errors.hasOwnProperty('zip_code')"
-                    >{{ errors.zip_code[0] }}</div>
+                      v-if="errors.hasOwnProperty('company_zip_code')"
+                    >{{ errors.company_zip_code[0] }}</div>
                   </div>
                 </div>
                 <div class="col-12">
                   <div class="form-group">
-                    <label for="address">{{ trans('Address') }}</label>
+                    <label for="company_address1">{{ trans('Address') }} 1</label>
                     <input
                       type="text"
                       class="form-control"
-                      id="address"
-                      name="address"
+                      id="company_address1"
+                      name="company_address1"
                       required
                       :placeholder="trans('Street address, P.O. box, company name, c/o')"
-                      :class="{'is-invalid': errors.hasOwnProperty('address')}"
-                      v-model="user.address"
+                      :class="{'is-invalid': errors.hasOwnProperty('company_address1')}"
+                      v-model="user.company_address1"
                     />
                     <div
                       class="invalid-feedback"
-                      v-if="errors.hasOwnProperty('address')"
-                    >{{ errors.address[0] }}</div>
+                      v-if="errors.hasOwnProperty('company_address1')"
+                    >{{ errors.company_address1[0] }}</div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="company_address2">{{ trans('Address') }} 2</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="company_address2"
+                      name="company_address2"
+                      :placeholder="trans('Apartment, suite, unit, building, floor, etc')"
+                      v-model="user.company_address2"
+                    />
                   </div>
                 </div>
               </div>
@@ -295,28 +361,165 @@
           </div>
 
           <div v-show="currentStep.id === 'payment-information'">
-            <div class="row">
-              <div class="col-lg-6 col-xl-4">
-                <div class="form-group">
-                  <label for="credit-card">{{ trans('Credit Card') }}</label>
-                  <card
-                    class="stripe-card"
-                    :class="{ complete }"
-                    :stripe="stripe"
-                    :options="stripeOptions"
-                    @change="stripeChange"
+            <fieldset>
+              <legend>{{ trans('Billing information') }}</legend>
+
+              <div class="form-group">
+                <div class="custom-control custom-switch">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="same-address"
+                    name="same-address"
+                    v-model="sameAddress"
+                    @change="toggleSameAddress()"
                   />
-                  <div
-                    id="card-errors"
-                    class="d-block invalid-feedback"
-                    role="alert"
-                    v-show="stripeError"
-                  >{{ stripeError }}</div>
+                  <label
+                    class="custom-control-label"
+                    for="same-address"
+                  >{{ trans('Same as Company address') }}?</label>
                 </div>
               </div>
 
-              <div class="col-lg-5 col-xl-6 mt-4 mt-lg-0 offset-lg-1"></div>
-            </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="billing_country">{{ trans('Country') }}</label>
+                    <select2
+                      name="billing_country"
+                      id="billing_country"
+                      class="form-control select2-hidden-accessible"
+                      :options="countries"
+                      :disabled="sameAddress"
+                      :class="{'is-invalid select2-hidden-accessible': errors.hasOwnProperty('billing_country'), 'form-control select2-hidden-accessible': !errors.hasOwnProperty('billing_country')}"
+                      v-model="user.billing_country"
+                      required
+                    >
+                      <option disabled value>---</option>
+                    </select2>
+                    <div
+                      class="invalid-feedback"
+                      v-if="errors.hasOwnProperty('billing_country')"
+                    >{{ errors.billing_country[0] }}</div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="billing_city">{{ trans('City') }}</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="billing_city"
+                      name="billing_city"
+                      required
+                      :disabled="sameAddress"
+                      :class="{'is-invalid': errors.hasOwnProperty('billing_city')}"
+                      v-model="user.billing_city"
+                    />
+                    <div
+                      class="invalid-feedback"
+                      v-if="errors.hasOwnProperty('billing_city')"
+                    >{{ errors.billing_city[0] }}</div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="billing_state">{{ trans('State, Providence, Region') }}</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="billing_state"
+                      name="billing_state"
+                      required
+                      :disabled="sameAddress"
+                      :class="{'is-invalid': errors.hasOwnProperty('billing_state')}"
+                      v-model="user.billing_state"
+                    />
+                    <div
+                      class="invalid-feedback"
+                      v-if="errors.hasOwnProperty('billing_state')"
+                    >{{ errors.billing_state[0] }}</div>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="billing_zip_code">{{ trans('Zip Code') }}</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="billing_zip_code"
+                      name="billing_zip_code"
+                      required
+                      :disabled="sameAddress"
+                      :class="{'is-invalid': errors.hasOwnProperty('billing_zip_code')}"
+                      v-model="user.billing_zip_code"
+                    />
+                    <div
+                      class="invalid-feedback"
+                      v-if="errors.hasOwnProperty('billing_zip_code')"
+                    >{{ errors.billing_zip_code[0] }}</div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="billing_address1">{{ trans('Address') }} 1</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="billing_address1"
+                      name="billing_address1"
+                      required
+                      :disabled="sameAddress"
+                      :placeholder="trans('Street address, P.O. box, company name, c/o')"
+                      :class="{'is-invalid': errors.hasOwnProperty('billing_address1')}"
+                      v-model="user.billing_address1"
+                    />
+                    <div
+                      class="invalid-feedback"
+                      v-if="errors.hasOwnProperty('billing_address1')"
+                    >{{ errors.billing_address1[0] }}</div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="form-group">
+                    <label for="billing_address2">{{ trans('Address') }} 2</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="billing_address2"
+                      name="billing_address2"
+                      :disabled="sameAddress"
+                      :placeholder="trans('Apartment, suite, unit, building, floor, etc')"
+                      v-model="user.billing_address2"
+                    />
+                  </div>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="mt-4">
+              <legend>{{ trans('Payment information') }}</legend>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label for="credit-card">{{ trans('Credit Card') }}</label>
+                    <card
+                      class="stripe-card"
+                      :class="{ 'complete': stripe.validationCompleted }"
+                      :stripe="stripe.key"
+                      :options="stripe.options"
+                      @change="stripeChange"
+                    />
+                    <div
+                      id="card-errors"
+                      class="d-block invalid-feedback"
+                      role="alert"
+                      v-show="stripe.error !== ''"
+                    >{{ stripe.error }}</div>
+                  </div>
+                </div>
+              </div>
+            </fieldset>
           </div>
 
           <div class="card-footer mt-4 pb-0 pl-0">
@@ -338,9 +541,14 @@
               class="btn btn-primary ladda-button px-4"
               data-style="zoom-out"
               v-show="isLastStep"
+              @click.prevent="submit()"
             >{{ trans('Create') }}</button>
+            <p
+              class="d-inline-block mb-0 ml-lg-3 mt-3 mt-lg-0 text-danger"
+              v-if="Object.keys(errors).length > 0"
+            >{{ trans('Something went wrong, please review all the steps') }}</p>
           </div>
-        </form>
+        </div>
       </div>
     </div>
 
@@ -408,6 +616,10 @@ export default {
   data() {
     return {
       laddaButton: null,
+      isProcessing: true,
+      isUserCreated: false,
+      errors: {},
+      sameAddress: false,
       steps: [
         {
           id: 'plans',
@@ -420,7 +632,7 @@ export default {
         {
           id: 'personal-information',
           title: 'Personal information',
-          description: 'User information and billing address',
+          description: 'User and Company information',
           isActive: false,
           isCompleted: false,
           required: [
@@ -428,24 +640,58 @@ export default {
             'last_name',
             'email',
             'email_confirmation',
-            'country',
-            'city',
-            'state',
-            'zip_code',
-            'address'
+            'company_name',
+            'company_phone',
+            'company_country',
+            'company_city',
+            'company_state',
+            'company_zip_code',
+            'company_address1'
           ]
         },
         {
           id: 'payment-information',
           title: 'Payment information',
-          description: 'Credic card and summary',
+          description: 'Billing address and credic card',
           isActive: false,
           isCompleted: false,
-          required: []
+          required: [
+            'billing_country',
+            'billing_city',
+            'billing_state',
+            'billing_zip_code',
+            'billing_address1'
+          ]
         }
       ],
       currentStep: {},
-      errors: {},
+      countries: [],
+      stripe: {
+        key: process.env.MIX_STRIPE_KEY,
+        options: {
+          elements: {
+            locale: this.locale
+          },
+          style: {
+            base: {
+              color: '#32325d',
+              fontFamily: '"Cerebri Sans", sans-serif',
+              fontSmoothing: 'antialiased',
+              fontSize: '16px',
+              '::placeholder': {
+                color: '#b1c2d9'
+              }
+            },
+            invalid: {
+              color: '#e63757',
+              iconColor: '#e63757'
+            }
+          },
+          hidePostalCode: true
+        },
+        validationCompleted: false,
+        stripeError: ''
+      },
       user: {
         product: this.products[0].slug,
         addons: [],
@@ -453,39 +699,23 @@ export default {
         last_name: '',
         email: '',
         email_confirmation: '',
-        country: null,
-        city: '',
-        state: '',
-        zip_code: '',
-        address: ''
-      },
-      countries: [],
-      isProcessing: true,
-      stripe: process.env.MIX_STRIPE_KEY,
-      stripeOptions: {
-        elements: {
-          locale: this.locale
-        },
-        style: {
-          base: {
-            color: '#32325d',
-            fontFamily: '"Cerebri Sans", sans-serif',
-            fontSmoothing: 'antialiased',
-            fontSize: '16px',
-            '::placeholder': {
-              color: '#b1c2d9'
-            }
-          },
-          invalid: {
-            color: '#e63757',
-            iconColor: '#e63757'
-          }
-        },
-        hidePostalCode: true
-      },
-      complete: false,
-      stripeError: '',
-      isUserCreated: false
+        company_name: '',
+        company_phone: '',
+        company_contact_name: '',
+        company_country: '',
+        company_city: '',
+        company_state: '',
+        company_zip_code: '',
+        company_address1: '',
+        company_address2: '',
+        billing_country: '',
+        billing_city: '',
+        billing_state: '',
+        billing_zip_code: '',
+        billing_address1: '',
+        billing_address2: '',
+        stripe_token: ''
+      }
     };
   },
   methods: {
@@ -500,11 +730,14 @@ export default {
             };
           });
         })
-        .then(this.toggleProcessing);
+        .then(() => {
+          this.user.country = this.countries[0].id;
+          this.toggleProcessing();
+        });
     },
     stripeChange($event) {
-      this.complete = $event.complete;
-      this.stripeError = $event.error ? $event.error.message : '';
+      this.stripe.validationCompleted = $event.complete;
+      this.stripe.error = $event.error ? $event.error.message : '';
     },
     toggleProcessing() {
       this.isProcessing = !this.isProcessing;
@@ -555,6 +788,10 @@ export default {
 
       this.currentStep = step;
       this.currentStep.isActive = true;
+
+      if (step.id === this.steps[this.steps.length - 1].id) {
+        this.toggleSameAddress();
+      }
     },
     goToPreviousStep() {
       const currentStepIndex = this.steps.findIndex(
@@ -572,6 +809,16 @@ export default {
 
       if (!this.isLastStep) {
         this.changeToStep(this.steps[currentStepIndex + 1]);
+      }
+    },
+    toggleSameAddress() {
+      if (this.sameAddress) {
+        this.user.billing_country = this.user.company_country;
+        this.user.billing_city = this.user.company_city;
+        this.user.billing_state = this.user.company_state;
+        this.user.billing_zip_code = this.user.company_zip_code;
+        this.user.billing_address1 = this.user.company_address1;
+        this.user.billing_address2 = this.user.company_address2;
       }
     },
     submit() {
@@ -605,7 +852,10 @@ export default {
         })
         .catch(error => {
           const data = error.response.data;
-          this.errors = data.errors;
+
+          if (data.errors) {
+            this.errors = data.errors;
+          }
 
           this.laddaButton.stop();
           this.toggleProcessing();

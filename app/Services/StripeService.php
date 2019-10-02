@@ -41,7 +41,7 @@ class StripeService
     public function createSubscription(string $customer_id, array $plans)
     {
         return StripeSubscription::create(
-            ["customer" => $customer_id, "items" => $plans],
+            ['customer' => $customer_id, 'items' => $plans],
             $this->getStripeKey()
         );
     }
@@ -56,7 +56,7 @@ class StripeService
     {
         $products = collect($this->getAllProducts()->data);
 
-        return $products->firstWhere("name", $name);
+        return $products->firstWhere('name', $name);
     }
 
     /**
@@ -66,7 +66,7 @@ class StripeService
      */
     public function getAllProducts(int $limit = 100)
     {
-        return StripeProduct::all(["limit" => $limit], $this->getStripeKey());
+        return StripeProduct::all(['limit' => $limit], $this->getStripeKey());
     }
 
     /**
@@ -80,7 +80,7 @@ class StripeService
     {
         $plans = collect($this->getAllPlansByProduct($product_id, 10)->data);
 
-        return $plans->whereIn("nickname", $names)->values();
+        return $plans->whereIn('nickname', $names)->values();
     }
 
     /**
@@ -93,7 +93,7 @@ class StripeService
     public function getAllPlansByProduct(string $product_id, int $limit = 100)
     {
         return StripePlan::all(
-            ["product" => $product_id, "limit" => $limit],
+            ['product' => $product_id, 'limit' => $limit],
             $this->getStripeKey()
         );
     }
@@ -118,16 +118,18 @@ class StripeService
     private function buildCustomerPayload(array $options)
     {
         return [
-            "name" => "{$options['first_name']} {$options['last_name']}",
-            "email" => $options["email"],
-            "address" => [
-                "city" => $options["city"],
-                "country" => $options["country"],
-                "line1" => $options["address"],
-                "postal_code" => $options["zip_code"],
-                "state" => $options["state"]
+            'name' => "{$options['first_name']} {$options['last_name']}",
+            'email' => $options['email'],
+            'phone' => $options['company_phone'] ?? '',
+            'address' => [
+                'city' => $options['billing_city'],
+                'country' => $options['billing_country'],
+                'line1' => $options['billing_address1'],
+                'line2' => $options['billing_address2'],
+                'postal_code' => $options['billing_zip_code'],
+                'state' => $options['billing_state']
             ],
-            "source" => $options["stripe_token"]
+            'source' => $options['stripe_token']
         ];
     }
 
@@ -154,9 +156,11 @@ class StripeService
         }
 
         if ($key = getenv('STRIPE_SECRET')) {
-            return $key;
+            $this->stripeKey = $key;
+            return $this->stripeKey;
         }
 
-        return config('services.stripe.secret');
+        $this->stripeKey = config('services.stripe.secret');
+        return $this->stripeKey;
     }
 }

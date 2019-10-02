@@ -73,6 +73,7 @@
     "Zip Code": "Código postal",
     "Address": "Dirección",
     "Street address, P.O. box, company name, c/o": "Dirección, nombre de calle, # de casa, nombre de la empresa, etc.",
+    "Apartment, suite, unit, building, floor, etc": "Apartamento, suite, unidad, edificio, piso, etc.",
     "Additional Features": "Características Adicionales",
     "Multi-Ring": "Multi-Ring",
     "Fraud Alert": "Alerta de Fraude",
@@ -125,8 +126,8 @@
     "Plan & features": " Planes y características",
     "Select plan and one or more features": "Seleccione el plan y una o más características",
     "Personal information": "Información personal",
-    "User information and billing address": "Información de usuario y dirección de facturación",
-    "Credic card and summary": "Tarjeta de crédito y resumen",
+    "User and Company information": "Información de usuario y de la Compañía",
+    "Billing address and credic card": "Dirección de facturación y tarjeta de crédito",
     "Previous": "Anterior",
     "Next": "Siguiente",
     "Product": "Producto",
@@ -141,5 +142,11 @@
     "Agent updated": "Agente actualizado",
     "Agent inactivated": "Agente inhabilitado",
     "Agent restored": "Agente habilitado",
-    "Agent password reseted": "Contraseña reiniciada"
+    "Agent password reseted": "Contraseña reiniciada",
+    "Business information": "Información del negocio",
+    "Same as Company address": "Misma dirección que la Compañía",
+    "Something went wrong, please review all the steps": "Ha ocurrido un problema, por favor revisa todos los pasos",
+    "Company name": "Nombre de la empresa",
+    "Company phone": "Teléfono de la empresa",
+    "Company contact name": "Nombre del contacto de la empresa"
 }
