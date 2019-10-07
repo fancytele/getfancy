@@ -2,6 +2,10 @@
   display: none;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .font-size-inherit {
   font-size: inherit;
 }
@@ -22,4 +26,8 @@
       font-weight: bold;
     }
   }
+}
+
+.vh-max-35 {
+  max-height: 35vh;
 }

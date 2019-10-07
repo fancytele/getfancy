@@ -17,7 +17,10 @@
 
     <create-user-component :locale="'{{ app()->getLocale() }}'"
                            :list-url="'{{ route('admin.users.index') }}'"
-                           :action="'{{ route('admin.users.store') }}'"
+                           :did-url="'{{ route('admin.dids.availables', '') }}'"
+                           :did-reserve-url="'{{ route('admin.dids.create_reservation') }}'"
+                           :action="'{{ route('admin.users.store', '') }}'"
+                           :did-regions='@json($did_regions)'
                            :products='@json($products)'
                            :addons='@json($addons)'></create-user-component>
 </div>

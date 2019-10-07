@@ -1,7 +1,7 @@
 <template>
   <div class="form-wizard">
     <div class="mb-3 row">
-      <div class="col-lg-4 mb-3" v-for="(step, index) in steps" :key="step.id">
+      <div class="col-lg-3 mb-3" v-for="(step, index) in steps" :key="step.id">
         <div
           class="form-step"
           @click="changeToStep(step)"
@@ -12,9 +12,9 @@
               <div class="mr-3 pt-1">
                 <span class="form-step-number">{{ index + 1 }}</span>
               </div>
-              <div>
-                <h3 class="h2 mb-0">{{ trans(step.title) }}</h3>
-                <h5 class="form-step-description">{{ trans(step.description) }}</h5>
+              <div class="text-truncate">
+                <h3 class="h2 mb-0 text-truncate">{{ trans(step.title) }}</h3>
+                <h5 class="form-step-description text-truncate">{{ trans(step.description) }}</h5>
               </div>
             </div>
           </div>
@@ -112,6 +112,98 @@
                 </ul>
               </div>
             </div>
+          </div>
+
+          <div v-show="currentStep.id === 'fancy-number'">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="number_type">{{ trans('Phone number type') }}</label>
+                  <select
+                    class="form-control"
+                    name="number_type"
+                    id="number_type"
+                    required
+                    :class="{'is-invalid': errors.hasOwnProperty('number_type')}"
+                    v-model="user.number_type"
+                  >
+                    <option value="custom">Existing number</option>
+                    <option value="fancy">New Fancy number</option>
+                  </select>
+                  <div
+                    class="invalid-feedback"
+                    v-if="errors.hasOwnProperty('number_type')"
+                  >{{ errors.number_type[0] }}</div>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="number_type">{{ trans('Current number') }}</label>
+                  <input
+                    type="tel"
+                    class="form-control"
+                    id="phone_number"
+                    name="phone_number"
+                    required
+                    :class="{'is-invalid': errors.hasOwnProperty('phone_number') }"
+                    v-model="user.phone_number"
+                  />
+                  <div
+                    class="invalid-feedback"
+                    v-if="errors.hasOwnProperty('phone_number')"
+                  >{{ errors.phone_number[0] }}</div>
+                </div>
+              </div>
+            </div>
+
+            <fieldset class="mt-4">
+              <legend>{{ trans('Reserve DID') }}</legend>
+              <div v-if="userHasReservation">
+                <div class="mt-2">
+                  <p class="mb-0">
+                    <b>DID:</b>
+                    {{ user.did.number | phone }}
+                  </p>
+                  <p>
+                    <b>Expires in:</b>
+                    <countdown-timer
+                      :end-date="user.did.expire_at"
+                      v-on:countdown-over="reservationOver()"
+                    ></countdown-timer>
+                  </p>
+                </div>
+
+                <button
+                  id="cancel-reservation-did"
+                  type="button"
+                  class="btn btn-danger btn-sm ladda-button text-white"
+                  data-style="zoom-out"
+                  @click="cancelReservationDID()"
+                >
+                  <i class="fe fe-phone-off mr-2"></i>
+                  {{ trans('Cancel reservation') }}
+                </button>
+              </div>
+
+              <button
+                type="button"
+                class="btn btn-secondary btn-sm text-white"
+                data-toggle="modal"
+                data-backdrop="static"
+                data-target="#search-did"
+                v-else
+                @click="resetSearchDIDs()"
+              >
+                <i class="fe fe-search mr-2"></i>
+                {{ trans('Search DIDs') }}
+              </button>
+
+              <div
+                class="d-block invalid-feedback mt-3"
+                v-if="errors.hasOwnProperty('did') || errors.hasOwnProperty('did.number') || errors.hasOwnProperty('did.reservation')"
+              >{{ trans('The DID is required') }}</div>
+            </fieldset>
           </div>
 
           <div v-show="currentStep.id === 'personal-information'">
@@ -522,31 +614,159 @@
             </fieldset>
           </div>
 
-          <div class="card-footer mt-4 pb-0 pl-0">
-            <button
-              type="button"
-              class="btn btn-light mr-3 px-4"
-              v-if="hasPreviousStep"
-              @click="goToPreviousStep()"
-            >{{ trans('Previous') }}</button>
-            <button
-              type="button"
-              class="btn btn-primary px-4"
-              v-if="!isLastStep"
-              @click="goToNextStep()"
-            >{{ trans('Next') }}</button>
-            <button
-              type="submit"
-              id="submit-create-user"
-              class="btn btn-primary ladda-button px-4"
-              data-style="zoom-out"
-              v-show="isLastStep"
-              @click.prevent="submit()"
-            >{{ trans('Create') }}</button>
+          <div class="card-footer mt-4 pb-0 px-0">
+            <div class="align-items-center row">
+              <div class="col">
+                <button
+                  type="button"
+                  class="btn btn-light mr-3 px-4"
+                  v-if="hasPreviousStep"
+                  @click="goToPreviousStep()"
+                >{{ trans('Previous') }}</button>
+                <button
+                  type="button"
+                  class="btn btn-primary px-4"
+                  v-if="!isLastStep"
+                  @click="goToNextStep()"
+                >{{ trans('Next') }}</button>
+                <button
+                  type="submit"
+                  id="submit-create-user"
+                  class="btn btn-primary ladda-button px-4"
+                  data-style="zoom-out"
+                  v-show="isLastStep"
+                  @click.prevent="submit()"
+                >{{ trans('Create') }}</button>
+                <p
+                  class="d-inline-block mb-0 ml-lg-3 mt-3 mt-lg-0 text-danger"
+                  v-if="Object.keys(errors).length > 0"
+                >{{ trans('Something went wrong, please review all the steps') }}</p>
+              </div>
+              <div class="col-auto" v-if="userHasReservation">
+                <div class="mt-2 mt-md-0 text-danger text-right">
+                  <p class="mb-0">
+                    <strong class="text-decoration-underline">DID reservation expires in:</strong>
+                    <countdown-timer
+                      :end-date="user.did.expire_at"
+                      v-on:countdown-over="reservationOver()"
+                    ></countdown-timer>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      id="search-did"
+      tabindex="-1"
+      role="dialog"
+      class="modal fade"
+      aria-hidden="true"
+      aria-labelledby="search-did-title"
+      v-if="!userHasReservation"
+    >
+      <div role="document" class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3 id="search-did-title" class="modal-title">Reserve DID</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="mb-5">
+              <div class="d-inline-block w-50">
+                <label for="did_region">{{ trans('Select region') }}</label>
+                <select2
+                  name="did_region"
+                  id="did_region"
+                  class="form-control select2-hidden-accessible"
+                  :options="didRegions"
+                  :class="{'is-invalid select2-hidden-accessible': errors.hasOwnProperty('did_region'), 'form-control select2-hidden-accessible': !errors.hasOwnProperty('did_region')}"
+                  v-model="reservationDID.region"
+                  required
+                >
+                  <option disabled value>---</option>
+                </select2>
+              </div>
+
+              <button
+                class="btn btn-link"
+                v-show="availablesDIDs.length > 0"
+                @click="refreshDIDs()"
+              >
+                <i class="fe fe-refresh-ccw mr-2"></i>
+                Refresh
+              </button>
+            </div>
+
+            <div class="mb-5" v-show="availablesDIDs.length > 0">
+              <p class="mb-2">Availables DIDs</p>
+              <div class="overflow-auto row vh-max-35">
+                <div
+                  class="col-md-4 cursor-pointer mb-3"
+                  v-for="item in availablesDIDs"
+                  :key="item.id"
+                >
+                  <div class="custom-control custom-control-button custom-radio">
+                    <input
+                      type="radio"
+                      :id="item.attributes.number"
+                      :name="item.attributes.number"
+                      class="custom-control-input"
+                      :value="item"
+                      v-model="reservationDID.item"
+                    />
+                    <label
+                      class="btn btn-block btn-lg btn-white custom-control-label cursor-pointer"
+                      :for="item.attributes.number"
+                    >{{ item.attributes.number| phone }}</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="text-center" v-show="!reservationDID.hasError">
+              <button
+                id="load-more-dids"
+                class="btn btn-outline-primary px-4"
+                @click="getAvailablesDIDs()"
+                v-show="!reservationDID.isLoading && availablesDIDs.length > 0"
+              >Load more...</button>
+              <div
+                class="align-middle mb-3 spinner-border text-primary"
+                role="status"
+                v-show="reservationDID.isLoading"
+              >
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+
             <p
-              class="d-inline-block mb-0 ml-lg-3 mt-3 mt-lg-0 text-danger"
-              v-if="Object.keys(errors).length > 0"
-            >{{ trans('Something went wrong, please review all the steps') }}</p>
+              class="text-center text-danger"
+              v-if="reservationDID.hasError"
+            >Internal error. Please close modal and try again</p>
+          </div>
+
+          <div class="align-items-center modal-footer">
+            <div class="col" v-if="reservationDID.item.hasOwnProperty('id')">
+              Selected DID:
+              <div class="font-weight-bold">{{ reservationDID.item.attributes.number | phone }}</div>
+            </div>
+            <div class="col-auto">
+              <button type="button" class="btn btn-light px-4" data-dismiss="modal">Close</button>
+              <button
+                id="submit-search-did"
+                type="button"
+                class="btn btn-primary ladda-button px-4"
+                data-style="zoom-out"
+                :disabled="!reservationDID.item.hasOwnProperty('id')"
+                @click="reserveDID()"
+              >Reserve</button>
+            </div>
           </div>
         </div>
       </div>
@@ -554,7 +774,7 @@
 
     <div
       id="user-created-message"
-      tabindex="-1"
+      tabindex="-2"
       role="dialog"
       class="modal fade"
       aria-hidden="true"
@@ -597,8 +817,20 @@ export default {
       type: String,
       required: true
     },
+    didUrl: {
+      type: String,
+      required: true
+    },
+    didReserveUrl: {
+      type: String,
+      required: true
+    },
     action: {
       type: String,
+      required: true
+    },
+    didRegions: {
+      type: Array,
       required: true
     },
     products: {
@@ -620,6 +852,14 @@ export default {
       isUserCreated: false,
       errors: {},
       sameAddress: false,
+      reservationDID: {
+        region: null,
+        item: {},
+        isLoading: false,
+        searchSubmit: null,
+        cancelSubmit: null,
+        hasError: false
+      },
       steps: [
         {
           id: 'plans',
@@ -628,6 +868,14 @@ export default {
           isActive: true,
           isCompleted: false,
           required: ['product']
+        },
+        {
+          id: 'fancy-number',
+          title: 'Fancy Number',
+          description: 'Virtual number reservation',
+          isActive: false,
+          isCompleted: false,
+          required: ['number_type', 'phone_number', 'did']
         },
         {
           id: 'personal-information',
@@ -665,7 +913,8 @@ export default {
         }
       ],
       currentStep: {},
-      countries: [],
+      countries: {},
+      availablesDIDs: [],
       stripe: {
         key: process.env.MIX_STRIPE_KEY,
         options: {
@@ -714,7 +963,10 @@ export default {
         billing_zip_code: '',
         billing_address1: '',
         billing_address2: '',
-        stripe_token: ''
+        stripe_token: '',
+        number_type: '',
+        phone_number: '',
+        did: {}
       }
     };
   },
@@ -731,9 +983,117 @@ export default {
           });
         })
         .then(() => {
-          this.user.country = this.countries[0].id;
           this.toggleProcessing();
         });
+    },
+    getAvailablesDIDs() {
+      if (this.reservationDID.isLoading || !this.reservationDID.region) {
+        return;
+      }
+
+      this.reservationDID.hasError = false;
+      this.toggleSearchDIDLoading();
+
+      axios
+        .get(`${this.didUrl}/${this.reservationDID.region}`)
+        .then(this.setAvailablesDIDsList)
+        .catch(() => (this.reservationDID.hasError = true))
+        .then(this.toggleSearchDIDLoading);
+    },
+    setAvailablesDIDsList(response) {
+      if (this.availablesDIDs.length === 0) {
+        this.availablesDIDs = response.data;
+        return;
+      }
+
+      let mergedData = [].concat(this.availablesDIDs, response.data);
+      this.availablesDIDs = _.uniqBy(mergedData, 'attributes.number');
+    },
+    toggleSearchDIDLoading() {
+      this.reservationDID.isLoading = !this.reservationDID.isLoading;
+    },
+    resetSearchDIDs() {
+      this.reservationDID.region = null;
+      this.reservationDID.hasError = false;
+
+      this.refreshDIDs();
+    },
+    refreshDIDs() {
+      this.availablesDIDs = [];
+      this.reservationDID.item = {};
+
+      if (this.reservationDID.region) {
+        this.getAvailablesDIDs();
+      }
+    },
+    reserveDID() {
+      if (this.isProcessing) {
+        return;
+      }
+
+      this.toggleProcessing();
+      this.reservationDID.searchSubmit.start();
+
+      axios
+        .post(this.didReserveUrl, { did: this.reservationDID.item.id })
+        .then(this.setSuccessfullReservation)
+        .catch(error => {
+          console.error(error);
+          this.reservationDID.hasError = true;
+
+          if (this.reservationDID.searchSubmit) {
+            this.reservationDID.searchSubmit.stop();
+          }
+        })
+        .then(this.toggleProcessing);
+    },
+    setSuccessfullReservation(response) {
+      let reservation = {
+        reservation: response.data.id,
+        number: this.reservationDID.item.attributes.number
+      };
+
+      this.user.did = Object.assign(reservation, response.data.attributes);
+
+      this.$nextTick(() => {
+        this.reservationDID.searchSubmit = null;
+        this.reservationDID.cancelSubmit = Ladda.create(
+          document.querySelector('#cancel-reservation-did')
+        );
+      });
+
+      $('#search-did').modal('hide');
+    },
+    cancelReservationDID() {
+      if (!this.userHasReservation) {
+        return;
+      }
+
+      this.reservationDID.cancelSubmit.start();
+
+      axios
+        .delete(`${this.didReserveUrl}/${this.user.did.reservation}`)
+        .then(this.reservationOver)
+        .catch(error => {
+          if (this.reservationDID.cancelSubmit) {
+            this.reservationDID.cancelSubmit.stop();
+          }
+
+          console.error(error);
+        });
+    },
+    reservationOver() {
+      this.user.did = {};
+      this.reservationDID.item = {};
+      this.reservationDID.cancelSubmit = null;
+
+      this.resetSearchDIDs();
+
+      this.$nextTick(() => {
+        this.reservationDID.searchSubmit = Ladda.create(
+          document.querySelector('#submit-search-did')
+        );
+      });
     },
     stripeChange($event) {
       this.stripe.validationCompleted = $event.complete;
@@ -747,6 +1107,13 @@ export default {
 
       this.currentStep.required.forEach(el => {
         if (Array.isArray(this.user[el]) && this.user[el].length === 0) {
+          this.$set(this.errors, el, ['This field is required']);
+        }
+
+        if (
+          this.user[el] instanceof Object &&
+          Object.keys(this.user[el]).length === 0
+        ) {
           this.$set(this.errors, el, ['This field is required']);
         }
 
@@ -862,6 +1229,13 @@ export default {
         });
     }
   },
+  filters: {
+    phone: function(value) {
+      return value
+        .replace(/[^0-9]/g, '')
+        .replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, '$1($2) $3-$4');
+    }
+  },
   computed: {
     hasPreviousStep() {
       const currentStepIndex = this.steps.findIndex(
@@ -876,11 +1250,26 @@ export default {
       );
 
       return currentStepIndex === this.steps.length - 1;
+    },
+    reserveDIDRegion() {
+      return this.reservationDID.region;
+    },
+    userHasReservation() {
+      return this.user.did.hasOwnProperty('reservation');
+    }
+  },
+  watch: {
+    reserveDIDRegion() {
+      this.refreshDIDs();
     }
   },
   mounted() {
     this.currentStep = this.steps[0];
     this.setCountryList();
+
+    this.reservationDID.searchSubmit = Ladda.create(
+      document.querySelector('#submit-search-did')
+    );
 
     this.laddaButton = Ladda.create(
       document.querySelector('#submit-create-user')

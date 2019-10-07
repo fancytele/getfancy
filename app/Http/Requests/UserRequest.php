@@ -43,7 +43,11 @@ class UserRequest extends FormRequest
             'billing_state' => ['required'],
             'billing_zip_code' => ['required'],
             'billing_address1' => ['required'],
-            'stripe_token' => ['required', 'string']
+            'stripe_token' => ['required', 'string'],
+            'number_type' => ['required'],
+            'phone_number' => ['required'],
+            'did.reservation' => ['required', 'uuid'],
+            'did.number' => ['required']
         ];
     }
 }

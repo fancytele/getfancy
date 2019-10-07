@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Mail\WelcomeMail;
 use App\Product;
+use App\Services\DIDService;
 use App\Services\StripeService;
 use App\Services\UserService;
 use App\User;
@@ -38,6 +39,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::role(Role::User)->withTrashed()->get();
+
         return view('admin.users.index', compact('users'));
     }
 
@@ -48,10 +50,14 @@ class UserController extends Controller
      */
     public function create()
     {
+        $did_service = new DIDService();
+        $did_country = $did_service->getCountryByISO('US');
+        $did_regions = $did_service->getRegionsByCountry($did_country->getId());
+
         $products = Product::all();
         $addons = Addon::subscription()->get();
 
-        return view('admin.users.create', compact('products', 'addons'));
+        return view('admin.users.create', compact('products', 'addons', 'did_regions'));
     }
 
     /**
@@ -88,12 +94,20 @@ class UserController extends Controller
         // Create Subscription
         $stripe_subscription = $stripe_service->createSubscription($stripe_customer->id, $plans);
 
+        // Purchase Reserved DID
+        // $did_service = new DIDService();
+        // $did = $did_service->purchaseReservation($data['did']['reservation']);
+        
+        // TODO: Catch error to delete subscription in case did purchase has error
+
         // Create Fancy User        
         $user_service = new UserService();
         $user = $user_service->createFromStripe($data, $stripe_customer);
 
         // Create User subscription
         $user->createSubscription($product->id, $stripe_product->id, $stripe_subscription);
+
+        // TODO: Save DID info into User (use variable $did)
 
         // Send reset password to new user
         Mail::to($user->model())->send(new WelcomeMail($user->model()));

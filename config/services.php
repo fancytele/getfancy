@@ -44,4 +44,8 @@ return [
         ],
     ],
 
+    'didww' => [
+        'url' => env('DIDWW_API_URL'),
+        'key' => env('DIDWW_API_KEY')
+    ],
 ];

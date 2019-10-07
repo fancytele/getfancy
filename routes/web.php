@@ -42,12 +42,17 @@ Route::prefix('admin')->group(function () {
         Route::post('agents/{agent}/reset_password', 'Admin\Users\AgentController@resetPassword')->name('admin.agents.reset_password');
         Route::post('agents/{agent}/restore', 'Admin\Users\AgentController@restore')->name('admin.agents.restore');
         Route::resource('agents', 'Admin\Users\AgentController', ['as' => 'admin'])->except(['show']);
-        
+
         // Users
         Route::post('users/{user}/reset_password', 'Admin\Users\UserController@resetPassword')->name('admin.users.reset_password');
         Route::post('users/{user}/restore', 'Admin\Users\UserController@restore')->name('admin.users.restore');
         Route::resource('users', 'Admin\Users\UserController', ['as' => 'admin'])->except(['show']);
     });
+
+    // DID
+    Route::get('dids/availables/{region}', 'Admin\DIDController@getAvailableDIDsByRegion')->name('admin.dids.availables');
+    Route::post('dids/reserve', 'Admin\DIDController@storeReservation')->name('admin.dids.create_reservation');
+    Route::delete('dids/reserve/{did}', 'Admin\DIDController@destroyReservation')->name('admin.dids.destroy_reservation');
 });
 
 

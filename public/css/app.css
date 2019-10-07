@@ -17717,6 +17717,10 @@ button:focus {
   display: none;
 }
 
+.cursor-pointer {
+  cursor: pointer;
+}
+
 .font-size-inherit {
   font-size: inherit;
 }
@@ -17737,6 +17741,21 @@ button:focus {
 .table-row-counter tbody tr td:first-child:before {
   content: counter(row-num);
   font-weight: bold;
+}
+
+.vh-max-35 {
+  max-height: 35vh;
+}
+
+.custom-control-button {
+  padding-left: 0;
+}
+
+.custom-control-button .custom-control-label::before {
+  left: 1.5rem;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+          transform: translateY(-50%);
 }
 
 .form-wizard .form-step {
