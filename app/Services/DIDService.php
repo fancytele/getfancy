@@ -5,6 +5,7 @@ namespace App\Services;
 use Didww\Configuration as DIDWWConfiguration;
 use Didww\Credentials as DIDWWCredentials;
 use Didww\Item\AvailableDid as DIDWWAvailableDID;
+use Didww\Item\City as DIDWWCity;
 use Didww\Item\Country as DIDWWCountry;
 use Didww\Item\DidReservation as DIDWWReservation;
 use Didww\Item\Order as DIDWWOrder;
@@ -54,7 +55,7 @@ class DIDService
 
         abort_if($countries->isEmpty(), Response::HTTP_INTERNAL_SERVER_ERROR);
 
-        return $countries->first();
+        return $countries->first()->toJsonApiArray();
     }
 
     /**
@@ -76,14 +77,37 @@ class DIDService
     }
 
     /**
-     * Availables DID by Region Id
-     * 
-     * @param string $region A DIDWW region UUID
+     * DIDWW Citires by Region Id
+     *
+     * @param string $region
      * @return array
      */
-    public function getAvailableDIDsByRegion(string $region)
+    public function getCitiesByRegion(string $region)
     {
-        $did_availables = DIDWWAvailableDID::all(['filter' => ['region.id' => $region]]);
+        $did_cities = DIDWWCity::all([
+            'filter' => [
+                'region.id' => $region,
+                'is_available' => true
+            ]
+        ]);
+
+        return $did_cities->getData()->map(function ($item) {
+            return [
+                'id' => $item->getId(),
+                'text' => $item->name
+            ];
+        });
+    }
+
+    /**
+     * Availables DID by City Id
+     * 
+     * @param string $city A DIDWW region UUID
+     * @return array
+     */
+    public function getAvailableDIDsByCity(string $city)
+    {
+        $did_availables = DIDWWAvailableDID::all(['filter' => ['city.id' => $city]]);
 
         $result = $did_availables->getData();
 

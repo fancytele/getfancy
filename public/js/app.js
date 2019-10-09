@@ -3396,6 +3396,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -3403,20 +3434,12 @@ __webpack_require__.r(__webpack_exports__);
       type: String,
       required: true
     },
-    listUrl: {
-      type: String,
+    urls: {
+      type: Object,
       required: true
     },
-    didUrl: {
-      type: String,
-      required: true
-    },
-    didReserveUrl: {
-      type: String,
-      required: true
-    },
-    action: {
-      type: String,
+    didCountry: {
+      type: Object,
       required: true
     },
     didRegions: {
@@ -3444,11 +3467,13 @@ __webpack_require__.r(__webpack_exports__);
       sameAddress: false,
       reservationDID: {
         region: null,
+        city: null,
         item: {},
         isLoading: false,
         searchSubmit: null,
         cancelSubmit: null,
-        hasError: false
+        hasError: false,
+        cities: []
       },
       steps: [{
         id: 'plans',
@@ -3552,17 +3577,35 @@ __webpack_require__.r(__webpack_exports__);
         _this.toggleProcessing();
       });
     },
-    getAvailablesDIDs: function getAvailablesDIDs() {
+    getDIDCities: function getDIDCities() {
+      if (this.isProcessing) {
+        return;
+      }
+
+      this.toggleProcessing();
+      axios.get(this.didCityUrl).then(this.setDIDCityList)["catch"](function (error) {
+        return console.error(error);
+      }).then(this.toggleProcessing);
+    },
+    setDIDCityList: function setDIDCityList(response) {
       var _this2 = this;
 
-      if (this.reservationDID.isLoading || !this.reservationDID.region) {
+      this.reservationDID.cities = response.data;
+      this.$nextTick(function () {
+        _this2.reservationDID.city = response.data[0].id;
+      });
+    },
+    getAvailablesDIDs: function getAvailablesDIDs() {
+      var _this3 = this;
+
+      if (this.reservationDID.isLoading || !this.reservationDID.city) {
         return;
       }
 
       this.reservationDID.hasError = false;
       this.toggleSearchDIDLoading();
-      axios.get("".concat(this.didUrl, "/").concat(this.reservationDID.region)).then(this.setAvailablesDIDsList)["catch"](function () {
-        return _this2.reservationDID.hasError = true;
+      axios.get(this.didAvailableUrl).then(this.setAvailablesDIDsList)["catch"](function () {
+        return _this3.reservationDID.hasError = true;
       }).then(this.toggleSearchDIDLoading);
     },
     setAvailablesDIDsList: function setAvailablesDIDsList(response) {
@@ -3578,20 +3621,19 @@ __webpack_require__.r(__webpack_exports__);
       this.reservationDID.isLoading = !this.reservationDID.isLoading;
     },
     resetSearchDIDs: function resetSearchDIDs() {
-      this.reservationDID.region = null;
-      this.reservationDID.hasError = false;
-      this.refreshDIDs();
-    },
-    refreshDIDs: function refreshDIDs() {
       this.availablesDIDs = [];
       this.reservationDID.item = {};
-
-      if (this.reservationDID.region) {
-        this.getAvailablesDIDs();
-      }
+      this.reservationDID.cities = [];
+      this.reservationDID.region = null;
+      this.reservationDID.city = null;
+      this.reservationDID.hasError = false;
+    },
+    searchAvailablesDIDs: function searchAvailablesDIDs() {
+      this.availablesDIDs = [];
+      this.getAvailablesDIDs();
     },
     reserveDID: function reserveDID() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.isProcessing) {
         return;
@@ -3599,19 +3641,19 @@ __webpack_require__.r(__webpack_exports__);
 
       this.toggleProcessing();
       this.reservationDID.searchSubmit.start();
-      axios.post(this.didReserveUrl, {
+      axios.post(this.urls.did_reservation, {
         did: this.reservationDID.item.id
       }).then(this.setSuccessfullReservation)["catch"](function (error) {
         console.error(error);
-        _this3.reservationDID.hasError = true;
+        _this4.reservationDID.hasError = true;
 
-        if (_this3.reservationDID.searchSubmit) {
-          _this3.reservationDID.searchSubmit.stop();
+        if (_this4.reservationDID.searchSubmit) {
+          _this4.reservationDID.searchSubmit.stop();
         }
       }).then(this.toggleProcessing);
     },
     setSuccessfullReservation: function setSuccessfullReservation(response) {
-      var _this4 = this;
+      var _this5 = this;
 
       var reservation = {
         reservation: response.data.id,
@@ -3619,36 +3661,36 @@ __webpack_require__.r(__webpack_exports__);
       };
       this.user.did = Object.assign(reservation, response.data.attributes);
       this.$nextTick(function () {
-        _this4.reservationDID.searchSubmit = null;
-        _this4.reservationDID.cancelSubmit = Ladda.create(document.querySelector('#cancel-reservation-did'));
+        _this5.reservationDID.searchSubmit = null;
+        _this5.reservationDID.cancelSubmit = Ladda.create(document.querySelector('#cancel-reservation-did'));
       });
       $('#search-did').modal('hide');
     },
     cancelReservationDID: function cancelReservationDID() {
-      var _this5 = this;
+      var _this6 = this;
 
       if (!this.userHasReservation) {
         return;
       }
 
       this.reservationDID.cancelSubmit.start();
-      axios["delete"]("".concat(this.didReserveUrl, "/").concat(this.user.did.reservation)).then(this.reservationOver)["catch"](function (error) {
-        if (_this5.reservationDID.cancelSubmit) {
-          _this5.reservationDID.cancelSubmit.stop();
+      axios["delete"]("".concat(this.urls.did_reservation, "/").concat(this.user.did.reservation)).then(this.reservationOver)["catch"](function (error) {
+        if (_this6.reservationDID.cancelSubmit) {
+          _this6.reservationDID.cancelSubmit.stop();
         }
 
         console.error(error);
       });
     },
     reservationOver: function reservationOver() {
-      var _this6 = this;
+      var _this7 = this;
 
       this.user.did = {};
       this.reservationDID.item = {};
       this.reservationDID.cancelSubmit = null;
       this.resetSearchDIDs();
       this.$nextTick(function () {
-        _this6.reservationDID.searchSubmit = Ladda.create(document.querySelector('#submit-search-did'));
+        _this7.reservationDID.searchSubmit = Ladda.create(document.querySelector('#submit-search-did'));
       });
     },
     stripeChange: function stripeChange($event) {
@@ -3659,26 +3701,26 @@ __webpack_require__.r(__webpack_exports__);
       this.isProcessing = !this.isProcessing;
     },
     currentStepIsCompleted: function currentStepIsCompleted() {
-      var _this7 = this;
+      var _this8 = this;
 
       this.errors = {};
       this.currentStep.required.forEach(function (el) {
-        if (Array.isArray(_this7.user[el]) && _this7.user[el].length === 0) {
-          _this7.$set(_this7.errors, el, ['This field is required']);
+        if (Array.isArray(_this8.user[el]) && _this8.user[el].length === 0) {
+          _this8.$set(_this8.errors, el, ['This field is required']);
         }
 
-        if (_this7.user[el] instanceof Object && Object.keys(_this7.user[el]).length === 0) {
-          _this7.$set(_this7.errors, el, ['This field is required']);
+        if (_this8.user[el] instanceof Object && Object.keys(_this8.user[el]).length === 0) {
+          _this8.$set(_this8.errors, el, ['This field is required']);
         }
 
-        if (_this7.user[el] === '') {
-          _this7.$set(_this7.errors, el, ['This field is required']);
+        if (_this8.user[el] === '') {
+          _this8.$set(_this8.errors, el, ['This field is required']);
         }
       });
       return Object.keys(this.errors).length === 0;
     },
     changeToStep: function changeToStep(step) {
-      var _this8 = this;
+      var _this9 = this;
 
       if (this.isProcessing) {
         return false;
@@ -3688,7 +3730,7 @@ __webpack_require__.r(__webpack_exports__);
         return el === step;
       });
       var currentStepIndex = this.steps.findIndex(function (el) {
-        return el === _this8.currentStep;
+        return el === _this9.currentStep;
       });
 
       if (stepIndex - currentStepIndex > 1) {
@@ -3718,10 +3760,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     goToPreviousStep: function goToPreviousStep() {
-      var _this9 = this;
+      var _this10 = this;
 
       var currentStepIndex = this.steps.findIndex(function (el) {
-        return el === _this9.currentStep;
+        return el === _this10.currentStep;
       });
 
       if (this.hasPreviousStep) {
@@ -3729,10 +3771,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     goToNextStep: function goToNextStep() {
-      var _this10 = this;
+      var _this11 = this;
 
       var currentStepIndex = this.steps.findIndex(function (el) {
-        return el === _this10.currentStep;
+        return el === _this11.currentStep;
       });
 
       if (!this.isLastStep) {
@@ -3750,7 +3792,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     submit: function submit() {
-      var _this11 = this;
+      var _this12 = this;
 
       if (this.isProcessing) {
         return;
@@ -3760,20 +3802,20 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = {};
       this.laddaButton.start();
       Object(vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_0__["createToken"])().then(function (data) {
-        _this11.user.stripe_token = data.token.id;
+        _this12.user.stripe_token = data.token.id;
 
-        _this11.processPayment();
+        _this12.processPayment();
       })["catch"](function (error) {
-        return _this11.stripeError.message;
+        return _this12.stripeError.message;
       });
     },
     processPayment: function processPayment() {
-      var _this12 = this;
+      var _this13 = this;
 
-      axios.post(this.action, this.user).then(function (response) {
-        _this12.isUserCreated = true;
+      axios.post(this.urls.create_user, this.user).then(function (response) {
+        _this13.isUserCreated = true;
 
-        _this12.$nextTick(function () {
+        _this13.$nextTick(function () {
           $('#user-created-message').modal({
             backdrop: 'static',
             keyboard: false
@@ -3783,12 +3825,12 @@ __webpack_require__.r(__webpack_exports__);
         var data = error.response.data;
 
         if (data.errors) {
-          _this12.errors = data.errors;
+          _this13.errors = data.errors;
         }
 
-        _this12.laddaButton.stop();
+        _this13.laddaButton.stop();
 
-        _this12.toggleProcessing();
+        _this13.toggleProcessing();
       });
     }
   },
@@ -3799,20 +3841,33 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     hasPreviousStep: function hasPreviousStep() {
-      var _this13 = this;
-
-      var currentStepIndex = this.steps.findIndex(function (el) {
-        return el === _this13.currentStep;
-      });
-      return currentStepIndex > 0;
-    },
-    isLastStep: function isLastStep() {
       var _this14 = this;
 
       var currentStepIndex = this.steps.findIndex(function (el) {
         return el === _this14.currentStep;
       });
+      return currentStepIndex > 0;
+    },
+    isLastStep: function isLastStep() {
+      var _this15 = this;
+
+      var currentStepIndex = this.steps.findIndex(function (el) {
+        return el === _this15.currentStep;
+      });
       return currentStepIndex === this.steps.length - 1;
+    },
+    didCityUrl: function didCityUrl() {
+      return this.urls.did_cities.replace('_region_', this.reservationDID.region);
+    },
+    didAvailableUrl: function didAvailableUrl() {
+      if (!this.reservationDID.city) {
+        return '';
+      }
+
+      return this.urls.dids_availables.replace('_city_', this.reservationDID.city);
+    },
+    reserveDIDCity: function reserveDIDCity() {
+      return this.reservationDID.city;
     },
     reserveDIDRegion: function reserveDIDRegion() {
       return this.reservationDID.region;
@@ -3822,8 +3877,18 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   watch: {
-    reserveDIDRegion: function reserveDIDRegion() {
-      this.refreshDIDs();
+    reserveDIDCity: function reserveDIDCity() {
+      this.availablesDIDs = [];
+      this.reservationDID.item = {};
+      this.reservationDID.hasError = false;
+    },
+    reserveDIDRegion: function reserveDIDRegion(newValue) {
+      this.reservationDID.city = null;
+      this.reservationDID.cities = [];
+
+      if (newValue) {
+        this.getDIDCities();
+      }
     }
   },
   mounted: function mounted() {
@@ -66328,81 +66393,169 @@ var render = function() {
                   _vm._m(0),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-body" }, [
-                    _c("div", { staticClass: "mb-5" }, [
-                      _c(
-                        "div",
-                        { staticClass: "d-inline-block w-50" },
-                        [
+                    _c("div", { staticClass: "align-items-end mb-5 row" }, [
+                      _c("div", { staticClass: "col-md-4" }, [
+                        _c("div", { staticClass: "form-group" }, [
                           _c("label", { attrs: { for: "did_region" } }, [
-                            _vm._v(_vm._s(_vm.trans("Select region")))
+                            _vm._v(_vm._s(_vm.trans("Country")))
                           ]),
                           _vm._v(" "),
                           _c(
-                            "select2",
+                            "select",
                             {
-                              staticClass:
-                                "form-control select2-hidden-accessible",
-                              class: {
-                                "is-invalid select2-hidden-accessible": _vm.errors.hasOwnProperty(
-                                  "did_region"
-                                ),
-                                "form-control select2-hidden-accessible": !_vm.errors.hasOwnProperty(
-                                  "did_region"
-                                )
-                              },
+                              staticClass: "form-control",
                               attrs: {
-                                name: "did_region",
-                                id: "did_region",
-                                options: _vm.didRegions,
-                                required: ""
-                              },
-                              model: {
-                                value: _vm.reservationDID.region,
-                                callback: function($$v) {
-                                  _vm.$set(_vm.reservationDID, "region", $$v)
-                                },
-                                expression: "reservationDID.region"
+                                name: "did_country",
+                                id: "did_country",
+                                disabled: ""
                               }
                             },
                             [
                               _c(
                                 "option",
-                                { attrs: { disabled: "", value: "" } },
-                                [_vm._v("---")]
+                                { domProps: { value: _vm.didCountry.id } },
+                                [_vm._v(_vm._s(_vm.didCountry.attributes.name))]
                               )
                             ]
                           )
-                        ],
-                        1
-                      ),
+                        ])
+                      ]),
                       _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          directives: [
-                            {
-                              name: "show",
-                              rawName: "v-show",
-                              value: _vm.availablesDIDs.length > 0,
-                              expression: "availablesDIDs.length > 0"
-                            }
+                      _c("div", { staticClass: "col-md-4" }, [
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _c("label", { attrs: { for: "did_region" } }, [
+                              _vm._v(_vm._s(_vm.trans("Region")))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "select2",
+                              {
+                                staticClass:
+                                  "form-control select2-hidden-accessible",
+                                class: {
+                                  "is-invalid select2-hidden-accessible": _vm.errors.hasOwnProperty(
+                                    "did_region"
+                                  ),
+                                  "form-control select2-hidden-accessible": !_vm.errors.hasOwnProperty(
+                                    "did_region"
+                                  )
+                                },
+                                attrs: {
+                                  name: "did_region",
+                                  id: "did_region",
+                                  options: _vm.didRegions
+                                },
+                                model: {
+                                  value: _vm.reservationDID.region,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.reservationDID, "region", $$v)
+                                  },
+                                  expression: "reservationDID.region"
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { disabled: "", value: "" } },
+                                  [_vm._v("---")]
+                                )
+                              ]
+                            )
                           ],
-                          staticClass: "btn btn-link",
-                          on: {
-                            click: function($event) {
-                              return _vm.refreshDIDs()
+                          1
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-4" }, [
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _c("label", { attrs: { for: "did_city" } }, [
+                              _vm._v(_vm._s(_vm.trans("City")))
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "select2",
+                              {
+                                staticClass:
+                                  "form-control select2-hidden-accessible",
+                                class: {
+                                  "is-invalid select2-hidden-accessible": _vm.errors.hasOwnProperty(
+                                    "did_city"
+                                  ),
+                                  "form-control select2-hidden-accessible": !_vm.errors.hasOwnProperty(
+                                    "did_city"
+                                  )
+                                },
+                                attrs: {
+                                  name: "did_city",
+                                  id: "did_city",
+                                  options: _vm.reservationDID.cities,
+                                  disabled:
+                                    !_vm.reservationDID.region ||
+                                    _vm.isProcessing
+                                },
+                                model: {
+                                  value: _vm.reservationDID.city,
+                                  callback: function($$v) {
+                                    _vm.$set(_vm.reservationDID, "city", $$v)
+                                  },
+                                  expression: "reservationDID.city"
+                                }
+                              },
+                              [
+                                _c(
+                                  "option",
+                                  { attrs: { disabled: "", value: "" } },
+                                  [_vm._v("---")]
+                                )
+                              ]
+                            )
+                          ],
+                          1
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-block btn-info",
+                            attrs: {
+                              type: "button",
+                              disabled: !_vm.reservationDID.city
+                            },
+                            on: {
+                              click: function($event) {
+                                return _vm.searchAvailablesDIDs()
+                              }
                             }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "fe fe-refresh-ccw mr-2" }),
-                          _vm._v("\n              Refresh\n            ")
-                        ]
-                      )
+                          },
+                          [
+                            _c("i", { staticClass: "fe fe-search" }),
+                            _vm._v(" Search\n              ")
+                          ]
+                        )
+                      ])
                     ]),
                     _vm._v(" "),
+                    _c("hr", {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.availablesDIDs.length > 0,
+                          expression: "availablesDIDs.length > 0"
+                        }
+                      ]
+                    }),
+                    _vm._v(" "),
                     _c(
-                      "div",
+                      "fieldset",
                       {
                         directives: [
                           {
@@ -66415,9 +66568,7 @@ var render = function() {
                         staticClass: "mb-5"
                       },
                       [
-                        _c("p", { staticClass: "mb-2" }, [
-                          _vm._v("Availables DIDs")
-                        ]),
+                        _c("legend", [_vm._v("Availables DIDs")]),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -66679,7 +66830,7 @@ var render = function() {
                             staticClass:
                               "btn btn-block btn-lg btn-success rounded-0",
                             attrs: {
-                              href: _vm.listUrl,
+                              href: _vm.urls.user_list,
                               "data-style": "zoom-out"
                             }
                           },

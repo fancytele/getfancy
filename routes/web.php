@@ -50,7 +50,8 @@ Route::prefix('admin')->group(function () {
     });
 
     // DID
-    Route::get('dids/availables/{region}', 'Admin\DIDController@getAvailableDIDsByRegion')->name('admin.dids.availables');
+    Route::get('dids/regions/{region}/cities', 'Admin\DIDController@getCitiesByRegion')->name('admin.dids.cities');
+    Route::get('dids/cities/{city}/availables', 'Admin\DIDController@getAvailableDIDsByCity')->name('admin.dids.availables');
     Route::post('dids/reserve', 'Admin\DIDController@storeReservation')->name('admin.dids.create_reservation');
     Route::delete('dids/reserve/{did}', 'Admin\DIDController@destroyReservation')->name('admin.dids.destroy_reservation');
 });

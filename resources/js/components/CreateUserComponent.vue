@@ -677,34 +677,65 @@
             </button>
           </div>
           <div class="modal-body">
-            <div class="mb-5">
-              <div class="d-inline-block w-50">
-                <label for="did_region">{{ trans('Select region') }}</label>
-                <select2
-                  name="did_region"
-                  id="did_region"
-                  class="form-control select2-hidden-accessible"
-                  :options="didRegions"
-                  :class="{'is-invalid select2-hidden-accessible': errors.hasOwnProperty('did_region'), 'form-control select2-hidden-accessible': !errors.hasOwnProperty('did_region')}"
-                  v-model="reservationDID.region"
-                  required
-                >
-                  <option disabled value>---</option>
-                </select2>
+            <div class="align-items-end mb-5 row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="did_region">{{ trans('Country') }}</label>
+                  <select name="did_country" id="did_country" class="form-control" disabled>
+                    <option :value="didCountry.id">{{ didCountry.attributes.name }}</option>
+                  </select>
+                </div>
               </div>
 
-              <button
-                class="btn btn-link"
-                v-show="availablesDIDs.length > 0"
-                @click="refreshDIDs()"
-              >
-                <i class="fe fe-refresh-ccw mr-2"></i>
-                Refresh
-              </button>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="did_region">{{ trans('Region') }}</label>
+                  <select2
+                    name="did_region"
+                    id="did_region"
+                    class="form-control select2-hidden-accessible"
+                    :options="didRegions"
+                    :class="{'is-invalid select2-hidden-accessible': errors.hasOwnProperty('did_region'), 'form-control select2-hidden-accessible': !errors.hasOwnProperty('did_region')}"
+                    v-model="reservationDID.region"
+                  >
+                    <option disabled value>---</option>
+                  </select2>
+                </div>
+              </div>
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="did_city">{{ trans('City') }}</label>
+                  <select2
+                    name="did_city"
+                    id="did_city"
+                    class="form-control select2-hidden-accessible"
+                    :options="reservationDID.cities"
+                    :class="{'is-invalid select2-hidden-accessible': errors.hasOwnProperty('did_city'), 'form-control select2-hidden-accessible': !errors.hasOwnProperty('did_city')}"
+                    v-model="reservationDID.city"
+                    :disabled="!reservationDID.region || isProcessing"
+                  >
+                    <option disabled value>---</option>
+                  </select2>
+                </div>
+              </div>
+
+              <div class="col">
+                <button
+                  type="button"
+                  class="btn btn-block btn-info"
+                  @click="searchAvailablesDIDs()"
+                  :disabled="!reservationDID.city"
+                >
+                  <i class="fe fe-search"></i> Search
+                </button>
+              </div>
             </div>
 
-            <div class="mb-5" v-show="availablesDIDs.length > 0">
-              <p class="mb-2">Availables DIDs</p>
+            <hr v-show="availablesDIDs.length > 0" />
+
+            <fieldset class="mb-5" v-show="availablesDIDs.length > 0">
+              <legend>Availables DIDs</legend>
               <div class="overflow-auto row vh-max-35">
                 <div
                   class="col-md-4 cursor-pointer mb-3"
@@ -727,7 +758,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </fieldset>
 
             <div class="text-center" v-show="!reservationDID.hasError">
               <button
@@ -792,7 +823,7 @@
             </div>
             <div class="overflow-hidden rounded-bottom">
               <a
-                :href="listUrl"
+                :href="urls.user_list"
                 data-style="zoom-out"
                 class="btn btn-block btn-lg btn-success rounded-0"
               >{{ trans('Return to list') }}</a>
@@ -813,20 +844,12 @@ export default {
       type: String,
       required: true
     },
-    listUrl: {
-      type: String,
+    urls: {
+      type: Object,
       required: true
     },
-    didUrl: {
-      type: String,
-      required: true
-    },
-    didReserveUrl: {
-      type: String,
-      required: true
-    },
-    action: {
-      type: String,
+    didCountry: {
+      type: Object,
       required: true
     },
     didRegions: {
@@ -854,11 +877,13 @@ export default {
       sameAddress: false,
       reservationDID: {
         region: null,
+        city: null,
         item: {},
         isLoading: false,
         searchSubmit: null,
         cancelSubmit: null,
-        hasError: false
+        hasError: false,
+        cities: []
       },
       steps: [
         {
@@ -986,8 +1011,28 @@ export default {
           this.toggleProcessing();
         });
     },
+    getDIDCities() {
+      if (this.isProcessing) {
+        return;
+      }
+
+      this.toggleProcessing();
+
+      axios
+        .get(this.didCityUrl)
+        .then(this.setDIDCityList)
+        .catch(error => console.error(error))
+        .then(this.toggleProcessing);
+    },
+    setDIDCityList(response) {
+      this.reservationDID.cities = response.data;
+
+      this.$nextTick(() => {
+        this.reservationDID.city = response.data[0].id;
+      });
+    },
     getAvailablesDIDs() {
-      if (this.reservationDID.isLoading || !this.reservationDID.region) {
+      if (this.reservationDID.isLoading || !this.reservationDID.city) {
         return;
       }
 
@@ -995,7 +1040,7 @@ export default {
       this.toggleSearchDIDLoading();
 
       axios
-        .get(`${this.didUrl}/${this.reservationDID.region}`)
+        .get(this.didAvailableUrl)
         .then(this.setAvailablesDIDsList)
         .catch(() => (this.reservationDID.hasError = true))
         .then(this.toggleSearchDIDLoading);
@@ -1013,18 +1058,16 @@ export default {
       this.reservationDID.isLoading = !this.reservationDID.isLoading;
     },
     resetSearchDIDs() {
-      this.reservationDID.region = null;
-      this.reservationDID.hasError = false;
-
-      this.refreshDIDs();
-    },
-    refreshDIDs() {
       this.availablesDIDs = [];
       this.reservationDID.item = {};
-
-      if (this.reservationDID.region) {
-        this.getAvailablesDIDs();
-      }
+      this.reservationDID.cities = [];
+      this.reservationDID.region = null;
+      this.reservationDID.city = null;
+      this.reservationDID.hasError = false;
+    },
+    searchAvailablesDIDs() {
+      this.availablesDIDs = [];
+      this.getAvailablesDIDs();
     },
     reserveDID() {
       if (this.isProcessing) {
@@ -1035,7 +1078,7 @@ export default {
       this.reservationDID.searchSubmit.start();
 
       axios
-        .post(this.didReserveUrl, { did: this.reservationDID.item.id })
+        .post(this.urls.did_reservation, { did: this.reservationDID.item.id })
         .then(this.setSuccessfullReservation)
         .catch(error => {
           console.error(error);
@@ -1072,7 +1115,7 @@ export default {
       this.reservationDID.cancelSubmit.start();
 
       axios
-        .delete(`${this.didReserveUrl}/${this.user.did.reservation}`)
+        .delete(`${this.urls.did_reservation}/${this.user.did.reservation}`)
         .then(this.reservationOver)
         .catch(error => {
           if (this.reservationDID.cancelSubmit) {
@@ -1206,7 +1249,7 @@ export default {
     },
     processPayment() {
       axios
-        .post(this.action, this.user)
+        .post(this.urls.create_user, this.user)
         .then(response => {
           this.isUserCreated = true;
 
@@ -1251,6 +1294,25 @@ export default {
 
       return currentStepIndex === this.steps.length - 1;
     },
+    didCityUrl() {
+      return this.urls.did_cities.replace(
+        '_region_',
+        this.reservationDID.region
+      );
+    },
+    didAvailableUrl() {
+      if (!this.reservationDID.city) {
+        return '';
+      }
+
+      return this.urls.dids_availables.replace(
+        '_city_',
+        this.reservationDID.city
+      );
+    },
+    reserveDIDCity() {
+      return this.reservationDID.city;
+    },
     reserveDIDRegion() {
       return this.reservationDID.region;
     },
@@ -1259,8 +1321,18 @@ export default {
     }
   },
   watch: {
-    reserveDIDRegion() {
-      this.refreshDIDs();
+    reserveDIDCity() {
+      this.availablesDIDs = [];
+      this.reservationDID.item = {};
+      this.reservationDID.hasError = false;
+    },
+    reserveDIDRegion(newValue) {
+      this.reservationDID.city = null;
+      this.reservationDID.cities = [];
+
+      if (newValue) {
+        this.getDIDCities();
+      }
     }
   },
   mounted() {

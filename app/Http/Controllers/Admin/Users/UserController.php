@@ -52,12 +52,20 @@ class UserController extends Controller
     {
         $did_service = new DIDService();
         $did_country = $did_service->getCountryByISO('US');
-        $did_regions = $did_service->getRegionsByCountry($did_country->getId());
+        $did_regions = $did_service->getRegionsByCountry($did_country['id']);
 
         $products = Product::all();
         $addons = Addon::subscription()->get();
 
-        return view('admin.users.create', compact('products', 'addons', 'did_regions'));
+        $urls = [
+            'user_list' => route('admin.users.index'),
+            'create_user' => route('admin.users.store'),
+            'did_cities' => route('admin.dids.cities', '_region_'),
+            'dids_availables' => route('admin.dids.availables', '_city_'),
+            'did_reservation' => route('admin.dids.create_reservation'),
+        ];
+
+        return view('admin.users.create', compact('products', 'addons', 'did_country', 'did_regions', 'urls'));
     }
 
     /**
@@ -97,7 +105,7 @@ class UserController extends Controller
         // Purchase Reserved DID
         // $did_service = new DIDService();
         // $did = $did_service->purchaseReservation($data['did']['reservation']);
-        
+
         // TODO: Catch error to delete subscription in case did purchase has error
 
         // Create Fancy User        

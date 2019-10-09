@@ -25,14 +25,27 @@ class DIDController extends Controller
     }
 
     /**
-     * Get a list of Availables DIDs
+     * Get a list of Cities by Region
      *
      * @param string $region
      * @return \Illuminate\Http\Response
      */
-    public function getAvailableDIDsByRegion(string $region)
+    public function getCitiesByRegion(string $region)
     {
-        $dids = $this->didService->getAvailableDIDsByRegion($region);
+        $cities = $this->didService->getCitiesByRegion($region);
+
+        return response()->json($cities);
+    }
+
+    /**
+     * Get a list of Availables DIDs
+     *
+     * @param string $city
+     * @return \Illuminate\Http\Response
+     */
+    public function getAvailableDIDsByCity(string $city)
+    {
+        $dids = $this->didService->getAvailableDIDsByCity($city);
 
         return response()->json($dids);
     }
