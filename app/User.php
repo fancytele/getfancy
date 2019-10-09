@@ -26,6 +26,7 @@ class User extends Authenticatable
         'company_name',
         'company_phone',
         'company_contact_name',
+        'employee_code',
         'stripe_id',
         'card_brand',
         'card_last_four',

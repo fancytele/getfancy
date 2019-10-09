@@ -37,7 +37,7 @@
 
     @if($agents->isNotEmpty ())
     <div class="card" data-toggle="lists"
-         data-options='{"valueNames": ["orders-name", "orders-email", "orders-last-login", "orders-status"]}'>
+         data-options='{"valueNames": ["orders-name", "orders-code", "orders-email", "orders-last-login", "orders-status"]}'>
         <div class="card-header">
             <div class="row align-items-center">
                 <div class="col">
@@ -65,6 +65,12 @@
                             <a href="#" class="text-muted sort"
                                data-sort="orders-name">
                                 @lang('Name')
+                            </a>
+                        </th>
+                        <th scope="col">
+                            <a href="#" class="text-muted sort"
+                               data-sort="orders-code">
+                                @lang('Agent code')
                             </a>
                         </th>
                         <th scope="col">
@@ -98,7 +104,11 @@
                                   aria-label="Default row number">{{ $key + 1 }}</span>
                         </td>
                         <td class="align-middle orders-name">
-                            {{ $agent->full_name }}</td>
+                            {{ $agent->full_name }}
+                        </td>
+                        <td class="align-middle orders-code">
+                            {{ $agent->employee_code }}
+                        </td>
                         <td class="align-middle orders-email">
                             {{ $agent->email }}
                         </td>

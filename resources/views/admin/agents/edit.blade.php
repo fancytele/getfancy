@@ -18,49 +18,7 @@
                         @csrf
                         @method('PUT')
 
-                        <div class="form-group">
-                            <label for="first_name">
-                                @lang('First Name')
-                            </label>
-                            <input type="text"
-                                   class="form-control @error('first_name') is-invalid @enderror"
-                                   id="first_name" name="first_name"
-                                   value="{{ old('first_name', $agent->first_name) }}"
-                                   required autofocus>
-                            @error('first_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="last_name">@lang('Last Name')</label>
-                            <input type="text"
-                                   class="form-control @error('last_name') is-invalid @enderror"
-                                   id="last_name" name="last_name"
-                                   value="{{ old('last_name', $agent->last_name) }}"
-                                   required>
-                            @error('last_name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">@lang('E-mail')</label>
-                            <input type="email"
-                                   class="form-control @error('email') is-invalid @enderror"
-                                   id="email" name="email"
-                                   value="{{ old('email', $agent->email) }}"
-                                   required>
-                            @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                            @enderror
-                        </div>
+                        @include('admin.agents._form')
 
                         <div
                              class="align-items-center d-flex justify-content-between">
@@ -82,7 +40,7 @@
     </div>
 </div>
 
-<!-- Modal -->
+{{-- Reset Modal --}}
 <div class="modal fade" id="reset-agent-password" tabindex="-1" role="dialog"
      aria-labelledby="reset-agent-password-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
@@ -96,8 +54,9 @@
                       method="POST">
                     @csrf
 
-                    <input type="hidden" name="email" value="{{ $agent->email }}">
-                    
+                    <input type="hidden" name="email"
+                           value="{{ $agent->email }}">
+
                     <div class="d-flex my-3 pl-4 pt-4">
                         <i
                            class="display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "></i>
@@ -126,4 +85,5 @@
         </div>
     </div>
 </div>
+
 @endsection

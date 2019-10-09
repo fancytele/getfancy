@@ -56,6 +56,7 @@ class AgentController extends Controller
     {
         $agent = new User();
 
+        $agent->employee_code = $request->code;
         $agent->first_name = $request->first_name;
         $agent->last_name = $request->last_name;
         $agent->email = $request->email;
@@ -91,6 +92,7 @@ class AgentController extends Controller
      */
     public function update(AgentRequest $request, User $agent)
     {
+        $agent->employee_code = $request->code;
         $agent->first_name = $request->first_name;
         $agent->last_name = $request->last_name;
         $agent->email = $request->email;

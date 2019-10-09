@@ -30,12 +30,15 @@ class AgentRequest extends FormRequest
     public function rules()
     {
         $unique_email = Rule::unique('users');
+        $unique_code = Rule::unique('users', 'employee_code');
 
         if ($this->agent) {
             $unique_email->ignore($this->agent);
+            $unique_code->ignore($this->agent);
         }
 
         return [
+            'code' => ['required', $unique_code],
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => ['required', 'email', $unique_email]
