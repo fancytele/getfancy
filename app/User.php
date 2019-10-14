@@ -22,6 +22,7 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'email',
+        'phone_number',
         'password',
         'company_name',
         'company_phone',
@@ -110,6 +111,14 @@ class User extends Authenticatable
     public function addresses()
     {
         return $this->hasMany(Address::class);
+    }
+
+    /**
+     * Get the Fancy numbers for the user
+     */
+    public function fancy_numbers()
+    {
+        return $this->hasMany(FancyNumber::class);
     }
 
     /**

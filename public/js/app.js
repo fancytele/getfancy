@@ -2559,7 +2559,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     countDownIsOver: function countDownIsOver() {
-      return moment__WEBPACK_IMPORTED_MODULE_0___default()().format('h:mm:ss a') === moment__WEBPACK_IMPORTED_MODULE_0___default()(this.endDate).format('h:mm:ss a');
+      return moment__WEBPACK_IMPORTED_MODULE_0___default()().format('h:mm:ss a') >= moment__WEBPACK_IMPORTED_MODULE_0___default()(this.endDate).format('h:mm:ss a');
     },
     timerLoop: function timerLoop() {
       this.countdown = moment__WEBPACK_IMPORTED_MODULE_0___default()().to(this.endDate, true);
@@ -2590,6 +2590,22 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-stripe-elements-plus */ "./node_modules/vue-stripe-elements-plus/dist/index.js");
 /* harmony import */ var vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_0__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3470,6 +3486,8 @@ __webpack_require__.r(__webpack_exports__);
         city: null,
         item: {},
         isLoading: false,
+        isSearchingCities: false,
+        existsMoreAvailableDIDs: true,
         searchSubmit: null,
         cancelSubmit: null,
         hasError: false,
@@ -3507,6 +3525,7 @@ __webpack_require__.r(__webpack_exports__);
       currentStep: {},
       countries: {},
       availablesDIDs: [],
+      existsMoreAvailableDIDs: true,
       stripe: {
         key: "pk_TMBfEj9GXcGCePpgJAFLIb8tHWpEA",
         options: {
@@ -3531,7 +3550,7 @@ __webpack_require__.r(__webpack_exports__);
           hidePostalCode: true
         },
         validationCompleted: false,
-        stripeError: ''
+        error: ''
       },
       user: {
         product: this.products[0].slug,
@@ -3578,34 +3597,42 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     getDIDCities: function getDIDCities() {
+      var _this2 = this;
+
       if (this.isProcessing) {
         return;
       }
 
       this.toggleProcessing();
+      this.reservationDID.isSearchingCities = true;
       axios.get(this.didCityUrl).then(this.setDIDCityList)["catch"](function (error) {
         return console.error(error);
-      }).then(this.toggleProcessing);
+      }).then(function () {
+        _this2.toggleProcessing();
+
+        _this2.reservationDID.isSearchingCities = false;
+      });
     },
     setDIDCityList: function setDIDCityList(response) {
-      var _this2 = this;
+      var _this3 = this;
 
       this.reservationDID.cities = response.data;
       this.$nextTick(function () {
-        _this2.reservationDID.city = response.data[0].id;
+        _this3.reservationDID.city = response.data[0].id;
       });
     },
     getAvailablesDIDs: function getAvailablesDIDs() {
-      var _this3 = this;
+      var _this4 = this;
 
       if (this.reservationDID.isLoading || !this.reservationDID.city) {
         return;
       }
 
-      this.reservationDID.hasError = false;
       this.toggleSearchDIDLoading();
+      this.existsMoreAvailableDIDs = true;
+      this.reservationDID.hasError = false;
       axios.get(this.didAvailableUrl).then(this.setAvailablesDIDsList)["catch"](function () {
-        return _this3.reservationDID.hasError = true;
+        return _this4.reservationDID.hasError = true;
       }).then(this.toggleSearchDIDLoading);
     },
     setAvailablesDIDsList: function setAvailablesDIDsList(response) {
@@ -3615,13 +3642,22 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       var mergedData = [].concat(this.availablesDIDs, response.data);
-      this.availablesDIDs = _.uniqBy(mergedData, 'attributes.number');
+
+      var uniqueDIDs = _.uniqBy(mergedData, 'attributes.number');
+
+      if (uniqueDIDs.length === this.availablesDIDs.length) {
+        this.existsMoreAvailableDIDs = false;
+        return;
+      }
+
+      this.availablesDIDs = uniqueDIDs;
     },
     toggleSearchDIDLoading: function toggleSearchDIDLoading() {
       this.reservationDID.isLoading = !this.reservationDID.isLoading;
     },
     resetSearchDIDs: function resetSearchDIDs() {
       this.availablesDIDs = [];
+      this.existsMoreAvailableDIDs = true;
       this.reservationDID.item = {};
       this.reservationDID.cities = [];
       this.reservationDID.region = null;
@@ -3633,7 +3669,7 @@ __webpack_require__.r(__webpack_exports__);
       this.getAvailablesDIDs();
     },
     reserveDID: function reserveDID() {
-      var _this4 = this;
+      var _this5 = this;
 
       if (this.isProcessing) {
         return;
@@ -3645,29 +3681,30 @@ __webpack_require__.r(__webpack_exports__);
         did: this.reservationDID.item.id
       }).then(this.setSuccessfullReservation)["catch"](function (error) {
         console.error(error);
-        _this4.reservationDID.hasError = true;
+        _this5.reservationDID.hasError = true;
 
-        if (_this4.reservationDID.searchSubmit) {
-          _this4.reservationDID.searchSubmit.stop();
+        if (_this5.reservationDID.searchSubmit) {
+          _this5.reservationDID.searchSubmit.stop();
         }
       }).then(this.toggleProcessing);
     },
     setSuccessfullReservation: function setSuccessfullReservation(response) {
-      var _this5 = this;
+      var _this6 = this;
 
       var reservation = {
-        reservation: response.data.id,
-        number: this.reservationDID.item.attributes.number
+        id: this.reservationDID.item.id,
+        number: this.reservationDID.item.attributes.number,
+        reservation: response.data.id
       };
       this.user.did = Object.assign(reservation, response.data.attributes);
       this.$nextTick(function () {
-        _this5.reservationDID.searchSubmit = null;
-        _this5.reservationDID.cancelSubmit = Ladda.create(document.querySelector('#cancel-reservation-did'));
+        _this6.reservationDID.searchSubmit = null;
+        _this6.reservationDID.cancelSubmit = Ladda.create(document.querySelector('#cancel-reservation-did'));
       });
       $('#search-did').modal('hide');
     },
     cancelReservationDID: function cancelReservationDID() {
-      var _this6 = this;
+      var _this7 = this;
 
       if (!this.userHasReservation) {
         return;
@@ -3675,22 +3712,22 @@ __webpack_require__.r(__webpack_exports__);
 
       this.reservationDID.cancelSubmit.start();
       axios["delete"]("".concat(this.urls.did_reservation, "/").concat(this.user.did.reservation)).then(this.reservationOver)["catch"](function (error) {
-        if (_this6.reservationDID.cancelSubmit) {
-          _this6.reservationDID.cancelSubmit.stop();
+        if (_this7.reservationDID.cancelSubmit) {
+          _this7.reservationDID.cancelSubmit.stop();
         }
 
         console.error(error);
       });
     },
     reservationOver: function reservationOver() {
-      var _this7 = this;
+      var _this8 = this;
 
       this.user.did = {};
       this.reservationDID.item = {};
       this.reservationDID.cancelSubmit = null;
       this.resetSearchDIDs();
       this.$nextTick(function () {
-        _this7.reservationDID.searchSubmit = Ladda.create(document.querySelector('#submit-search-did'));
+        _this8.reservationDID.searchSubmit = Ladda.create(document.querySelector('#submit-search-did'));
       });
     },
     stripeChange: function stripeChange($event) {
@@ -3701,26 +3738,26 @@ __webpack_require__.r(__webpack_exports__);
       this.isProcessing = !this.isProcessing;
     },
     currentStepIsCompleted: function currentStepIsCompleted() {
-      var _this8 = this;
+      var _this9 = this;
 
       this.errors = {};
       this.currentStep.required.forEach(function (el) {
-        if (Array.isArray(_this8.user[el]) && _this8.user[el].length === 0) {
-          _this8.$set(_this8.errors, el, ['This field is required']);
+        if (Array.isArray(_this9.user[el]) && _this9.user[el].length === 0) {
+          _this9.$set(_this9.errors, el, ['This field is required']);
         }
 
-        if (_this8.user[el] instanceof Object && Object.keys(_this8.user[el]).length === 0) {
-          _this8.$set(_this8.errors, el, ['This field is required']);
+        if (_this9.user[el] instanceof Object && Object.keys(_this9.user[el]).length === 0) {
+          _this9.$set(_this9.errors, el, ['This field is required']);
         }
 
-        if (_this8.user[el] === '') {
-          _this8.$set(_this8.errors, el, ['This field is required']);
+        if (_this9.user[el] === '') {
+          _this9.$set(_this9.errors, el, ['This field is required']);
         }
       });
       return Object.keys(this.errors).length === 0;
     },
     changeToStep: function changeToStep(step) {
-      var _this9 = this;
+      var _this10 = this;
 
       if (this.isProcessing) {
         return false;
@@ -3730,7 +3767,7 @@ __webpack_require__.r(__webpack_exports__);
         return el === step;
       });
       var currentStepIndex = this.steps.findIndex(function (el) {
-        return el === _this9.currentStep;
+        return el === _this10.currentStep;
       });
 
       if (stepIndex - currentStepIndex > 1) {
@@ -3760,10 +3797,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     goToPreviousStep: function goToPreviousStep() {
-      var _this10 = this;
+      var _this11 = this;
 
       var currentStepIndex = this.steps.findIndex(function (el) {
-        return el === _this10.currentStep;
+        return el === _this11.currentStep;
       });
 
       if (this.hasPreviousStep) {
@@ -3771,10 +3808,10 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     goToNextStep: function goToNextStep() {
-      var _this11 = this;
+      var _this12 = this;
 
       var currentStepIndex = this.steps.findIndex(function (el) {
-        return el === _this11.currentStep;
+        return el === _this12.currentStep;
       });
 
       if (!this.isLastStep) {
@@ -3792,7 +3829,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     submit: function submit() {
-      var _this12 = this;
+      var _this13 = this;
 
       if (this.isProcessing) {
         return;
@@ -3802,20 +3839,22 @@ __webpack_require__.r(__webpack_exports__);
       this.errors = {};
       this.laddaButton.start();
       Object(vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_0__["createToken"])().then(function (data) {
-        _this12.user.stripe_token = data.token.id;
+        _this13.user.stripe_token = data.token.id;
 
-        _this12.processPayment();
+        _this13.processPayment();
       })["catch"](function (error) {
-        return _this12.stripeError.message;
+        _this13.toggleProcessing();
+
+        _this13.laddaButton.stop();
       });
     },
     processPayment: function processPayment() {
-      var _this13 = this;
+      var _this14 = this;
 
       axios.post(this.urls.create_user, this.user).then(function (response) {
-        _this13.isUserCreated = true;
+        _this14.isUserCreated = true;
 
-        _this13.$nextTick(function () {
+        _this14.$nextTick(function () {
           $('#user-created-message').modal({
             backdrop: 'static',
             keyboard: false
@@ -3825,12 +3864,12 @@ __webpack_require__.r(__webpack_exports__);
         var data = error.response.data;
 
         if (data.errors) {
-          _this13.errors = data.errors;
+          _this14.errors = data.errors;
         }
 
-        _this13.laddaButton.stop();
+        _this14.laddaButton.stop();
 
-        _this13.toggleProcessing();
+        _this14.toggleProcessing();
       });
     }
   },
@@ -3841,18 +3880,18 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     hasPreviousStep: function hasPreviousStep() {
-      var _this14 = this;
-
-      var currentStepIndex = this.steps.findIndex(function (el) {
-        return el === _this14.currentStep;
-      });
-      return currentStepIndex > 0;
-    },
-    isLastStep: function isLastStep() {
       var _this15 = this;
 
       var currentStepIndex = this.steps.findIndex(function (el) {
         return el === _this15.currentStep;
+      });
+      return currentStepIndex > 0;
+    },
+    isLastStep: function isLastStep() {
+      var _this16 = this;
+
+      var currentStepIndex = this.steps.findIndex(function (el) {
+        return el === _this16.currentStep;
       });
       return currentStepIndex === this.steps.length - 1;
     },
@@ -64980,11 +65019,11 @@ var render = function() {
                       },
                       [
                         _c("option", { attrs: { value: "custom" } }, [
-                          _vm._v("Existing number")
+                          _vm._v(_vm._s(_vm.trans("Existing number")))
                         ]),
                         _vm._v(" "),
                         _c("option", { attrs: { value: "fancy" } }, [
-                          _vm._v("New Fancy number")
+                          _vm._v(_vm._s(_vm.trans("New Fancy number")))
                         ])
                       ]
                     ),
@@ -65064,7 +65103,9 @@ var render = function() {
                         _c(
                           "p",
                           [
-                            _c("b", [_vm._v("Expires in:")]),
+                            _c("b", [
+                              _vm._v(_vm._s(_vm.trans("Expires in")) + ":")
+                            ]),
                             _vm._v(" "),
                             _c("countdown-timer", {
                               attrs: { "end-date": _vm.user.did.expire_at },
@@ -66390,7 +66431,18 @@ var render = function() {
               },
               [
                 _c("div", { staticClass: "modal-content" }, [
-                  _vm._m(0),
+                  _c("div", { staticClass: "modal-header" }, [
+                    _c(
+                      "h3",
+                      {
+                        staticClass: "modal-title",
+                        attrs: { id: "search-did-title" }
+                      },
+                      [_vm._v(_vm._s(_vm.trans("Reserve DID")))]
+                    ),
+                    _vm._v(" "),
+                    _vm._m(0)
+                  ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-body" }, [
                     _c("div", { staticClass: "align-items-end mb-5 row" }, [
@@ -66479,6 +66531,31 @@ var render = function() {
                             ]),
                             _vm._v(" "),
                             _c(
+                              "div",
+                              {
+                                directives: [
+                                  {
+                                    name: "show",
+                                    rawName: "v-show",
+                                    value:
+                                      _vm.reservationDID.isSearchingCities &&
+                                      _vm.reservationDID.cities.length === 0,
+                                    expression:
+                                      "reservationDID.isSearchingCities && reservationDID.cities.length === 0"
+                                  }
+                                ],
+                                staticClass:
+                                  "spinner-border spinner-border-sm text-primary",
+                                attrs: { role: "status" }
+                              },
+                              [
+                                _c("span", { staticClass: "sr-only" }, [
+                                  _vm._v(_vm._s(_vm.trans("Loading")) + "...")
+                                ])
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
                               "select2",
                               {
                                 staticClass:
@@ -66537,7 +66614,11 @@ var render = function() {
                           },
                           [
                             _c("i", { staticClass: "fe fe-search" }),
-                            _vm._v(" Search\n              ")
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(_vm.trans("Search")) +
+                                "\n              "
+                            )
                           ]
                         )
                       ])
@@ -66568,7 +66649,16 @@ var render = function() {
                         staticClass: "mb-5"
                       },
                       [
-                        _c("legend", [_vm._v("Availables DIDs")]),
+                        _c("legend", [
+                          _c("span", [
+                            _vm._v(_vm._s(_vm.availablesDIDs.length))
+                          ]),
+                          _vm._v(
+                            "\n              " +
+                              _vm._s(_vm.trans("Availables DIDs")) +
+                              "\n            "
+                          )
+                        ]),
                         _vm._v(" "),
                         _c(
                           "div",
@@ -66671,9 +66761,10 @@ var render = function() {
                                 rawName: "v-show",
                                 value:
                                   !_vm.reservationDID.isLoading &&
-                                  _vm.availablesDIDs.length > 0,
+                                  _vm.availablesDIDs.length > 0 &&
+                                  _vm.existsMoreAvailableDIDs,
                                 expression:
-                                  "!reservationDID.isLoading && availablesDIDs.length > 0"
+                                  "!reservationDID.isLoading && availablesDIDs.length > 0 && existsMoreAvailableDIDs"
                               }
                             ],
                             staticClass: "btn btn-outline-primary px-4",
@@ -66684,7 +66775,7 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Load more...")]
+                          [_vm._v(_vm._s(_vm.trans("Load more")) + "...")]
                         ),
                         _vm._v(" "),
                         _c(
@@ -66704,7 +66795,7 @@ var render = function() {
                           },
                           [
                             _c("span", { staticClass: "sr-only" }, [
-                              _vm._v("Loading...")
+                              _vm._v(_vm._s(_vm.trans("Loading")) + "...")
                             ])
                           ]
                         )
@@ -66714,7 +66805,11 @@ var render = function() {
                     _vm.reservationDID.hasError
                       ? _c("p", { staticClass: "text-center text-danger" }, [
                           _vm._v(
-                            "Internal error. Please close modal and try again"
+                            _vm._s(
+                              _vm.trans(
+                                "Internal error. Please close modal and try again"
+                              )
+                            )
                           )
                         ])
                       : _vm._e()
@@ -66726,7 +66821,11 @@ var render = function() {
                     [
                       _vm.reservationDID.item.hasOwnProperty("id")
                         ? _c("div", { staticClass: "col" }, [
-                            _vm._v("\n            Selected DID:\n            "),
+                            _vm._v(
+                              "\n            " +
+                                _vm._s(_vm.trans("Selected DID")) +
+                                ":\n            "
+                            ),
                             _c("div", { staticClass: "font-weight-bold" }, [
                               _vm._v(
                                 _vm._s(
@@ -66746,7 +66845,7 @@ var render = function() {
                             staticClass: "btn btn-light px-4",
                             attrs: { type: "button", "data-dismiss": "modal" }
                           },
-                          [_vm._v("Close")]
+                          [_vm._v(_vm._s(_vm.trans("Cancel")))]
                         ),
                         _vm._v(" "),
                         _c(
@@ -66767,7 +66866,7 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v("Reserve")]
+                          [_vm._v(_vm._s(_vm.trans("Reserve")))]
                         )
                       ])
                     ]
@@ -66852,26 +66951,18 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "modal-header" }, [
-      _c(
-        "h3",
-        { staticClass: "modal-title", attrs: { id: "search-did-title" } },
-        [_vm._v("Reserve DID")]
-      ),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "close",
-          attrs: {
-            type: "button",
-            "data-dismiss": "modal",
-            "aria-label": "Close"
-          }
-        },
-        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
-      )
-    ])
+    return _c(
+      "button",
+      {
+        staticClass: "close",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+    )
   }
 ]
 render._withStripped = true

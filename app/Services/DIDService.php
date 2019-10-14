@@ -9,7 +9,7 @@ use Didww\Item\City as DIDWWCity;
 use Didww\Item\Country as DIDWWCountry;
 use Didww\Item\DidReservation as DIDWWReservation;
 use Didww\Item\Order as DIDWWOrder;
-use Didww\Item\OrderItem\ReservationDid as DIDWWOrderReservation;
+use Didww\Item\OrderItem\ReservationDid as DIDWWOrderItemReservation;
 use Didww\Item\Region as DIDWWRegion;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,11 +24,10 @@ class DIDService
     private $apiKey;
 
     /**
-     * The DID API Url
-     *
-     * @var string
+     * Const to get Stock Keeping Units with amount of channel
+     * 
      */
-    private $apiUrl;
+    private const AMOUNT_CHANNEL_DEFAULT = 0;
 
     /**
      * Create a new controller instance.
@@ -151,23 +150,66 @@ class DIDService
         return true;
     }
 
-
+    /**
+     * Purchase a given DID Reservation
+     *
+     * @param string $reservation A DID reservation UUID 
+     */
     public function purchaseReservation(string $reservation)
     {
-        $did_reservation = DIDWWReservation::find($reservation)->getData();
+        $did_reservation = DIDWWReservation::find($reservation, [
+            'include' => 'available_did.did_group.stock_keeping_units'
+        ])->getData();
 
-        $orderItem = new DIDWWOrderReservation();
+        $sku = $this->getDefaultStockKeepingUnit($did_reservation->availableDID());
+
+        $orderItem = new DIDWWOrderItemReservation();
         $orderItem->setDidReservationId($did_reservation->getId());
+        $orderItem->setSku($sku);
 
         $order = new DIDWWOrder();
-        $items = [$orderItem];
+        $order->setItems([$orderItem]);
 
-        $order->setItems($items);
         $orderDocument = $order->save();
-        $order = $orderDocument->getData();
 
-        return $order->toJsonApiArray();
+        $order = $orderDocument->getData();
+        $item = $order->getItems()[0];
+        
+        return [
+            'id' => $order->getId(),
+            'amount' => $order->amount,
+            'status' => $order->status,
+            'created_at' => $order->created_at,
+            'description' => $order->description,
+            'reference' => $order->reference,
+            'item' => [
+                'qty' => $item->getQty(),
+                'nrc' => $item->getNrc(),
+                'mrc' => $item->getMrc(),
+                'prorated_mrc' => $item->getProratedMrc(),
+                'billed_from' => $item->getBilledFrom(),
+                'billed_to' => $item->getBilledTo(),
+                'did_group_id' => $item->getDidGroupId()
+            ]
+        ];
     }
+
+    /**
+     * Get default Stock Keeping Unit (SKU)
+     *
+     * @param $did
+     * @return \Didww\Item\StockKeepingUnit
+     */
+    private function getDefaultStockKeepingUnit($did)
+    {
+        $did_group = $did->getIncluded()->didGroup();
+        $skus = $did_group->getIncluded()->stockKeepingUnits;
+
+        $sku = $skus->where('channels_included_count', $this::AMOUNT_CHANNEL_DEFAULT)->first();
+
+        return $sku ? $sku : $skus->first();
+    }
+
     /**
      * Get the DID API key.
      *

@@ -4,7 +4,9 @@ namespace App\Services;
 
 use App\Address;
 use App\Enums\AddressType;
+use App\Enums\DIDOrderStatus;
 use App\Enums\Role;
+use App\FancyNumber;
 use App\User;
 use App\Subscription;
 use Illuminate\Support\Facades\Hash;
@@ -80,6 +82,20 @@ class UserService
         return $this;
     }
 
+    public function assignFancyNumber(string $did, string $did_number, string $did_type, array $did_purchase)
+    {
+        $fancy_number = new FancyNumber([
+            'type' => $did_type,
+            'did_id' => $did, // TODO: Investigate real DID, aparently this is the Available DID and not the purchased one
+            'did_purchase_id' => $did_purchase['id'],
+            'did_number' => $did_number,
+            'did_reference' => $did_purchase['reference'],
+            'did_status' => DIDOrderStatus::getValue($did_purchase['status'])
+        ]);
+
+        $this->model->fancy_numbers()->save($fancy_number);
+    }
+
     /**
      * Build the payload with stripe information.
      * 
@@ -97,6 +113,7 @@ class UserService
             'first_name' => $user_options['first_name'],
             'last_name' => $user_options['last_name'],
             'email' => $user_options['email'],
+            'phone_number' => $user_options['phone_number'] ?? '',
             'password' => User::generatePassword(),
             'company_name' => $user_options['company_name'] ?? null,
             'company_phone' => $user_options['company_phone'] ?? null,

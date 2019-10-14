@@ -83,6 +83,8 @@ class UserController extends Controller
         // Create Stripe Customer
         $stripe_customer = $stripe_service->createCustomer($data);
 
+        // TODO: Catch error and send response to user
+
         // Find product by slug
         $product = Product::whereSlug($data['product'])->first();
 
@@ -102,11 +104,13 @@ class UserController extends Controller
         // Create Subscription
         $stripe_subscription = $stripe_service->createSubscription($stripe_customer->id, $plans);
 
-        // Purchase Reserved DID
-        // $did_service = new DIDService();
-        // $did = $did_service->purchaseReservation($data['did']['reservation']);
+        // TODO: Catch error to delete Stripe Customer and send response to user
 
-        // TODO: Catch error to delete subscription in case did purchase has error
+        // Purchase Reserved DID
+        $did_service = new DIDService();
+        $did_purchase = $did_service->purchaseReservation($data['did']['reservation']);
+
+        // TODO: Catch error to delete Stripe Customer and Subscription and send response to user
 
         // Create Fancy User        
         $user_service = new UserService();
@@ -115,10 +119,13 @@ class UserController extends Controller
         // Create User subscription
         $user->createSubscription($product->id, $stripe_product->id, $stripe_subscription);
 
-        // TODO: Save DID info into User (use variable $did)
+        // Create User Fancy number
+        $user->assignFancyNumber($data['did']['id'], $data['did']['number'], $data['number_type'], $did_purchase);
 
         // Send reset password to new user
         Mail::to($user->model())->send(new WelcomeMail($user->model()));
+
+        // TODO: Create Ticket and assign to a user with role: operator
 
         return response()->json(['success' => true]);
     }

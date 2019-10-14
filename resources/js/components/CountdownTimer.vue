@@ -20,7 +20,7 @@ export default {
   methods: {
     countDownIsOver() {
       return (
-        moment().format('h:mm:ss a') ===
+        moment().format('h:mm:ss a') >=
         moment(this.endDate).format('h:mm:ss a')
       );
     },

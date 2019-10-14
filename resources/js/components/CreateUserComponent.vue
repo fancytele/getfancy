@@ -127,8 +127,8 @@
                     :class="{'is-invalid': errors.hasOwnProperty('number_type')}"
                     v-model="user.number_type"
                   >
-                    <option value="custom">Existing number</option>
-                    <option value="fancy">New Fancy number</option>
+                    <option value="custom">{{ trans('Existing number') }}</option>
+                    <option value="fancy">{{ trans('New Fancy number') }}</option>
                   </select>
                   <div
                     class="invalid-feedback"
@@ -166,7 +166,7 @@
                     {{ user.did.number | phone }}
                   </p>
                   <p>
-                    <b>Expires in:</b>
+                    <b>{{ trans('Expires in') }}:</b>
                     <countdown-timer
                       :end-date="user.did.expire_at"
                       v-on:countdown-over="reservationOver()"
@@ -671,7 +671,7 @@
       <div role="document" class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
-            <h3 id="search-did-title" class="modal-title">Reserve DID</h3>
+            <h3 id="search-did-title" class="modal-title">{{ trans('Reserve DID') }}</h3>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -706,6 +706,14 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label for="did_city">{{ trans('City') }}</label>
+                  <div
+                    class="spinner-border spinner-border-sm text-primary"
+                    role="status"
+                    v-show="reservationDID.isSearchingCities && reservationDID.cities.length === 0"
+                  >
+                    <span class="sr-only">{{ trans('Loading') }}...</span>
+                  </div>
+
                   <select2
                     name="did_city"
                     id="did_city"
@@ -727,7 +735,8 @@
                   @click="searchAvailablesDIDs()"
                   :disabled="!reservationDID.city"
                 >
-                  <i class="fe fe-search"></i> Search
+                  <i class="fe fe-search"></i>
+                  {{ trans('Search') }}
                 </button>
               </div>
             </div>
@@ -735,7 +744,10 @@
             <hr v-show="availablesDIDs.length > 0" />
 
             <fieldset class="mb-5" v-show="availablesDIDs.length > 0">
-              <legend>Availables DIDs</legend>
+              <legend>
+                <span>{{ availablesDIDs.length }}</span>
+                {{ trans('Availables DIDs') }}
+              </legend>
               <div class="overflow-auto row vh-max-35">
                 <div
                   class="col-md-4 cursor-pointer mb-3"
@@ -765,30 +777,34 @@
                 id="load-more-dids"
                 class="btn btn-outline-primary px-4"
                 @click="getAvailablesDIDs()"
-                v-show="!reservationDID.isLoading && availablesDIDs.length > 0"
-              >Load more...</button>
+                v-show="!reservationDID.isLoading && availablesDIDs.length > 0 && existsMoreAvailableDIDs"
+              >{{ trans('Load more') }}...</button>
               <div
                 class="align-middle mb-3 spinner-border text-primary"
                 role="status"
                 v-show="reservationDID.isLoading"
               >
-                <span class="sr-only">Loading...</span>
+                <span class="sr-only">{{ trans('Loading') }}...</span>
               </div>
             </div>
 
             <p
               class="text-center text-danger"
               v-if="reservationDID.hasError"
-            >Internal error. Please close modal and try again</p>
+            >{{ trans('Internal error. Please close modal and try again') }}</p>
           </div>
 
           <div class="align-items-center modal-footer">
             <div class="col" v-if="reservationDID.item.hasOwnProperty('id')">
-              Selected DID:
+              {{ trans('Selected DID') }}:
               <div class="font-weight-bold">{{ reservationDID.item.attributes.number | phone }}</div>
             </div>
             <div class="col-auto">
-              <button type="button" class="btn btn-light px-4" data-dismiss="modal">Close</button>
+              <button
+                type="button"
+                class="btn btn-light px-4"
+                data-dismiss="modal"
+              >{{ trans('Cancel') }}</button>
               <button
                 id="submit-search-did"
                 type="button"
@@ -796,7 +812,7 @@
                 data-style="zoom-out"
                 :disabled="!reservationDID.item.hasOwnProperty('id')"
                 @click="reserveDID()"
-              >Reserve</button>
+              >{{ trans('Reserve') }}</button>
             </div>
           </div>
         </div>
@@ -880,6 +896,8 @@ export default {
         city: null,
         item: {},
         isLoading: false,
+        isSearchingCities: false,
+        existsMoreAvailableDIDs: true,
         searchSubmit: null,
         cancelSubmit: null,
         hasError: false,
@@ -940,6 +958,7 @@ export default {
       currentStep: {},
       countries: {},
       availablesDIDs: [],
+      existsMoreAvailableDIDs: true,
       stripe: {
         key: process.env.MIX_STRIPE_KEY,
         options: {
@@ -964,7 +983,7 @@ export default {
           hidePostalCode: true
         },
         validationCompleted: false,
-        stripeError: ''
+        error: ''
       },
       user: {
         product: this.products[0].slug,
@@ -1017,12 +1036,16 @@ export default {
       }
 
       this.toggleProcessing();
+      this.reservationDID.isSearchingCities = true;
 
       axios
         .get(this.didCityUrl)
         .then(this.setDIDCityList)
         .catch(error => console.error(error))
-        .then(this.toggleProcessing);
+        .then(() => {
+          this.toggleProcessing();
+          this.reservationDID.isSearchingCities = false;
+        });
     },
     setDIDCityList(response) {
       this.reservationDID.cities = response.data;
@@ -1036,8 +1059,9 @@ export default {
         return;
       }
 
-      this.reservationDID.hasError = false;
       this.toggleSearchDIDLoading();
+      this.existsMoreAvailableDIDs = true;
+      this.reservationDID.hasError = false;
 
       axios
         .get(this.didAvailableUrl)
@@ -1052,13 +1076,22 @@ export default {
       }
 
       let mergedData = [].concat(this.availablesDIDs, response.data);
-      this.availablesDIDs = _.uniqBy(mergedData, 'attributes.number');
+      let uniqueDIDs = _.uniqBy(mergedData, 'attributes.number');
+
+      if (uniqueDIDs.length === this.availablesDIDs.length) {
+        this.existsMoreAvailableDIDs = false;
+        return;
+      }
+
+      this.availablesDIDs = uniqueDIDs;
     },
     toggleSearchDIDLoading() {
       this.reservationDID.isLoading = !this.reservationDID.isLoading;
     },
     resetSearchDIDs() {
       this.availablesDIDs = [];
+      this.existsMoreAvailableDIDs = true;
+
       this.reservationDID.item = {};
       this.reservationDID.cities = [];
       this.reservationDID.region = null;
@@ -1092,8 +1125,9 @@ export default {
     },
     setSuccessfullReservation(response) {
       let reservation = {
+        id: this.reservationDID.item.id,
+        number: this.reservationDID.item.attributes.number,
         reservation: response.data.id,
-        number: this.reservationDID.item.attributes.number
       };
 
       this.user.did = Object.assign(reservation, response.data.attributes);
@@ -1245,7 +1279,10 @@ export default {
           this.user.stripe_token = data.token.id;
           this.processPayment();
         })
-        .catch(error => this.stripeError.message);
+        .catch(error => {
+          this.toggleProcessing();
+          this.laddaButton.stop();
+        });
     },
     processPayment() {
       axios

@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\DIDNumberType;
 use App\Enums\Permission;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UserRequest extends FormRequest
 {
@@ -44,10 +46,11 @@ class UserRequest extends FormRequest
             'billing_zip_code' => ['required'],
             'billing_address1' => ['required'],
             'stripe_token' => ['required', 'string'],
-            'number_type' => ['required'],
+            'number_type' => ['required', Rule::in(DIDNumberType::getValues())],
             'phone_number' => ['required'],
-            'did.reservation' => ['required', 'uuid'],
-            'did.number' => ['required']
+            'did.id' => ['required', 'uuid'],
+            'did.number' => ['required'],
+            'did.reservation' => ['required', 'uuid']
         ];
     }
 }

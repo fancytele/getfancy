@@ -24,4 +24,16 @@ abstract class Enum
 
         return $constants[$name];
     }
+
+    public static function getValues()
+    {
+        $constants = self::getConstants();
+        $values = [];
+
+        foreach ($constants as $key => $value) {
+            array_push($values, $constants[$key]);
+        }
+        
+        return $values;
+    }
 }
