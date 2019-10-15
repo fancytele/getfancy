@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin\Users;
 
 use App\Addon;
 use App\Enums\Role;
+use App\Enums\TicketStatus;
+use App\Enums\TicketType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Mail\WelcomeMail;
@@ -11,6 +13,7 @@ use App\Product;
 use App\Services\DIDService;
 use App\Services\StripeService;
 use App\Services\UserService;
+use App\Ticket;
 use App\User;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
@@ -80,11 +83,6 @@ class UserController extends Controller
 
         $stripe_service = new StripeService();
 
-        // Create Stripe Customer
-        $stripe_customer = $stripe_service->createCustomer($data);
-
-        // TODO: Catch error and send response to user
-
         // Find product by slug
         $product = Product::whereSlug($data['product'])->first();
 
@@ -101,16 +99,22 @@ class UserController extends Controller
             return ['plan' => $item->id];
         })->toArray();
 
+        // Create Stripe Customer
+        // TODO: Catch error and send response to user
+        $stripe_customer = $stripe_service->createCustomer($data);
+
         // Create Subscription
+        // TODO: Catch error to delete Stripe Customer and send response to user
         $stripe_subscription = $stripe_service->createSubscription($stripe_customer->id, $plans);
 
-        // TODO: Catch error to delete Stripe Customer and send response to user
-
         // Purchase Reserved DID
-        $did_service = new DIDService();
-        $did_purchase = $did_service->purchaseReservation($data['did']['reservation']);
+        $did_data = $data['did'];
 
+        $did_service = new DIDService();
         // TODO: Catch error to delete Stripe Customer and Subscription and send response to user
+        $did_purchase = $did_service->purchaseReservation($did_data['reservation']);
+
+        \Log::info(print_r($did_purchase, true));
 
         // Create Fancy User        
         $user_service = new UserService();
@@ -120,12 +124,21 @@ class UserController extends Controller
         $user->createSubscription($product->id, $stripe_product->id, $stripe_subscription);
 
         // Create User Fancy number
-        $user->assignFancyNumber($data['did']['id'], $data['did']['number'], $data['number_type'], $did_purchase);
+        $user->assignFancyNumber($did_data['id'], $did_data['number'], $data['number_type'], $did_purchase);
 
         // Send reset password to new user
         Mail::to($user->model())->send(new WelcomeMail($user->model()));
 
-        // TODO: Create Ticket and assign to a user with role: operator
+        // Create Ticket and assign to a user with role: OPERATOR
+        $ticket = new Ticket();
+        $ticket->fancy_number_id = $user->fancyNumberModel()->id;
+        $ticket->assigned_id = 1; // TODO: Replace with real OPERATOR user Id
+        $ticket->type = TicketType::DID;
+        $ticket->status = TicketStatus::PENDING;
+
+        $ticket->save();
+
+        // TODO: Send email to Operator
 
         return response()->json(['success' => true]);
     }

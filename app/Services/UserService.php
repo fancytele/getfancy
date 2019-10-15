@@ -18,9 +18,16 @@ class UserService
     /**
      * User model
      *
-     * @var \App\User;
+     * @var \App\User
      */
     private $model;
+
+    /**
+     * Fancy Number model
+     *
+     * @var \App\FancyNumber
+     */
+    private $fancyNumber;
 
     /**
      * Get User model
@@ -30,6 +37,16 @@ class UserService
     public function model()
     {
         return $this->model;
+    }
+
+    /**
+     * Get User Fancy Number moel
+     *
+     * @return \App\FancyNumber
+     */
+    public function fancyNumberModel()
+    {
+        return $this->fancyNumber;
     }
 
     /**
@@ -93,7 +110,7 @@ class UserService
             'did_status' => DIDOrderStatus::getValue($did_purchase['status'])
         ]);
 
-        $this->model->fancy_numbers()->save($fancy_number);
+        $this->fancyNumber = $this->model->fancy_numbers()->save($fancy_number);
     }
 
     /**

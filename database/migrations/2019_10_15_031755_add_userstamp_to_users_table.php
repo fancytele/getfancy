@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPhoneNumberToUsersTable extends Migration
+class AddUserstampToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,9 @@ class AddPhoneNumberToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('phone_number')->nullable()->after('email');
+            $table->bigInteger('deleted_by')->nullable()->after('last_login');
+            $table->bigInteger('updated_by')->nullable()->after('last_login');
+            $table->bigInteger('created_by')->nullable()->after('last_login');
         });
     }
 
@@ -26,7 +28,7 @@ class AddPhoneNumberToUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('phone_number');
+            $table->dropColumn(['created_by', 'updated_by', 'deleted_by']);
         });
     }
 }

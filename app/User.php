@@ -3,15 +3,15 @@
 namespace App;
 
 use App\Enums\Role;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasRoles, Notifiable, SoftDeletes;
+    use HasRoles, Notifiable, SoftDeletes, Userstamps;
 
     /**
      * The attributes that are mass assignable.
