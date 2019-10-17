@@ -101,9 +101,12 @@ class UserService
 
     public function assignFancyNumber(string $did, string $did_number, string $did_type, array $did_purchase)
     {
+        $did_service = new DIDService();
+        $did = $did_service->getPurchasedDID($did_purchase['id']);
+
         $fancy_number = new FancyNumber([
             'type' => $did_type,
-            'did_id' => $did, // TODO: Investigate real DID, aparently this is the Available DID and not the purchased one
+            'did_id' => $did['id'],
             'did_purchase_id' => $did_purchase['id'],
             'did_number' => $did_number,
             'did_reference' => $did_purchase['reference'],

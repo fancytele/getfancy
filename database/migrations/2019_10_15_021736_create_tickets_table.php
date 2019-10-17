@@ -17,9 +17,8 @@ class CreateTicketsTable extends Migration
     {
         Schema::create('tickets', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('assigned_id');
+            $table->unsignedBigInteger('assigned_id')->nullable();
             $table->unsignedBigInteger('fancy_number_id');
-            $table->string('type')->default(TicketType::DID);
             $table->string('status')->default(TicketStatus::PENDING);
             $table->timestamp('started_at')->nullable();
             $table->timestamp('completed_at')->nullable();

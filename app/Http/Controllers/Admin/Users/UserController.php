@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin\Users;
 use App\Addon;
 use App\Enums\Role;
 use App\Enums\TicketStatus;
-use App\Enums\TicketType;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Mail\WelcomeMail;
@@ -110,8 +109,8 @@ class UserController extends Controller
         // Purchase Reserved DID
         $did_data = $data['did'];
 
-        $did_service = new DIDService();
         // TODO: Catch error to delete Stripe Customer and Subscription and send response to user
+        $did_service = new DIDService();
         $did_purchase = $did_service->purchaseReservation($did_data['reservation']);
 
         \Log::info(print_r($did_purchase, true));
@@ -129,16 +128,12 @@ class UserController extends Controller
         // Send reset password to new user
         Mail::to($user->model())->send(new WelcomeMail($user->model()));
 
-        // Create Ticket and assign to a user with role: OPERATOR
+        // Create Ticket
         $ticket = new Ticket();
         $ticket->fancy_number_id = $user->fancyNumberModel()->id;
-        $ticket->assigned_id = 1; // TODO: Replace with real OPERATOR user Id
-        $ticket->type = TicketType::DID;
         $ticket->status = TicketStatus::PENDING;
 
         $ticket->save();
-
-        // TODO: Send email to Operator
 
         return response()->json(['success' => true]);
     }

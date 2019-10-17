@@ -7,6 +7,7 @@ use Didww\Credentials as DIDWWCredentials;
 use Didww\Item\AvailableDid as DIDWWAvailableDID;
 use Didww\Item\City as DIDWWCity;
 use Didww\Item\Country as DIDWWCountry;
+use Didww\Item\Did as DIDWW;
 use Didww\Item\DidReservation as DIDWWReservation;
 use Didww\Item\Order as DIDWWOrder;
 use Didww\Item\OrderItem\ReservationDid as DIDWWOrderItemReservation;
@@ -117,6 +118,19 @@ class DIDService
         return $result->toJsonApiArray();
     }
 
+    public function getPurchasedDID(string $order_id)
+    {
+        $did = DIDWW::all(['filter' => ['order.id' => $order_id]]);
+
+        $result = $did->getData();
+
+        if ($result->isEmpty()) {
+            return [];
+        }
+
+        return $result->first()->toJsonApiArray();
+    }
+
     /**
      * Generate a DID reservation
      *
@@ -174,7 +188,7 @@ class DIDService
 
         $order = $orderDocument->getData();
         $item = $order->getItems()[0];
-        
+
         return [
             'id' => $order->getId(),
             'amount' => $order->amount,
