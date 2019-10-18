@@ -1,0 +1,42 @@
+.custom-control-md {
+  padding-left: 2rem;
+
+  .custom-control-label {
+    &:before,
+    &:after {
+      height: 1.5rem;
+      left: -2rem;
+      top: 0;
+      width: 1.5rem;
+    }
+  }
+}
+
+.custom-control-button {
+  padding-left: 0;
+
+  .custom-control-label::before {
+    left: 1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.custom-control-box {
+  padding-left: 0;
+
+  .custom-control-text {
+    display: block;
+    margin-bottom: 3px;
+  }
+
+  .custom-control-label {
+    &:before {
+      left: 0;
+    }
+
+    &:after {
+      left: 0.2125rem;
+    }
+  }
+}

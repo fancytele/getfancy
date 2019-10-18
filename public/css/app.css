@@ -17747,6 +17747,18 @@ button:focus {
   max-height: 35vh;
 }
 
+.custom-control-md {
+  padding-left: 2rem;
+}
+
+.custom-control-md .custom-control-label:before,
+.custom-control-md .custom-control-label:after {
+  height: 1.5rem;
+  left: -2rem;
+  top: 0;
+  width: 1.5rem;
+}
+
 .custom-control-button {
   padding-left: 0;
 }
@@ -17756,6 +17768,23 @@ button:focus {
   top: 50%;
   -webkit-transform: translateY(-50%);
           transform: translateY(-50%);
+}
+
+.custom-control-box {
+  padding-left: 0;
+}
+
+.custom-control-box .custom-control-text {
+  display: block;
+  margin-bottom: 3px;
+}
+
+.custom-control-box .custom-control-label:before {
+  left: 0;
+}
+
+.custom-control-box .custom-control-label:after {
+  left: 0.2125rem;
 }
 
 .form-wizard .form-step {
@@ -17809,6 +17838,19 @@ button:focus {
 .navbar-dark.navbar-vertical {
   border: 0;
   box-shadow: inset -8px 0 10px -6px rgba(0, 0, 0, 0.3);
+}
+
+#did-settings .input-group-time {
+  width: 7.5rem;
+}
+
+#did-settings .label-day {
+  width: 2.1875rem;
+}
+
+#did-settings .business-full-time {
+  opacity: 0.4;
+  pointer-events: none;
 }
 
 /*!

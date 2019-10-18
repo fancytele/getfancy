@@ -17,9 +17,12 @@
 @import "abstracts/helpers";
 
 // Components
-@import "components/custom-control-button";
+@import "components/custom-control";
 @import "components/form-wizard";
 @import "components/navbar-vertical";
+
+// Pages
+@import "pages/did-settings";
 
 // Vendor Extensions
 @import "~ladda/dist/ladda-themeless.min";

@@ -46,6 +46,7 @@ Route::prefix('admin')->group(function () {
         // Users
         Route::post('users/{user}/reset_password', 'Admin\Users\UserController@resetPassword')->name('admin.users.reset_password');
         Route::post('users/{user}/restore', 'Admin\Users\UserController@restore')->name('admin.users.restore');
+        Route::get('users/{user}/edit/fancy', 'Admin\Users\UserController@editFancy')->name('admin.users.edit_fancy');
         Route::resource('users', 'Admin\Users\UserController', ['as' => 'admin'])->except(['show']);
     });
 
