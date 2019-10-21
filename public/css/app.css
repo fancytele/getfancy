@@ -3044,7 +3044,7 @@ pre code {
 .StripeElement:disabled,
 .form-control[readonly],
 [readonly].StripeElement {
-  background-color: #FFFFFF;
+  background-color: #f6f7fb;
   opacity: 1;
 }
 
@@ -4993,7 +4993,7 @@ input[type=button].btn-block {
 }
 
 .custom-control-input:disabled ~ .custom-control-label::before {
-  background-color: #FFFFFF;
+  background-color: #f6f7fb;
 }
 
 .custom-control-label {
@@ -5189,7 +5189,7 @@ input[type=button].btn-block {
 }
 
 .custom-file-input:disabled ~ .custom-file-label {
-  background-color: #FFFFFF;
+  background-color: #f6f7fb;
 }
 
 .custom-file-input:lang(en) ~ .custom-file-label::after {
@@ -17561,7 +17561,7 @@ button:focus {
 .select2-container--default .select2-selection--multiple[readonly],
 .select2-container--default .select2-search--dropdown .select2-search__field:disabled,
 .select2-container--default .select2-search--dropdown .select2-search__field[readonly] {
-  background-color: #FFFFFF;
+  background-color: #f6f7fb;
   opacity: 1;
 }
 
@@ -17729,6 +17729,10 @@ button:focus {
   line-height: 1;
 }
 
+.resize-none {
+  resize: none;
+}
+
 .table-row-counter {
   counter-reset: row-num;
 }
@@ -17745,6 +17749,20 @@ button:focus {
 
 .vh-max-35 {
   max-height: 35vh;
+}
+
+@media (min-width: 1200px) {
+  .border-xl-left {
+    border-left: 1px solid #E3EBF6;
+  }
+
+  .border-xl-left-2 {
+    border-left-width: 2px;
+  }
+
+  .border-xl-top-0 {
+    border-top-width: 0 !important;
+  }
 }
 
 .custom-control-md {
@@ -17770,20 +17788,26 @@ button:focus {
           transform: translateY(-50%);
 }
 
-.custom-control-box {
+.custom-control-block {
   padding-left: 0;
 }
 
-.custom-control-box .custom-control-text {
+.custom-control-block .custom-control-text {
   display: block;
   margin-bottom: 3px;
 }
 
-.custom-control-box .custom-control-label:before {
+.custom-control-block .custom-control-label {
+  display: block;
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.custom-control-block .custom-control-label:before {
   left: 0;
 }
 
-.custom-control-box .custom-control-label:after {
+.custom-control-block .custom-control-label:after {
   left: 0.2125rem;
 }
 
@@ -17848,7 +17872,7 @@ button:focus {
   width: 2.1875rem;
 }
 
-#did-settings .business-full-time {
+#did-settings .disabled-setting {
   opacity: 0.4;
   pointer-events: none;
 }

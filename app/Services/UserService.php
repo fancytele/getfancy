@@ -57,7 +57,7 @@ class UserService
     public function create(array $options)
     {
         $this->model = User::create($options);
-        $this->model->assignRole(Role::User);
+        $this->model->assignRole(Role::USER);
 
         return $this;
     }
@@ -110,7 +110,7 @@ class UserService
             'did_purchase_id' => $did_purchase['id'],
             'did_number' => $did_number,
             'did_reference' => $did_purchase['reference'],
-            'did_status' => DIDOrderStatus::getValue($did_purchase['status'])
+            'did_status' => DIDOrderStatus::getValue(strtoupper($did_purchase['status']))
         ]);
 
         $this->fancyNumber = $this->model->fancy_numbers()->save($fancy_number);

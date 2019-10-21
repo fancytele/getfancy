@@ -3940,6 +3940,471 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FancyConfigurationComponent.vue?vue&type=script&lang=js&":
+/*!**************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FancyConfigurationComponent.vue?vue&type=script&lang=js& ***!
+  \**************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      businessHours: {
+        allDay: false,
+        days: [{
+          id: 'monday',
+          text: 'Mon',
+          open: null,
+          close: null,
+          isOpen: false
+        }, {
+          id: 'tuesday',
+          text: 'Tue',
+          open: null,
+          close: null,
+          isOpen: false
+        }, {
+          id: 'wednesday',
+          text: 'Wed',
+          open: null,
+          close: null,
+          isOpen: false
+        }, {
+          id: 'thursday',
+          text: 'Thu',
+          open: null,
+          close: null,
+          isOpen: false
+        }, {
+          id: 'friday',
+          text: 'Fri',
+          open: null,
+          close: null,
+          isOpen: false
+        }, {
+          id: 'saturday',
+          text: 'Sat',
+          open: null,
+          close: null,
+          isOpen: false
+        }, {
+          id: 'sunday',
+          text: 'Sun',
+          open: null,
+          close: null,
+          isOpen: false
+        }]
+      },
+      notification: {
+        email: '',
+        period: 'daily'
+      },
+      pbx: {
+        type: 'predefined'
+      }
+    };
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/select2.vue?vue&type=script&lang=js&":
 /*!******************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/select2.vue?vue&type=script&lang=js& ***!
@@ -66971,6 +67436,1050 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FancyConfigurationComponent.vue?vue&type=template&id=271e73b5&":
+/*!******************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FancyConfigurationComponent.vue?vue&type=template&id=271e73b5& ***!
+  \******************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", { staticClass: "mb-5", attrs: { id: "did-settings" } }, [
+    _c(
+      "div",
+      {
+        staticClass:
+          "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+      },
+      [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+              },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "custom-control custom-control-block custom-switch"
+                    },
+                    [
+                      _c("label", { attrs: { for: "all_day" } }, [
+                        _c("span", { staticClass: "custom-control-text" }, [
+                          _vm._v("Open 24/7")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.businessHours.allDay,
+                              expression: "businessHours.allDay"
+                            }
+                          ],
+                          staticClass: "custom-control-input",
+                          attrs: { type: "checkbox", id: "all_day" },
+                          domProps: {
+                            checked: Array.isArray(_vm.businessHours.allDay)
+                              ? _vm._i(_vm.businessHours.allDay, null) > -1
+                              : _vm.businessHours.allDay
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$a = _vm.businessHours.allDay,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = null,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      _vm.businessHours,
+                                      "allDay",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      _vm.businessHours,
+                                      "allDay",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(_vm.businessHours, "allDay", $$c)
+                              }
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "custom-control-label" })
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "mt-5",
+                    class: { "disabled-setting": _vm.businessHours.allDay }
+                  },
+                  _vm._l(_vm.businessHours.days, function(item) {
+                    return _c(
+                      "div",
+                      {
+                        key: item.id,
+                        staticClass:
+                          "align-items-baseline d-lg-flex mb-4 mb-lg-1"
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "custom-checkbox custom-control custom-control-md d-lg-inline mb-3 mb-lg-0 mr-lg-4"
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: item.isOpen,
+                                  expression: "item.isOpen"
+                                }
+                              ],
+                              staticClass: "custom-control-input",
+                              attrs: { type: "checkbox", id: item.id },
+                              domProps: {
+                                checked: Array.isArray(item.isOpen)
+                                  ? _vm._i(item.isOpen, null) > -1
+                                  : item.isOpen
+                              },
+                              on: {
+                                change: function($event) {
+                                  var $$a = item.isOpen,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = null,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        _vm.$set(
+                                          item,
+                                          "isOpen",
+                                          $$a.concat([$$v])
+                                        )
+                                    } else {
+                                      $$i > -1 &&
+                                        _vm.$set(
+                                          item,
+                                          "isOpen",
+                                          $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1))
+                                        )
+                                    }
+                                  } else {
+                                    _vm.$set(item, "isOpen", $$c)
+                                  }
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "label",
+                              {
+                                staticClass:
+                                  "align-items-start label-day custom-control-label",
+                                attrs: { for: item.id }
+                              },
+                              [_vm._v(_vm._s(item.text))]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "d-inline-block mr-4" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "sr-only",
+                              attrs: { for: item.id + "_open_time" }
+                            },
+                            [_vm._v("Start time")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "input-group input-group-sm input-group-time"
+                            },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: item.open,
+                                    expression: "item.open"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  id: item.id + "_open_time",
+                                  name: item.id + "_open_time",
+                                  "aria-label": item.text + " open time",
+                                  "aria-describedby":
+                                    item.id + "-open-time-icon",
+                                  disabled: !item.isOpen
+                                },
+                                domProps: { value: item.open },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(item, "open", $event.target.value)
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "input-group-append" }, [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass: "input-group-text",
+                                    attrs: { id: item.id + "-open-time-icon" }
+                                  },
+                                  [_c("i", { staticClass: "fe fe-clock" })]
+                                )
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "d-inline-block mr-4" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "sr-only",
+                              attrs: { for: item.id + "_close_time" }
+                            },
+                            [_vm._v("Start time")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "input-group input-group-sm input-group-time"
+                            },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: item.close,
+                                    expression: "item.close"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  id: item.id + "_close_time",
+                                  name: item.id + "_close_time",
+                                  "aria-label": item.text + " close time",
+                                  "aria-describedby":
+                                    item.id + "-close-time-icon",
+                                  disabled: !item.isOpen
+                                },
+                                domProps: { value: item.close },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(item, "close", $event.target.value)
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "input-group-append" }, [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass: "input-group-text",
+                                    attrs: { id: item.id + "-close-time-icon" }
+                                  },
+                                  [_c("i", { staticClass: "fe fe-clock" })]
+                                )
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _vm._m(1, true)
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ]
+            )
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+      },
+      [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _vm._m(2),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+              },
+              [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "email" } }, [
+                        _vm._v("E-mail")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.notification.email,
+                            expression: "notification.email"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "email",
+                          id: "email",
+                          name: "email",
+                          required: ""
+                        },
+                        domProps: { value: _vm.notification.email },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.notification,
+                              "email",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "period" } }, [
+                        _vm._v("Period")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.notification.period,
+                              expression: "notification.period"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { name: "period", id: "period", required: "" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.notification,
+                                "period",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        [
+                          _c("option", { attrs: { value: "daily" } }, [
+                            _vm._v("Daily")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "weekly" } }, [
+                            _vm._v("Weekly")
+                          ]),
+                          _vm._v(" "),
+                          _c("option", { attrs: { value: "monthly" } }, [
+                            _vm._v("Monthly")
+                          ])
+                        ]
+                      )
+                    ])
+                  ])
+                ])
+              ]
+            )
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+      },
+      [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _vm._m(3),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+              },
+              [
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "custom-control custom-control-md custom-radio d-inline-block mr-5"
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.pbx.type,
+                          expression: "pbx.type"
+                        }
+                      ],
+                      staticClass: "custom-control-input",
+                      attrs: {
+                        type: "radio",
+                        id: "predefined",
+                        name: "pbx_type",
+                        value: "predefined"
+                      },
+                      domProps: { checked: _vm._q(_vm.pbx.type, "predefined") },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.pbx, "type", "predefined")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "custom-control-label",
+                        attrs: { for: "predefined" }
+                      },
+                      [_vm._v("Predefined")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "custom-control custom-control-md custom-radio d-inline-block"
+                  },
+                  [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.pbx.type,
+                          expression: "pbx.type"
+                        }
+                      ],
+                      staticClass: "custom-control-input",
+                      attrs: {
+                        type: "radio",
+                        id: "custom",
+                        name: "pbx_type",
+                        value: "custom"
+                      },
+                      domProps: { checked: _vm._q(_vm.pbx.type, "custom") },
+                      on: {
+                        change: function($event) {
+                          return _vm.$set(_vm.pbx, "type", "custom")
+                        }
+                      }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass: "custom-control-label",
+                        attrs: { for: "custom" }
+                      },
+                      [_vm._v("Custom")]
+                    )
+                  ]
+                ),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-5" }, [
+                  _c("fieldset", { staticClass: "mb-4" }, [
+                    _c("legend", { staticClass: "pl-4" }, [
+                      _vm._v("Message for Business hours")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.pbx.type === "predefined",
+                            expression: "pbx.type === 'predefined'"
+                          }
+                        ]
+                      },
+                      [
+                        _vm._m(4),
+                        _vm._v(" "),
+                        _vm._m(5),
+                        _vm._v(" "),
+                        _vm._m(6),
+                        _vm._v(" "),
+                        _vm._m(7),
+                        _vm._v(" "),
+                        _vm._m(8),
+                        _vm._v(" "),
+                        _vm._m(9)
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.pbx.type === "custom",
+                            expression: "pbx.type === 'custom'"
+                          }
+                        ],
+                        staticClass: "form-group pl-4"
+                      },
+                      [
+                        _c("textarea", {
+                          staticClass: "form-control resize-none",
+                          attrs: {
+                            name: "business_hours_message",
+                            id: "business_hours_message",
+                            rows: "5"
+                          }
+                        })
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("fieldset", { staticClass: "mb-4" }, [
+                    _c("legend", { staticClass: "pl-4" }, [
+                      _vm._v(
+                        "\n                Message for Downtime hours\n                "
+                      ),
+                      _vm.businessHours.allDay
+                        ? _c("p", { staticClass: "mt-n2 small text-warning" }, [
+                            _vm._v(
+                              "The company is open 24/7. No need for Downtime hours message"
+                            )
+                          ])
+                        : _vm._e()
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        class: { "disabled-setting": _vm.businessHours.allDay }
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.pbx.type === "predefined",
+                                expression: "pbx.type === 'predefined'"
+                              }
+                            ]
+                          },
+                          [_vm._m(10), _vm._v(" "), _vm._m(11)]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.pbx.type === "custom",
+                                expression: "pbx.type === 'custom'"
+                              }
+                            ],
+                            staticClass: "form-group pl-4"
+                          },
+                          [
+                            _c("textarea", {
+                              staticClass: "form-control resize-none",
+                              attrs: {
+                                name: "business_hours_message",
+                                id: "business_hours_message",
+                                rows: "5"
+                              }
+                            })
+                          ]
+                        )
+                      ]
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("fieldset", { staticClass: "mb-4" }, [
+                    _c("legend", { staticClass: "pl-4" }, [
+                      _vm._v("Message for On-hold hours")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.pbx.type === "predefined",
+                            expression: "pbx.type === 'predefined'"
+                          }
+                        ]
+                      },
+                      [_vm._m(12)]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: _vm.pbx.type === "custom",
+                            expression: "pbx.type === 'custom'"
+                          }
+                        ],
+                        staticClass: "form-group pl-4"
+                      },
+                      [
+                        _c("textarea", {
+                          staticClass: "form-control resize-none",
+                          attrs: {
+                            name: "business_hours_message",
+                            id: "business_hours_message",
+                            rows: "5"
+                          }
+                        })
+                      ]
+                    )
+                  ])
+                ])
+              ]
+            )
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-primary btn btn-primary ladda-button",
+        staticStyle: {},
+        attrs: { type: "submit" }
+      },
+      [_vm._v("Save setting")]
+    )
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-xl-4" }, [
+      _c("h2", { staticClass: "mb-1" }, [_vm._v("Business hours")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "text-black-50" }, [
+        _vm._v(
+          "\n            Lorem ipsum dolor sit, amet consectetur adipisicing\n            elit.\n          "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      { staticClass: "btn btn-link pl-0 pl-lg-3 text-decoration-underline" },
+      [
+        _c("i", { staticClass: "fe fe-copy" }),
+        _vm._v("\n                Copy to all\n              ")
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-xl-4" }, [
+      _c("h2", { staticClass: "mb-1" }, [_vm._v("Notifications")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "text-black-50" }, [
+        _vm._v(
+          "\n            Lorem ipsum dolor sit amet, consectetur adipisicing\n            elit.\n          "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-xl-4" }, [
+      _c("h2", { staticClass: "mb-1" }, [_vm._v("PBX")]),
+      _vm._v(" "),
+      _c("p", { staticClass: "text-black-50" }, [
+        _vm._v(
+          "\n            Lorem ipsum dolor sit amet, consectetur adipisicing\n            elit.\n          "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "custom-control custom-radio mb-3" }, [
+      _c("input", {
+        staticClass: "custom-control-input",
+        attrs: {
+          type: "radio",
+          id: "business-message-1",
+          name: "business-message"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "custom-control-label",
+          attrs: { for: "business-message-1" }
+        },
+        [
+          _vm._v(
+            "\n                    For English press 1, para Español presione\n                    el número dos.” For training purposes this\n                    call may be recorded\n                  "
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "custom-control custom-radio mb-3" }, [
+      _c("input", {
+        staticClass: "custom-control-input",
+        attrs: {
+          type: "radio",
+          id: "business-message-2",
+          name: "business-message"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "custom-control-label",
+          attrs: { for: "business-message-2" }
+        },
+        [
+          _vm._v(
+            "\n                    You’ve reached “Company Name”. For Sales\n                    Press 1. For Customer Service press 2. For\n                    all other inquiries press 3 or wait in line\n                    for one of our operators.\n                  "
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "custom-control custom-radio mb-3" }, [
+      _c("input", {
+        staticClass: "custom-control-input",
+        attrs: {
+          type: "radio",
+          id: "business-message-3",
+          name: "business-message"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "custom-control-label",
+          attrs: { for: "business-message-3" }
+        },
+        [
+          _vm._v(
+            "\n                    For Sales, Press 1. For Support, Press 2.\n                    For all other questions, press 3.\n                  "
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "custom-control custom-radio mb-3" }, [
+      _c("input", {
+        staticClass: "custom-control-input",
+        attrs: {
+          type: "radio",
+          id: "business-message-4",
+          name: "business-message"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "custom-control-label",
+          attrs: { for: "business-message-4" }
+        },
+        [
+          _vm._v(
+            "\n                    If you know the extension of the person you\n                    would like to reach, you may dial it at any\n                    time. You can also press 0 to reach an\n                    agent. For all other callers, please listen\n                    to the following options: for account\n                    information press 1, for questions about a\n                    product you purchased press 2…\n                  "
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "custom-control custom-radio mb-3" }, [
+      _c("input", {
+        staticClass: "custom-control-input",
+        attrs: {
+          type: "radio",
+          id: "business-message-5",
+          name: "business-message"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "custom-control-label",
+          attrs: { for: "business-message-5" }
+        },
+        [
+          _vm._v(
+            "\n                    If you know your party’s extension, you may\n                    dial it at any time. Otherwise, please\n                    choose from the following options: for\n                    customer support press 1, for sales press 2…\n                  "
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "custom-control custom-radio mb-3" }, [
+      _c("input", {
+        staticClass: "custom-control-input",
+        attrs: {
+          type: "radio",
+          id: "business-message-6",
+          name: "business-message"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "custom-control-label",
+          attrs: { for: "business-message-6" }
+        },
+        [
+          _vm._v(
+            "\n                    To reach our company directory, press 1. For\n                    more information about [Company Name], press\n                    2. If you are an existing customer, please\n                    press 3. For billing questions, press 4. To\n                    repeat menu options, press 9. For all other\n                    inquiries, press 0.\n                  "
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "custom-control custom-radio mb-3" }, [
+      _c("input", {
+        staticClass: "custom-control-input",
+        attrs: {
+          type: "radio",
+          id: "downtime-message-1",
+          name: "downtime-message"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "custom-control-label",
+          attrs: { for: "downtime-message-1" }
+        },
+        [
+          _vm._v(
+            "\n                      You have reached “Company Name” our business\n                      hours are 8 am to 5 pm.\n                    "
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "custom-control custom-radio mb-3" }, [
+      _c("input", {
+        staticClass: "custom-control-input",
+        attrs: {
+          type: "radio",
+          id: "downtime-message-2",
+          name: "downtime-message"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "custom-control-label",
+          attrs: { for: "downtime-message-2" }
+        },
+        [
+          _vm._v(
+            '\n                      Hello! Thank you for calling "Company Name".\n                      Our offices are closed. We are open Monday\n                      to Friday from 8.30 a.m. to 1.30 p.m. and\n                      from 4.30 p.m. to 7.30 p.m. If you wish you\n                      can send a fax to the number *** or an email\n                      to ***. Thank you and goodbye for now!\n                    '
+          )
+        ]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "custom-control custom-radio mb-3" }, [
+      _c("input", {
+        staticClass: "custom-control-input",
+        attrs: {
+          type: "radio",
+          id: "on-hold-message-1",
+          name: "on-hold-message"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "custom-control-label",
+          attrs: { for: "on-hold-message-1" }
+        },
+        [
+          _vm._v(
+            "\n                    Our operators are all busy as to not keep\n                    you waiting too long, if you have called us\n                    from an identifiable user, you will be\n                    contacted by the first available operator.\n                    Thank you for calling and talk to you later!\n                  "
+          )
+        ]
+      )
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/select2.vue?vue&type=template&id=7e62a13b&":
 /*!**********************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/select2.vue?vue&type=template&id=7e62a13b& ***!
@@ -79359,6 +80868,7 @@ var map = {
 	"./components/CheckoutComponent.vue": "./resources/js/components/CheckoutComponent.vue",
 	"./components/CountdownTimer.vue": "./resources/js/components/CountdownTimer.vue",
 	"./components/CreateUserComponent.vue": "./resources/js/components/CreateUserComponent.vue",
+	"./components/FancyConfigurationComponent.vue": "./resources/js/components/FancyConfigurationComponent.vue",
 	"./components/select2.vue": "./resources/js/components/select2.vue"
 };
 
@@ -79690,6 +81200,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUserComponent_vue_vue_type_template_id_2528f0bb___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_CreateUserComponent_vue_vue_type_template_id_2528f0bb___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/FancyConfigurationComponent.vue":
+/*!*****************************************************************!*\
+  !*** ./resources/js/components/FancyConfigurationComponent.vue ***!
+  \*****************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _FancyConfigurationComponent_vue_vue_type_template_id_271e73b5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FancyConfigurationComponent.vue?vue&type=template&id=271e73b5& */ "./resources/js/components/FancyConfigurationComponent.vue?vue&type=template&id=271e73b5&");
+/* harmony import */ var _FancyConfigurationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FancyConfigurationComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/FancyConfigurationComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _FancyConfigurationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FancyConfigurationComponent_vue_vue_type_template_id_271e73b5___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FancyConfigurationComponent_vue_vue_type_template_id_271e73b5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/FancyConfigurationComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/FancyConfigurationComponent.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/FancyConfigurationComponent.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FancyConfigurationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./FancyConfigurationComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FancyConfigurationComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FancyConfigurationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/FancyConfigurationComponent.vue?vue&type=template&id=271e73b5&":
+/*!************************************************************************************************!*\
+  !*** ./resources/js/components/FancyConfigurationComponent.vue?vue&type=template&id=271e73b5& ***!
+  \************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FancyConfigurationComponent_vue_vue_type_template_id_271e73b5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./FancyConfigurationComponent.vue?vue&type=template&id=271e73b5& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FancyConfigurationComponent.vue?vue&type=template&id=271e73b5&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FancyConfigurationComponent_vue_vue_type_template_id_271e73b5___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FancyConfigurationComponent_vue_vue_type_template_id_271e73b5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

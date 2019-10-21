@@ -40,7 +40,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::role(Role::User)->withTrashed()->get();
+        $users = User::role(Role::USER)->withTrashed()->get();
 
         return view('admin.users.index', compact('users'));
     }

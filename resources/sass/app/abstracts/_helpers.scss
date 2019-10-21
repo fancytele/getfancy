@@ -14,6 +14,10 @@
   line-height: 1;
 }
 
+.resize-none {
+  resize: none;
+}
+
 .table-row-counter {
   counter-reset: row-num;
 
@@ -30,4 +34,18 @@
 
 .vh-max-35 {
   max-height: 35vh;
+}
+
+@include media-breakpoint-up(xl) {
+  .border-xl-left {
+    border-left: 1px solid $gray-300;
+  }
+
+  .border-xl-left-2 {
+    border-left-width: 2px;
+  }
+
+  .border-xl-top-0 {
+    border-top-width: 0 !important;
+  }
 }

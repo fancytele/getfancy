@@ -144,7 +144,7 @@ class User extends Authenticatable
             ->whereNull('users.deleted_at')
             ->where('model_has_roles.model_type', 'App\\User')
             ->where('roles.guard_name', 'web')
-            ->where('roles.name', '<>', Role::Admin)
+            ->where('roles.name', '<>', Role::ADMIN)
             ->groupBy('roles.id')
             ->get();
     }
