@@ -2,7 +2,11 @@
 
 @section('page-subtitle', __('Edit User'))
 
-@section('page-title', __('DID configuration'))
+@section('page-title', __('Fancy configuration'))
+
+@push('head-scripts')
+<script src="{{ asset('js/lang.js') }}" defer></script>
+@endpush
 
 @section('content')
 <div class="container-fluid">
@@ -11,6 +15,8 @@
         @lang('Return to list')
     </a>
 
-    <fancy-configuration-component></fancy-configuration-component>
+    <fancy-configuration-component :periods='@json($notification_period)'
+                                   :messages='@json($messages)'>
+    </fancy-configuration-component>
 </div>
 @endsection

@@ -2624,7 +2624,7 @@ pre code {
 
 .table-sm th,
 .table-sm td {
-  padding: 0.9375rem;
+  padding: 0.75rem;
 }
 
 .table-bordered {
@@ -17875,6 +17875,16 @@ button:focus {
 #did-settings .disabled-setting {
   opacity: 0.4;
   pointer-events: none;
+}
+
+#did-settings .content-action-hover .action {
+  opacity: 0;
+  visibility: hidden;
+}
+
+#did-settings .content-action-hover:hover .action {
+  opacity: 1;
+  visibility: visible;
 }
 
 /*!

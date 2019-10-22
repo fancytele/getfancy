@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin\Users;
 
 use App\Addon;
+use App\Enums\FancyNotificationPeriod;
 use App\Enums\Role;
 use App\Enums\TicketStatus;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Mail\WelcomeMail;
+use App\PBXMessage;
 use App\Product;
 use App\Services\DIDService;
 use App\Services\StripeService;
@@ -168,7 +170,10 @@ class UserController extends Controller
      */
     public function editFancy(User $user)
     {
-        return view('admin.users.edit-fancy', compact('user'));
+        $notification_period = FancyNotificationPeriod::getValues();
+        $messages = PBXMessage::get(['id', 'message', 'type'])->groupBy('type')->toArray();
+
+        return view('admin.users.edit-fancy', compact('user', 'notification_period', 'messages'));
     }
 
     /**

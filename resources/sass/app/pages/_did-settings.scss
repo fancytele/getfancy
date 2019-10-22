@@ -11,4 +11,16 @@
     opacity: 0.4;
     pointer-events: none;
   }
+
+  .content-action-hover {
+    .action {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    &:hover .action {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
 }

@@ -4343,7 +4343,165 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    periods: {
+      type: Array,
+      required: true
+    },
+    messages: {
+      type: Object,
+      required: true
+    }
+  },
   data: function data() {
     return {
       businessHours: {
@@ -4390,6 +4548,52 @@ __webpack_require__.r(__webpack_exports__);
           open: null,
           close: null,
           isOpen: false
+        }]
+      },
+      downtimeHours: {
+        enable: false,
+        days: [{
+          id: 'monday',
+          text: 'Mon',
+          start: null,
+          end: null,
+          isClosed: false
+        }, {
+          id: 'tuesday',
+          text: 'Tue',
+          start: null,
+          end: null,
+          isClosed: false
+        }, {
+          id: 'wednesday',
+          text: 'Wed',
+          start: null,
+          end: null,
+          isClosed: false
+        }, {
+          id: 'thursday',
+          text: 'Thu',
+          start: null,
+          end: null,
+          isClosed: false
+        }, {
+          id: 'friday',
+          text: 'Fri',
+          start: null,
+          end: null,
+          isClosed: false
+        }, {
+          id: 'saturday',
+          text: 'Sat',
+          start: null,
+          end: null,
+          isClosed: false
+        }, {
+          id: 'sunday',
+          text: 'Sun',
+          start: null,
+          end: null,
+          isClosed: false
         }]
       },
       notification: {
@@ -67461,7 +67665,15 @@ var render = function() {
       [
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "row" }, [
-            _vm._m(0),
+            _c("div", { staticClass: "col-xl-4" }, [
+              _c("h2", { staticClass: "mb-1" }, [
+                _vm._v(_vm._s(_vm.trans("Business hours")))
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-black-50" }, [
+                _vm._v(_vm._s(_vm.trans("Business hours description")))
+              ])
+            ]),
             _vm._v(" "),
             _c(
               "div",
@@ -67480,7 +67692,7 @@ var render = function() {
                     [
                       _c("label", { attrs: { for: "all_day" } }, [
                         _c("span", { staticClass: "custom-control-text" }, [
-                          _vm._v("Open 24/7")
+                          _vm._v(_vm._s(_vm.trans("Open 24/7")) + "?")
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -67549,7 +67761,7 @@ var render = function() {
                       {
                         key: item.id,
                         staticClass:
-                          "align-items-baseline d-lg-flex mb-4 mb-lg-1"
+                          "align-items-baseline content-action-hover d-lg-flex mb-4 mb-lg-1"
                       },
                       [
                         _c(
@@ -67614,7 +67826,7 @@ var render = function() {
                                   "align-items-start label-day custom-control-label",
                                 attrs: { for: item.id }
                               },
-                              [_vm._v(_vm._s(item.text))]
+                              [_vm._v(_vm._s(_vm.trans(item.text)))]
                             )
                           ]
                         ),
@@ -67741,7 +67953,21 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _vm._m(1, true)
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "action btn btn-link pl-0 pl-lg-3 text-decoration-underline"
+                          },
+                          [
+                            _c("i", { staticClass: "fe fe-copy" }),
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(_vm.trans("Copy to all")) +
+                                "\n              "
+                            )
+                          ]
+                        )
                       ]
                     )
                   }),
@@ -67763,7 +67989,341 @@ var render = function() {
       [
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "row" }, [
-            _vm._m(2),
+            _c("div", { staticClass: "col-xl-4" }, [
+              _c("h2", { staticClass: "mb-1" }, [
+                _vm._v(_vm._s(_vm.trans("Downtime hours")))
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-black-50" }, [
+                _vm._v(_vm._s(_vm.trans("Downtime hours description")))
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+              },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass:
+                        "custom-control custom-control-block custom-switch"
+                    },
+                    [
+                      _c("label", { attrs: { for: "enable_downtime" } }, [
+                        _c("span", { staticClass: "custom-control-text" }, [
+                          _vm._v(
+                            _vm._s(_vm.trans("Enable downtime hours")) + "?"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.downtimeHours.enable,
+                              expression: "downtimeHours.enable"
+                            }
+                          ],
+                          staticClass: "custom-control-input",
+                          attrs: { type: "checkbox", id: "enable_downtime" },
+                          domProps: {
+                            checked: Array.isArray(_vm.downtimeHours.enable)
+                              ? _vm._i(_vm.downtimeHours.enable, null) > -1
+                              : _vm.downtimeHours.enable
+                          },
+                          on: {
+                            change: function($event) {
+                              var $$a = _vm.downtimeHours.enable,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = null,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    _vm.$set(
+                                      _vm.downtimeHours,
+                                      "enable",
+                                      $$a.concat([$$v])
+                                    )
+                                } else {
+                                  $$i > -1 &&
+                                    _vm.$set(
+                                      _vm.downtimeHours,
+                                      "enable",
+                                      $$a
+                                        .slice(0, $$i)
+                                        .concat($$a.slice($$i + 1))
+                                    )
+                                }
+                              } else {
+                                _vm.$set(_vm.downtimeHours, "enable", $$c)
+                              }
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _c("span", { staticClass: "custom-control-label" })
+                      ])
+                    ]
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass: "mt-5",
+                    class: { "disabled-setting": !_vm.downtimeHours.enable }
+                  },
+                  _vm._l(_vm.downtimeHours.days, function(item) {
+                    return _c(
+                      "div",
+                      {
+                        key: item.id,
+                        staticClass:
+                          "align-items-baseline content-action-hover d-lg-flex mb-4 mb-lg-1"
+                      },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "custom-checkbox custom-control custom-control-md d-lg-inline mb-3 mb-lg-0 mr-lg-4"
+                          },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: item.isClosed,
+                                  expression: "item.isClosed"
+                                }
+                              ],
+                              staticClass: "custom-control-input",
+                              attrs: { type: "checkbox", id: item.id },
+                              domProps: {
+                                checked: Array.isArray(item.isClosed)
+                                  ? _vm._i(item.isClosed, null) > -1
+                                  : item.isClosed
+                              },
+                              on: {
+                                change: function($event) {
+                                  var $$a = item.isClosed,
+                                    $$el = $event.target,
+                                    $$c = $$el.checked ? true : false
+                                  if (Array.isArray($$a)) {
+                                    var $$v = null,
+                                      $$i = _vm._i($$a, $$v)
+                                    if ($$el.checked) {
+                                      $$i < 0 &&
+                                        _vm.$set(
+                                          item,
+                                          "isClosed",
+                                          $$a.concat([$$v])
+                                        )
+                                    } else {
+                                      $$i > -1 &&
+                                        _vm.$set(
+                                          item,
+                                          "isClosed",
+                                          $$a
+                                            .slice(0, $$i)
+                                            .concat($$a.slice($$i + 1))
+                                        )
+                                    }
+                                  } else {
+                                    _vm.$set(item, "isClosed", $$c)
+                                  }
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "label",
+                              {
+                                staticClass:
+                                  "align-items-start label-day custom-control-label",
+                                attrs: { for: item.id }
+                              },
+                              [_vm._v(_vm._s(_vm.trans(item.text)))]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "d-inline-block mr-4" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "sr-only",
+                              attrs: { for: item.id + "_start_time" }
+                            },
+                            [_vm._v("Start time")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "input-group input-group-sm input-group-time"
+                            },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: item.start,
+                                    expression: "item.start"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  id: item.id + "_start_time",
+                                  name: item.id + "_start_time",
+                                  "aria-label": item.text + " start time",
+                                  "aria-describedby":
+                                    item.id + "-start-time-icon",
+                                  disabled: !item.isClosed
+                                },
+                                domProps: { value: item.start },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(item, "start", $event.target.value)
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "input-group-append" }, [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass: "input-group-text",
+                                    attrs: { id: item.id + "-start-time-icon" }
+                                  },
+                                  [_c("i", { staticClass: "fe fe-clock" })]
+                                )
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "d-inline-block mr-4" }, [
+                          _c(
+                            "label",
+                            {
+                              staticClass: "sr-only",
+                              attrs: { for: item.id + "_end_time" }
+                            },
+                            [_vm._v("Start time")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "input-group input-group-sm input-group-time"
+                            },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: item.end,
+                                    expression: "item.end"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: {
+                                  type: "text",
+                                  id: item.id + "_end_time",
+                                  name: item.id + "_end_time",
+                                  "aria-label": item.text + " end time",
+                                  "aria-describedby":
+                                    item.id + "-end-time-icon",
+                                  disabled: !item.isClosed
+                                },
+                                domProps: { value: item.end },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(item, "end", $event.target.value)
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c("div", { staticClass: "input-group-append" }, [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass: "input-group-text",
+                                    attrs: { id: item.id + "-end-time-icon" }
+                                  },
+                                  [_c("i", { staticClass: "fe fe-clock" })]
+                                )
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "action btn btn-link pl-0 pl-lg-3 text-decoration-underline"
+                          },
+                          [
+                            _c("i", { staticClass: "fe fe-copy" }),
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(_vm.trans("Copy to all")) +
+                                "\n              "
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  }),
+                  0
+                )
+              ]
+            )
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+      },
+      [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-xl-4" }, [
+              _c("h2", { staticClass: "mb-1" }, [
+                _vm._v(_vm._s(_vm.trans("Notifications")))
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-black-50" }, [
+                _vm._v(_vm._s(_vm.trans("Notifications description")))
+              ])
+            ]),
             _vm._v(" "),
             _c(
               "div",
@@ -67776,7 +68336,7 @@ var render = function() {
                   _c("div", { staticClass: "col-md-8 col-lg-6" }, [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "email" } }, [
-                        _vm._v("E-mail")
+                        _vm._v(_vm._s(_vm.trans("E-mail")))
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -67817,7 +68377,7 @@ var render = function() {
                   _c("div", { staticClass: "col-md-8 col-lg-6" }, [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "period" } }, [
-                        _vm._v("Period")
+                        _vm._v(_vm._s(_vm.trans("Period")))
                       ]),
                       _vm._v(" "),
                       _c(
@@ -67886,7 +68446,13 @@ var render = function() {
       [
         _c("div", { staticClass: "card-body" }, [
           _c("div", { staticClass: "row" }, [
-            _vm._m(3),
+            _c("div", { staticClass: "col-xl-4" }, [
+              _c("h2", { staticClass: "mb-1" }, [_vm._v("PBX")]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-black-50" }, [
+                _vm._v(_vm._s(_vm.trans("Choose your PBX message")) + ".")
+              ])
+            ]),
             _vm._v(" "),
             _c(
               "div",
@@ -67932,7 +68498,7 @@ var render = function() {
                         staticClass: "custom-control-label",
                         attrs: { for: "predefined" }
                       },
-                      [_vm._v("Predefined")]
+                      [_vm._v(_vm._s(_vm.trans("Predefined")))]
                     )
                   ]
                 ),
@@ -67974,7 +68540,7 @@ var render = function() {
                         staticClass: "custom-control-label",
                         attrs: { for: "custom" }
                       },
-                      [_vm._v("Custom")]
+                      [_vm._v(_vm._s(_vm.trans("Custom")))]
                     )
                   ]
                 ),
@@ -67982,7 +68548,7 @@ var render = function() {
                 _c("div", { staticClass: "mt-5" }, [
                   _c("fieldset", { staticClass: "mb-4" }, [
                     _c("legend", { staticClass: "pl-4" }, [
-                      _vm._v("Message for Business hours")
+                      _vm._v(_vm._s(_vm.trans("Message for business hours")))
                     ]),
                     _vm._v(" "),
                     _c(
@@ -67998,17 +68564,17 @@ var render = function() {
                         ]
                       },
                       [
+                        _vm._m(0),
+                        _vm._v(" "),
+                        _vm._m(1),
+                        _vm._v(" "),
+                        _vm._m(2),
+                        _vm._v(" "),
+                        _vm._m(3),
+                        _vm._v(" "),
                         _vm._m(4),
                         _vm._v(" "),
-                        _vm._m(5),
-                        _vm._v(" "),
-                        _vm._m(6),
-                        _vm._v(" "),
-                        _vm._m(7),
-                        _vm._v(" "),
-                        _vm._m(8),
-                        _vm._v(" "),
-                        _vm._m(9)
+                        _vm._m(5)
                       ]
                     ),
                     _vm._v(" "),
@@ -68041,15 +68607,29 @@ var render = function() {
                   _c("fieldset", { staticClass: "mb-4" }, [
                     _c("legend", { staticClass: "pl-4" }, [
                       _vm._v(
-                        "\n                Message for Downtime hours\n                "
+                        "\n                " +
+                          _vm._s(_vm.trans("Message for downtime hours")) +
+                          "\n                "
                       ),
-                      _vm.businessHours.allDay
-                        ? _c("p", { staticClass: "mt-n2 small text-warning" }, [
-                            _vm._v(
-                              "The company is open 24/7. No need for Downtime hours message"
-                            )
-                          ])
-                        : _vm._e()
+                      _c(
+                        "p",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.businessHours.allDay,
+                              expression: "businessHours.allDay"
+                            }
+                          ],
+                          staticClass: "mt-n2 small text-warning"
+                        },
+                        [
+                          _vm._v(
+                            "The company is open 24/7. No need for Downtime hours message"
+                          )
+                        ]
+                      )
                     ]),
                     _vm._v(" "),
                     _c(
@@ -68070,7 +68650,7 @@ var render = function() {
                               }
                             ]
                           },
-                          [_vm._m(10), _vm._v(" "), _vm._m(11)]
+                          [_vm._m(6), _vm._v(" "), _vm._m(7)]
                         ),
                         _vm._v(" "),
                         _c(
@@ -68103,7 +68683,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("fieldset", { staticClass: "mb-4" }, [
                     _c("legend", { staticClass: "pl-4" }, [
-                      _vm._v("Message for On-hold hours")
+                      _vm._v(_vm._s(_vm.trans("Message for on-hold calls")))
                     ]),
                     _vm._v(" "),
                     _c(
@@ -68118,7 +68698,7 @@ var render = function() {
                           }
                         ]
                       },
-                      [_vm._m(12)]
+                      [_vm._m(8)]
                     ),
                     _vm._v(" "),
                     _c(
@@ -68145,7 +68725,80 @@ var render = function() {
                         })
                       ]
                     )
-                  ])
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "fieldset",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.pbx.type === "custom",
+                          expression: "pbx.type === 'custom'"
+                        }
+                      ],
+                      staticClass: "mb-4"
+                    },
+                    [
+                      _c("legend", { staticClass: "pl-4" }, [
+                        _vm._v(
+                          "\n                " +
+                            _vm._s(_vm.trans("Custom extensions")) +
+                            "\n                "
+                        ),
+                        _c(
+                          "p",
+                          { staticClass: "mb-1 mt-n2 small text-muted" },
+                          [
+                            _vm._v(
+                              _vm._s(_vm.trans("Custom extensions description"))
+                            )
+                          ]
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "pl-4" }, [
+                        _c(
+                          "table",
+                          {
+                            staticClass:
+                              "border-bottom mb-2 table table-hover table-sm"
+                          },
+                          [
+                            _c("thead", [
+                              _c("tr", [
+                                _c("th", { attrs: { scope: "col" } }, [
+                                  _vm._v(_vm._s(_vm.trans("Number")))
+                                ]),
+                                _vm._v(" "),
+                                _c("th", { attrs: { scope: "col" } }, [
+                                  _vm._v(_vm._s(_vm.trans("Name")))
+                                ]),
+                                _vm._v(" "),
+                                _vm._m(9)
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _vm._m(10)
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          { staticClass: "btn btn-link text-secondary" },
+                          [
+                            _c("i", { staticClass: "fe fe-plus" }),
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(_vm.trans("Add a new extension")) +
+                                "\n                "
+                            )
+                          ]
+                        )
+                      ])
+                    ]
+                  )
                 ])
               ]
             )
@@ -68161,66 +68814,11 @@ var render = function() {
         staticStyle: {},
         attrs: { type: "submit" }
       },
-      [_vm._v("Save setting")]
+      [_vm._v(_vm._s(_vm.trans("Save setting")))]
     )
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xl-4" }, [
-      _c("h2", { staticClass: "mb-1" }, [_vm._v("Business hours")]),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-black-50" }, [
-        _vm._v(
-          "\n            Lorem ipsum dolor sit, amet consectetur adipisicing\n            elit.\n          "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "button",
-      { staticClass: "btn btn-link pl-0 pl-lg-3 text-decoration-underline" },
-      [
-        _c("i", { staticClass: "fe fe-copy" }),
-        _vm._v("\n                Copy to all\n              ")
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xl-4" }, [
-      _c("h2", { staticClass: "mb-1" }, [_vm._v("Notifications")]),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-black-50" }, [
-        _vm._v(
-          "\n            Lorem ipsum dolor sit amet, consectetur adipisicing\n            elit.\n          "
-        )
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-xl-4" }, [
-      _c("h2", { staticClass: "mb-1" }, [_vm._v("PBX")]),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-black-50" }, [
-        _vm._v(
-          "\n            Lorem ipsum dolor sit amet, consectetur adipisicing\n            elit.\n          "
-        )
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -68471,6 +69069,72 @@ var staticRenderFns = [
           )
         ]
       )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [
+      _c("span", { staticClass: "sr-only" }, [_vm._v("Action")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tbody", [
+      _c("tr", { staticClass: "content-action-hover" }, [
+        _c("td", [
+          _c("input", {
+            staticClass: "form-control form-control-sm w-50",
+            attrs: { type: "number" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            staticClass: "form-control form-control-sm",
+            attrs: { type: "text" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c(
+            "button",
+            {
+              staticClass: "action btn btn-link btn-sm mt-n1 py-0 text-danger"
+            },
+            [_c("i", { staticClass: "fe fe-minus-circle h2" })]
+          )
+        ])
+      ]),
+      _vm._v(" "),
+      _c("tr", { staticClass: "content-action-hover" }, [
+        _c("td", [
+          _c("input", {
+            staticClass: "form-control form-control-sm w-50",
+            attrs: { type: "number" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c("input", {
+            staticClass: "form-control form-control-sm",
+            attrs: { type: "text" }
+          })
+        ]),
+        _vm._v(" "),
+        _c("td", [
+          _c(
+            "button",
+            {
+              staticClass: "action btn btn-link btn-sm mt-n1 py-0 text-danger"
+            },
+            [_c("i", { staticClass: "fe fe-minus-circle h2" })]
+          )
+        ])
+      ])
     ])
   }
 ]

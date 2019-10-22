@@ -7,11 +7,8 @@
       <div class="card-body">
         <div class="row">
           <div class="col-xl-4">
-            <h2 class="mb-1">Business hours</h2>
-            <p class="text-black-50">
-              Lorem ipsum dolor sit, amet consectetur adipisicing
-              elit.
-            </p>
+            <h2 class="mb-1">{{ trans('Business hours') }}</h2>
+            <p class="text-black-50">{{ trans('Business hours description') }}</p>
           </div>
           <div
             class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
@@ -19,7 +16,7 @@
             <div class="form-group">
               <div class="custom-control custom-control-block custom-switch">
                 <label for="all_day">
-                  <span class="custom-control-text">Open 24/7</span>
+                  <span class="custom-control-text">{{ trans('Open 24/7') }}?</span>
                   <input
                     type="checkbox"
                     class="custom-control-input"
@@ -33,7 +30,7 @@
 
             <div class="mt-5" :class="{'disabled-setting': businessHours.allDay}">
               <div
-                class="align-items-baseline d-lg-flex mb-4 mb-lg-1"
+                class="align-items-baseline content-action-hover d-lg-flex mb-4 mb-lg-1"
                 v-for="item in businessHours.days"
                 :key="item.id"
               >
@@ -49,7 +46,7 @@
                   <label
                     class="align-items-start label-day custom-control-label"
                     :for="item.id"
-                  >{{ item.text }}</label>
+                  >{{ trans(item.text) }}</label>
                 </div>
 
                 <div class="d-inline-block mr-4">
@@ -93,9 +90,110 @@
                   </div>
                 </div>
 
-                <button class="btn btn-link pl-0 pl-lg-3 text-decoration-underline">
+                <button class="action btn btn-link pl-0 pl-lg-3 text-decoration-underline">
                   <i class="fe fe-copy"></i>
-                  Copy to all
+                  {{ trans('Copy to all') }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Downtime Hours -->
+    <div
+      class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+    >
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-4">
+            <h2 class="mb-1">{{ trans('Downtime hours') }}</h2>
+            <p class="text-black-50">{{ trans('Downtime hours description') }}</p>
+          </div>
+          <div
+            class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+          >
+            <div class="form-group">
+              <div class="custom-control custom-control-block custom-switch">
+                <label for="enable_downtime">
+                  <span class="custom-control-text">{{ trans('Enable downtime hours') }}?</span>
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="enable_downtime"
+                    v-model="downtimeHours.enable"
+                  />
+                  <span class="custom-control-label"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="mt-5" :class="{'disabled-setting': !downtimeHours.enable}">
+              <div
+                class="align-items-baseline content-action-hover d-lg-flex mb-4 mb-lg-1"
+                v-for="item in downtimeHours.days"
+                :key="item.id"
+              >
+                <div
+                  class="custom-checkbox custom-control custom-control-md d-lg-inline mb-3 mb-lg-0 mr-lg-4"
+                >
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    :id="item.id"
+                    v-model="item.isClosed"
+                  />
+                  <label
+                    class="align-items-start label-day custom-control-label"
+                    :for="item.id"
+                  >{{ trans(item.text) }}</label>
+                </div>
+
+                <div class="d-inline-block mr-4">
+                  <label class="sr-only" :for="item.id + '_start_time'">Start time</label>
+                  <div class="input-group input-group-sm input-group-time">
+                    <input
+                      type="text"
+                      class="form-control"
+                      :id="item.id + '_start_time'"
+                      :name="item.id + '_start_time'"
+                      :aria-label="item.text + ' start time'"
+                      :aria-describedby="item.id + '-start-time-icon'"
+                      v-model="item.start"
+                      :disabled="!item.isClosed"
+                    />
+                    <div class="input-group-append">
+                      <span class="input-group-text" :id="item.id + '-start-time-icon'">
+                        <i class="fe fe-clock"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="d-inline-block mr-4">
+                  <label class="sr-only" :for="item.id + '_end_time'">Start time</label>
+                  <div class="input-group input-group-sm input-group-time">
+                    <input
+                      type="text"
+                      class="form-control"
+                      :id="item.id + '_end_time'"
+                      :name="item.id + '_end_time'"
+                      :aria-label="item.text + ' end time'"
+                      :aria-describedby="item.id + '-end-time-icon'"
+                      v-model="item.end"
+                      :disabled="!item.isClosed"
+                    />
+                    <div class="input-group-append">
+                      <span class="input-group-text" :id="item.id + '-end-time-icon'">
+                        <i class="fe fe-clock"></i>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <button class="action btn btn-link pl-0 pl-lg-3 text-decoration-underline">
+                  <i class="fe fe-copy"></i>
+                  {{ trans('Copy to all') }}
                 </button>
               </div>
             </div>
@@ -111,11 +209,8 @@
       <div class="card-body">
         <div class="row">
           <div class="col-xl-4">
-            <h2 class="mb-1">Notifications</h2>
-            <p class="text-black-50">
-              Lorem ipsum dolor sit amet, consectetur adipisicing
-              elit.
-            </p>
+            <h2 class="mb-1">{{ trans('Notifications') }}</h2>
+            <p class="text-black-50">{{ trans('Notifications description') }}</p>
           </div>
           <div
             class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
@@ -123,7 +218,7 @@
             <div class="row">
               <div class="col-md-8 col-lg-6">
                 <div class="form-group">
-                  <label for="email">E-mail</label>
+                  <label for="email">{{ trans('E-mail') }}</label>
                   <input
                     type="email"
                     class="form-control"
@@ -138,7 +233,7 @@
             <div class="row">
               <div class="col-md-8 col-lg-6">
                 <div class="form-group">
-                  <label for="period">Period</label>
+                  <label for="period">{{ trans('Period') }}</label>
                   <select
                     name="period"
                     id="period"
@@ -166,10 +261,7 @@
         <div class="row">
           <div class="col-xl-4">
             <h2 class="mb-1">PBX</h2>
-            <p class="text-black-50">
-              Lorem ipsum dolor sit amet, consectetur adipisicing
-              elit.
-            </p>
+            <p class="text-black-50">{{ trans('Choose your PBX message') }}.</p>
           </div>
           <div
             class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
@@ -183,7 +275,7 @@
                 value="predefined"
                 v-model="pbx.type"
               />
-              <label class="custom-control-label" for="predefined">Predefined</label>
+              <label class="custom-control-label" for="predefined">{{ trans('Predefined') }}</label>
             </div>
             <div class="custom-control custom-control-md custom-radio d-inline-block">
               <input
@@ -194,12 +286,12 @@
                 value="custom"
                 v-model="pbx.type"
               />
-              <label class="custom-control-label" for="custom">Custom</label>
+              <label class="custom-control-label" for="custom">{{ trans('Custom') }}</label>
             </div>
 
             <div class="mt-5">
               <fieldset class="mb-4">
-                <legend class="pl-4">Message for Business hours</legend>
+                <legend class="pl-4">{{ trans('Message for business hours') }}</legend>
                 <div v-show="pbx.type === 'predefined'">
                   <div class="custom-control custom-radio mb-3">
                     <input
@@ -300,10 +392,10 @@
 
               <fieldset class="mb-4">
                 <legend class="pl-4">
-                  Message for Downtime hours
+                  {{ trans('Message for downtime hours') }}
                   <p
                     class="mt-n2 small text-warning"
-                    v-if="businessHours.allDay"
+                    v-show="businessHours.allDay"
                   >The company is open 24/7. No need for Downtime hours message</p>
                 </legend>
 
@@ -351,7 +443,7 @@
               </fieldset>
 
               <fieldset class="mb-4">
-                <legend class="pl-4">Message for On-hold hours</legend>
+                <legend class="pl-4">{{ trans('Message for on-hold calls') }}</legend>
                 <div v-show="pbx.type === 'predefined'">
                   <div class="custom-control custom-radio mb-3">
                     <input
@@ -378,6 +470,62 @@
                   ></textarea>
                 </div>
               </fieldset>
+
+              <fieldset class="mb-4" v-show="pbx.type === 'custom'">
+                <legend class="pl-4">
+                  {{ trans('Custom extensions') }}
+                  <p
+                    class="mb-1 mt-n2 small text-muted"
+                    style
+                  >{{ trans('Custom extensions description') }}</p>
+                </legend>
+
+                <div class="pl-4">
+                  <table class="border-bottom mb-2 table table-hover table-sm">
+                    <thead>
+                      <tr>
+                        <th scope="col">{{ trans('Number') }}</th>
+                        <th scope="col">{{ trans('Name') }}</th>
+                        <th>
+                          <span class="sr-only">Action</span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="content-action-hover">
+                        <td>
+                          <input type="number" class="form-control form-control-sm w-50" />
+                        </td>
+                        <td>
+                          <input type="text" class="form-control form-control-sm" />
+                        </td>
+                        <td>
+                          <button class="action btn btn-link btn-sm mt-n1 py-0 text-danger">
+                            <i class="fe fe-minus-circle h2"></i>
+                          </button>
+                        </td>
+                      </tr>
+                      <tr class="content-action-hover">
+                        <td>
+                          <input type="number" class="form-control form-control-sm w-50" />
+                        </td>
+                        <td>
+                          <input type="text" class="form-control form-control-sm" />
+                        </td>
+                        <td>
+                          <button class="action btn btn-link btn-sm mt-n1 py-0 text-danger">
+                            <i class="fe fe-minus-circle h2"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <button class="btn btn-link text-secondary">
+                    <i class="fe fe-plus"></i>
+                    {{ trans('Add a new extension') }}
+                  </button>
+                </div>
+              </fieldset>
             </div>
           </div>
         </div>
@@ -388,12 +536,22 @@
       type="submit"
       class="btn btn-primary btn btn-primary ladda-button"
       style="zoom-out"
-    >Save setting</button>
+    >{{ trans('Save setting') }}</button>
   </div>
 </template>
 
 <script>
 export default {
+  props: {
+    periods: {
+      type: Array,
+      required: true
+    },
+    messages: {
+      type: Object,
+      required: true
+    }
+  },
   data() {
     return {
       businessHours: {
@@ -447,6 +605,60 @@ export default {
             open: null,
             close: null,
             isOpen: false
+          }
+        ]
+      },
+      downtimeHours: {
+        enable: false,
+        days: [
+          {
+            id: 'monday',
+            text: 'Mon',
+            start: null,
+            end: null,
+            isClosed: false
+          },
+          {
+            id: 'tuesday',
+            text: 'Tue',
+            start: null,
+            end: null,
+            isClosed: false
+          },
+          {
+            id: 'wednesday',
+            text: 'Wed',
+            start: null,
+            end: null,
+            isClosed: false
+          },
+          {
+            id: 'thursday',
+            text: 'Thu',
+            start: null,
+            end: null,
+            isClosed: false
+          },
+          {
+            id: 'friday',
+            text: 'Fri',
+            start: null,
+            end: null,
+            isClosed: false
+          },
+          {
+            id: 'saturday',
+            text: 'Sat',
+            start: null,
+            end: null,
+            isClosed: false
+          },
+          {
+            id: 'sunday',
+            text: 'Sun',
+            start: null,
+            end: null,
+            isClosed: false
           }
         ]
       },
