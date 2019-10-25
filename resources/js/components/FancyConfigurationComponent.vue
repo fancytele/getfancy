@@ -266,30 +266,7 @@
           <div
             class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
           >
-            <div class="custom-control custom-control-md custom-radio d-inline-block mr-5">
-              <input
-                type="radio"
-                id="predefined"
-                name="pbx_type"
-                class="custom-control-input"
-                value="predefined"
-                v-model="pbx.type"
-              />
-              <label class="custom-control-label" for="predefined">{{ trans('Predefined') }}</label>
-            </div>
-            <div class="custom-control custom-control-md custom-radio d-inline-block">
-              <input
-                type="radio"
-                id="custom"
-                name="pbx_type"
-                class="custom-control-input"
-                value="custom"
-                v-model="pbx.type"
-              />
-              <label class="custom-control-label" for="custom">{{ trans('Custom') }}</label>
-            </div>
-
-            <div class="mt-5">
+            <div>
               <fieldset class="mb-4">
                 <legend class="pl-4">{{ trans('Message for business hours') }}</legend>
                 <div v-show="pbx.type === 'predefined'">
@@ -379,14 +356,23 @@
                       inquiries, press 0.
                     </label>
                   </div>
-                </div>
-                <div class="form-group pl-4" v-show="pbx.type === 'custom'">
-                  <textarea
-                    name="business_hours_message"
-                    id="business_hours_message"
-                    class="form-control resize-none"
-                    rows="5"
-                  ></textarea>
+                  <div class="custom-control custom-radio mb-3">
+                    <input
+                      type="radio"
+                      id="business-message-7"
+                      name="business-message"
+                      class="custom-control-input"
+                    />
+                    <label class="custom-control-label" for="business-message-7">Custom</label>
+                  </div>
+                  <div class="form-group pl-4">
+                    <textarea
+                      name="business_hours_message"
+                      id="business_hours_message"
+                      class="form-control resize-none"
+                      rows="3"
+                    ></textarea>
+                  </div>
                 </div>
               </fieldset>
 
@@ -417,7 +403,7 @@
                       <input
                         type="radio"
                         id="downtime-message-2"
-                        name="downtime-message"
+                        name="downtime-message-2"
                         class="custom-control-input"
                       />
                       <label class="custom-control-label" for="downtime-message-2">
@@ -429,15 +415,23 @@
                         to ***. Thank you and goodbye for now!
                       </label>
                     </div>
-                  </div>
-
-                  <div class="form-group pl-4" v-show="pbx.type === 'custom'">
-                    <textarea
-                      name="business_hours_message"
-                      id="business_hours_message"
-                      class="form-control resize-none"
-                      rows="5"
-                    ></textarea>
+                    <div class="custom-control custom-radio mb-3">
+                      <input
+                        type="radio"
+                        id="downtime-message-custom"
+                        name="downtime-message-custom"
+                        class="custom-control-input"
+                      />
+                      <label class="custom-control-label" for="downtime-message-custom">Custom</label>
+                    </div>
+                    <div class="form-group">
+                      <textarea
+                        name="downtime-message"
+                        id="downtime-message"
+                        class="form-control resize-none"
+                        rows="3"
+                      ></textarea>
+                    </div>
                   </div>
                 </div>
               </fieldset>
@@ -449,7 +443,7 @@
                     <input
                       type="radio"
                       id="on-hold-message-1"
-                      name="on-hold-message"
+                      name="on-hold-message-1"
                       class="custom-control-input"
                     />
                     <label class="custom-control-label" for="on-hold-message-1">
@@ -460,72 +454,153 @@
                       Thank you for calling and talk to you later!
                     </label>
                   </div>
-                </div>
-                <div class="form-group pl-4" v-show="pbx.type === 'custom'">
-                  <textarea
-                    name="business_hours_message"
-                    id="business_hours_message"
-                    class="form-control resize-none"
-                    rows="5"
-                  ></textarea>
-                </div>
-              </fieldset>
-
-              <fieldset class="mb-4" v-show="pbx.type === 'custom'">
-                <legend class="pl-4">
-                  {{ trans('Custom extensions') }}
-                  <p
-                    class="mb-1 mt-n2 small text-muted"
-                    style
-                  >{{ trans('Custom extensions description') }}</p>
-                </legend>
-
-                <div class="pl-4">
-                  <table class="border-bottom mb-2 table table-hover table-sm">
-                    <thead>
-                      <tr>
-                        <th scope="col">{{ trans('Number') }}</th>
-                        <th scope="col">{{ trans('Name') }}</th>
-                        <th>
-                          <span class="sr-only">Action</span>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr class="content-action-hover">
-                        <td>
-                          <input type="number" class="form-control form-control-sm w-50" />
-                        </td>
-                        <td>
-                          <input type="text" class="form-control form-control-sm" />
-                        </td>
-                        <td>
-                          <button class="action btn btn-link btn-sm mt-n1 py-0 text-danger">
-                            <i class="fe fe-minus-circle h2"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr class="content-action-hover">
-                        <td>
-                          <input type="number" class="form-control form-control-sm w-50" />
-                        </td>
-                        <td>
-                          <input type="text" class="form-control form-control-sm" />
-                        </td>
-                        <td>
-                          <button class="action btn btn-link btn-sm mt-n1 py-0 text-danger">
-                            <i class="fe fe-minus-circle h2"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                  <button class="btn btn-link text-secondary">
-                    <i class="fe fe-plus"></i>
-                    {{ trans('Add a new extension') }}
-                  </button>
+                  <div class="custom-control custom-radio mb-3">
+                    <input
+                      type="radio"
+                      id="on-hold-message-custom"
+                      name="on-hold-message-custom"
+                      class="custom-control-input"
+                    />
+                    <label class="custom-control-label" for="on-hold-message-custom">Custom</label>
+                  </div>
+                  <div class="form-group pl-4">
+                    <textarea
+                      name="bon-hold-message"
+                      id="on-hold-message"
+                      class="form-control resize-none"
+                      rows="5"
+                    ></textarea>
+                  </div>
                 </div>
               </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Extensions -->
+    <div
+      class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+    >
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-4">
+            <h2 class="mb-1">{{ trans('Custom extensions') }}</h2>
+            <p class="text-black-50">{{ trans('Custom extensions description') }}.</p>
+          </div>
+          <div
+            class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+          >
+            <div class="row">
+              <div class="col-lg-10">
+                <table class="border-bottom mb-2 table table-hover table-sm">
+                  <thead>
+                    <tr>
+                      <th scope="col">{{ trans('Number') }}</th>
+                      <th scope="col">{{ trans('Name') }}</th>
+                      <th>
+                        <span class="sr-only">Action</span>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="content-action-hover" v-for="item in extensions" :key="item.id">
+                      <td>
+                        <input
+                          type="number"
+                          class="form-control form-control-sm w-75"
+                          min="0"
+                          v-model="item.number"
+                        />
+                      </td>
+                      <td>
+                        <input type="text" class="form-control form-control-sm" v-model="item.name" />
+                      </td>
+                      <td>
+                        <button
+                          class="action btn btn-link btn-sm mt-n1 py-0 text-danger"
+                          @click="deleteExtension(item.id)"
+                        >
+                          <i class="fe fe-minus-circle h2"></i>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <button class="btn btn-link text-secondary" @click="addExtension()">
+                  <i class="fe fe-plus"></i>
+                  {{ trans('Add a new extension') }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Audio -->
+    <div
+      class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+    >
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-4">
+            <h2 class="mb-1">{{ trans('Audio') }}</h2>
+            <p class="text-black-50">{{ trans('Audio description') }}.</p>
+          </div>
+          <div
+            class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+          >
+            <!-- <div
+              class="custom-checkbox custom-control custom-control-md"
+            >
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="professinal_greeting"
+                checked
+                disabled
+              />
+              <label
+                class="align-items-start custom-control-label text-body"
+                for="professinal_greeting"
+              >{{ trans('Professional Greeting/Custom Recordings') }}</label>
+            </div> -->
+            <div>
+              <div class="custom-control custom-control-md custom-radio d-inline-block mr-6">
+                <input
+                  type="radio"
+                  id="predefined_audio"
+                  name="type_audio"
+                  class="custom-control-input"
+                />
+                <label for="predefined_audio" class="custom-control-label">Predefined</label>
+              </div>
+              <div class="custom-control custom-control-md custom-radio d-inline-block">
+                <input
+                  type="radio"
+                  id="custom_audio"
+                  name="type_audio"
+                  class="custom-control-input"
+                />
+                <label for="custom_audio" class="custom-control-label">Custom</label>
+              </div>
+            </div>
+
+            <h4 class="my-4">OR</h4>
+
+            <div class="custom-checkbox custom-control custom-control-md">
+              <input type="checkbox" class="custom-control-input" id="professinal_greeting" />
+              <label
+                class="align-items-start custom-control-label text-body"
+                for="professinal_greeting"
+              >
+                {{ trans('Buy Professional Greeting/Custom Recordings') }}
+                <span
+                  class="form-text text-muted"
+                >$ 8.00 (will be charge next month)</span>
+              </label>
             </div>
           </div>
         </div>
@@ -668,8 +743,24 @@ export default {
       },
       pbx: {
         type: 'predefined'
-      }
+      },
+      extensions: []
     };
+  },
+  methods: {
+    addExtension() {
+      const extension = {
+        id: new Date().valueOf(),
+        number: null,
+        name: ''
+      };
+
+      this.extensions.push(extension);
+    },
+    deleteExtension(id) {
+      const index = this.extensions.findIndex(el => el.id === id);
+      this.extensions.splice(index, 1);
+    }
   }
 };
 </script>

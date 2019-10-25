@@ -4491,6 +4491,81 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     periods: {
@@ -4602,8 +4677,25 @@ __webpack_require__.r(__webpack_exports__);
       },
       pbx: {
         type: 'predefined'
-      }
+      },
+      extensions: []
     };
+  },
+  methods: {
+    addExtension: function addExtension() {
+      var extension = {
+        id: new Date().valueOf(),
+        number: null,
+        name: ''
+      };
+      this.extensions.push(extension);
+    },
+    deleteExtension: function deleteExtension(id) {
+      var index = this.extensions.findIndex(function (el) {
+        return el.id === id;
+      });
+      this.extensions.splice(index, 1);
+    }
   }
 });
 
@@ -68461,91 +68553,7 @@ var render = function() {
                   "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
               },
               [
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "custom-control custom-control-md custom-radio d-inline-block mr-5"
-                  },
-                  [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.pbx.type,
-                          expression: "pbx.type"
-                        }
-                      ],
-                      staticClass: "custom-control-input",
-                      attrs: {
-                        type: "radio",
-                        id: "predefined",
-                        name: "pbx_type",
-                        value: "predefined"
-                      },
-                      domProps: { checked: _vm._q(_vm.pbx.type, "predefined") },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.pbx, "type", "predefined")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "custom-control-label",
-                        attrs: { for: "predefined" }
-                      },
-                      [_vm._v(_vm._s(_vm.trans("Predefined")))]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "custom-control custom-control-md custom-radio d-inline-block"
-                  },
-                  [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.pbx.type,
-                          expression: "pbx.type"
-                        }
-                      ],
-                      staticClass: "custom-control-input",
-                      attrs: {
-                        type: "radio",
-                        id: "custom",
-                        name: "pbx_type",
-                        value: "custom"
-                      },
-                      domProps: { checked: _vm._q(_vm.pbx.type, "custom") },
-                      on: {
-                        change: function($event) {
-                          return _vm.$set(_vm.pbx, "type", "custom")
-                        }
-                      }
-                    }),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      {
-                        staticClass: "custom-control-label",
-                        attrs: { for: "custom" }
-                      },
-                      [_vm._v(_vm._s(_vm.trans("Custom")))]
-                    )
-                  ]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "mt-5" }, [
+                _c("div", [
                   _c("fieldset", { staticClass: "mb-4" }, [
                     _c("legend", { staticClass: "pl-4" }, [
                       _vm._v(_vm._s(_vm.trans("Message for business hours")))
@@ -68574,32 +68582,11 @@ var render = function() {
                         _vm._v(" "),
                         _vm._m(4),
                         _vm._v(" "),
-                        _vm._m(5)
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.pbx.type === "custom",
-                            expression: "pbx.type === 'custom'"
-                          }
-                        ],
-                        staticClass: "form-group pl-4"
-                      },
-                      [
-                        _c("textarea", {
-                          staticClass: "form-control resize-none",
-                          attrs: {
-                            name: "business_hours_message",
-                            id: "business_hours_message",
-                            rows: "5"
-                          }
-                        })
+                        _vm._m(5),
+                        _vm._v(" "),
+                        _vm._m(6),
+                        _vm._v(" "),
+                        _vm._m(7)
                       ]
                     )
                   ]),
@@ -68650,31 +68637,14 @@ var render = function() {
                               }
                             ]
                           },
-                          [_vm._m(6), _vm._v(" "), _vm._m(7)]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.pbx.type === "custom",
-                                expression: "pbx.type === 'custom'"
-                              }
-                            ],
-                            staticClass: "form-group pl-4"
-                          },
                           [
-                            _c("textarea", {
-                              staticClass: "form-control resize-none",
-                              attrs: {
-                                name: "business_hours_message",
-                                id: "business_hours_message",
-                                rows: "5"
-                              }
-                            })
+                            _vm._m(8),
+                            _vm._v(" "),
+                            _vm._m(9),
+                            _vm._v(" "),
+                            _vm._m(10),
+                            _vm._v(" "),
+                            _vm._m(11)
                           ]
                         )
                       ]
@@ -68698,108 +68668,260 @@ var render = function() {
                           }
                         ]
                       },
-                      [_vm._m(8)]
+                      [
+                        _vm._m(12),
+                        _vm._v(" "),
+                        _vm._m(13),
+                        _vm._v(" "),
+                        _vm._m(14)
+                      ]
+                    )
+                  ])
+                ])
+              ]
+            )
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+      },
+      [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-xl-4" }, [
+              _c("h2", { staticClass: "mb-1" }, [
+                _vm._v(_vm._s(_vm.trans("Custom extensions")))
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-black-50" }, [
+                _vm._v(_vm._s(_vm.trans("Custom extensions description")) + ".")
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+              },
+              [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-lg-10" }, [
+                    _c(
+                      "table",
+                      {
+                        staticClass:
+                          "border-bottom mb-2 table table-hover table-sm"
+                      },
+                      [
+                        _c("thead", [
+                          _c("tr", [
+                            _c("th", { attrs: { scope: "col" } }, [
+                              _vm._v(_vm._s(_vm.trans("Number")))
+                            ]),
+                            _vm._v(" "),
+                            _c("th", { attrs: { scope: "col" } }, [
+                              _vm._v(_vm._s(_vm.trans("Name")))
+                            ]),
+                            _vm._v(" "),
+                            _vm._m(15)
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "tbody",
+                          _vm._l(_vm.extensions, function(item) {
+                            return _c(
+                              "tr",
+                              {
+                                key: item.id,
+                                staticClass: "content-action-hover"
+                              },
+                              [
+                                _c("td", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: item.number,
+                                        expression: "item.number"
+                                      }
+                                    ],
+                                    staticClass:
+                                      "form-control form-control-sm w-75",
+                                    attrs: { type: "number", min: "0" },
+                                    domProps: { value: item.number },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          item,
+                                          "number",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c("input", {
+                                    directives: [
+                                      {
+                                        name: "model",
+                                        rawName: "v-model",
+                                        value: item.name,
+                                        expression: "item.name"
+                                      }
+                                    ],
+                                    staticClass: "form-control form-control-sm",
+                                    attrs: { type: "text" },
+                                    domProps: { value: item.name },
+                                    on: {
+                                      input: function($event) {
+                                        if ($event.target.composing) {
+                                          return
+                                        }
+                                        _vm.$set(
+                                          item,
+                                          "name",
+                                          $event.target.value
+                                        )
+                                      }
+                                    }
+                                  })
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "action btn btn-link btn-sm mt-n1 py-0 text-danger",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.deleteExtension(item.id)
+                                        }
+                                      }
+                                    },
+                                    [
+                                      _c("i", {
+                                        staticClass: "fe fe-minus-circle h2"
+                                      })
+                                    ]
+                                  )
+                                ])
+                              ]
+                            )
+                          }),
+                          0
+                        )
+                      ]
                     ),
                     _vm._v(" "),
                     _c(
-                      "div",
+                      "button",
                       {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.pbx.type === "custom",
-                            expression: "pbx.type === 'custom'"
+                        staticClass: "btn btn-link text-secondary",
+                        on: {
+                          click: function($event) {
+                            return _vm.addExtension()
                           }
-                        ],
-                        staticClass: "form-group pl-4"
+                        }
                       },
                       [
-                        _c("textarea", {
-                          staticClass: "form-control resize-none",
-                          attrs: {
-                            name: "business_hours_message",
-                            id: "business_hours_message",
-                            rows: "5"
-                          }
-                        })
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "fieldset",
-                    {
-                      directives: [
-                        {
-                          name: "show",
-                          rawName: "v-show",
-                          value: _vm.pbx.type === "custom",
-                          expression: "pbx.type === 'custom'"
-                        }
-                      ],
-                      staticClass: "mb-4"
-                    },
-                    [
-                      _c("legend", { staticClass: "pl-4" }, [
+                        _c("i", { staticClass: "fe fe-plus" }),
                         _vm._v(
                           "\n                " +
-                            _vm._s(_vm.trans("Custom extensions")) +
-                            "\n                "
-                        ),
-                        _c(
-                          "p",
-                          { staticClass: "mb-1 mt-n2 small text-muted" },
-                          [
-                            _vm._v(
-                              _vm._s(_vm.trans("Custom extensions description"))
-                            )
-                          ]
+                            _vm._s(_vm.trans("Add a new extension")) +
+                            "\n              "
                         )
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "pl-4" }, [
-                        _c(
-                          "table",
-                          {
-                            staticClass:
-                              "border-bottom mb-2 table table-hover table-sm"
-                          },
-                          [
-                            _c("thead", [
-                              _c("tr", [
-                                _c("th", { attrs: { scope: "col" } }, [
-                                  _vm._v(_vm._s(_vm.trans("Number")))
-                                ]),
-                                _vm._v(" "),
-                                _c("th", { attrs: { scope: "col" } }, [
-                                  _vm._v(_vm._s(_vm.trans("Name")))
-                                ]),
-                                _vm._v(" "),
-                                _vm._m(9)
-                              ])
-                            ]),
-                            _vm._v(" "),
-                            _vm._m(10)
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          { staticClass: "btn btn-link text-secondary" },
-                          [
-                            _c("i", { staticClass: "fe fe-plus" }),
-                            _vm._v(
-                              "\n                  " +
-                                _vm._s(_vm.trans("Add a new extension")) +
-                                "\n                "
-                            )
-                          ]
-                        )
-                      ])
-                    ]
-                  )
+                      ]
+                    )
+                  ])
                 ])
+              ]
+            )
+          ])
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass:
+          "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+      },
+      [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-xl-4" }, [
+              _c("h2", { staticClass: "mb-1" }, [
+                _vm._v(_vm._s(_vm.trans("Audio")))
+              ]),
+              _vm._v(" "),
+              _c("p", { staticClass: "text-black-50" }, [
+                _vm._v(_vm._s(_vm.trans("Audio description")) + ".")
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass:
+                  "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+              },
+              [
+                _vm._m(16),
+                _vm._v(" "),
+                _c("h4", { staticClass: "my-4" }, [_vm._v("OR")]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "custom-checkbox custom-control custom-control-md"
+                  },
+                  [
+                    _c("input", {
+                      staticClass: "custom-control-input",
+                      attrs: { type: "checkbox", id: "professinal_greeting" }
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "label",
+                      {
+                        staticClass:
+                          "align-items-start custom-control-label text-body",
+                        attrs: { for: "professinal_greeting" }
+                      },
+                      [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(
+                              _vm.trans(
+                                "Buy Professional Greeting/Custom Recordings"
+                              )
+                            ) +
+                            "\n              "
+                        ),
+                        _c("span", { staticClass: "form-text text-muted" }, [
+                          _vm._v("$ 8.00 (will be charge next month)")
+                        ])
+                      ]
+                    )
+                  ]
+                )
               ]
             )
           ])
@@ -68996,6 +69118,45 @@ var staticRenderFns = [
         staticClass: "custom-control-input",
         attrs: {
           type: "radio",
+          id: "business-message-7",
+          name: "business-message"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "custom-control-label",
+          attrs: { for: "business-message-7" }
+        },
+        [_vm._v("Custom")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group pl-4" }, [
+      _c("textarea", {
+        staticClass: "form-control resize-none",
+        attrs: {
+          name: "business_hours_message",
+          id: "business_hours_message",
+          rows: "3"
+        }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "custom-control custom-radio mb-3" }, [
+      _c("input", {
+        staticClass: "custom-control-input",
+        attrs: {
+          type: "radio",
           id: "downtime-message-1",
           name: "downtime-message"
         }
@@ -69025,7 +69186,7 @@ var staticRenderFns = [
         attrs: {
           type: "radio",
           id: "downtime-message-2",
-          name: "downtime-message"
+          name: "downtime-message-2"
         }
       }),
       _vm._v(" "),
@@ -69052,8 +69213,43 @@ var staticRenderFns = [
         staticClass: "custom-control-input",
         attrs: {
           type: "radio",
+          id: "downtime-message-custom",
+          name: "downtime-message-custom"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "custom-control-label",
+          attrs: { for: "downtime-message-custom" }
+        },
+        [_vm._v("Custom")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("textarea", {
+        staticClass: "form-control resize-none",
+        attrs: { name: "downtime-message", id: "downtime-message", rows: "3" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "custom-control custom-radio mb-3" }, [
+      _c("input", {
+        staticClass: "custom-control-input",
+        attrs: {
+          type: "radio",
           id: "on-hold-message-1",
-          name: "on-hold-message"
+          name: "on-hold-message-1"
         }
       }),
       _vm._v(" "),
@@ -69075,6 +69271,41 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "custom-control custom-radio mb-3" }, [
+      _c("input", {
+        staticClass: "custom-control-input",
+        attrs: {
+          type: "radio",
+          id: "on-hold-message-custom",
+          name: "on-hold-message-custom"
+        }
+      }),
+      _vm._v(" "),
+      _c(
+        "label",
+        {
+          staticClass: "custom-control-label",
+          attrs: { for: "on-hold-message-custom" }
+        },
+        [_vm._v("Custom")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group pl-4" }, [
+      _c("textarea", {
+        staticClass: "form-control resize-none",
+        attrs: { name: "bon-hold-message", id: "on-hold-message", rows: "5" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c("th", [
       _c("span", { staticClass: "sr-only" }, [_vm._v("Action")])
     ])
@@ -69083,58 +69314,52 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("tbody", [
-      _c("tr", { staticClass: "content-action-hover" }, [
-        _c("td", [
+    return _c("div", [
+      _c(
+        "div",
+        {
+          staticClass:
+            "custom-control custom-control-md custom-radio d-inline-block mr-6"
+        },
+        [
           _c("input", {
-            staticClass: "form-control form-control-sm w-50",
-            attrs: { type: "number" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("td", [
-          _c("input", {
-            staticClass: "form-control form-control-sm",
-            attrs: { type: "text" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("td", [
+            staticClass: "custom-control-input",
+            attrs: { type: "radio", id: "predefined_audio", name: "type_audio" }
+          }),
+          _vm._v(" "),
           _c(
-            "button",
+            "label",
             {
-              staticClass: "action btn btn-link btn-sm mt-n1 py-0 text-danger"
+              staticClass: "custom-control-label",
+              attrs: { for: "predefined_audio" }
             },
-            [_c("i", { staticClass: "fe fe-minus-circle h2" })]
+            [_vm._v("Predefined")]
           )
-        ])
-      ]),
+        ]
+      ),
       _vm._v(" "),
-      _c("tr", { staticClass: "content-action-hover" }, [
-        _c("td", [
+      _c(
+        "div",
+        {
+          staticClass:
+            "custom-control custom-control-md custom-radio d-inline-block"
+        },
+        [
           _c("input", {
-            staticClass: "form-control form-control-sm w-50",
-            attrs: { type: "number" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("td", [
-          _c("input", {
-            staticClass: "form-control form-control-sm",
-            attrs: { type: "text" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("td", [
+            staticClass: "custom-control-input",
+            attrs: { type: "radio", id: "custom_audio", name: "type_audio" }
+          }),
+          _vm._v(" "),
           _c(
-            "button",
+            "label",
             {
-              staticClass: "action btn btn-link btn-sm mt-n1 py-0 text-danger"
+              staticClass: "custom-control-label",
+              attrs: { for: "custom_audio" }
             },
-            [_c("i", { staticClass: "fe fe-minus-circle h2" })]
+            [_vm._v("Custom")]
           )
-        ])
-      ])
+        ]
+      )
     ])
   }
 ]

@@ -30,7 +30,7 @@ class Product extends Model
      */
     public function getRenewAttribute()
     {
-        return $this->attributes['renew'] = ProductRenews::getValue($this->name);
+        return $this->attributes['renew'] = ProductRenews::getValue(strtoupper($this->name));
     }
 
     /**
