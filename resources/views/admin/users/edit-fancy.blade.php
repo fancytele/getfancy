@@ -2,7 +2,7 @@
 
 @section('page-subtitle', __('Edit User'))
 
-@section('page-title', __('Fancy configuration'))
+@section('page-title', __('Fancy Setting'))
 
 @push('head-scripts')
 <script src="{{ asset('js/lang.js') }}" defer></script>
@@ -16,7 +16,8 @@
     </a>
 
     <fancy-configuration-component :periods='@json($notification_period)'
-                                   :messages='@json($messages)'>
+                                   :messages='@json($messages)'
+                                   :url-action="'{{ route('admin.users.update_fancy', $user->id) }}'">
     </fancy-configuration-component>
 </div>
 @endsection

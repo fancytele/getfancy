@@ -40,6 +40,7 @@ Route::prefix('admin')->group(function () {
     Route::post('users/{user}/reset_password', 'Admin\Users\UserController@resetPassword')->name('admin.users.reset_password');
     Route::post('users/{user}/restore', 'Admin\Users\UserController@restore')->name('admin.users.restore');
     Route::get('users/{user}/edit/fancy', 'Admin\Users\UserController@editFancy')->name('admin.users.edit_fancy');
+    Route::put('users/{user}/update/fancy', 'Admin\Users\UserController@updateFancy')->name('admin.users.update_fancy');
     Route::resource('users', 'Admin\Users\UserController', ['as' => 'admin'])->except(['show']);
 
     // Agents Management
