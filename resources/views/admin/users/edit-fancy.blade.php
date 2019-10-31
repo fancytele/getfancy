@@ -15,9 +15,9 @@
         @lang('Return to list')
     </a>
 
-    <fancy-configuration-component :periods='@json($notification_period)'
+    <fancy-setting-component :periods='@json($notification_period)'
                                    :messages='@json($messages)'
                                    :url-action="'{{ route('admin.users.update_fancy', $user->id) }}'">
-    </fancy-configuration-component>
+    </fancy-setting-component>
 </div>
 @endsection

@@ -22,4 +22,12 @@ class FancyNumber extends Model
         'did_reference',
         'did_status'
     ];
+
+    /**
+     * Get the settings for the Fancy number.
+     */
+    public function settings()
+    {
+        return $this->hasMany(FancySetting::class);
+    }
 }

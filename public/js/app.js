@@ -3940,15 +3940,31 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FancyConfigurationComponent.vue?vue&type=script&lang=js&":
-/*!**************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FancyConfigurationComponent.vue?vue&type=script&lang=js& ***!
-  \**************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FancySettingComponent.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FancySettingComponent.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4552,6 +4568,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       isProcessing: false,
+      laddaButton: null,
       settings: {
         notification: {
           email: '',
@@ -4566,7 +4583,10 @@ __webpack_require__.r(__webpack_exports__);
           onholdCustom: ''
         },
         extensions: [],
-        audio_type: 'predefined'
+        audio: {
+          type: 'predefined',
+          buy_professional: false
+        }
       }
     };
   },
@@ -4585,28 +4605,34 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.settings.extensions.splice(index, 1);
     },
-    getPayload: function getPayload() {
+    getSettingPayload: function getSettingPayload() {
       var payload = {
         notification: this.settings.notification,
-        audio_type: this.settings.audio_type
+        audio_type: this.settings.audio.type
       }; // Business Hours
 
       if (this.businessHours.allDay || this.businessHours.days.filter(function (el) {
         return el.isOpen;
       }).length > 0) {
-        payload.businessHours = this.businessHours;
+        payload.business_hours = {
+          all_day: this.businessHours.allDay,
+          days: this.businessHours.days
+        };
       } // Downtime Hours
 
 
       if (!this.businessHours.allDay && this.downtimeHours.enable && this.downtimeHours.days.filter(function (el) {
         return el.isClosed;
       }).length > 0) {
-        payload.downtimeHours = this.downtimeHours;
+        payload.downtime_hours = {
+          all_day: this.downtimeHours.allDay,
+          days: this.downtimeHours.days
+        };
       } // Messages
 
 
       if (this.settings.messages.business || this.settings.messages.businessCustom) {
-        payload.bussines = {
+        payload.business = {
           id: this.settings.messages.business,
           text: this.settings.messages.businessCustom
         };
@@ -4628,7 +4654,16 @@ __webpack_require__.r(__webpack_exports__);
 
 
       if (this.settings.extensions.length > 0) {
-        payload.extensions = this.settings.extensions;
+        payload.extensions = {
+          data: this.settings.extensions.filters(function (el) {
+            return el.number && el.name;
+          })
+        };
+      } // Audio
+
+
+      if (this.hasProfessionalRecording || this.settings.audio.buy_professional) {
+        payload.audio_type = 'professional';
       }
 
       console.log(payload);
@@ -4642,15 +4677,22 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.isProcessing = true;
-      axios.put(this.urlAction, this.getPayload()).then(function (response) {
+      this.laddaButton.start();
+      axios.put(this.urlAction, this.getSettingPayload()).then(function (response) {
         console.log(response.data);
         _this.isProcessing = false;
+
+        _this.laddaButton.stop();
       })["catch"](function (error) {
         console.error(error);
-      }).then(function () {
         _this.isProcessing = false;
+
+        _this.laddaButton.stop();
       });
     }
+  },
+  mounted: function mounted() {
+    this.laddaButton = Ladda.create(document.querySelector('#submit-fancy-setting'));
   }
 });
 
@@ -67687,10 +67729,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FancyConfigurationComponent.vue?vue&type=template&id=271e73b5&":
-/*!******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FancyConfigurationComponent.vue?vue&type=template&id=271e73b5& ***!
-  \******************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FancySettingComponent.vue?vue&type=template&id=15450d1b&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/FancySettingComponent.vue?vue&type=template&id=15450d1b& ***!
+  \************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -69479,12 +69521,73 @@ var render = function() {
                           ]
                         )
                       : _c("div", [
-                          !_vm.hasProfessionalRecording
-                            ? _c(
+                          _c(
+                            "div",
+                            {
+                              class: {
+                                "disabled-setting":
+                                  _vm.settings.audio.buy_professional
+                              }
+                            },
+                            [
+                              !_vm.hasProfessionalRecording
+                                ? _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "custom-control custom-control-md custom-radio d-inline-block mr-6"
+                                    },
+                                    [
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.settings.audio.type,
+                                            expression: "settings.audio.type"
+                                          }
+                                        ],
+                                        staticClass: "custom-control-input",
+                                        attrs: {
+                                          type: "radio",
+                                          id: "predefined_audio",
+                                          name: "type_audio",
+                                          value: "predefined"
+                                        },
+                                        domProps: {
+                                          checked: _vm._q(
+                                            _vm.settings.audio.type,
+                                            "predefined"
+                                          )
+                                        },
+                                        on: {
+                                          change: function($event) {
+                                            return _vm.$set(
+                                              _vm.settings.audio,
+                                              "type",
+                                              "predefined"
+                                            )
+                                          }
+                                        }
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "custom-control-label",
+                                          attrs: { for: "predefined_audio" }
+                                        },
+                                        [_vm._v("Predefined")]
+                                      )
+                                    ]
+                                  )
+                                : _vm._e(),
+                              _vm._v(" "),
+                              _c(
                                 "div",
                                 {
                                   staticClass:
-                                    "custom-control custom-control-md custom-radio d-inline-block mr-6"
+                                    "custom-control custom-control-md custom-radio d-inline-block"
                                 },
                                 [
                                   _c("input", {
@@ -69492,29 +69595,29 @@ var render = function() {
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.settings.audio_type,
-                                        expression: "settings.audio_type"
+                                        value: _vm.settings.audio.type,
+                                        expression: "settings.audio.type"
                                       }
                                     ],
                                     staticClass: "custom-control-input",
                                     attrs: {
                                       type: "radio",
-                                      id: "predefined_audio",
+                                      id: "custom_audio",
                                       name: "type_audio",
-                                      value: "predefined"
+                                      value: "custom"
                                     },
                                     domProps: {
                                       checked: _vm._q(
-                                        _vm.settings.audio_type,
-                                        "predefined"
+                                        _vm.settings.audio.type,
+                                        "custom"
                                       )
                                     },
                                     on: {
                                       change: function($event) {
                                         return _vm.$set(
-                                          _vm.settings,
-                                          "audio_type",
-                                          "predefined"
+                                          _vm.settings.audio,
+                                          "type",
+                                          "custom"
                                         )
                                       }
                                     }
@@ -69524,19 +69627,22 @@ var render = function() {
                                     "label",
                                     {
                                       staticClass: "custom-control-label",
-                                      attrs: { for: "predefined_audio" }
+                                      attrs: { for: "custom_audio" }
                                     },
-                                    [_vm._v("Predefined")]
+                                    [_vm._v("Custom")]
                                   )
                                 ]
-                              )
-                            : _vm._e(),
+                              ),
+                              _vm._v(" "),
+                              _c("h4", { staticClass: "my-4" }, [_vm._v("OR")])
+                            ]
+                          ),
                           _vm._v(" "),
                           _c(
                             "div",
                             {
                               staticClass:
-                                "custom-control custom-control-md custom-radio d-inline-block"
+                                "custom-checkbox custom-control custom-control-md"
                             },
                             [
                               _c("input", {
@@ -69544,30 +69650,59 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.settings.audio_type,
-                                    expression: "settings.audio_type"
+                                    value: _vm.settings.audio.buy_professional,
+                                    expression:
+                                      "settings.audio.buy_professional"
                                   }
                                 ],
                                 staticClass: "custom-control-input",
                                 attrs: {
-                                  type: "radio",
-                                  id: "custom_audio",
-                                  name: "type_audio",
-                                  value: "custom"
+                                  type: "checkbox",
+                                  id: "buy_professional_greeting"
                                 },
                                 domProps: {
-                                  checked: _vm._q(
-                                    _vm.settings.audio_type,
-                                    "custom"
+                                  checked: Array.isArray(
+                                    _vm.settings.audio.buy_professional
                                   )
+                                    ? _vm._i(
+                                        _vm.settings.audio.buy_professional,
+                                        null
+                                      ) > -1
+                                    : _vm.settings.audio.buy_professional
                                 },
                                 on: {
                                   change: function($event) {
-                                    return _vm.$set(
-                                      _vm.settings,
-                                      "audio_type",
-                                      "custom"
-                                    )
+                                    var $$a =
+                                        _vm.settings.audio.buy_professional,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = null,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          _vm.$set(
+                                            _vm.settings.audio,
+                                            "buy_professional",
+                                            $$a.concat([$$v])
+                                          )
+                                      } else {
+                                        $$i > -1 &&
+                                          _vm.$set(
+                                            _vm.settings.audio,
+                                            "buy_professional",
+                                            $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1))
+                                          )
+                                      }
+                                    } else {
+                                      _vm.$set(
+                                        _vm.settings.audio,
+                                        "buy_professional",
+                                        $$c
+                                      )
+                                    }
                                   }
                                 }
                               }),
@@ -69575,10 +69710,30 @@ var render = function() {
                               _c(
                                 "label",
                                 {
-                                  staticClass: "custom-control-label",
-                                  attrs: { for: "custom_audio" }
+                                  staticClass:
+                                    "align-items-start custom-control-label text-body",
+                                  attrs: { for: "buy_professional_greeting" }
                                 },
-                                [_vm._v("Custom")]
+                                [
+                                  _vm._v(
+                                    "\n                                    " +
+                                      _vm._s(
+                                        _vm.trans(
+                                          "Buy Professional Greeting/Custom Recordings"
+                                        )
+                                      ) +
+                                      "\n                                    "
+                                  ),
+                                  _c(
+                                    "span",
+                                    { staticClass: "form-text text-muted" },
+                                    [
+                                      _vm._v(
+                                        "$ 8.00 (will be charge next month)"
+                                      )
+                                    ]
+                                  )
+                                ]
                               )
                             ]
                           )
@@ -69594,7 +69749,11 @@ var render = function() {
           "button",
           {
             staticClass: "btn btn-primary btn btn-primary ladda-button",
-            attrs: { type: "submit", "data-style": "zoom-out" }
+            attrs: {
+              type: "submit",
+              id: "submit-fancy-setting",
+              "data-style": "zoom-out"
+            }
           },
           [
             _vm._v(
@@ -82012,7 +82171,7 @@ var map = {
 	"./components/CheckoutComponent.vue": "./resources/js/components/CheckoutComponent.vue",
 	"./components/CountdownTimer.vue": "./resources/js/components/CountdownTimer.vue",
 	"./components/CreateUserComponent.vue": "./resources/js/components/CreateUserComponent.vue",
-	"./components/FancyConfigurationComponent.vue": "./resources/js/components/FancyConfigurationComponent.vue",
+	"./components/FancySettingComponent.vue": "./resources/js/components/FancySettingComponent.vue",
 	"./components/select2.vue": "./resources/js/components/select2.vue"
 };
 
@@ -82349,17 +82508,17 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/FancyConfigurationComponent.vue":
-/*!*****************************************************************!*\
-  !*** ./resources/js/components/FancyConfigurationComponent.vue ***!
-  \*****************************************************************/
+/***/ "./resources/js/components/FancySettingComponent.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/components/FancySettingComponent.vue ***!
+  \***********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _FancyConfigurationComponent_vue_vue_type_template_id_271e73b5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FancyConfigurationComponent.vue?vue&type=template&id=271e73b5& */ "./resources/js/components/FancyConfigurationComponent.vue?vue&type=template&id=271e73b5&");
-/* harmony import */ var _FancyConfigurationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FancyConfigurationComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/FancyConfigurationComponent.vue?vue&type=script&lang=js&");
+/* harmony import */ var _FancySettingComponent_vue_vue_type_template_id_15450d1b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./FancySettingComponent.vue?vue&type=template&id=15450d1b& */ "./resources/js/components/FancySettingComponent.vue?vue&type=template&id=15450d1b&");
+/* harmony import */ var _FancySettingComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./FancySettingComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/FancySettingComponent.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -82369,9 +82528,9 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _FancyConfigurationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _FancyConfigurationComponent_vue_vue_type_template_id_271e73b5___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _FancyConfigurationComponent_vue_vue_type_template_id_271e73b5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _FancySettingComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _FancySettingComponent_vue_vue_type_template_id_15450d1b___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _FancySettingComponent_vue_vue_type_template_id_15450d1b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
   null,
@@ -82381,38 +82540,38 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/FancyConfigurationComponent.vue"
+component.options.__file = "resources/js/components/FancySettingComponent.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/FancyConfigurationComponent.vue?vue&type=script&lang=js&":
-/*!******************************************************************************************!*\
-  !*** ./resources/js/components/FancyConfigurationComponent.vue?vue&type=script&lang=js& ***!
-  \******************************************************************************************/
+/***/ "./resources/js/components/FancySettingComponent.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/components/FancySettingComponent.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FancyConfigurationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./FancyConfigurationComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FancyConfigurationComponent.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FancyConfigurationComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FancySettingComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./FancySettingComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FancySettingComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_FancySettingComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/FancyConfigurationComponent.vue?vue&type=template&id=271e73b5&":
-/*!************************************************************************************************!*\
-  !*** ./resources/js/components/FancyConfigurationComponent.vue?vue&type=template&id=271e73b5& ***!
-  \************************************************************************************************/
+/***/ "./resources/js/components/FancySettingComponent.vue?vue&type=template&id=15450d1b&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/components/FancySettingComponent.vue?vue&type=template&id=15450d1b& ***!
+  \******************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FancyConfigurationComponent_vue_vue_type_template_id_271e73b5___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./FancyConfigurationComponent.vue?vue&type=template&id=271e73b5& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FancyConfigurationComponent.vue?vue&type=template&id=271e73b5&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FancyConfigurationComponent_vue_vue_type_template_id_271e73b5___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FancySettingComponent_vue_vue_type_template_id_15450d1b___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./FancySettingComponent.vue?vue&type=template&id=15450d1b& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/FancySettingComponent.vue?vue&type=template&id=15450d1b&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FancySettingComponent_vue_vue_type_template_id_15450d1b___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FancyConfigurationComponent_vue_vue_type_template_id_271e73b5___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_FancySettingComponent_vue_vue_type_template_id_15450d1b___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

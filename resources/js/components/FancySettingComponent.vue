@@ -441,24 +441,39 @@
                                 </label>
                             </div>
                             <div v-else>
-                                <div class="custom-control custom-control-md custom-radio d-inline-block mr-6"
-                                     v-if="!hasProfessionalRecording">
-                                    <input type="radio"
-                                           id="predefined_audio"
-                                           name="type_audio"
-                                           class="custom-control-input"
-                                           value="predefined"
-                                           v-model="settings.audio_type"/>
-                                    <label for="predefined_audio" class="custom-control-label">Predefined</label>
+                                <div :class="{'disabled-setting': settings.audio.buy_professional}">
+                                    <div class="custom-control custom-control-md custom-radio d-inline-block mr-6"
+                                         v-if="!hasProfessionalRecording">
+                                        <input type="radio"
+                                               id="predefined_audio"
+                                               name="type_audio"
+                                               class="custom-control-input"
+                                               value="predefined"
+                                               v-model="settings.audio.type"/>
+                                        <label for="predefined_audio" class="custom-control-label">Predefined</label>
+                                    </div>
+                                    <div class="custom-control custom-control-md custom-radio d-inline-block">
+                                        <input type="radio"
+                                               id="custom_audio"
+                                               name="type_audio"
+                                               value="custom"
+                                               class="custom-control-input"
+                                               v-model="settings.audio.type"/>
+                                        <label for="custom_audio" class="custom-control-label">Custom</label>
+                                    </div>
+
+                                    <h4 class="my-4">OR</h4>
                                 </div>
-                                <div class="custom-control custom-control-md custom-radio d-inline-block">
-                                    <input type="radio"
-                                           id="custom_audio"
-                                           name="type_audio"
-                                           value="custom"
-                                           class="custom-control-input"
-                                           v-model="settings.audio_type"/>
-                                    <label for="custom_audio" class="custom-control-label">Custom</label>
+
+                                <div class="custom-checkbox custom-control custom-control-md">
+                                    <input type="checkbox" class="custom-control-input"
+                                           id="buy_professional_greeting"
+                                           v-model="settings.audio.buy_professional"/>
+                                    <label class="align-items-start custom-control-label text-body"
+                                           for="buy_professional_greeting">
+                                        {{ trans('Buy Professional Greeting/Custom Recordings') }}
+                                        <span class="form-text text-muted">$ 8.00 (will be charge next month)</span>
+                                    </label>
                                 </div>
                             </div>
                         </div>
@@ -467,6 +482,7 @@
             </div>
 
             <button type="submit"
+                    id="submit-fancy-setting"
                     class="btn btn-primary btn btn-primary ladda-button"
                     data-style="zoom-out">
                 {{ trans('Save setting') }}
@@ -618,6 +634,7 @@
     data() {
       return {
         isProcessing: false,
+        laddaButton: null,
         settings: {
           notification: {
             email: '',
@@ -632,7 +649,10 @@
             onholdCustom: ''
           },
           extensions: [],
-          audio_type: 'predefined'
+          audio: {
+            type: 'predefined',
+            buy_professional: false
+          }
         }
       };
     },
@@ -650,25 +670,31 @@
         const index = this.settings.extensions.findIndex(el => el.id === id);
         this.settings.extensions.splice(index, 1);
       },
-      getPayload() {
+      getSettingPayload() {
         const payload = {
           notification: this.settings.notification,
-          audio_type: this.settings.audio_type
+          audio_type: this.settings.audio.type
         };
 
         // Business Hours
         if (this.businessHours.allDay || this.businessHours.days.filter(el => el.isOpen).length > 0) {
-          payload.businessHours = this.businessHours;
+          payload.business_hours = {
+            all_day: this.businessHours.allDay,
+            days: this.businessHours.days
+          };
         }
 
         // Downtime Hours
         if (!this.businessHours.allDay && (this.downtimeHours.enable && this.downtimeHours.days.filter(el => el.isClosed).length > 0)) {
-          payload.downtimeHours = this.downtimeHours;
+          payload.downtime_hours = {
+            all_day: this.downtimeHours.allDay,
+            days: this.downtimeHours.days
+          };
         }
 
         // Messages
         if (this.settings.messages.business || this.settings.messages.businessCustom) {
-          payload.bussines = {
+          payload.business = {
             id: this.settings.messages.business,
             text: this.settings.messages.businessCustom
           };
@@ -690,7 +716,14 @@
 
         // Extensions
         if (this.settings.extensions.length > 0) {
-          payload.extensions = this.settings.extensions;
+          payload.extensions = {
+            data: this.settings.extensions.filters(el => el.number && el.name)
+          };
+        }
+
+        // Audio
+        if (this.hasProfessionalRecording || this.settings.audio.buy_professional) {
+          payload.audio_type = 'professional';
         }
 
         console.log(payload);
@@ -702,16 +735,27 @@
         }
 
         this.isProcessing = true;
+        this.laddaButton.start();
 
-        axios.put(this.urlAction, this.getPayload()).then(response => {
-          console.log(response.data);
-          this.isProcessing = false;
-        }).catch(error => {
-          console.error(error);
-        }).then(() => {
-          this.isProcessing = false;
-        });
+        axios.put(this.urlAction, this.getSettingPayload())
+          .then(response => {
+            console.log(response.data);
+
+            this.isProcessing = false;
+            this.laddaButton.stop();
+          })
+          .catch(error => {
+            console.error(error);
+
+            this.isProcessing = false;
+            this.laddaButton.stop();
+          });
       }
+    },
+    mounted() {
+      this.laddaButton = Ladda.create(
+        document.querySelector('#submit-fancy-setting')
+      );
     }
   };
 </script>

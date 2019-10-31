@@ -3,9 +3,11 @@
 namespace App\Http\Controllers\Admin\Users;
 
 use App\Addon;
+use App\Enums\FancyAudioType;
 use App\Enums\FancyNotificationPeriod;
 use App\Enums\Role;
 use App\Enums\TicketStatus;
+use App\FancySetting;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Mail\WelcomeMail;
@@ -186,7 +188,58 @@ class UserController extends Controller
     public function updateFancy(Request $request, User $user)
     {
         $data = $request->all();
-        return response()->json($data);
+        // $fancy_number = $user->fancy_numbers()->first();
+
+        $setting = new FancySetting();
+
+        // Business Hours
+        if ($request->has('business_hours')) {
+            $setting->business_hours = $request->input('business_hours');
+        }
+
+        // Downtime Hours
+        if ($request->has('downtime_hours')) {
+            $setting->downtime_hours = $request->input('downtime_hours');
+        }
+
+        //  Notification
+        $setting->email_notification = $request->input('notification.email');
+        $setting->period_notification = $request->input('notification.period');
+
+        // Messages
+        if ($request->has('business')) {
+            //TODO: Verify each
+            $setting->business_message_id = $request->input('business.id');
+            $setting->business_custom_message = $request->input('business.text');
+        }
+
+        if ($request->has('downtime')) {
+            //TODO: Verify each
+            $setting->downtime_message_id = $request->input('downtime.id');
+            $setting->downtime_custom_message = $request->input('downtime.text');
+        }
+
+        if ($request->has('onhold')) {
+            //TODO: Verify each
+            $setting->onhold_message_id = $request->input('onhold.id');
+            $setting->onhold_custom_message = $request->input('onhold.text');
+        }
+
+        // Extensions
+        if ($request->has('extensions')) {
+            $setting->extensions = $request->input('extensions');
+        }
+
+        // Audio
+        $setting->audio_type = $request->input('audio_type');
+
+        if ($request->input('audio_type') === FancyAudioType::PROFESSIONAL) {
+            // TODO: Verify if user already bought it. If not: set payment to be executed in 30 days.
+        }
+
+        // $fancy_number->settings()->save($setting);
+
+        return response()->json($setting);
     }
 
     /**
