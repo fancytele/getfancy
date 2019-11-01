@@ -18,20 +18,18 @@ class CreateFancySettingsTable extends Migration
         Schema::create('fancy_settings', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('fancy_number_id');
-            $table->boolean('always_open')->default(false);
-            $table->boolean('enable_downtime_hours')->default(false);
             $table->json('business_hours')->nullable();
             $table->json('downtime_hours')->nullable();
             $table->json('extensions')->nullable();
             $table->string('email_notification')->nullable();
             $table->string('period_notification')->default(FancyNotificationPeriod::DAILY);
-            $table->string('pbx_type')->default(PBXType::PREDEFINED);
             $table->unsignedBigInteger('business_message_id')->nullable();
             $table->unsignedBigInteger('downtime_message_id')->nullable();
             $table->unsignedBigInteger('onhold_message_id')->nullable();
             $table->text('business_custom_message')->nullable();
             $table->text('downtime_custom_message')->nullable();
             $table->text('onhold_custom_message')->nullable();
+            $table->string('audio_type')->default(\App\Enums\FancyAudioType::PREDEFINED);
             $table->timestamps();
 
             $table->foreign('fancy_number_id')->references('id')->on('fancy_numbers');

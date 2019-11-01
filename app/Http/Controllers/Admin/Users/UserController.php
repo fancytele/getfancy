@@ -187,7 +187,6 @@ class UserController extends Controller
      */
     public function updateFancy(Request $request, User $user)
     {
-        $data = $request->all();
         // $fancy_number = $user->fancy_numbers()->first();
 
         $setting = new FancySetting();

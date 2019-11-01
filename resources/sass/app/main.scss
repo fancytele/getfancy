@@ -25,9 +25,11 @@
 @import "pages/did-settings";
 
 // Vendor Extensions
+@import "vendor_extensions/vue-timepicker";
 @import "~ladda/dist/ladda-themeless.min";
-@import "~select2/dist/css/select2.min.css";
-@import "~flatpickr/dist/flatpickr.min.css";
+@import "~select2/dist/css/select2.min";
+@import "~flatpickr/dist/flatpickr.min";
+@import '~vue2-timepicker/dist/VueTimepicker';
 
 @import "../web/vendor_extensions/stripe-element";
 @import "../../fonts/feather/feather.css";

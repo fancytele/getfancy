@@ -1,0 +1,23 @@
+.vue__time-picker input.display-time {
+  background-color: $white;
+  border-color: $border-color;
+
+  &:disabled {
+    background-color: $input-disabled-bg;
+    opacitiy: 1;
+  }
+}
+
+.input-group {
+  .vue__time-picker {
+    display: flex;
+    flex: 1 1 auto;
+    width: 1%;
+  }
+
+  .vue__time-picker input.display-time {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    width: 100%;
+  }
+}

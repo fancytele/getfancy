@@ -32,7 +32,8 @@
                                         <input type="checkbox"
                                                class="custom-control-input"
                                                :id="'business_' + item.id"
-                                               v-model="item.isOpen"/>
+                                               v-model="item.enable"
+                                               @change="toggleHour(item)"/>
                                         <label class="align-items-start label-day custom-control-label"
                                                :for="'business_' + item.id">
                                             {{ trans(item.text) }}
@@ -40,17 +41,18 @@
                                     </div>
 
                                     <div class="d-inline-block mr-4">
-                                        <label class="sr-only" :for="'business_' + item.id + '_open_time'">Start
-                                            time</label>
+                                        <label class="sr-only" :for="'business_' + item.id + '_open_time'">
+                                            Start time
+                                        </label>
                                         <div class="input-group input-group-sm input-group-time">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   :id="'business_' + item.id + '_open_time'"
-                                                   :name="'business_' + item.id + '_open_time'"
-                                                   :aria-label="'business_' + item.text + ' open time'"
-                                                   :aria-describedby="'business_' + item.id + '-open-time-icon'"
-                                                   v-model="item.open"
-                                                   :disabled="!item.isOpen"/>
+                                            <vue-timepicker input-class="form-control"
+                                                            :id="'business_' + item.id + '_open_time'"
+                                                            :name="'business_' + item.id + '_open_time'"
+                                                            :aria-label="'business_' + item.text + ' open time'"
+                                                            :aria-describedby="'business_' + item.id + '-open-time-icon'"
+                                                            v-model="item.start"
+                                                            :disabled="!item.enable"
+                                                            minute-interval="30"></vue-timepicker>
                                             <div class="input-group-append">
                                                 <span class="input-group-text"
                                                       :id="'business_' + item.id + '-open-time-icon'">
@@ -63,14 +65,14 @@
                                     <div class="d-inline-block mr-4">
                                         <label class="sr-only" :for="item.id + '_close_time'">Start time</label>
                                         <div class="input-group input-group-sm input-group-time">
-                                            <input type="text"
-                                                   class="form-control"
-                                                   :id="item.id + '_close_time'"
-                                                   :name="item.id + '_close_time'"
-                                                   :aria-label="item.text + ' close time'"
-                                                   :aria-describedby="item.id + '-close-time-icon'"
-                                                   v-model="item.close"
-                                                   :disabled="!item.isOpen"/>
+                                            <vue-timepicker input-class="form-control"
+                                                            :id="'business_' + item.id + '_close_time'"
+                                                            :name="'business_' + item.id + '_close_time'"
+                                                            :aria-label="'business_' + item.text + ' close time'"
+                                                            :aria-describedby="'business_' + item.id + '-close-time-icon'"
+                                                            v-model="item.end"
+                                                            :disabled="!item.enable"
+                                                            minute-interval="30"></vue-timepicker>
                                             <div class="input-group-append">
                                                 <span class="input-group-text" :id="item.id + '-close-time-icon'">
                                                   <i class="fe fe-clock"></i>
@@ -79,7 +81,10 @@
                                         </div>
                                     </div>
 
-                                    <button class="action btn btn-link pl-0 pl-lg-3 text-decoration-underline">
+                                    <button type="button"
+                                            class="action btn btn-link pl-0 pl-lg-3 text-decoration-underline"
+                                            :class="{'invisible': item.enable === false}"
+                                            @click="copyHours(businessHours, item)">
                                         <i class="fe fe-copy"></i>
                                         {{ trans('Copy to all') }}
                                     </button>
@@ -118,7 +123,8 @@
                                         <input type="checkbox"
                                                class="custom-control-input"
                                                :id="'downtime_' + item.id"
-                                               v-model="item.isClosed"/>
+                                               v-model="item.enable"
+                                               @change="toggleHour(item)"/>
                                         <label class="align-items-start label-day custom-control-label"
                                                :for="'downtime_' + item.id">
                                             {{ trans(item.text) }}
@@ -129,13 +135,14 @@
                                         <label class="sr-only" :for="'downtime_' + item.id + '_start_time'">Start
                                             time</label>
                                         <div class="input-group input-group-sm input-group-time">
-                                            <input type="text" class="form-control"
-                                                   :id="'downtime_' + item.id + '_start_time'"
-                                                   :name="'downtime_' + item.id + '_start_time'"
-                                                   :aria-label="'downtime_' + item.text + ' start time'"
-                                                   :aria-describedby="item.id + '-start-time-icon'"
-                                                   v-model="item.start"
-                                                   :disabled="!item.isClosed"/>
+                                            <vue-timepicker input-class="form-control"
+                                                            :id="'downtime_' + item.id + '_start_time'"
+                                                            :name="'downtime_' + item.id + '_start_time'"
+                                                            :aria-label="'downtime_' + item.text + ' start time'"
+                                                            :aria-describedby="'downtime_' + item.id + '-start-time-icon'"
+                                                            v-model="item.start"
+                                                            :disabled="!item.enable"
+                                                            minute-interval="30"></vue-timepicker>
                                             <div class="input-group-append">
                                                 <span class="input-group-text"
                                                       :id="'downtime_' + item.id + '-start-time-icon'">
@@ -148,13 +155,14 @@
                                         <label class="sr-only" :for="'downtime_' + item.id + '_end_time'">Start
                                             time</label>
                                         <div class="input-group input-group-sm input-group-time">
-                                            <input type="text" class="form-control"
-                                                   :id="'downtime_' + item.id + '_end_time'"
-                                                   :name="'downtime_' + item.id + '_end_time'"
-                                                   :aria-label="'downtime_' + item.text + ' end time'"
-                                                   :aria-describedby="'downtime_' + item.id + '-end-time-icon'"
-                                                   v-model="item.end"
-                                                   :disabled="!item.isClosed"/>
+                                            <vue-timepicker input-class="form-control"
+                                                            :id="'downtime_' + item.id + '_end_time'"
+                                                            :name="'downtime_' + item.id + '_end_time'"
+                                                            :aria-label="'downtime_' + item.text + ' end time'"
+                                                            :aria-describedby="'downtime_' + item.id + '-end-time-icon'"
+                                                            v-model="item.end"
+                                                            :disabled="!item.enable"
+                                                            minute-interval="30"></vue-timepicker>
                                             <div class="input-group-append">
                                                 <span class="input-group-text"
                                                       :id="'downtime_' + item.id + '-end-time-icon'">
@@ -164,7 +172,10 @@
                                         </div>
                                     </div>
 
-                                    <button class="action btn btn-link pl-0 pl-lg-3 text-decoration-underline">
+                                    <button type="button"
+                                            class="action btn btn-link pl-0 pl-lg-3 text-decoration-underline"
+                                            :class="{'invisible': item.enable === false}"
+                                            @click="copyHours(downtimeHours, item)">
                                         <i class="fe fe-copy"></i>
                                         {{ trans('Copy to all') }}
                                     </button>
@@ -356,9 +367,7 @@
             </div>
 
             <!-- Extensions -->
-            <div
-                    class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
-            >
+            <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
                 <div class="card-body">
                     <div class="row">
                         <div class="col-xl-4">
@@ -368,7 +377,7 @@
                         <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
                             <div class="row">
                                 <div class="col-lg-10">
-                                    <table class="border-bottom mb-2 table table-hover table-sm">
+                                    <table class="border-bottom mb-2 table table-hover table-sm" ref="extensions-table">
                                         <thead>
                                         <tr>
                                             <th scope="col">{{ trans('Number') }}</th>
@@ -408,7 +417,7 @@
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <button class="btn btn-link" @click="addExtension()">
+                                    <button type="button" class="btn btn-link" @click="addExtension()">
                                         <i class="fe fe-plus"></i>
                                         {{ trans('Add a new extension') }}
                                     </button>
@@ -492,6 +501,8 @@
 </template>
 
 <script>
+  import VueTimepicker from 'vue2-timepicker'
+
   export default {
     props: {
       hasProfessionalRecording: {
@@ -509,51 +520,51 @@
               {
                 id: 'monday',
                 text: 'Mon',
-                open: null,
-                close: null,
-                isOpen: false
+                start: null,
+                end: null,
+                enable: false
               },
               {
                 id: 'tuesday',
                 text: 'Tue',
-                open: null,
-                close: null,
-                isOpen: false
+                start: null,
+                end: null,
+                enable: false
               },
               {
                 id: 'wednesday',
                 text: 'Wed',
-                open: null,
-                close: null,
-                isOpen: false
+                start: null,
+                end: null,
+                enable: false
               },
               {
                 id: 'thursday',
                 text: 'Thu',
-                open: null,
-                close: null,
-                isOpen: false
+                start: null,
+                end: null,
+                enable: false
               },
               {
                 id: 'friday',
                 text: 'Fri',
-                open: null,
-                close: null,
-                isOpen: false
+                start: null,
+                end: null,
+                enable: false
               },
               {
                 id: 'saturday',
                 text: 'Sat',
-                open: null,
-                close: null,
-                isOpen: false
+                start: null,
+                end: null,
+                enable: false
               },
               {
                 id: 'sunday',
                 text: 'Sun',
-                open: null,
-                close: null,
-                isOpen: false
+                start: null,
+                end: null,
+                enable: false
               }
             ]
           };
@@ -570,49 +581,49 @@
                 text: 'Mon',
                 start: null,
                 end: null,
-                isClosed: false
+                enable: false
               },
               {
                 id: 'tuesday',
                 text: 'Tue',
                 start: null,
                 end: null,
-                isClosed: false
+                enable: false
               },
               {
                 id: 'wednesday',
                 text: 'Wed',
                 start: null,
                 end: null,
-                isClosed: false
+                enable: false
               },
               {
                 id: 'thursday',
                 text: 'Thu',
                 start: null,
                 end: null,
-                isClosed: false
+                enable: false
               },
               {
                 id: 'friday',
                 text: 'Fri',
                 start: null,
                 end: null,
-                isClosed: false
+                enable: false
               },
               {
                 id: 'saturday',
                 text: 'Sat',
                 start: null,
                 end: null,
-                isClosed: false
+                enable: false
               },
               {
                 id: 'sunday',
                 text: 'Sun',
                 start: null,
                 end: null,
-                isClosed: false
+                enable: false
               }
             ]
           };
@@ -656,7 +667,33 @@
         }
       };
     },
+    components: {
+      VueTimepicker
+    },
     methods: {
+      toggleHour(item) {
+        if (item.enable) {
+          return;
+        }
+
+        item.start = {HH: '', mm: ''};
+        item.end = {HH: '', mm: ''};
+      },
+      copyHours(list, item) {
+        if (item.enable === false || !item.start || !item.end) {
+          return;
+        }
+
+        list.days.forEach(el => {
+          if (el.id === item.id) {
+            return false;
+          }
+
+          el.enable = true;
+          el.start = item.start;
+          el.end = item.end;
+        });
+      },
       addExtension() {
         const extension = {
           id: new Date().valueOf(),
@@ -665,6 +702,10 @@
         };
 
         this.settings.extensions.push(extension);
+
+        this.$nextTick(() => {
+          this.$refs['extensions-table'].querySelector('tbody tr:last-child td:first-child input').focus();
+        });
       },
       deleteExtension(id) {
         const index = this.settings.extensions.findIndex(el => el.id === id);
