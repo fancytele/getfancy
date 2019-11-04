@@ -30,4 +30,12 @@ class FancyNumber extends Model
     {
         return $this->hasMany(FancySetting::class);
     }
+
+    /**
+     * Get the Ticket for the Fancy Number
+     */
+    public function ticket()
+    {
+        return $this->hasOne(Ticket::class);
+    }
 }

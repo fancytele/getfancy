@@ -18,21 +18,21 @@ class UserService
     /**
      * User model
      *
-     * @var \App\User
+     * @var User
      */
     private $model;
 
     /**
      * Fancy Number model
      *
-     * @var \App\FancyNumber
+     * @var FancyNumber
      */
     private $fancyNumber;
 
     /**
      * Get User model
      *
-     * @return \App\User
+     * @return User
      */
     public function model()
     {
@@ -40,9 +40,9 @@ class UserService
     }
 
     /**
-     * Get User Fancy Number moel
+     * Get User Fancy Number model
      *
-     * @return \App\FancyNumber
+     * @return FancyNumber
      */
     public function fancyNumberModel()
     {
@@ -63,10 +63,10 @@ class UserService
     }
 
     /**
-     * @param array $options
+     * @param array $user_options
      * @param StripeCustomer $stripe_customer
-     * 
-     * @return $this
+     *
+     * @return UserService
      */
     public function createFromStripe(array $user_options, StripeCustomer $stripe_customer)
     {
@@ -83,7 +83,7 @@ class UserService
      * @param string $stripe_product_id
      * @param StripeSubscription $stripe_subscription
      * 
-     * @return void
+     * @return UserService
      */
     public function createSubscription(int $product_id, string $stripe_product_id, StripeSubscription $stripe_subscription)
     {
@@ -99,7 +99,7 @@ class UserService
         return $this;
     }
 
-    public function assignFancyNumber(string $did, string $did_number, string $did_type, array $did_purchase)
+    public function assignFancyNumber(string $did_number, string $did_type, array $did_purchase)
     {
         $did_service = new DIDService();
         $did = $did_service->getPurchasedDID($did_purchase['id']);
@@ -118,10 +118,10 @@ class UserService
 
     /**
      * Build the payload with stripe information.
-     * 
-     * @param array $options
+     *
+     * @param array $user_options
      * @param StripeCustomer $stripe_customer
-     * 
+     *
      * @return array
      */
     private function buildUserWithStripePayload(array $user_options, StripeCustomer $stripe_customer)

@@ -4453,118 +4453,73 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    ticketInProgress: {
+      type: Boolean,
+      "default": function _default() {
+        return false;
+      }
+    },
     hasProfessionalRecording: {
       type: Boolean,
       "default": function _default() {
         return false;
       }
     },
-    businessHours: {
+    settings: {
       type: Object,
-      "default": function _default() {
-        return {
-          allDay: false,
-          days: [{
-            id: 'monday',
-            text: 'Mon',
-            start: null,
-            end: null,
-            enable: false
-          }, {
-            id: 'tuesday',
-            text: 'Tue',
-            start: null,
-            end: null,
-            enable: false
-          }, {
-            id: 'wednesday',
-            text: 'Wed',
-            start: null,
-            end: null,
-            enable: false
-          }, {
-            id: 'thursday',
-            text: 'Thu',
-            start: null,
-            end: null,
-            enable: false
-          }, {
-            id: 'friday',
-            text: 'Fri',
-            start: null,
-            end: null,
-            enable: false
-          }, {
-            id: 'saturday',
-            text: 'Sat',
-            start: null,
-            end: null,
-            enable: false
-          }, {
-            id: 'sunday',
-            text: 'Sun',
-            start: null,
-            end: null,
-            enable: false
-          }]
-        };
-      }
+      required: true
     },
-    downtimeHours: {
-      type: Object,
-      "default": function _default() {
-        return {
-          enable: false,
-          days: [{
-            id: 'monday',
-            text: 'Mon',
-            start: null,
-            end: null,
-            enable: false
-          }, {
-            id: 'tuesday',
-            text: 'Tue',
-            start: null,
-            end: null,
-            enable: false
-          }, {
-            id: 'wednesday',
-            text: 'Wed',
-            start: null,
-            end: null,
-            enable: false
-          }, {
-            id: 'thursday',
-            text: 'Thu',
-            start: null,
-            end: null,
-            enable: false
-          }, {
-            id: 'friday',
-            text: 'Fri',
-            start: null,
-            end: null,
-            enable: false
-          }, {
-            id: 'saturday',
-            text: 'Sat',
-            start: null,
-            end: null,
-            enable: false
-          }, {
-            id: 'sunday',
-            text: 'Sun',
-            start: null,
-            end: null,
-            enable: false
-          }]
-        };
-      }
-    },
-    periods: {
+    notificationPeriods: {
       type: Array,
       required: true
     },
@@ -4581,24 +4536,115 @@ __webpack_require__.r(__webpack_exports__);
     return {
       isProcessing: false,
       laddaButton: null,
-      settings: {
-        notification: {
-          email: '',
-          period: 'daily'
-        },
-        messages: {
-          business: null,
-          businessCustom: '',
-          downtime: null,
-          downtimeCustom: '',
-          onhold: null,
-          onholdCustom: ''
-        },
-        extensions: [],
-        audio: {
-          type: 'predefined',
-          buy_professional: false
-        }
+      reason: '',
+      businessHours: {
+        allDay: false,
+        days: [{
+          id: 'monday',
+          text: 'Mon',
+          start: null,
+          end: null,
+          enable: false
+        }, {
+          id: 'tuesday',
+          text: 'Tue',
+          start: null,
+          end: null,
+          enable: false
+        }, {
+          id: 'wednesday',
+          text: 'Wed',
+          start: null,
+          end: null,
+          enable: false
+        }, {
+          id: 'thursday',
+          text: 'Thu',
+          start: null,
+          end: null,
+          enable: false
+        }, {
+          id: 'friday',
+          text: 'Fri',
+          start: null,
+          end: null,
+          enable: false
+        }, {
+          id: 'saturday',
+          text: 'Sat',
+          start: null,
+          end: null,
+          enable: false
+        }, {
+          id: 'sunday',
+          text: 'Sun',
+          start: null,
+          end: null,
+          enable: false
+        }]
+      },
+      downtimeHours: {
+        enable: false,
+        days: [{
+          id: 'monday',
+          text: 'Mon',
+          start: null,
+          end: null,
+          enable: false
+        }, {
+          id: 'tuesday',
+          text: 'Tue',
+          start: null,
+          end: null,
+          enable: false
+        }, {
+          id: 'wednesday',
+          text: 'Wed',
+          start: null,
+          end: null,
+          enable: false
+        }, {
+          id: 'thursday',
+          text: 'Thu',
+          start: null,
+          end: null,
+          enable: false
+        }, {
+          id: 'friday',
+          text: 'Fri',
+          start: null,
+          end: null,
+          enable: false
+        }, {
+          id: 'saturday',
+          text: 'Sat',
+          start: null,
+          end: null,
+          enable: false
+        }, {
+          id: 'sunday',
+          text: 'Sun',
+          start: null,
+          end: null,
+          enable: false
+        }]
+      },
+      notification: {
+        email: '',
+        period: 'daily'
+      },
+      pbx: {
+        business: null,
+        business_text: '',
+        downtime: null,
+        downtime_text: '',
+        onhold: null,
+        onhold_text: ''
+      },
+      extensions: [],
+      audio: {
+        type: 'predefined',
+        buy_professional: false
       }
     };
   },
@@ -4643,25 +4689,25 @@ __webpack_require__.r(__webpack_exports__);
         number: null,
         name: ''
       };
-      this.settings.extensions.push(extension);
+      this.extensions.push(extension);
       this.$nextTick(function () {
         _this.$refs['extensions-table'].querySelector('tbody tr:last-child td:first-child input').focus();
       });
     },
     deleteExtension: function deleteExtension(id) {
-      var index = this.settings.extensions.findIndex(function (el) {
+      var index = this.extensions.findIndex(function (el) {
         return el.id === id;
       });
-      this.settings.extensions.splice(index, 1);
+      this.extensions.splice(index, 1);
     },
     getSettingPayload: function getSettingPayload() {
       var payload = {
-        notification: this.settings.notification,
-        audio_type: this.settings.audio.type
+        notification: this.notification,
+        audio_type: this.audio.type
       }; // Business Hours
 
       if (this.businessHours.allDay || this.businessHours.days.filter(function (el) {
-        return el.isOpen;
+        return el.enable;
       }).length > 0) {
         payload.business_hours = {
           all_day: this.businessHours.allDay,
@@ -4670,56 +4716,84 @@ __webpack_require__.r(__webpack_exports__);
       } // Downtime Hours
 
 
-      if (!this.businessHours.allDay && this.downtimeHours.enable && this.downtimeHours.days.filter(function (el) {
-        return el.isClosed;
+      if (this.businessHours.allDay === false && this.downtimeHours.enable && this.downtimeHours.days.filter(function (el) {
+        return el.enable;
       }).length > 0) {
         payload.downtime_hours = {
           all_day: this.downtimeHours.allDay,
           days: this.downtimeHours.days
         };
-      } // Messages
+      } // PBX
 
 
-      if (this.settings.messages.business || this.settings.messages.businessCustom) {
-        payload.business = {
-          id: this.settings.messages.business,
-          text: this.settings.messages.businessCustom
-        };
+      if (this.pbx.business && this.pbx.business > 0) {
+        payload.business_id = this.pbx.business;
       }
 
-      if (!this.businessHours.allDay && (this.settings.messages.downtime || this.settings.messages.businessCustom)) {
-        payload.downtime = {
-          id: this.settings.messages.downtime,
-          text: this.settings.messages.downtimeCustom
-        };
+      if (this.pbx.business > 0 && this.pbx.business_text) {
+        payload.business_text = this.pbx.business_text;
       }
 
-      if (this.settings.messages.onhold || this.settings.messages.onholdCustom) {
-        payload.onhold = {
-          id: this.settings.messages.onhold,
-          text: this.settings.messages.onholdCustom
-        };
+      if (this.businessHours.allDay === false) {
+        if (this.pbx.downtime && this.pbx.business > 0) {
+          payload.downtime_id = this.pbx.downtime;
+        }
+
+        if (this.pbx.downtime > 0 && this.pbx.downtime_text) {
+          payload.downtime_text = this.pbx.downtime_text;
+        }
+      }
+
+      if (this.pbx.onhold && this.pbx.onhold > 0) {
+        payload.onhold_id = this.pbx.onhold;
+      }
+
+      if (this.pbx.onhold > 0 && this.pbx.onhold_text) {
+        payload.onhold_text = this.pbx.onhold_text;
       } // Extensions
 
 
-      if (this.settings.extensions.length > 0) {
-        payload.extensions = {
-          data: this.settings.extensions.filters(function (el) {
-            return el.number && el.name;
-          })
-        };
+      if (this.extensions.length > 0) {
+        payload.extensions = this.extensions.filter(function (el) {
+          return el.number && el.name;
+        });
       } // Audio
 
 
-      if (this.hasProfessionalRecording || this.settings.audio.buy_professional) {
+      if (this.hasProfessionalRecording || this.audio.buy_professional) {
         payload.audio_type = 'professional';
+      } // Reason, only if Ticket in progress exists
+
+
+      if (this.ticketInProgress) {
+        payload.ticket_in_progress = this.ticketInProgress;
+        payload.reason = this.reason;
       }
 
       console.log(payload);
       return payload;
     },
-    saveSetting: function saveSetting() {
+    showReasonModal: function showReasonModal() {
       var _this2 = this;
+
+      $(this.$refs['reason-modal']).modal({
+        backdrop: 'static',
+        keyboard: false
+      }).on('shown.bs.modal', function () {
+        _this2.$refs['reason-input'].focus();
+      });
+    },
+    hideReasonModal: function hideReasonModal() {
+      this.laddaButton.stop();
+      this.reason = '';
+    },
+    saveSetting: function saveSetting() {
+      var _this3 = this;
+
+      if (this.ticketInProgress && this.reason === '') {
+        this.showReasonModal();
+        return false;
+      }
 
       if (this.isProcessing) {
         return false;
@@ -4729,15 +4803,43 @@ __webpack_require__.r(__webpack_exports__);
       this.laddaButton.start();
       axios.put(this.urlAction, this.getSettingPayload()).then(function (response) {
         console.log(response.data);
-        _this2.isProcessing = false;
+        _this3.isProcessing = false;
 
-        _this2.laddaButton.stop();
+        _this3.laddaButton.stop();
       })["catch"](function (error) {
         console.error(error);
-        _this2.isProcessing = false;
 
-        _this2.laddaButton.stop();
+        _this3.hideReasonModal();
+
+        _this3.isProcessing = false;
+
+        _this3.laddaButton.stop();
       });
+    }
+  },
+  created: function created() {
+    if (this.settings.business_hours) {
+      this.businessHours = this.settings.business_hours;
+    }
+
+    if (this.settings.downtime_hours) {
+      this.downtimeHours = this.settings.downtime_hours;
+    }
+
+    if (this.settings.notification) {
+      this.notification = this.settings.notification;
+    }
+
+    if (this.settings.pbx) {
+      this.pbx = this.settings.pbx;
+    }
+
+    if (this.settings.extensions) {
+      this.extensions = this.settings.extensions;
+    }
+
+    if (this.settings.audio) {
+      this.audio = this.settings.audio;
     }
   },
   mounted: function mounted() {
@@ -68600,8 +68702,8 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.settings.notification.email,
-                                expression: "settings.notification.email"
+                                value: _vm.notification.email,
+                                expression: "notification.email"
                               }
                             ],
                             staticClass: "form-control",
@@ -68611,16 +68713,14 @@ var render = function() {
                               name: "email",
                               required: ""
                             },
-                            domProps: {
-                              value: _vm.settings.notification.email
-                            },
+                            domProps: { value: _vm.notification.email },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
                                   return
                                 }
                                 _vm.$set(
-                                  _vm.settings.notification,
+                                  _vm.notification,
                                   "email",
                                   $event.target.value
                                 )
@@ -68645,8 +68745,8 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.settings.notification.period,
-                                  expression: "settings.notification.period"
+                                  value: _vm.notification.period,
+                                  expression: "notification.period"
                                 }
                               ],
                               staticClass: "form-control text-capitalize",
@@ -68667,7 +68767,7 @@ var render = function() {
                                       return val
                                     })
                                   _vm.$set(
-                                    _vm.settings.notification,
+                                    _vm.notification,
                                     "period",
                                     $event.target.multiple
                                       ? $$selectedVal
@@ -68676,7 +68776,7 @@ var render = function() {
                                 }
                               }
                             },
-                            _vm._l(_vm.periods, function(period) {
+                            _vm._l(_vm.notificationPeriods, function(period) {
                               return _c(
                                 "option",
                                 { key: period, domProps: { value: period } },
@@ -68750,8 +68850,8 @@ var render = function() {
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.settings.messages.business,
-                                        expression: "settings.messages.business"
+                                        value: _vm.pbx.business,
+                                        expression: "pbx.business"
                                       }
                                     ],
                                     staticClass: "custom-control-input",
@@ -68762,15 +68862,12 @@ var render = function() {
                                     },
                                     domProps: {
                                       value: item.id,
-                                      checked: _vm._q(
-                                        _vm.settings.messages.business,
-                                        item.id
-                                      )
+                                      checked: _vm._q(_vm.pbx.business, item.id)
                                     },
                                     on: {
                                       change: function($event) {
                                         return _vm.$set(
-                                          _vm.settings.messages,
+                                          _vm.pbx,
                                           "business",
                                           item.id
                                         )
@@ -68809,8 +68906,8 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.settings.messages.business,
-                                      expression: "settings.messages.business"
+                                      value: _vm.pbx.business,
+                                      expression: "pbx.business"
                                     }
                                   ],
                                   staticClass: "custom-control-input",
@@ -68821,18 +68918,11 @@ var render = function() {
                                     value: "0"
                                   },
                                   domProps: {
-                                    checked: _vm._q(
-                                      _vm.settings.messages.business,
-                                      "0"
-                                    )
+                                    checked: _vm._q(_vm.pbx.business, "0")
                                   },
                                   on: {
                                     change: function($event) {
-                                      return _vm.$set(
-                                        _vm.settings.messages,
-                                        "business",
-                                        "0"
-                                      )
+                                      return _vm.$set(_vm.pbx, "business", "0")
                                     }
                                   }
                                 }),
@@ -68853,8 +68943,7 @@ var render = function() {
                               {
                                 staticClass: "form-group pl-4",
                                 class: {
-                                  "disabled-setting":
-                                    _vm.settings.messages.business != 0
+                                  "disabled-setting": _vm.pbx.business != 0
                                 }
                               },
                               [
@@ -68863,10 +68952,8 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value:
-                                        _vm.settings.messages.businessCustom,
-                                      expression:
-                                        "settings.messages.businessCustom"
+                                      value: _vm.pbx.business_text,
+                                      expression: "pbx.business_text"
                                     }
                                   ],
                                   staticClass: "form-control resize-none",
@@ -68874,20 +68961,17 @@ var render = function() {
                                     name: "business_message_custom",
                                     id: "business_message_custom",
                                     rows: "3",
-                                    disabled:
-                                      _vm.settings.messages.business != 0
+                                    disabled: _vm.pbx.business != 0
                                   },
-                                  domProps: {
-                                    value: _vm.settings.messages.businessCustom
-                                  },
+                                  domProps: { value: _vm.pbx.business_text },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
                                         return
                                       }
                                       _vm.$set(
-                                        _vm.settings.messages,
-                                        "businessCustom",
+                                        _vm.pbx,
+                                        "business_text",
                                         $event.target.value
                                       )
                                     }
@@ -68956,8 +69040,8 @@ var render = function() {
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.settings.messages.downtime,
-                                        expression: "settings.messages.downtime"
+                                        value: _vm.pbx.downtime,
+                                        expression: "pbx.downtime"
                                       }
                                     ],
                                     staticClass: "custom-control-input",
@@ -68968,15 +69052,12 @@ var render = function() {
                                     },
                                     domProps: {
                                       value: item.id,
-                                      checked: _vm._q(
-                                        _vm.settings.messages.downtime,
-                                        item.id
-                                      )
+                                      checked: _vm._q(_vm.pbx.downtime, item.id)
                                     },
                                     on: {
                                       change: function($event) {
                                         return _vm.$set(
-                                          _vm.settings.messages,
+                                          _vm.pbx,
                                           "downtime",
                                           item.id
                                         )
@@ -69015,8 +69096,8 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.settings.messages.downtime,
-                                      expression: "settings.messages.downtime"
+                                      value: _vm.pbx.downtime,
+                                      expression: "pbx.downtime"
                                     }
                                   ],
                                   staticClass: "custom-control-input",
@@ -69027,18 +69108,11 @@ var render = function() {
                                     value: "0"
                                   },
                                   domProps: {
-                                    checked: _vm._q(
-                                      _vm.settings.messages.downtime,
-                                      "0"
-                                    )
+                                    checked: _vm._q(_vm.pbx.downtime, "0")
                                   },
                                   on: {
                                     change: function($event) {
-                                      return _vm.$set(
-                                        _vm.settings.messages,
-                                        "downtime",
-                                        "0"
-                                      )
+                                      return _vm.$set(_vm.pbx, "downtime", "0")
                                     }
                                   }
                                 }),
@@ -69059,8 +69133,7 @@ var render = function() {
                               {
                                 staticClass: "form-group pl-4",
                                 class: {
-                                  "disabled-setting":
-                                    _vm.settings.messages.downtime != 0
+                                  "disabled-setting": _vm.pbx.downtime != 0
                                 }
                               },
                               [
@@ -69069,10 +69142,8 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value:
-                                        _vm.settings.messages.downtimeCustom,
-                                      expression:
-                                        "settings.messages.downtimeCustom"
+                                      value: _vm.pbx.downtime_text,
+                                      expression: "pbx.downtime_text"
                                     }
                                   ],
                                   staticClass: "form-control resize-none",
@@ -69080,20 +69151,17 @@ var render = function() {
                                     name: "downtime_message_custom",
                                     id: "downtime_message_custom",
                                     rows: "3",
-                                    disabled:
-                                      _vm.settings.messages.downtime != 0
+                                    disabled: _vm.pbx.downtime != 0
                                   },
-                                  domProps: {
-                                    value: _vm.settings.messages.downtimeCustom
-                                  },
+                                  domProps: { value: _vm.pbx.downtime_text },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
                                         return
                                       }
                                       _vm.$set(
-                                        _vm.settings.messages,
-                                        "downtimeCustom",
+                                        _vm.pbx,
+                                        "downtime_text",
                                         $event.target.value
                                       )
                                     }
@@ -69128,8 +69196,8 @@ var render = function() {
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.settings.messages.onhold,
-                                        expression: "settings.messages.onhold"
+                                        value: _vm.pbx.onhold,
+                                        expression: "pbx.onhold"
                                       }
                                     ],
                                     staticClass: "custom-control-input",
@@ -69140,15 +69208,12 @@ var render = function() {
                                     },
                                     domProps: {
                                       value: item.id,
-                                      checked: _vm._q(
-                                        _vm.settings.messages.onhold,
-                                        item.id
-                                      )
+                                      checked: _vm._q(_vm.pbx.onhold, item.id)
                                     },
                                     on: {
                                       change: function($event) {
                                         return _vm.$set(
-                                          _vm.settings.messages,
+                                          _vm.pbx,
                                           "onhold",
                                           item.id
                                         )
@@ -69187,8 +69252,8 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.settings.messages.onhold,
-                                      expression: "settings.messages.onhold"
+                                      value: _vm.pbx.onhold,
+                                      expression: "pbx.onhold"
                                     }
                                   ],
                                   staticClass: "custom-control-input",
@@ -69199,18 +69264,11 @@ var render = function() {
                                     value: "0"
                                   },
                                   domProps: {
-                                    checked: _vm._q(
-                                      _vm.settings.messages.onhold,
-                                      "0"
-                                    )
+                                    checked: _vm._q(_vm.pbx.onhold, "0")
                                   },
                                   on: {
                                     change: function($event) {
-                                      return _vm.$set(
-                                        _vm.settings.messages,
-                                        "onhold",
-                                        "0"
-                                      )
+                                      return _vm.$set(_vm.pbx, "onhold", "0")
                                     }
                                   }
                                 }),
@@ -69231,8 +69289,7 @@ var render = function() {
                               {
                                 staticClass: "form-group pl-4",
                                 class: {
-                                  "disabled-setting":
-                                    _vm.settings.messages.onhold != 0
+                                  "disabled-setting": _vm.pbx.onhold != 0
                                 }
                               },
                               [
@@ -69241,9 +69298,8 @@ var render = function() {
                                     {
                                       name: "model",
                                       rawName: "v-model",
-                                      value: _vm.settings.messages.onholdCustom,
-                                      expression:
-                                        "settings.messages.onholdCustom"
+                                      value: _vm.pbx.onhold_text,
+                                      expression: "pbx.onhold_text"
                                     }
                                   ],
                                   staticClass: "form-control resize-none",
@@ -69251,19 +69307,17 @@ var render = function() {
                                     name: "onhold_message_custom",
                                     id: "onhold_message_custom",
                                     rows: "3",
-                                    disabled: _vm.settings.messages.onhold != 0
+                                    disabled: _vm.pbx.onhold != 0
                                   },
-                                  domProps: {
-                                    value: _vm.settings.messages.onholdCustom
-                                  },
+                                  domProps: { value: _vm.pbx.onhold_text },
                                   on: {
                                     input: function($event) {
                                       if ($event.target.composing) {
                                         return
                                       }
                                       _vm.$set(
-                                        _vm.settings.messages,
-                                        "onholdCustom",
+                                        _vm.pbx,
+                                        "onhold_text",
                                         $event.target.value
                                       )
                                     }
@@ -69337,7 +69391,7 @@ var render = function() {
                             _vm._v(" "),
                             _c(
                               "tbody",
-                              _vm._l(_vm.settings.extensions, function(item) {
+                              _vm._l(_vm.extensions, function(item) {
                                 return _c(
                                   "tr",
                                   {
@@ -69560,8 +69614,7 @@ var render = function() {
                             "div",
                             {
                               class: {
-                                "disabled-setting":
-                                  _vm.settings.audio.buy_professional
+                                "disabled-setting": _vm.audio.buy_professional
                               }
                             },
                             [
@@ -69578,8 +69631,8 @@ var render = function() {
                                           {
                                             name: "model",
                                             rawName: "v-model",
-                                            value: _vm.settings.audio.type,
-                                            expression: "settings.audio.type"
+                                            value: _vm.audio.type,
+                                            expression: "audio.type"
                                           }
                                         ],
                                         staticClass: "custom-control-input",
@@ -69591,14 +69644,14 @@ var render = function() {
                                         },
                                         domProps: {
                                           checked: _vm._q(
-                                            _vm.settings.audio.type,
+                                            _vm.audio.type,
                                             "predefined"
                                           )
                                         },
                                         on: {
                                           change: function($event) {
                                             return _vm.$set(
-                                              _vm.settings.audio,
+                                              _vm.audio,
                                               "type",
                                               "predefined"
                                             )
@@ -69630,8 +69683,8 @@ var render = function() {
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.settings.audio.type,
-                                        expression: "settings.audio.type"
+                                        value: _vm.audio.type,
+                                        expression: "audio.type"
                                       }
                                     ],
                                     staticClass: "custom-control-input",
@@ -69642,15 +69695,12 @@ var render = function() {
                                       value: "custom"
                                     },
                                     domProps: {
-                                      checked: _vm._q(
-                                        _vm.settings.audio.type,
-                                        "custom"
-                                      )
+                                      checked: _vm._q(_vm.audio.type, "custom")
                                     },
                                     on: {
                                       change: function($event) {
                                         return _vm.$set(
-                                          _vm.settings.audio,
+                                          _vm.audio,
                                           "type",
                                           "custom"
                                         )
@@ -69685,9 +69735,8 @@ var render = function() {
                                   {
                                     name: "model",
                                     rawName: "v-model",
-                                    value: _vm.settings.audio.buy_professional,
-                                    expression:
-                                      "settings.audio.buy_professional"
+                                    value: _vm.audio.buy_professional,
+                                    expression: "audio.buy_professional"
                                   }
                                 ],
                                 staticClass: "custom-control-input",
@@ -69697,18 +69746,15 @@ var render = function() {
                                 },
                                 domProps: {
                                   checked: Array.isArray(
-                                    _vm.settings.audio.buy_professional
+                                    _vm.audio.buy_professional
                                   )
-                                    ? _vm._i(
-                                        _vm.settings.audio.buy_professional,
-                                        null
-                                      ) > -1
-                                    : _vm.settings.audio.buy_professional
+                                    ? _vm._i(_vm.audio.buy_professional, null) >
+                                      -1
+                                    : _vm.audio.buy_professional
                                 },
                                 on: {
                                   change: function($event) {
-                                    var $$a =
-                                        _vm.settings.audio.buy_professional,
+                                    var $$a = _vm.audio.buy_professional,
                                       $$el = $event.target,
                                       $$c = $$el.checked ? true : false
                                     if (Array.isArray($$a)) {
@@ -69717,14 +69763,14 @@ var render = function() {
                                       if ($$el.checked) {
                                         $$i < 0 &&
                                           _vm.$set(
-                                            _vm.settings.audio,
+                                            _vm.audio,
                                             "buy_professional",
                                             $$a.concat([$$v])
                                           )
                                       } else {
                                         $$i > -1 &&
                                           _vm.$set(
-                                            _vm.settings.audio,
+                                            _vm.audio,
                                             "buy_professional",
                                             $$a
                                               .slice(0, $$i)
@@ -69733,7 +69779,7 @@ var render = function() {
                                       }
                                     } else {
                                       _vm.$set(
-                                        _vm.settings.audio,
+                                        _vm.audio,
                                         "buy_professional",
                                         $$c
                                       )
@@ -69799,7 +69845,171 @@ var render = function() {
           ]
         )
       ]
-    )
+    ),
+    _vm._v(" "),
+    _vm.ticketInProgress
+      ? _c(
+          "div",
+          {
+            ref: "reason-modal",
+            staticClass: "modal fade",
+            attrs: {
+              id: "reason-modal",
+              tabindex: "-1",
+              role: "dialog",
+              "aria-labelledby": "reason-modal-label",
+              "aria-hidden": "true"
+            }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "modal-dialog modal-dialog-centered modal-sm",
+                attrs: { role: "document" }
+              },
+              [
+                _c("div", { staticClass: "modal-content" }, [
+                  _c(
+                    "div",
+                    {
+                      staticClass: "align-items-center d-flex modal-header py-3"
+                    },
+                    [
+                      _c(
+                        "h5",
+                        {
+                          staticClass: "h3 mb-0 modal-title",
+                          attrs: { id: "reason-modal-label" }
+                        },
+                        [_vm._v("Reason")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "close py-0",
+                          attrs: {
+                            type: "button",
+                            "data-dismiss": "modal",
+                            "aria-label": "Close"
+                          },
+                          on: {
+                            click: function($event) {
+                              return _vm.hideReasonModal()
+                            }
+                          }
+                        },
+                        [_c("i", { staticClass: "fe fe-x-circle" })]
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "modal-body p-0" }, [
+                    _c(
+                      "form",
+                      {
+                        attrs: { action: _vm.urlAction },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.saveSetting()
+                          }
+                        }
+                      },
+                      [
+                        _c("label", { staticClass: "w-100" }, [
+                          _c("textarea", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.reason,
+                                expression: "reason"
+                              }
+                            ],
+                            ref: "reason-input",
+                            staticClass:
+                              "form-control form-control-flush px-4 resize-none",
+                            attrs: {
+                              name: "reason",
+                              id: "reason",
+                              rows: "5",
+                              placeholder:
+                                "Specify why this change is necessary"
+                            },
+                            domProps: { value: _vm.reason },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.reason = $event.target.value
+                              }
+                            }
+                          })
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "d-flex overflow-hidden rounded-bottom"
+                          },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-lg btn-outline-light rounded-0 text-body w-50",
+                                attrs: {
+                                  type: "button",
+                                  "data-dismiss": "modal"
+                                },
+                                on: {
+                                  click: function($event) {
+                                    return _vm.hideReasonModal()
+                                  }
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(_vm.trans("Cancel")) +
+                                    "\n                            "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-lg btn-primary ladda-button rounded-0 w-50",
+                                attrs: {
+                                  type: "submit",
+                                  "data-style": "zoom-out",
+                                  disabled: _vm.reason === ""
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                                " +
+                                    _vm._s(_vm.trans("Confirm")) +
+                                    "\n                            "
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              ]
+            )
+          ]
+        )
+      : _vm._e()
   ])
 }
 var staticRenderFns = [

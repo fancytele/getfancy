@@ -7,6 +7,7 @@ use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -114,21 +115,37 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the Fancy numbers for the user
+     * Get the Fancy number for the user
      */
-    public function fancy_numbers()
+    public function fancy_number()
     {
-        return $this->hasMany(FancyNumber::class);
+        return $this->hasOne(FancyNumber::class);
     }
 
     /**
-     * Generate random encrypted password. 
+     * Get the user's ticket.
+     */
+    public function ticket()
+    {
+        return $this->hasOneThrough(Ticket::class, FancyNumber::class);
+    }
+
+    /**
+     * Get the user's ticket.
+     */
+    public function fancy_setting()
+    {
+        return $this->hasOneThrough(FancySetting::class, FancyNumber::class);
+    }
+
+    /**
+     * Generate random encrypted password.
      *
-     * @return void
+     * @return string
      */
     public static function generatePassword()
     {
-        return bcrypt(str_random(35));
+        return bcrypt(Str::random(35));
     }
 
     /**

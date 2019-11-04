@@ -21,3 +21,7 @@
     width: 100%;
   }
 }
+
+.vue__time-picker .dropdown ul li:not([disabled]).active {
+  background-color: $primary;
+}

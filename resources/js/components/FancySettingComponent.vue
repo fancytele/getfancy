@@ -204,7 +204,7 @@
                                                id="email"
                                                name="email"
                                                required
-                                               v-model="settings.notification.email"/>
+                                               v-model="notification.email"/>
                                     </div>
                                 </div>
                             </div>
@@ -216,9 +216,9 @@
                                                 id="period"
                                                 class="form-control text-capitalize"
                                                 required
-                                                v-model="settings.notification.period">
+                                                v-model="notification.period">
                                             <option :value="period"
-                                                    v-for="period in periods"
+                                                    v-for="period in notificationPeriods"
                                                     :key="period">
                                                 {{ trans(period) }}
                                             </option>
@@ -252,7 +252,7 @@
                                                    name="business-message"
                                                    class="custom-control-input"
                                                    :value="item.id"
-                                                   v-model="settings.messages.business"/>
+                                                   v-model="pbx.business"/>
                                             <label class="custom-control-label"
                                                    :for="`${item.type}_message_${item.id}`">
                                                 {{ trans(item.message) }}
@@ -264,17 +264,17 @@
                                                    name="business-message"
                                                    class="custom-control-input"
                                                    value="0"
-                                                   v-model="settings.messages.business"/>
+                                                   v-model="pbx.business"/>
                                             <label class="custom-control-label" for="business_message_0">Custom</label>
                                         </div>
                                         <div class="form-group pl-4"
-                                             :class="{'disabled-setting': settings.messages.business != 0}">
+                                             :class="{'disabled-setting': pbx.business != 0}">
                                             <textarea name="business_message_custom"
                                                       id="business_message_custom"
                                                       class="form-control resize-none"
                                                       rows="3"
-                                                      :disabled="settings.messages.business != 0"
-                                                      v-model="settings.messages.businessCustom"></textarea>
+                                                      :disabled="pbx.business != 0"
+                                                      v-model="pbx.business_text"></textarea>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -296,7 +296,7 @@
                                                    name="downtime-message"
                                                    class="custom-control-input"
                                                    :value="item.id"
-                                                   v-model="settings.messages.downtime"/>
+                                                   v-model="pbx.downtime"/>
                                             <label class="custom-control-label"
                                                    :for="`${item.type}_message_${item.id}`">
                                                 {{ trans(item.message) }}
@@ -308,17 +308,17 @@
                                                    name="downtime_message"
                                                    class="custom-control-input"
                                                    value="0"
-                                                   v-model="settings.messages.downtime"/>
+                                                   v-model="pbx.downtime"/>
                                             <label class="custom-control-label" for="downtime_message_0">Custom</label>
                                         </div>
                                         <div class="form-group pl-4"
-                                             :class="{'disabled-setting': settings.messages.downtime != 0}">
+                                             :class="{'disabled-setting': pbx.downtime != 0}">
                                             <textarea name="downtime_message_custom"
                                                       id="downtime_message_custom"
                                                       class="form-control resize-none"
                                                       rows="3"
-                                                      :disabled="settings.messages.downtime != 0"
-                                                      v-model="settings.messages.downtimeCustom"></textarea>
+                                                      :disabled="pbx.downtime != 0"
+                                                      v-model="pbx.downtime_text"></textarea>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -334,7 +334,7 @@
                                                    name="onhold-message"
                                                    class="custom-control-input"
                                                    :value="item.id"
-                                                   v-model="settings.messages.onhold"/>
+                                                   v-model="pbx.onhold"/>
                                             <label class="custom-control-label"
                                                    :for="`${item.type}_message_${item.id}`">
                                                 {{ trans(item.message) }}
@@ -346,17 +346,17 @@
                                                    name="onhold_message"
                                                    class="custom-control-input"
                                                    value="0"
-                                                   v-model="settings.messages.onhold"/>
+                                                   v-model="pbx.onhold"/>
                                             <label class="custom-control-label" for="onhold_message_0">Custom</label>
                                         </div>
                                         <div class="form-group pl-4"
-                                             :class="{'disabled-setting': settings.messages.onhold != 0}">
+                                             :class="{'disabled-setting': pbx.onhold != 0}">
                                             <textarea name="onhold_message_custom"
                                                       id="onhold_message_custom"
                                                       class="form-control resize-none"
                                                       rows="3"
-                                                      :disabled="settings.messages.onhold != 0"
-                                                      v-model="settings.messages.onholdCustom"></textarea>
+                                                      :disabled="pbx.onhold != 0"
+                                                      v-model="pbx.onhold_text"></textarea>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -389,7 +389,7 @@
                                         </thead>
                                         <tbody>
                                         <tr class="content-action-hover"
-                                            v-for="item in settings.extensions"
+                                            v-for="item in extensions"
                                             :key="item.id">
                                             <td>
                                                 <label :for="'extension_number_'+ item.id"
@@ -450,7 +450,7 @@
                                 </label>
                             </div>
                             <div v-else>
-                                <div :class="{'disabled-setting': settings.audio.buy_professional}">
+                                <div :class="{'disabled-setting': audio.buy_professional}">
                                     <div class="custom-control custom-control-md custom-radio d-inline-block mr-6"
                                          v-if="!hasProfessionalRecording">
                                         <input type="radio"
@@ -458,7 +458,7 @@
                                                name="type_audio"
                                                class="custom-control-input"
                                                value="predefined"
-                                               v-model="settings.audio.type"/>
+                                               v-model="audio.type"/>
                                         <label for="predefined_audio" class="custom-control-label">Predefined</label>
                                     </div>
                                     <div class="custom-control custom-control-md custom-radio d-inline-block">
@@ -467,7 +467,7 @@
                                                name="type_audio"
                                                value="custom"
                                                class="custom-control-input"
-                                               v-model="settings.audio.type"/>
+                                               v-model="audio.type"/>
                                         <label for="custom_audio" class="custom-control-label">Custom</label>
                                     </div>
 
@@ -477,7 +477,7 @@
                                 <div class="custom-checkbox custom-control custom-control-md">
                                     <input type="checkbox" class="custom-control-input"
                                            id="buy_professional_greeting"
-                                           v-model="settings.audio.buy_professional"/>
+                                           v-model="audio.buy_professional"/>
                                     <label class="align-items-start custom-control-label text-body"
                                            for="buy_professional_greeting">
                                         {{ trans('Buy Professional Greeting/Custom Recordings') }}
@@ -497,6 +497,53 @@
                 {{ trans('Save setting') }}
             </button>
         </form>
+
+        <div class="modal fade" id="reason-modal" tabindex="-1" role="dialog"
+             aria-labelledby="reason-modal-label" aria-hidden="true"
+             v-if="ticketInProgress" ref="reason-modal">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="align-items-center d-flex modal-header py-3">
+                        <h5 class="h3 mb-0 modal-title" id="reason-modal-label">Reason</h5>
+                        <button type="button"
+                                data-dismiss="modal"
+                                aria-label="Close"
+                                class="close py-0"
+                                @click="hideReasonModal()">
+                            <i class="fe fe-x-circle"></i>
+                        </button>
+                    </div>
+                    <div class="modal-body p-0">
+                        <form :action="urlAction" @submit.prevent="saveSetting()">
+                            <label class="w-100">
+                                <textarea class="form-control form-control-flush px-4 resize-none"
+                                          name="reason"
+                                          id="reason"
+                                          rows="5"
+                                          placeholder="Specify why this change is necessary"
+                                          v-model="reason"
+                                          ref="reason-input">
+                                </textarea>
+                            </label>
+                            <div class="d-flex overflow-hidden rounded-bottom">
+                                <button type="button"
+                                        class="btn btn-lg btn-outline-light rounded-0 text-body w-50"
+                                        data-dismiss="modal"
+                                        @click="hideReasonModal()">
+                                    {{ trans('Cancel') }}
+                                </button>
+                                <button type="submit"
+                                        class="btn btn-lg btn-primary ladda-button rounded-0 w-50"
+                                        data-style="zoom-out"
+                                        :disabled="reason === ''">
+                                    {{ trans('Confirm') }}
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -505,131 +552,23 @@
 
   export default {
     props: {
+      ticketInProgress: {
+        type: Boolean,
+        default() {
+          return false;
+        }
+      },
       hasProfessionalRecording: {
         type: Boolean,
         default() {
           return false;
         }
       },
-      businessHours: {
+      settings: {
         type: Object,
-        default() {
-          return {
-            allDay: false,
-            days: [
-              {
-                id: 'monday',
-                text: 'Mon',
-                start: null,
-                end: null,
-                enable: false
-              },
-              {
-                id: 'tuesday',
-                text: 'Tue',
-                start: null,
-                end: null,
-                enable: false
-              },
-              {
-                id: 'wednesday',
-                text: 'Wed',
-                start: null,
-                end: null,
-                enable: false
-              },
-              {
-                id: 'thursday',
-                text: 'Thu',
-                start: null,
-                end: null,
-                enable: false
-              },
-              {
-                id: 'friday',
-                text: 'Fri',
-                start: null,
-                end: null,
-                enable: false
-              },
-              {
-                id: 'saturday',
-                text: 'Sat',
-                start: null,
-                end: null,
-                enable: false
-              },
-              {
-                id: 'sunday',
-                text: 'Sun',
-                start: null,
-                end: null,
-                enable: false
-              }
-            ]
-          };
-        }
+        required: true
       },
-      downtimeHours: {
-        type: Object,
-        default() {
-          return {
-            enable: false,
-            days: [
-              {
-                id: 'monday',
-                text: 'Mon',
-                start: null,
-                end: null,
-                enable: false
-              },
-              {
-                id: 'tuesday',
-                text: 'Tue',
-                start: null,
-                end: null,
-                enable: false
-              },
-              {
-                id: 'wednesday',
-                text: 'Wed',
-                start: null,
-                end: null,
-                enable: false
-              },
-              {
-                id: 'thursday',
-                text: 'Thu',
-                start: null,
-                end: null,
-                enable: false
-              },
-              {
-                id: 'friday',
-                text: 'Fri',
-                start: null,
-                end: null,
-                enable: false
-              },
-              {
-                id: 'saturday',
-                text: 'Sat',
-                start: null,
-                end: null,
-                enable: false
-              },
-              {
-                id: 'sunday',
-                text: 'Sun',
-                start: null,
-                end: null,
-                enable: false
-              }
-            ]
-          };
-        }
-      },
-      periods: {
+      notificationPeriods: {
         type: Array,
         required: true
       },
@@ -646,24 +585,131 @@
       return {
         isProcessing: false,
         laddaButton: null,
-        settings: {
-          notification: {
-            email: '',
-            period: 'daily'
-          },
-          messages: {
-            business: null,
-            businessCustom: '',
-            downtime: null,
-            downtimeCustom: '',
-            onhold: null,
-            onholdCustom: ''
-          },
-          extensions: [],
-          audio: {
-            type: 'predefined',
-            buy_professional: false
-          }
+        reason: '',
+        businessHours: {
+          allDay: false,
+          days: [
+            {
+              id: 'monday',
+              text: 'Mon',
+              start: null,
+              end: null,
+              enable: false
+            },
+            {
+              id: 'tuesday',
+              text: 'Tue',
+              start: null,
+              end: null,
+              enable: false
+            },
+            {
+              id: 'wednesday',
+              text: 'Wed',
+              start: null,
+              end: null,
+              enable: false
+            },
+            {
+              id: 'thursday',
+              text: 'Thu',
+              start: null,
+              end: null,
+              enable: false
+            },
+            {
+              id: 'friday',
+              text: 'Fri',
+              start: null,
+              end: null,
+              enable: false
+            },
+            {
+              id: 'saturday',
+              text: 'Sat',
+              start: null,
+              end: null,
+              enable: false
+            },
+            {
+              id: 'sunday',
+              text: 'Sun',
+              start: null,
+              end: null,
+              enable: false
+            }
+          ]
+        },
+        downtimeHours: {
+          enable: false,
+          days: [
+            {
+              id: 'monday',
+              text: 'Mon',
+              start: null,
+              end: null,
+              enable: false
+            },
+            {
+              id: 'tuesday',
+              text: 'Tue',
+              start: null,
+              end: null,
+              enable: false
+            },
+            {
+              id: 'wednesday',
+              text: 'Wed',
+              start: null,
+              end: null,
+              enable: false
+            },
+            {
+              id: 'thursday',
+              text: 'Thu',
+              start: null,
+              end: null,
+              enable: false
+            },
+            {
+              id: 'friday',
+              text: 'Fri',
+              start: null,
+              end: null,
+              enable: false
+            },
+            {
+              id: 'saturday',
+              text: 'Sat',
+              start: null,
+              end: null,
+              enable: false
+            },
+            {
+              id: 'sunday',
+              text: 'Sun',
+              start: null,
+              end: null,
+              enable: false
+            }
+          ]
+        },
+        notification: {
+          email: '',
+          period: 'daily'
+        },
+        pbx: {
+          business: null,
+          business_text: '',
+          downtime: null,
+          downtime_text: '',
+          onhold: null,
+          onhold_text: ''
+        },
+        extensions: [],
+        audio: {
+          type: 'predefined',
+          buy_professional: false,
         }
       };
     },
@@ -701,24 +747,24 @@
           name: ''
         };
 
-        this.settings.extensions.push(extension);
+        this.extensions.push(extension);
 
         this.$nextTick(() => {
           this.$refs['extensions-table'].querySelector('tbody tr:last-child td:first-child input').focus();
         });
       },
       deleteExtension(id) {
-        const index = this.settings.extensions.findIndex(el => el.id === id);
-        this.settings.extensions.splice(index, 1);
+        const index = this.extensions.findIndex(el => el.id === id);
+        this.extensions.splice(index, 1);
       },
       getSettingPayload() {
         const payload = {
-          notification: this.settings.notification,
-          audio_type: this.settings.audio.type
+          notification: this.notification,
+          audio_type: this.audio.type
         };
 
         // Business Hours
-        if (this.businessHours.allDay || this.businessHours.days.filter(el => el.isOpen).length > 0) {
+        if (this.businessHours.allDay || this.businessHours.days.filter(el => el.enable).length > 0) {
           payload.business_hours = {
             all_day: this.businessHours.allDay,
             days: this.businessHours.days
@@ -726,51 +772,77 @@
         }
 
         // Downtime Hours
-        if (!this.businessHours.allDay && (this.downtimeHours.enable && this.downtimeHours.days.filter(el => el.isClosed).length > 0)) {
+        if (this.businessHours.allDay === false && (this.downtimeHours.enable && this.downtimeHours.days.filter(el => el.enable).length > 0)) {
           payload.downtime_hours = {
             all_day: this.downtimeHours.allDay,
             days: this.downtimeHours.days
           };
         }
 
-        // Messages
-        if (this.settings.messages.business || this.settings.messages.businessCustom) {
-          payload.business = {
-            id: this.settings.messages.business,
-            text: this.settings.messages.businessCustom
-          };
+        // PBX
+        if (this.pbx.business && this.pbx.business > 0) {
+          payload.business_id = this.pbx.business;
         }
 
-        if (!this.businessHours.allDay && (this.settings.messages.downtime || this.settings.messages.businessCustom)) {
-          payload.downtime = {
-            id: this.settings.messages.downtime,
-            text: this.settings.messages.downtimeCustom
-          };
+        if (this.pbx.business > 0 && this.pbx.business_text) {
+          payload.business_text = this.pbx.business_text;
         }
 
-        if (this.settings.messages.onhold || this.settings.messages.onholdCustom) {
-          payload.onhold = {
-            id: this.settings.messages.onhold,
-            text: this.settings.messages.onholdCustom
-          };
+        if (this.businessHours.allDay === false) {
+          if (this.pbx.downtime && this.pbx.business > 0) {
+            payload.downtime_id = this.pbx.downtime;
+          }
+
+          if (this.pbx.downtime > 0 && this.pbx.downtime_text) {
+            payload.downtime_text = this.pbx.downtime_text;
+          }
+        }
+
+        if (this.pbx.onhold && this.pbx.onhold > 0) {
+          payload.onhold_id = this.pbx.onhold;
+        }
+
+        if (this.pbx.onhold > 0 && this.pbx.onhold_text) {
+          payload.onhold_text = this.pbx.onhold_text;
         }
 
         // Extensions
-        if (this.settings.extensions.length > 0) {
-          payload.extensions = {
-            data: this.settings.extensions.filters(el => el.number && el.name)
-          };
+        if (this.extensions.length > 0) {
+          payload.extensions = this.extensions.filter(el => el.number && el.name);
         }
 
         // Audio
-        if (this.hasProfessionalRecording || this.settings.audio.buy_professional) {
+        if (this.hasProfessionalRecording || this.audio.buy_professional) {
           payload.audio_type = 'professional';
+        }
+
+        // Reason, only if Ticket in progress exists
+        if (this.ticketInProgress) {
+          payload.ticket_in_progress = this.ticketInProgress;
+          payload.reason = this.reason;
         }
 
         console.log(payload);
         return payload;
       },
+      showReasonModal() {
+        $(this.$refs['reason-modal']).modal({
+          backdrop: 'static',
+          keyboard: false
+        }).on('shown.bs.modal', () => {
+          this.$refs['reason-input'].focus();
+        });
+      },
+      hideReasonModal() {
+        this.laddaButton.stop();
+        this.reason = '';
+      },
       saveSetting() {
+        if (this.ticketInProgress && this.reason === '') {
+          this.showReasonModal();
+          return false;
+        }
+
         if (this.isProcessing) {
           return false;
         }
@@ -788,9 +860,35 @@
           .catch(error => {
             console.error(error);
 
+            this.hideReasonModal();
             this.isProcessing = false;
             this.laddaButton.stop();
           });
+      }
+    },
+    created() {
+      if (this.settings.business_hours) {
+        this.businessHours = this.settings.business_hours;
+      }
+
+      if (this.settings.downtime_hours) {
+        this.downtimeHours = this.settings.downtime_hours;
+      }
+
+      if (this.settings.notification) {
+        this.notification = this.settings.notification;
+      }
+
+      if (this.settings.pbx) {
+        this.pbx = this.settings.pbx;
+      }
+
+      if (this.settings.extensions) {
+        this.extensions = this.settings.extensions;
+      }
+
+      if (this.settings.audio) {
+        this.audio = this.settings.audio;
       }
     },
     mounted() {

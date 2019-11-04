@@ -17898,6 +17898,10 @@ button:focus {
   width: 100%;
 }
 
+.vue__time-picker .dropdown ul li:not([disabled]).active {
+  background-color: #704895;
+}
+
 /*!
  * Ladda
  * http://lab.hakim.se/ladda
