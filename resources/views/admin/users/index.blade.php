@@ -125,11 +125,13 @@
                                            class="font-weight-normal h5 px-2">
                                             @lang('Edit')
                                         </a>
-                                        |
-                                        <a href="{{ route('admin.users.edit_fancy', $user->id) }}"
-                                           class="font-weight-normal h5 px-2">
-                                            @lang('Fancy Settings')
-                                        </a>
+                                        @if($user->fancy_number)
+                                            |
+                                            <a href="{{ route('admin.users.edit_fancy', $user->id) }}"
+                                            class="font-weight-normal h5 px-2">
+                                                @lang('Fancy Settings')
+                                            </a>
+                                        @endif
                                         |
                                         <a href="{{ route('admin.users.destroy', $user->id) }}"
                                            class="font-weight-normal h5 px-2"

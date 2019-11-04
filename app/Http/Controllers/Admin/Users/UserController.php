@@ -172,6 +172,14 @@ class UserController extends Controller
      */
     public function editFancy(User $user)
     {
+        if (is_null($user->fancy_number)) {
+            return redirect()->back()->with('alert', [
+                'type' => 'warning',
+                'icon' => 'alert-circle',
+                'message' => 'User doesn\'t have a Fancy Number'
+            ]);
+        }
+
         $settings = collect([]);
 
         if ($user->fancy_setting) {
@@ -237,8 +245,8 @@ class UserController extends Controller
         $setting->downtime_hours = $request->input('downtime_hours');
 
         //  Notification
-        $setting->email_notification = (string)$request->input('notification.email');
-        $setting->period_notification = (string)$request->input('notification.period');
+        $setting->email_notification = (string) $request->input('notification.email');
+        $setting->period_notification = (string) $request->input('notification.period');
 
         // PBX
         $setting->business_message_id = $request->input('business_id');

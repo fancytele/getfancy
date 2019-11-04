@@ -104,7 +104,7 @@ class UserService
         $did_service = new DIDService();
         $did = $did_service->getPurchasedDID($did_purchase['id']);
 
-        $fancy_number = new FancyNumber([
+        $this->fancyNumber = new FancyNumber([
             'type' => $did_type,
             'did_id' => $did['id'],
             'did_purchase_id' => $did_purchase['id'],
@@ -113,7 +113,7 @@ class UserService
             'did_status' => DIDOrderStatus::getValue(strtoupper($did_purchase['status']))
         ]);
 
-        $this->fancyNumber = $this->model->fancy_numbers()->save($fancy_number);
+        $this->model->fancy_number()->save($this->fancyNumber);
     }
 
     /**
