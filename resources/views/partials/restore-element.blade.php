@@ -30,7 +30,7 @@
                             @lang('Cancel')
                         </button>
                         <button type="submit"
-                                class="btn btn-lg btn-success ladda-button rounded-0 w-50"
+                                class="btn btn-lg btn-success ladda-button js-ladda-submit rounded-0 w-50"
                                 data-style="zoom-out">
                             @lang('Restore')
                         </button>

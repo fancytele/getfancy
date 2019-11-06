@@ -533,8 +533,7 @@
                                     {{ trans('Cancel') }}
                                 </button>
                                 <button type="submit"
-                                        class="btn btn-lg btn-primary ladda-button rounded-0 w-50"
-                                        data-style="zoom-out"
+                                        class="btn btn-lg btn-primary rounded-0 w-50"
                                         :disabled="reason === ''">
                                     {{ trans('Confirm') }}
                                 </button>
@@ -829,12 +828,9 @@
         $(this.$refs['reason-modal']).modal({
           backdrop: 'static',
           keyboard: false
-        }).on('shown.bs.modal', () => {
-          this.$refs['reason-input'].focus();
-        });
+        }).on('shown.bs.modal', () => this.$refs['reason-input'].focus());
       },
       hideReasonModal() {
-        this.laddaButton.stop();
         this.reason = '';
       },
       saveSetting() {
@@ -850,6 +846,10 @@
         this.isProcessing = true;
         this.laddaButton.start();
 
+        if (this.$refs['reason-modal']) {
+          $(this.$refs['reason-modal']).modal('hide');
+        }
+
         axios.put(this.urlAction, this.getSettingPayload())
           .then(response => {
             console.log(response.data);
@@ -860,7 +860,6 @@
           .catch(error => {
             console.error(error);
 
-            this.hideReasonModal();
             this.isProcessing = false;
             this.laddaButton.stop();
           });

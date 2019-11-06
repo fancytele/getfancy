@@ -36896,8 +36896,7 @@ function initExtensionsChar(chart) {
       tooltips: {
         callbacks: {
           title: function title(item, data) {
-            var title = data.labels[item[0].index];
-            return title;
+            return data.labels[item[0].index];
           },
           label: function label(item, data) {
             var value = data.datasets[0].data[item.index];
@@ -36938,7 +36937,7 @@ window.onload = function () {
   }); // Automatically trigger the loading animation on click
 
   if (typeof Ladda !== 'undefined') {
-    Ladda.bind('button[type=submit]');
+    Ladda.bind('button[type=submit].js-ladda-submit');
   } // Delte and Retore element
 
 

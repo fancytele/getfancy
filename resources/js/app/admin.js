@@ -28,9 +28,9 @@ function initCallsChar(chart) {
       tooltips: {
         callbacks: {
           label: function (item, data) {
-            var label = data.datasets[item.datasetIndex].label || '';
-            var yLabel = item.yLabel;
-            var content = '';
+            const label = data.datasets[item.datasetIndex].label || '';
+            const yLabel = item.yLabel;
+            let content = '';
 
             if (data.datasets.length > 1) {
               content += '<span class="popover-body-label mr-auto">' + label + '</span>';
@@ -59,12 +59,11 @@ function initExtensionsChar(chart) {
       tooltips: {
         callbacks: {
           title: function (item, data) {
-            var title = data.labels[item[0].index];
-            return title;
+            return data.labels[item[0].index];
           },
           label: function (item, data) {
-            var value = data.datasets[0].data[item.index];
-            var content = '';
+            const value = data.datasets[0].data[item.index];
+            let content = '';
 
             content += '<span class="popover-body-value">' + value + '%</span>';
             return content;
@@ -108,13 +107,13 @@ window.onload = function () {
 
   // Automatically trigger the loading animation on click
   if (typeof Ladda !== 'undefined') {
-    Ladda.bind('button[type=submit]');
+    Ladda.bind('button[type=submit].js-ladda-submit');
   }
 
   // Delte and Retore element
   $('#delete-element, #restore-element').on('show.bs.modal', function (event) {
     const element = $(event.relatedTarget);
-    const elementName = element.data('name')
+    const elementName = element.data('name');
     const elementDetail = element.data('detail');
     const elementAction = element.data('action');
 

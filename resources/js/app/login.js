@@ -1,15 +1,15 @@
 window.Ladda = require('ladda');
 
 (function () {
-  var isDocumentReady = () => {
+  const isDocumentReady = () => {
     if (document.readyState === "complete") {
       return true;
     }
 
     return document.readyState !== "loading" && !document.documentElement.doScroll;
-  }
+  };
 
-  var callback = function () {
+  const callback = function () {
     if (typeof Ladda !== 'undefined') {
       Ladda.bind('button[type=submit]');
     }

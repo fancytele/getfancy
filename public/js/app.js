@@ -4499,7 +4499,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -4780,11 +4779,10 @@ __webpack_require__.r(__webpack_exports__);
         backdrop: 'static',
         keyboard: false
       }).on('shown.bs.modal', function () {
-        _this2.$refs['reason-input'].focus();
+        return _this2.$refs['reason-input'].focus();
       });
     },
     hideReasonModal: function hideReasonModal() {
-      this.laddaButton.stop();
       this.reason = '';
     },
     saveSetting: function saveSetting() {
@@ -4801,6 +4799,11 @@ __webpack_require__.r(__webpack_exports__);
 
       this.isProcessing = true;
       this.laddaButton.start();
+
+      if (this.$refs['reason-modal']) {
+        $(this.$refs['reason-modal']).modal('hide');
+      }
+
       axios.put(this.urlAction, this.getSettingPayload()).then(function (response) {
         console.log(response.data);
         _this3.isProcessing = false;
@@ -4808,9 +4811,6 @@ __webpack_require__.r(__webpack_exports__);
         _this3.laddaButton.stop();
       })["catch"](function (error) {
         console.error(error);
-
-        _this3.hideReasonModal();
-
         _this3.isProcessing = false;
 
         _this3.laddaButton.stop();
@@ -69984,10 +69984,9 @@ var render = function() {
                               "button",
                               {
                                 staticClass:
-                                  "btn btn-lg btn-primary ladda-button rounded-0 w-50",
+                                  "btn btn-lg btn-primary rounded-0 w-50",
                                 attrs: {
                                   type: "submit",
-                                  "data-style": "zoom-out",
                                   disabled: _vm.reason === ""
                                 }
                               },
