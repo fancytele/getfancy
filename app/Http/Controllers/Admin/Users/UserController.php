@@ -7,7 +7,6 @@ use App\Enums\FancyAudioType;
 use App\Enums\FancyNotificationPeriod;
 use App\Enums\Role;
 use App\Enums\TicketStatus;
-use App\FancySetting;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FancySettingRequest;
 use App\Http\Requests\UserRequest;
@@ -15,6 +14,7 @@ use App\Mail\WelcomeMail;
 use App\PBXMessage;
 use App\Product;
 use App\Services\DIDService;
+use App\Services\FancySettingService;
 use App\Services\StripeService;
 use App\Services\UserService;
 use App\Ticket;
@@ -79,6 +79,7 @@ class UserController extends Controller
      *
      * @param \App\Http\Requests\UserRequest $request
      * @return \Illuminate\Http\Response
+     * @throws \Stripe\Error\Api
      */
     public function store(UserRequest $request)
     {
@@ -180,38 +181,14 @@ class UserController extends Controller
             ]);
         }
 
-        $settings = collect([]);
+        $data = [
+            'user' => $user,
+            'settings' => (new FancySettingService($user))->getSettingsToEdit(),
+            'notification_periods' => FancyNotificationPeriod::getValues(),
+            'messages' => PBXMessage::get(['id', 'message', 'type'])->groupBy('type')->toArray()
+        ];
 
-        if ($user->fancy_setting) {
-            $settings['business_hours'] = optional($user->fancy_setting)->business_hours;
-            $settings['downtime_hours'] = optional($user->fancy_setting)->downtime_hours;
-
-            $settings['notification'] = [
-                'email' => optional($user->fancy_setting)->email_notification,
-                'period' => optional($user->fancy_setting)->period_notification
-            ];
-
-            $settings['pbx'] = [
-                'business' => optional($user->fancy_setting)->business_message_id,
-                'business_text' => optional($user->fancy_setting)->business_custom_message,
-                'downtime' => optional($user->fancy_setting)->downtime_message_id,
-                'downtime_text' => optional($user->fancy_setting)->downtime_custom_message,
-                'onhold' => optional($user->fancy_setting)->onhold_message_id,
-                'onhold_text' => optional($user->fancy_setting)->onhold_custom_message
-            ];
-
-            $settings['extensions'] = optional($user->fancy_setting)->extensions ?? [];
-
-            $settings['audio'] = [
-                'type' => optional($user->fancy_setting)->audio_type ?? FancyAudioType::PREDEFINED,
-                'buy_professional' => optional($user->fancy_setting)->audio_type === FancyAudioType::PROFESSIONAL
-            ];
-        }
-
-        $notification_periods = FancyNotificationPeriod::getValues();
-        $messages = PBXMessage::get(['id', 'message', 'type'])->groupBy('type')->toArray();
-
-        return view('admin.users.edit-fancy', compact('user', 'settings', 'notification_periods', 'messages'));
+        return view('admin.users.edit-fancy', $data);
     }
 
     /**
@@ -223,67 +200,7 @@ class UserController extends Controller
      */
     public function updateFancy(FancySettingRequest $request, User $user)
     {
-        $fancy_number = $user->fancy_number;
-        $ticket = $fancy_number->ticket;
-
-        $setting = FancySetting::firstOrNew(['fancy_number_id' => $fancy_number->id]);
-
-        if ($setting->exists && $ticket->inProgress()) {
-            $new_ticket = $ticket->replicate();
-            $new_ticket->parent_id = $ticket->id;
-            $new_ticket->save();
-
-            $ticket->reason = $request->input('reason');
-            $ticket->reason_by = $request->user()->id;
-            $ticket->delete();
-        }
-
-        // Business Hours
-        $setting->business_hours = $request->input('business_hours');
-
-        // Downtime Hours
-        $setting->downtime_hours = $request->input('downtime_hours');
-
-        //  Notification
-        $setting->email_notification = (string) $request->input('notification.email');
-        $setting->period_notification = (string) $request->input('notification.period');
-
-        // PBX
-        $setting->business_message_id = $request->input('business_id');
-
-        if (is_null($setting->business_message_id) && $request->has('business_text')) {
-            $setting->business_custom_message = $request->input('business_text');
-        } else {
-            $setting->business_custom_message = null;
-        }
-
-        $setting->downtime_message_id = $request->input('downtime_id');
-
-        if (is_null($setting->downtime_message_id) && $request->has('downtime_text')) {
-            $setting->downtime_custom_message = $request->input('downtime_text');
-        } else {
-            $setting->downtime_custom_message = null;
-        }
-
-        $setting->onhold_message_id = $request->input('onhold_id');
-
-        if (is_null($setting->onhold_message_id) && $request->has('onhold_text')) {
-            $setting->onhold_custom_message = $request->input('onhold_text');
-        } else {
-            $setting->onhold_custom_message = null;
-        }
-
-        // Extensions
-        $setting->extensions = $request->input('extensions');
-
-        // Audio
-        $setting->audio_type = $request->input('audio_type');
-
-        if ($request->input('audio_type') === FancyAudioType::PROFESSIONAL) {
-            // TODO: Verify if user already bought it. If not: set payment to be executed in 30 days.
-        }
-
-        $fancy_number->settings()->save($setting);
+        $setting = (new FancySettingService($user))->SaveSetting($request);
 
         return response()->json(['message' => 'success', 'data' => $setting]);
     }

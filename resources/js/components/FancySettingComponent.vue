@@ -481,7 +481,7 @@
                                     <label class="align-items-start custom-control-label text-body"
                                            for="buy_professional_greeting">
                                         {{ trans('Buy Professional Greeting/Custom Recordings') }}
-                                        <span class="form-text text-muted">$ 8.00 (will be charge next month)</span>
+                                        <span class="form-text text-muted">$ 8.00 (will be charge immediately)</span>
                                     </label>
                                 </div>
                             </div>

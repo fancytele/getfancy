@@ -69810,7 +69810,7 @@ var render = function() {
                                     { staticClass: "form-text text-muted" },
                                     [
                                       _vm._v(
-                                        "$ 8.00 (will be charge next month)"
+                                        "$ 8.00 (will be charge immediately)"
                                       )
                                     ]
                                   )
