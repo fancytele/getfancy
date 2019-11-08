@@ -5,9 +5,12 @@ namespace App\Services;
 use App\Addon;
 use App\Enums\AddonCode;
 use App\Enums\FancyAudioType;
+use App\Enums\TicketStatus;
+use App\Events\RegisterInvoiceEvent;
 use App\FancyNumber;
 use App\FancySetting;
 use App\Http\Requests\FancySettingRequest;
+use App\Ticket;
 use App\User;
 
 class FancySettingService
@@ -71,7 +74,9 @@ class FancySettingService
 
         $this->fancyNumber->settings()->save($setting);
 
-        $this->buyProfessionalRecording($request->input('audio_type'));
+        if ($setting->audio_type === FancyAudioType::PROFESSIONAL) {
+            $this->buyProfessionalRecording();
+        }
 
         return $setting;
     }
@@ -118,8 +123,10 @@ class FancySettingService
         $current_ticket = $this->fancyNumber->ticket;
 
         if ($setting->exists && $current_ticket->inProgress()) {
-            $new_ticket = $current_ticket->replicate();
+            $new_ticket = new Ticket();
             $new_ticket->parent_id = $current_ticket->id;
+            $new_ticket->fancy_number_id = $current_ticket->fancy_number_id;
+            $new_ticket->status = TicketStatus::PENDING;
             $new_ticket->save();
 
             $current_ticket->reason = $reason;
@@ -130,16 +137,15 @@ class FancySettingService
     }
 
     /**
-     * @param string $audioType
      * @throws \Stripe\Error\Api
      */
-    private function buyProfessionalRecording(string $audioType)
+    private function buyProfessionalRecording()
     {
-        // TODO: Verify if payment already has been made, so we don't charge User multiple time
-        if ($audioType === FancyAudioType::PROFESSIONAL) {
-            $add_on = Addon::where('code', AddonCode::PROFESSIONAL_RECORDING)->first();
+        $add_on = Addon::where('code', AddonCode::PROFESSIONAL_RECORDING)->first();
 
-            (new StripeService())->createInvoice($add_on->cost * 100, $this->user->email, $add_on->name);
+        if ($this->user->hasBoughtAddon($add_on->id) === false) {
+            $stripe_invoice = (new StripeService())->createInvoice($add_on->cost * 100, $this->user->email, $add_on->name);
+            event(new RegisterInvoiceEvent($this->user, $add_on, $stripe_invoice));
         }
     }
 }

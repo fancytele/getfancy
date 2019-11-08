@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Admin\Users;
 
 use App\Addon;
-use App\Enums\FancyAudioType;
 use App\Enums\FancyNotificationPeriod;
 use App\Enums\Role;
 use App\Enums\TicketStatus;
@@ -200,9 +199,9 @@ class UserController extends Controller
      */
     public function updateFancy(FancySettingRequest $request, User $user)
     {
-        $setting = (new FancySettingService($user))->SaveSetting($request);
+        (new FancySettingService($user))->SaveSetting($request);
 
-        return response()->json(['message' => 'success', 'data' => $setting]);
+        return response()->json(['message' => 'success']);
     }
 
     /**

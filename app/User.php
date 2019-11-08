@@ -165,4 +165,17 @@ class User extends Authenticatable
             ->groupBy('roles.id')
             ->get();
     }
+
+    /**
+     * @param int $addonId
+     * @return bool
+     */
+    public function hasBoughtAddon(int $addonId)
+    {
+        if (is_null($addonId)) {
+            return false;
+        }
+
+        return Invoice::where('user_id', $this->id)->where('addon_id', $addonId)->count('id') > 0;
+    }
 }

@@ -4499,6 +4499,35 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -4529,10 +4558,15 @@ __webpack_require__.r(__webpack_exports__);
     urlAction: {
       type: String,
       required: true
+    },
+    urlUserList: {
+      type: String,
+      required: true
     }
   },
   data: function data() {
     return {
+      settingsSaved: false,
       isProcessing: false,
       laddaButton: null,
       reason: '',
@@ -4804,11 +4838,15 @@ __webpack_require__.r(__webpack_exports__);
         $(this.$refs['reason-modal']).modal('hide');
       }
 
-      axios.put(this.urlAction, this.getSettingPayload()).then(function (response) {
-        console.log(response.data);
-        _this3.isProcessing = false;
+      axios.put(this.urlAction, this.getSettingPayload()).then(function () {
+        _this3.settingsSaved = true;
 
-        _this3.laddaButton.stop();
+        _this3.$nextTick(function () {
+          $(_this3.$refs['success-modal']).modal({
+            backdrop: 'static',
+            keyboard: false
+          });
+        });
       })["catch"](function (error) {
         console.error(error);
         _this3.isProcessing = false;
@@ -69997,6 +70035,87 @@ var render = function() {
                                     "\n                            "
                                 )
                               ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              ]
+            )
+          ]
+        )
+      : _vm._e(),
+    _vm._v(" "),
+    _vm.settingsSaved
+      ? _c(
+          "div",
+          {
+            ref: "success-modal",
+            staticClass: "modal fade",
+            attrs: {
+              id: "fancy-settings-created-message",
+              tabindex: "-2",
+              role: "dialog",
+              "aria-hidden": "true"
+            }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "modal-dialog modal-dialog-centered modal-sm",
+                attrs: { role: "document" }
+              },
+              [
+                _c("div", { staticClass: "modal-content" }, [
+                  _c("div", { staticClass: "modal-body p-0" }, [
+                    _c("div", { staticClass: "d-flex my-3 pl-4 pt-4" }, [
+                      _c("i", {
+                        staticClass:
+                          "display-4 fe fe-check-circle mr-3 mt-n2 mt-n3 text-success"
+                      }),
+                      _vm._v(" "),
+                      _c("div", [
+                        _c("h3", { staticClass: "mb-1" }, [
+                          _vm._v(_vm._s(_vm.trans("Fancy Settings saved")))
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "p",
+                          { staticClass: "line-height-normal text-black-50" },
+                          [
+                            _vm._v(
+                              "\n                                " +
+                                _vm._s(
+                                  _vm.trans(
+                                    "Changes will be applied within 24 hours"
+                                  )
+                                ) +
+                                "\n                            "
+                            )
+                          ]
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "overflow-hidden rounded-bottom" },
+                      [
+                        _c(
+                          "a",
+                          {
+                            staticClass:
+                              "btn btn-block btn-lg btn-success rounded-0",
+                            attrs: { href: _vm.urlUserList }
+                          },
+                          [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.trans("Return to list")) +
+                                "\n                        "
                             )
                           ]
                         )

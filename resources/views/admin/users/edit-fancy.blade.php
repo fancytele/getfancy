@@ -33,7 +33,8 @@
                 :settings='@json($settings)'
                 :notification-periods='@json($notification_periods)'
                 :messages='@json($messages)'
-                :url-action="'{{ route('admin.users.update_fancy', $user->id) }}'">
+                :url-action="'{{ route('admin.users.update_fancy', $user->id) }}'"
+                :url-user-list="'{{ route('admin.users.index') }}'">
         </fancy-setting-component>
     </div>
 @endsection

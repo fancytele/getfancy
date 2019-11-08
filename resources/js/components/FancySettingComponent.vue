@@ -543,6 +543,35 @@
                 </div>
             </div>
         </div>
+
+        <div id="fancy-settings-created-message"
+             tabindex="-2"
+             role="dialog"
+             class="modal fade"
+             aria-hidden="true"
+             ref="success-modal"
+             v-if="settingsSaved">
+            <div role="document" class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <div class="d-flex my-3 pl-4 pt-4">
+                            <i class="display-4 fe fe-check-circle mr-3 mt-n2 mt-n3 text-success"></i>
+                            <div>
+                                <h3 class="mb-1">{{ trans('Fancy Settings saved') }}</h3>
+                                <p class="line-height-normal text-black-50">
+                                    {{ trans('Changes will be applied within 24 hours') }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="overflow-hidden rounded-bottom">
+                            <a :href="urlUserList" class="btn btn-block btn-lg btn-success rounded-0">
+                                {{ trans('Return to list') }}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -578,10 +607,15 @@
       urlAction: {
         type: String,
         required: true
+      },
+      urlUserList: {
+        type: String,
+        required: true
       }
     },
     data() {
       return {
+        settingsSaved: false,
         isProcessing: false,
         laddaButton: null,
         reason: '',
@@ -851,11 +885,12 @@
         }
 
         axios.put(this.urlAction, this.getSettingPayload())
-          .then(response => {
-            console.log(response.data);
+          .then(() => {
+            this.settingsSaved = true;
 
-            this.isProcessing = false;
-            this.laddaButton.stop();
+            this.$nextTick(() => {
+              $(this.$refs['success-modal']).modal({backdrop: 'static', keyboard: false});
+            });
           })
           .catch(error => {
             console.error(error);
