@@ -15,7 +15,7 @@
             @lang('Return to list')
         </a>
 
-        @if($user->ticket && $user->ticket->inProgress())
+        @if($user->hasTicketInProgress())
             <div class="alert alert-warning align-items-center d-flex" role="alert">
                 <i class="display-4 fe fe-alert-triangle mr-4"></i>
                 <div>
@@ -28,13 +28,14 @@
             </div>
         @endif
 
-        <fancy-setting-component
-                :ticket-in-progress="{{ json_encode($user->ticket && $user->ticket->inProgress()) }}"
-                :settings='@json($settings)'
-                :notification-periods='@json($notification_periods)'
-                :messages='@json($messages)'
-                :url-action="'{{ route('admin.users.update_fancy', $user->id) }}'"
-                :url-user-list="'{{ route('admin.users.index') }}'">
+        <fancy-setting-component 
+            :ticket-in-progress="{{ json_encode($user->hasTicketInProgress()) }}"
+            :has-professional-recording='@json($has_professional_recording)'
+            :settings='@json($settings)'
+            :notification-periods='@json($notification_periods)'
+            :messages='@json($messages)'
+            :url-action="'{{ route('admin.users.update_fancy', $user->id) }}'"
+            :url-user-list="'{{ route('admin.users.index') }}'">
         </fancy-setting-component>
     </div>
 @endsection

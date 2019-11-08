@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Enums\TicketStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -34,8 +35,18 @@ class FancyNumber extends Model
     /**
      * Get the Ticket for the Fancy Number
      */
-    public function ticket()
+    public function tickets()
     {
-        return $this->hasOne(Ticket::class);
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function hasPendingTicket()
+    {
+        return $this->tickets->isNotEmpty() && $this->tickets->where('status', TicketStatus::PENDING)->count() > 0;
+    }
+
+    public function hasTicketInProgress()
+    {
+        return $this->tickets->isNotEmpty() && $this->tickets->where('status', TicketStatus::IN_PROGRESS)->count() > 0;
     }
 }

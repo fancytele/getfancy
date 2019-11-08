@@ -4528,6 +4528,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -4566,6 +4567,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
+      buyProfessionalRecording: false,
       settingsSaved: false,
       isProcessing: false,
       laddaButton: null,
@@ -4675,10 +4677,7 @@ __webpack_require__.r(__webpack_exports__);
         onhold_text: ''
       },
       extensions: [],
-      audio: {
-        type: 'predefined',
-        buy_professional: false
-      }
+      audioType: 'predefined'
     };
   },
   components: {
@@ -4736,7 +4735,7 @@ __webpack_require__.r(__webpack_exports__);
     getSettingPayload: function getSettingPayload() {
       var payload = {
         notification: this.notification,
-        audio_type: this.audio.type
+        audio_type: this.audioType
       }; // Business Hours
 
       if (this.businessHours.allDay || this.businessHours.days.filter(function (el) {
@@ -4793,7 +4792,7 @@ __webpack_require__.r(__webpack_exports__);
       } // Audio
 
 
-      if (this.hasProfessionalRecording || this.audio.buy_professional) {
+      if (this.buyProfessionalRecording) {
         payload.audio_type = 'professional';
       } // Reason, only if Ticket in progress exists
 
@@ -4803,7 +4802,6 @@ __webpack_require__.r(__webpack_exports__);
         payload.reason = this.reason;
       }
 
-      console.log(payload);
       return payload;
     },
     showReasonModal: function showReasonModal() {
@@ -4841,6 +4839,8 @@ __webpack_require__.r(__webpack_exports__);
       axios.put(this.urlAction, this.getSettingPayload()).then(function () {
         _this3.settingsSaved = true;
 
+        _this3.laddaButton.stop();
+
         _this3.$nextTick(function () {
           $(_this3.$refs['success-modal']).modal({
             backdrop: 'static',
@@ -4876,8 +4876,8 @@ __webpack_require__.r(__webpack_exports__);
       this.extensions = this.settings.extensions;
     }
 
-    if (this.settings.audio) {
-      this.audio = this.settings.audio;
+    if (this.settings.audio_type) {
+      this.audioType = this.settings.audio_type;
     }
   },
   mounted: function mounted() {
@@ -69608,112 +69608,109 @@ var render = function() {
                       "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
                   },
                   [
-                    _vm.hasProfessionalRecording
-                      ? _c(
-                          "div",
-                          {
-                            staticClass:
-                              "custom-checkbox custom-control custom-control-md"
-                          },
-                          [
-                            _c("input", {
-                              staticClass: "custom-control-input",
-                              attrs: {
-                                type: "checkbox",
-                                id: "professional_greeting",
-                                checked: "",
-                                disabled: ""
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "label",
-                              {
-                                staticClass:
-                                  "align-items-start custom-control-label text-body",
-                                attrs: { for: "professional_greeting" }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(
-                                      _vm.trans(
-                                        "Professional Greeting/Custom Recordings"
-                                      )
-                                    ) +
-                                    "\n                            "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      : _c("div", [
+                    _c("div", [
+                      _c(
+                        "div",
+                        {
+                          class: {
+                            "disabled-setting": _vm.buyProfessionalRecording
+                          }
+                        },
+                        [
                           _c(
                             "div",
                             {
-                              class: {
-                                "disabled-setting": _vm.audio.buy_professional
-                              }
+                              staticClass:
+                                "custom-control custom-control-md custom-radio d-xl-inline-block mb-4 mr-6"
                             },
                             [
-                              !_vm.hasProfessionalRecording
-                                ? _c(
-                                    "div",
-                                    {
-                                      staticClass:
-                                        "custom-control custom-control-md custom-radio d-inline-block mr-6"
-                                    },
-                                    [
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: _vm.audio.type,
-                                            expression: "audio.type"
-                                          }
-                                        ],
-                                        staticClass: "custom-control-input",
-                                        attrs: {
-                                          type: "radio",
-                                          id: "predefined_audio",
-                                          name: "type_audio",
-                                          value: "predefined"
-                                        },
-                                        domProps: {
-                                          checked: _vm._q(
-                                            _vm.audio.type,
-                                            "predefined"
-                                          )
-                                        },
-                                        on: {
-                                          change: function($event) {
-                                            return _vm.$set(
-                                              _vm.audio,
-                                              "type",
-                                              "predefined"
-                                            )
-                                          }
-                                        }
-                                      }),
-                                      _vm._v(" "),
-                                      _c(
-                                        "label",
-                                        {
-                                          staticClass: "custom-control-label",
-                                          attrs: { for: "predefined_audio" }
-                                        },
-                                        [_vm._v("Predefined")]
-                                      )
-                                    ]
-                                  )
-                                : _vm._e(),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.audioType,
+                                    expression: "audioType"
+                                  }
+                                ],
+                                staticClass: "custom-control-input",
+                                attrs: {
+                                  type: "radio",
+                                  id: "predefined_audio",
+                                  name: "type_audio",
+                                  value: "predefined"
+                                },
+                                domProps: {
+                                  checked: _vm._q(_vm.audioType, "predefined")
+                                },
+                                on: {
+                                  change: function($event) {
+                                    _vm.audioType = "predefined"
+                                  }
+                                }
+                              }),
                               _vm._v(" "),
                               _c(
+                                "label",
+                                {
+                                  staticClass: "custom-control-label",
+                                  attrs: { for: "predefined_audio" }
+                                },
+                                [_vm._v("Predefined")]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "custom-control custom-control-md custom-radio d-xl-inline-block mb-4 mr-6"
+                            },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.audioType,
+                                    expression: "audioType"
+                                  }
+                                ],
+                                staticClass: "custom-control-input",
+                                attrs: {
+                                  type: "radio",
+                                  id: "custom_audio",
+                                  name: "type_audio",
+                                  value: "custom"
+                                },
+                                domProps: {
+                                  checked: _vm._q(_vm.audioType, "custom")
+                                },
+                                on: {
+                                  change: function($event) {
+                                    _vm.audioType = "custom"
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _c(
+                                "label",
+                                {
+                                  staticClass: "custom-control-label",
+                                  attrs: { for: "custom_audio" }
+                                },
+                                [_vm._v("Custom")]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm.hasProfessionalRecording
+                            ? _c(
                                 "div",
                                 {
                                   staticClass:
-                                    "custom-control custom-control-md custom-radio d-inline-block"
+                                    "custom-control custom-control-md custom-radio d-xl-inline-block mb-4 "
                                 },
                                 [
                                   _c("input", {
@@ -69721,27 +69718,26 @@ var render = function() {
                                       {
                                         name: "model",
                                         rawName: "v-model",
-                                        value: _vm.audio.type,
-                                        expression: "audio.type"
+                                        value: _vm.audioType,
+                                        expression: "audioType"
                                       }
                                     ],
                                     staticClass: "custom-control-input",
                                     attrs: {
                                       type: "radio",
-                                      id: "custom_audio",
+                                      id: "professional_audio",
                                       name: "type_audio",
-                                      value: "custom"
+                                      value: "professional"
                                     },
                                     domProps: {
-                                      checked: _vm._q(_vm.audio.type, "custom")
+                                      checked: _vm._q(
+                                        _vm.audioType,
+                                        "professional"
+                                      )
                                     },
                                     on: {
                                       change: function($event) {
-                                        return _vm.$set(
-                                          _vm.audio,
-                                          "type",
-                                          "custom"
-                                        )
+                                        _vm.audioType = "professional"
                                       }
                                     }
                                   }),
@@ -69750,113 +69746,120 @@ var render = function() {
                                     "label",
                                     {
                                       staticClass: "custom-control-label",
-                                      attrs: { for: "custom_audio" }
+                                      attrs: { for: "professional_audio" }
                                     },
-                                    [_vm._v("Custom")]
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c("h4", { staticClass: "my-4" }, [_vm._v("OR")])
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "custom-checkbox custom-control custom-control-md"
-                            },
-                            [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.audio.buy_professional,
-                                    expression: "audio.buy_professional"
-                                  }
-                                ],
-                                staticClass: "custom-control-input",
-                                attrs: {
-                                  type: "checkbox",
-                                  id: "buy_professional_greeting"
-                                },
-                                domProps: {
-                                  checked: Array.isArray(
-                                    _vm.audio.buy_professional
-                                  )
-                                    ? _vm._i(_vm.audio.buy_professional, null) >
-                                      -1
-                                    : _vm.audio.buy_professional
-                                },
-                                on: {
-                                  change: function($event) {
-                                    var $$a = _vm.audio.buy_professional,
-                                      $$el = $event.target,
-                                      $$c = $$el.checked ? true : false
-                                    if (Array.isArray($$a)) {
-                                      var $$v = null,
-                                        $$i = _vm._i($$a, $$v)
-                                      if ($$el.checked) {
-                                        $$i < 0 &&
-                                          _vm.$set(
-                                            _vm.audio,
-                                            "buy_professional",
-                                            $$a.concat([$$v])
-                                          )
-                                      } else {
-                                        $$i > -1 &&
-                                          _vm.$set(
-                                            _vm.audio,
-                                            "buy_professional",
-                                            $$a
-                                              .slice(0, $$i)
-                                              .concat($$a.slice($$i + 1))
-                                          )
-                                      }
-                                    } else {
-                                      _vm.$set(
-                                        _vm.audio,
-                                        "buy_professional",
-                                        $$c
-                                      )
-                                    }
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass:
-                                    "align-items-start custom-control-label text-body",
-                                  attrs: { for: "buy_professional_greeting" }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                    " +
-                                      _vm._s(
-                                        _vm.trans(
-                                          "Buy Professional Greeting/Custom Recordings"
-                                        )
-                                      ) +
-                                      "\n                                    "
-                                  ),
-                                  _c(
-                                    "span",
-                                    { staticClass: "form-text text-muted" },
                                     [
                                       _vm._v(
-                                        "$ 8.00 (will be charge immediately)"
+                                        "\n                                      " +
+                                          _vm._s(
+                                            _vm.trans(
+                                              "Professional Greeting/Custom Recordings"
+                                            )
+                                          ) +
+                                          "\n                                    "
                                       )
                                     ]
                                   )
                                 ]
                               )
-                            ]
-                          )
-                        ])
+                            : _vm._e()
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _vm.hasProfessionalRecording === false
+                        ? _c("div", [
+                            _c("h4", { staticClass: "mb-4" }, [_vm._v("OR")]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "custom-checkbox custom-control custom-control-md"
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.buyProfessionalRecording,
+                                      expression: "buyProfessionalRecording"
+                                    }
+                                  ],
+                                  staticClass: "custom-control-input",
+                                  attrs: {
+                                    type: "checkbox",
+                                    id: "buy_professional_greeting"
+                                  },
+                                  domProps: {
+                                    checked: Array.isArray(
+                                      _vm.buyProfessionalRecording
+                                    )
+                                      ? _vm._i(
+                                          _vm.buyProfessionalRecording,
+                                          null
+                                        ) > -1
+                                      : _vm.buyProfessionalRecording
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      var $$a = _vm.buyProfessionalRecording,
+                                        $$el = $event.target,
+                                        $$c = $$el.checked ? true : false
+                                      if (Array.isArray($$a)) {
+                                        var $$v = null,
+                                          $$i = _vm._i($$a, $$v)
+                                        if ($$el.checked) {
+                                          $$i < 0 &&
+                                            (_vm.buyProfessionalRecording = $$a.concat(
+                                              [$$v]
+                                            ))
+                                        } else {
+                                          $$i > -1 &&
+                                            (_vm.buyProfessionalRecording = $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1)))
+                                        }
+                                      } else {
+                                        _vm.buyProfessionalRecording = $$c
+                                      }
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass:
+                                      "align-items-start custom-control-label text-body",
+                                    attrs: { for: "buy_professional_greeting" }
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                        " +
+                                        _vm._s(
+                                          _vm.trans(
+                                            "Buy Professional Greeting/Custom Recordings"
+                                          )
+                                        ) +
+                                        "\n                                        "
+                                    ),
+                                    _c(
+                                      "span",
+                                      { staticClass: "form-text text-muted" },
+                                      [
+                                        _vm._v(
+                                          "$ 8.00 (will be charge immediately)"
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ])
+                        : _vm._e()
+                    ])
                   ]
                 )
               ])
@@ -70055,7 +70058,7 @@ var render = function() {
             ref: "success-modal",
             staticClass: "modal fade",
             attrs: {
-              id: "fancy-settings-created-message",
+              id: "success-modal",
               tabindex: "-2",
               role: "dialog",
               "aria-hidden": "true"
@@ -87432,9 +87435,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /var/www/resources/sass/web/main.scss */"./resources/sass/web/main.scss");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/app/main.scss */"./resources/sass/app/main.scss");
+__webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\sass\web\main.scss */"./resources/sass/web/main.scss");
+module.exports = __webpack_require__(/*! C:\Users\sd-admin\Source\Repos\getfancy\resources\sass\app\main.scss */"./resources/sass/app/main.scss");
 
 
 /***/ })

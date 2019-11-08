@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Users;
 
 use App\Addon;
+use App\Enums\AddonCode;
 use App\Enums\FancyNotificationPeriod;
 use App\Enums\Role;
 use App\Enums\TicketStatus;
@@ -180,8 +181,11 @@ class UserController extends Controller
             ]);
         }
 
+        $addon = Addon::where('code', AddonCode::PROFESSIONAL_RECORDING)->first();
+
         $data = [
             'user' => $user,
+            'has_professional_recording' => $user->hasBoughtAddon($addon->id),
             'settings' => (new FancySettingService($user))->getSettingsToEdit(),
             'notification_periods' => FancyNotificationPeriod::getValues(),
             'messages' => PBXMessage::get(['id', 'message', 'type'])->groupBy('type')->toArray()

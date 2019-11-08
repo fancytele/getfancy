@@ -437,52 +437,53 @@
                             <p class="text-black-50">{{ trans('Audio description') }}.</p>
                         </div>
                         <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
-                            <div class="custom-checkbox custom-control custom-control-md"
-                                 v-if="hasProfessionalRecording">
-                                <input type="checkbox"
-                                       class="custom-control-input"
-                                       id="professional_greeting"
-                                       checked
-                                       disabled/>
-                                <label class="align-items-start custom-control-label text-body"
-                                       for="professional_greeting">
-                                    {{ trans('Professional Greeting/Custom Recordings') }}
-                                </label>
-                            </div>
-                            <div v-else>
-                                <div :class="{'disabled-setting': audio.buy_professional}">
-                                    <div class="custom-control custom-control-md custom-radio d-inline-block mr-6"
-                                         v-if="!hasProfessionalRecording">
+                            <div>
+                                <div :class="{'disabled-setting': buyProfessionalRecording}">
+                                    <div class="custom-control custom-control-md custom-radio d-xl-inline-block mb-4 mr-6">
                                         <input type="radio"
                                                id="predefined_audio"
                                                name="type_audio"
                                                class="custom-control-input"
                                                value="predefined"
-                                               v-model="audio.type"/>
+                                               v-model="audioType"/>
                                         <label for="predefined_audio" class="custom-control-label">Predefined</label>
                                     </div>
-                                    <div class="custom-control custom-control-md custom-radio d-inline-block">
+                                    <div class="custom-control custom-control-md custom-radio d-xl-inline-block mb-4 mr-6">
                                         <input type="radio"
                                                id="custom_audio"
                                                name="type_audio"
                                                value="custom"
                                                class="custom-control-input"
-                                               v-model="audio.type"/>
+                                               v-model="audioType"/>
                                         <label for="custom_audio" class="custom-control-label">Custom</label>
                                     </div>
-
-                                    <h4 class="my-4">OR</h4>
+                                    <div class="custom-control custom-control-md custom-radio d-xl-inline-block mb-4 "
+                                         v-if="hasProfessionalRecording">
+                                        <input type="radio"
+                                               id="professional_audio"
+                                               name="type_audio"
+                                               value="professional"
+                                               class="custom-control-input"
+                                               v-model="audioType"/>
+                                        <label for="professional_audio" class="custom-control-label">
+                                          {{ trans('Professional Greeting/Custom Recordings') }}
+                                        </label>
+                                    </div>
                                 </div>
 
-                                <div class="custom-checkbox custom-control custom-control-md">
-                                    <input type="checkbox" class="custom-control-input"
-                                           id="buy_professional_greeting"
-                                           v-model="audio.buy_professional"/>
-                                    <label class="align-items-start custom-control-label text-body"
-                                           for="buy_professional_greeting">
-                                        {{ trans('Buy Professional Greeting/Custom Recordings') }}
-                                        <span class="form-text text-muted">$ 8.00 (will be charge immediately)</span>
-                                    </label>
+                                <div v-if="hasProfessionalRecording === false">
+                                    <h4 class="mb-4">OR</h4>
+
+                                    <div class="custom-checkbox custom-control custom-control-md">
+                                        <input type="checkbox" class="custom-control-input"
+                                              id="buy_professional_greeting"
+                                              v-model="buyProfessionalRecording"/>
+                                        <label class="align-items-start custom-control-label text-body"
+                                              for="buy_professional_greeting">
+                                            {{ trans('Buy Professional Greeting/Custom Recordings') }}
+                                            <span class="form-text text-muted">$ 8.00 (will be charge immediately)</span>
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -544,7 +545,7 @@
             </div>
         </div>
 
-        <div id="fancy-settings-created-message"
+        <div id="success-modal"
              tabindex="-2"
              role="dialog"
              class="modal fade"
@@ -615,6 +616,7 @@
     },
     data() {
       return {
+        buyProfessionalRecording: false,
         settingsSaved: false,
         isProcessing: false,
         laddaButton: null,
@@ -740,10 +742,7 @@
           onhold_text: ''
         },
         extensions: [],
-        audio: {
-          type: 'predefined',
-          buy_professional: false,
-        }
+        audioType: 'predefined'
       };
     },
     components: {
@@ -793,7 +792,7 @@
       getSettingPayload() {
         const payload = {
           notification: this.notification,
-          audio_type: this.audio.type
+          audio_type: this.audioType
         };
 
         // Business Hours
@@ -845,7 +844,7 @@
         }
 
         // Audio
-        if (this.hasProfessionalRecording || this.audio.buy_professional) {
+        if (this.buyProfessionalRecording) {
           payload.audio_type = 'professional';
         }
 
@@ -855,7 +854,6 @@
           payload.reason = this.reason;
         }
 
-        console.log(payload);
         return payload;
       },
       showReasonModal() {
@@ -887,6 +885,7 @@
         axios.put(this.urlAction, this.getSettingPayload())
           .then(() => {
             this.settingsSaved = true;
+            this.laddaButton.stop();
 
             this.$nextTick(() => {
               $(this.$refs['success-modal']).modal({backdrop: 'static', keyboard: false});
@@ -921,8 +920,8 @@
         this.extensions = this.settings.extensions;
       }
 
-      if (this.settings.audio) {
-        this.audio = this.settings.audio;
+      if (this.settings.audio_type) {
+        this.audioType = this.settings.audio_type;
       }
     },
     mounted() {

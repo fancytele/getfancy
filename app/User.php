@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Enums\Role;
+use App\Enums\TicketStatus;
 use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
@@ -125,9 +126,9 @@ class User extends Authenticatable
     /**
      * Get the user's ticket.
      */
-    public function ticket()
+    public function tickets()
     {
-        return $this->hasOneThrough(Ticket::class, FancyNumber::class);
+        return $this->hasManyThrough(Ticket::class, FancyNumber::class);
     }
 
     /**
@@ -177,5 +178,10 @@ class User extends Authenticatable
         }
 
         return Invoice::where('user_id', $this->id)->where('addon_id', $addonId)->count('id') > 0;
+    }
+
+    public function hasTicketInProgress()
+    {
+        return $this->tickets->isNotEmpty() && $this->tickets->where('status', TicketStatus::IN_PROGRESS)->count() > 0;
     }
 }
