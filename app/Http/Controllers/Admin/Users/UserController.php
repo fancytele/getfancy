@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Admin\Users;
 
 use App\Addon;
 use App\Enums\AddonCode;
+use App\Enums\AddonType;
 use App\Enums\FancyNotificationPeriod;
 use App\Enums\Role;
 use App\Enums\TicketStatus;
+use App\Events\RegisterInvoiceEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FancySettingRequest;
 use App\Http\Requests\UserRequest;
@@ -19,14 +21,11 @@ use App\Services\StripeService;
 use App\Services\UserService;
 use App\Ticket;
 use App\User;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
-    use SendsPasswordResetEmails;
-
     /**
      * Create a new controller instance.
      *
@@ -61,10 +60,10 @@ class UserController extends Controller
         $did_regions = $did_service->getRegionsByCountry($did_country['id']);
 
         $products = Product::all();
-        $addons = Addon::subscription()->get();
+        $addons = Addon::subscription()->orWhere('code', AddonCode::PROFESSIONAL_RECORDING)->get();
 
         $urls = [
-            'user_list' => route('admin.users.index'),
+            'fancy_settings' => route('admin.users.edit_fancy', '_user_'),
             'create_user' => route('admin.users.store'),
             'did_cities' => route('admin.dids.cities', '_region_'),
             'dids_availables' => route('admin.dids.availables', '_city_'),
@@ -93,13 +92,13 @@ class UserController extends Controller
         // Get Stripe Product by Name
         $stripe_product = $stripe_service->getProductByName($product->name);
 
-        // Get all product Plans (base and features)
+        // Get all product Plans (base and subscription add-ons)
         $stripe_plans = $stripe_service->getProductPlansByNames(
             $stripe_product->id,
             Arr::prepend($data['addons'], $product->name)
         );
 
-        $plans = $stripe_plans->map(function ($item) {
+        $stripe_plans_id = $stripe_plans->map(function ($item) {
             return ['plan' => $item->id];
         })->toArray();
 
@@ -109,7 +108,7 @@ class UserController extends Controller
 
         // Create Subscription
         // TODO: Catch error to delete Stripe Customer and send response to user
-        $stripe_subscription = $stripe_service->createSubscription($stripe_customer->id, $plans);
+        $stripe_subscription = $stripe_service->createSubscription($stripe_customer->id, $stripe_plans_id);
 
         // Purchase Reserved DID
         $did_data = $data['did'];
@@ -127,6 +126,14 @@ class UserController extends Controller
         // Create User subscription
         $user->createSubscription($product->id, $stripe_product->id, $stripe_subscription);
 
+        // Create Invoice for One Time Fee Add-ons
+        $addons = Addon::where('type', AddonType::OTF)->whereIn('code', $data['addons'])->get();
+
+        $addons->each(function ($addon) use ($data, $user, $stripe_service) {
+            $stripe_invoice = $stripe_service->createInvoice($addon->cost * 100, $data['email'], $addon->name);
+            event(new RegisterInvoiceEvent($user->model(), $addon, $stripe_invoice));
+        });
+
         // Create User Fancy number
         $user->assignFancyNumber($did_data['number'], $data['number_type'], $did_purchase);
 
@@ -137,10 +144,9 @@ class UserController extends Controller
         $ticket = new Ticket();
         $ticket->fancy_number_id = $user->fancyNumberModel()->id;
         $ticket->status = TicketStatus::PENDING;
-
         $ticket->save();
 
-        return response()->json(['success' => true]);
+        return response()->json(['success' => true, 'user' => $user->model()->id]);
     }
 
     /**

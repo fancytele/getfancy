@@ -42,8 +42,8 @@ class FancySettingService
 
         $setting->business_hours = $request->input('business_hours');
         $setting->downtime_hours = $request->input('downtime_hours');
-        $setting->email_notification = (string) $request->input('notification.email');
-        $setting->period_notification = (string) $request->input('notification.period');
+        $setting->email_notification = (string)$request->input('notification.email');
+        $setting->period_notification = (string)$request->input('notification.period');
 
         $setting->business_message_id = $request->input('business_id');
 
@@ -83,11 +83,12 @@ class FancySettingService
 
     /**
      * Get settings value to display in Form
+     * @return mixed
      */
     public function getSettingsToEdit()
     {
         if (is_null($this->user->fancy_setting)) {
-            return [];
+            return (object)[];
         }
 
         return collect([

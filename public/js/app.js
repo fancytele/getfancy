@@ -3443,6 +3443,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -3478,7 +3502,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       laddaButton: null,
       isProcessing: true,
-      isUserCreated: false,
+      userCreated: null,
       errors: {},
       sameAddress: false,
       reservationDID: {
@@ -3852,7 +3876,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this14 = this;
 
       axios.post(this.urls.create_user, this.user).then(function (response) {
-        _this14.isUserCreated = true;
+        _this14.userCreated = response.data.user;
 
         _this14.$nextTick(function () {
           $('#user-created-message').modal({
@@ -3913,6 +3937,13 @@ __webpack_require__.r(__webpack_exports__);
     },
     userHasReservation: function userHasReservation() {
       return this.user.did.hasOwnProperty('reservation');
+    },
+    fancySettingUrl: function fancySettingUrl() {
+      if (this.userCreated === null) {
+        return '';
+      }
+
+      return this.urls.fancy_settings.replace('_user_', this.userCreated);
     }
   },
   watch: {
@@ -65690,7 +65721,8 @@ var render = function() {
                               _vm._v(
                                 _vm._s(_vm.trans(product.name)) +
                                   " - $" +
-                                  _vm._s(_vm.trans(product.cost))
+                                  _vm._s(_vm.trans(product.cost)) +
+                                  "\n                                    "
                               )
                             ]
                           )
@@ -65700,7 +65732,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("product")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.product[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.product[0]) +
+                                "\n                                "
+                            )
                           ])
                         : _vm._e()
                     ]),
@@ -65778,11 +65813,11 @@ var render = function() {
                                 },
                                 [
                                   _vm._v(
-                                    "\n                    " +
+                                    "\n                                        " +
                                       _vm._s(_vm.trans(addon.name)) +
                                       " - $" +
                                       _vm._s(addon.cost) +
-                                      "\n                    "
+                                      "\n                                        "
                                   ),
                                   _c(
                                     "span",
@@ -65790,11 +65825,7 @@ var render = function() {
                                       staticClass: "form-text text-muted",
                                       attrs: { id: addon.code + "-help-block" }
                                     },
-                                    [
-                                      _vm._v(
-                                        _vm._s(addon.name) + " description text"
-                                      )
-                                    ]
+                                    [_vm._v(_vm._s(addon.description))]
                                   )
                                 ]
                               )
@@ -65977,7 +66008,10 @@ var render = function() {
                     _vm._v(" "),
                     _vm.errors.hasOwnProperty("number_type")
                       ? _c("div", { staticClass: "invalid-feedback" }, [
-                          _vm._v(_vm._s(_vm.errors.number_type[0]))
+                          _vm._v(
+                            _vm._s(_vm.errors.number_type[0]) +
+                              "\n                                "
+                          )
                         ])
                       : _vm._e()
                   ])
@@ -66025,7 +66059,10 @@ var render = function() {
                     _vm._v(" "),
                     _vm.errors.hasOwnProperty("phone_number")
                       ? _c("div", { staticClass: "invalid-feedback" }, [
-                          _vm._v(_vm._s(_vm.errors.phone_number[0]))
+                          _vm._v(
+                            _vm._s(_vm.errors.phone_number[0]) +
+                              "\n                                "
+                          )
                         ])
                       : _vm._e()
                   ])
@@ -66041,9 +66078,9 @@ var render = function() {
                         _c("p", { staticClass: "mb-0" }, [
                           _c("b", [_vm._v("DID:")]),
                           _vm._v(
-                            "\n                  " +
+                            "\n                                    " +
                               _vm._s(_vm._f("phone")(_vm.user.did.number)) +
-                              "\n                "
+                              "\n                                "
                           )
                         ]),
                         _vm._v(" "),
@@ -66086,9 +66123,9 @@ var render = function() {
                         [
                           _c("i", { staticClass: "fe fe-phone-off mr-2" }),
                           _vm._v(
-                            "\n                " +
+                            "\n                                " +
                               _vm._s(_vm.trans("Cancel reservation")) +
-                              "\n              "
+                              "\n                            "
                           )
                         ]
                       )
@@ -66112,9 +66149,9 @@ var render = function() {
                       [
                         _c("i", { staticClass: "fe fe-search mr-2" }),
                         _vm._v(
-                          "\n              " +
+                          "\n                            " +
                             _vm._s(_vm.trans("Search DIDs")) +
-                            "\n            "
+                            "\n                        "
                         )
                       ]
                     ),
@@ -66125,7 +66162,12 @@ var render = function() {
                   ? _c(
                       "div",
                       { staticClass: "d-block invalid-feedback mt-3" },
-                      [_vm._v(_vm._s(_vm.trans("The DID is required")))]
+                      [
+                        _vm._v(
+                          _vm._s(_vm.trans("The DID is required")) +
+                            "\n                        "
+                        )
+                      ]
                     )
                   : _vm._e()
               ])
@@ -66193,7 +66235,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("first_name")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.first_name[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.first_name[0]) +
+                                "\n                                    "
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -66237,7 +66282,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("last_name")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.last_name[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.last_name[0]) +
+                                "\n                                    "
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -66281,7 +66329,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("email")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.email[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.email[0]) +
+                                "\n                                    "
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -66331,7 +66382,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("email_confirmation")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.email_confirmation[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.email_confirmation[0]) +
+                                "\n                                    "
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -66389,7 +66443,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("company_name")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.company_name[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.company_name[0]) +
+                                "\n                                    "
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -66439,7 +66496,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("company_phone")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.company_phone[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.company_phone[0]) +
+                                "\n                                    "
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -66488,7 +66548,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("company_contact_name")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.company_contact_name[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.company_contact_name[0]) +
+                                "\n                                    "
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -66540,7 +66603,10 @@ var render = function() {
                         _vm._v(" "),
                         _vm.errors.hasOwnProperty("company_country")
                           ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(_vm._s(_vm.errors.company_country[0]))
+                              _vm._v(
+                                _vm._s(_vm.errors.company_country[0]) +
+                                  "\n                                    "
+                              )
                             ])
                           : _vm._e()
                       ],
@@ -66592,7 +66658,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("company_city")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.company_city[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.company_city[0]) +
+                                "\n                                    "
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -66642,7 +66711,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("company_state")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.company_state[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.company_state[0]) +
+                                "\n                                    "
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -66692,7 +66764,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("company_zip_code")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.company_zip_code[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.company_zip_code[0]) +
+                                "\n                                    "
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -66745,7 +66820,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("company_address1")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.company_address1[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.company_address1[0]) +
+                                "\n                                    "
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -66928,7 +67006,10 @@ var render = function() {
                         _vm._v(" "),
                         _vm.errors.hasOwnProperty("billing_country")
                           ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(_vm._s(_vm.errors.billing_country[0]))
+                              _vm._v(
+                                _vm._s(_vm.errors.billing_country[0]) +
+                                  "\n                                    "
+                              )
                             ])
                           : _vm._e()
                       ],
@@ -66981,7 +67062,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("billing_city")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.billing_city[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.billing_city[0]) +
+                                "\n                                    "
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -67032,7 +67116,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("billing_state")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.billing_state[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.billing_state[0]) +
+                                "\n                                    "
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -67083,7 +67170,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("billing_zip_code")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.billing_zip_code[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.billing_zip_code[0]) +
+                                "\n                                    "
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -67137,7 +67227,10 @@ var render = function() {
                       _vm._v(" "),
                       _vm.errors.hasOwnProperty("billing_address1")
                         ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(_vm._s(_vm.errors.billing_address1[0]))
+                            _vm._v(
+                              _vm._s(_vm.errors.billing_address1[0]) +
+                                "\n                                    "
+                            )
                           ])
                         : _vm._e()
                     ])
@@ -67206,6 +67299,7 @@ var render = function() {
                           staticClass: "stripe-card",
                           class: { complete: _vm.stripe.validationCompleted },
                           attrs: {
+                            id: "credit-card",
                             stripe: _vm.stripe.key,
                             options: _vm.stripe.options
                           },
@@ -67226,7 +67320,12 @@ var render = function() {
                             staticClass: "d-block invalid-feedback",
                             attrs: { id: "card-errors", role: "alert" }
                           },
-                          [_vm._v(_vm._s(_vm.stripe.error))]
+                          [
+                            _vm._v(
+                              _vm._s(_vm.stripe.error) +
+                                "\n                                    "
+                            )
+                          ]
                         )
                       ],
                       1
@@ -67252,7 +67351,12 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v(_vm._s(_vm.trans("Previous")))]
+                      [
+                        _vm._v(
+                          _vm._s(_vm.trans("Previous")) +
+                            "\n                            "
+                        )
+                      ]
                     )
                   : _vm._e(),
                 _vm._v(" "),
@@ -67268,7 +67372,12 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v(_vm._s(_vm.trans("Next")))]
+                      [
+                        _vm._v(
+                          _vm._s(_vm.trans("Next")) +
+                            "\n                            "
+                        )
+                      ]
                     )
                   : _vm._e(),
                 _vm._v(" "),
@@ -67296,7 +67405,12 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v(_vm._s(_vm.trans("Create")))]
+                  [
+                    _vm._v(
+                      _vm._s(_vm.trans("Create")) +
+                        "\n                            "
+                    )
+                  ]
                 ),
                 _vm._v(" "),
                 Object.keys(_vm.errors).length > 0
@@ -67562,9 +67676,9 @@ var render = function() {
                           [
                             _c("i", { staticClass: "fe fe-search" }),
                             _vm._v(
-                              "\n                " +
+                              "\n                                " +
                                 _vm._s(_vm.trans("Search")) +
-                                "\n              "
+                                "\n                            "
                             )
                           ]
                         )
@@ -67601,9 +67715,9 @@ var render = function() {
                             _vm._v(_vm._s(_vm.availablesDIDs.length))
                           ]),
                           _vm._v(
-                            "\n              " +
+                            "\n                            " +
                               _vm._s(_vm.trans("Availables DIDs")) +
-                              "\n            "
+                              "\n                        "
                           )
                         ]),
                         _vm._v(" "),
@@ -67722,7 +67836,12 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v(_vm._s(_vm.trans("Load more")) + "...")]
+                          [
+                            _vm._v(
+                              _vm._s(_vm.trans("Load more")) +
+                                "...\n                        "
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
@@ -67769,9 +67888,9 @@ var render = function() {
                       _vm.reservationDID.item.hasOwnProperty("id")
                         ? _c("div", { staticClass: "col" }, [
                             _vm._v(
-                              "\n            " +
+                              "\n                        " +
                                 _vm._s(_vm.trans("Selected DID")) +
-                                ":\n            "
+                                ":\n                        "
                             ),
                             _c("div", { staticClass: "font-weight-bold" }, [
                               _vm._v(
@@ -67792,7 +67911,12 @@ var render = function() {
                             staticClass: "btn btn-light px-4",
                             attrs: { type: "button", "data-dismiss": "modal" }
                           },
-                          [_vm._v(_vm._s(_vm.trans("Cancel")))]
+                          [
+                            _vm._v(
+                              _vm._s(_vm.trans("Cancel")) +
+                                "\n                        "
+                            )
+                          ]
                         ),
                         _vm._v(" "),
                         _c(
@@ -67813,7 +67937,12 @@ var render = function() {
                               }
                             }
                           },
-                          [_vm._v(_vm._s(_vm.trans("Reserve")))]
+                          [
+                            _vm._v(
+                              _vm._s(_vm.trans("Reserve")) +
+                                "\n                        "
+                            )
+                          ]
                         )
                       ])
                     ]
@@ -67825,7 +67954,7 @@ var render = function() {
         )
       : _vm._e(),
     _vm._v(" "),
-    _vm.isUserCreated
+    _vm.userCreated !== null
       ? _c(
           "div",
           {
@@ -67876,11 +68005,11 @@ var render = function() {
                             staticClass:
                               "btn btn-block btn-lg btn-success rounded-0",
                             attrs: {
-                              href: _vm.urls.user_list,
+                              href: _vm.fancySettingUrl,
                               "data-style": "zoom-out"
                             }
                           },
-                          [_vm._v(_vm._s(_vm.trans("Return to list")))]
+                          [_vm._v(_vm._s(_vm.trans("Go to Fancy Settings")))]
                         )
                       ]
                     )
