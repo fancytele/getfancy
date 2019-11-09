@@ -111,7 +111,6 @@ class FancySettingService
     }
 
     /**
-     * @param FancySetting $setting
      * @param int $userId
      * @param string|null $reason
      */
@@ -129,6 +128,7 @@ class FancySettingService
                 $current_ticket->delete();
 
                 $new_ticket->parent_id = $current_ticket->id;
+                $new_ticket->assigned_id = $current_ticket->assigned_id;
             }
 
             $new_ticket->save();

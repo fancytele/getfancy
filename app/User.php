@@ -56,8 +56,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the user's display name.
-     *
      * @return string
      */
     public function getDisplayNameAttribute()
@@ -69,8 +67,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's full name.
-     *
      * @return string
      */
     public function getFullNameAttribute()
@@ -79,8 +75,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's avatar url.
-     *
      * @return string
      */
     public function getAvatarAttribute()
@@ -90,53 +84,41 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's is active flag.
-     *
-     * @return string
+     * @return boolean
      */
     public function getIsActiveAttribute()
     {
         return !$this->trashed();
     }
 
-    /**
-     * Get the subscriptions for the user.
-     */
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class, $this->getForeignKey())->orderBy('created_at', 'desc');
     }
 
-    /**
-     * Get the addresses for the user.
-     */
     public function addresses()
     {
         return $this->hasMany(Address::class);
     }
 
-    /**
-     * Get the Fancy number for the user
-     */
     public function fancy_number()
     {
         return $this->hasOne(FancyNumber::class);
     }
 
-    /**
-     * Get the user's ticket.
-     */
     public function tickets()
     {
         return $this->hasManyThrough(Ticket::class, FancyNumber::class);
     }
 
-    /**
-     * Get the user's ticket.
-     */
     public function fancy_setting()
     {
         return $this->hasOneThrough(FancySetting::class, FancyNumber::class);
+    }
+
+    public function invoice()
+    {
+        return $this->hasMany(Invoice::class);
     }
 
     /**
@@ -173,11 +155,7 @@ class User extends Authenticatable
      */
     public function hasBoughtAddon(int $addonId)
     {
-        if (is_null($addonId)) {
-            return false;
-        }
-
-        return Invoice::where('user_id', $this->id)->where('addon_id', $addonId)->count('id') > 0;
+        return $this->invoice()->where('user_id', $this->id)->where('addon_id', $addonId)->count('id') > 0;
     }
 
     public function hasTicketInProgress()
