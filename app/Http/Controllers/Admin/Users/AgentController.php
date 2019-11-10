@@ -69,7 +69,7 @@ class AgentController extends Controller
 
         return response()
             ->redirectToRoute('admin.agents.index')
-            ->with('alert', ['type' => 'success', 'message' => 'Agent created.']);
+            ->with('alert', ['type' => 'success', 'message' => 'Agent created']);
     }
 
     /**

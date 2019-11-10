@@ -139,7 +139,7 @@
     "User": "Usuario",
     "Users": "Usuarios",
     "success": "exitoso",
-    "Agente created": "Agente creado",
+    "Agent created": "Agente creado",
     "Agent updated": "Agente actualizado",
     "Agent inactivated": "Agente inhabilitado",
     "Agent restored": "Agente habilitado",
@@ -195,5 +195,14 @@
     "Fri": "Vie",
     "Sat": "Sab",
     "Sun": "Dom",
-    "Go to Fancy Settings": "Ir a Configuración de Fancy"
+    "Go to Fancy Settings": "Ir a Configuración de Fancy",
+    "Operator": "Operadores",
+    "Operator list": "Lista de Operadores",
+    "Create operator": "Crear operador",
+    "No operators yet": "No hay operadores",
+    "Operator created": "Operador creado",
+    "Operator updated": "Operador actualizado",
+    "Operator inactivated": "Operador inhabilitado",
+    "Operator restored": "Operador habilitado",
+    "Operator password reseted": "Contraseña reiniciada"
 }
