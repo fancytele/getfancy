@@ -78,32 +78,38 @@
 
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link " href="{{ route('admin.dashboard') }}">
+                                <a class="nav-link{{ (request()->is('admin/dashboard')) ? ' active' : ''}}" href="{{ route('admin.dashboard') }}">
                                     <i class="fe fe-home"></i> Dashboard
                                 </a>
                             </li>
                             @hasanyrole('admin|agent')
                             <li class="nav-item">
-                                <a class="nav-link" href="#sidebarUsers" data-toggle="collapse" role="button"
-                                   aria-expanded="false" aria-controls="sidebarUsers">
+                                <a class="nav-link{{ (request()->is('admin/users*', 'admin/agents*', 'admin/operators*')) ? ' active' : ''}}"
+                                   href="#sidebarUsers" data-toggle="collapse" role="button"
+                                   aria-expanded="{{ (request()->is('admin/users*', 'admin/agents*', 'admin/operators*')) ? 'true' : 'false'}}"
+                                   aria-controls="sidebarUsers">
                                     <i class="fe fe-users"></i>
                                     @lang('User management')
                                 </a>
-                                <div class="collapse" id="sidebarUsers">
+                                <div id="sidebarUsers"
+                                     class="collapse {{ (request()->is('admin/users*', 'admin/agents*', 'admin/operators*')) ? ' show' : ''}}">
                                     <ul class="nav nav-sm flex-column">
                                         <li class="nav-item">
-                                            <a href="{{ route('admin.users.index') }}" class="nav-link">
+                                            <a href="{{ route('admin.users.index') }}"
+                                               class="nav-link {{ (request()->is('admin/users*')) ? ' active' : ''}}">
                                                 @lang('Users')
                                             </a>
                                         </li>
                                         @role('admin')
                                         <li class="nav-item">
-                                            <a href="{{ route('admin.agents.index') }}" class="nav-link ">
+                                            <a href="{{ route('admin.agents.index') }}"
+                                               class="nav-link{{ (request()->is('admin/agents*')) ? ' active' : ''}}">
                                                 @lang('Agents')
                                             </a>
                                         </li>
                                         <li class="nav-item">
-                                            <a href="{{ route('admin.operators.index') }}" class="nav-link ">
+                                            <a href="{{ route('admin.operators.index') }}"
+                                               class="nav-link{{ (request()->is('admin/operators*')) ? ' active' : ''}}">
                                                 @lang('Operator')
                                             </a>
                                         </li>
