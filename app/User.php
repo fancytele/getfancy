@@ -3,10 +3,12 @@
 namespace App;
 
 use App\Enums\Role;
+use App\Enums\TicketStatus;
 use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
@@ -54,8 +56,6 @@ class User extends Authenticatable
     ];
 
     /**
-     * Get the user's display name.
-     *
      * @return string
      */
     public function getDisplayNameAttribute()
@@ -67,8 +67,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's full name.
-     *
      * @return string
      */
     public function getFullNameAttribute()
@@ -77,8 +75,6 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's avatar url.
-     *
      * @return string
      */
     public function getAvatarAttribute()
@@ -88,47 +84,51 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the user's is active flag.
-     *
-     * @return string
+     * @return boolean
      */
     public function getIsActiveAttribute()
     {
         return !$this->trashed();
     }
 
-    /**
-     * Get the subscriptions for the user.
-     */
     public function subscriptions()
     {
         return $this->hasMany(Subscription::class, $this->getForeignKey())->orderBy('created_at', 'desc');
     }
 
-    /**
-     * Get the addresses for the user.
-     */
     public function addresses()
     {
         return $this->hasMany(Address::class);
     }
 
-    /**
-     * Get the Fancy numbers for the user
-     */
-    public function fancy_numbers()
+    public function fancy_number()
     {
-        return $this->hasMany(FancyNumber::class);
+        return $this->hasOne(FancyNumber::class);
+    }
+
+    public function tickets()
+    {
+        return $this->hasManyThrough(Ticket::class, FancyNumber::class);
+    }
+
+    public function fancy_setting()
+    {
+        return $this->hasOneThrough(FancySetting::class, FancyNumber::class);
+    }
+
+    public function invoice()
+    {
+        return $this->hasMany(Invoice::class);
     }
 
     /**
-     * Generate random encrypted password. 
+     * Generate random encrypted password.
      *
-     * @return void
+     * @return string
      */
     public static function generatePassword()
     {
-        return bcrypt(str_random(35));
+        return bcrypt(Str::random(35));
     }
 
     /**
@@ -144,8 +144,22 @@ class User extends Authenticatable
             ->whereNull('users.deleted_at')
             ->where('model_has_roles.model_type', 'App\\User')
             ->where('roles.guard_name', 'web')
-            ->where('roles.name', '<>', Role::Admin)
+            ->where('roles.name', '<>', Role::ADMIN)
             ->groupBy('roles.id')
             ->get();
+    }
+
+    /**
+     * @param int $addonId
+     * @return bool
+     */
+    public function hasBoughtAddon(int $addonId)
+    {
+        return $this->invoice()->where('user_id', $this->id)->where('addon_id', $addonId)->count('id') > 0;
+    }
+
+    public function hasTicketInProgress()
+    {
+        return $this->tickets->isNotEmpty() && $this->tickets->where('status', TicketStatus::IN_PROGRESS)->count() > 0;
     }
 }

@@ -24,6 +24,9 @@ class EventServiceProvider extends ServiceProvider
         'App\Events\SendEmailReceiptEvent' => [
             'App\Listeners\SendEmailReceiptListener',
         ],
+        'App\Events\RegisterInvoiceEvent' => [
+            'App\Listeners\RegisterInvoiceListener'
+        ]
     ];
 
     /**

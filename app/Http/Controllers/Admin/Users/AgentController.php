@@ -32,7 +32,7 @@ class AgentController extends Controller
      */
     public function index()
     {;
-        $agents = User::role(Role::Agent)->withTrashed()->get();
+        $agents = User::role(Role::AGENT)->withTrashed()->get();
         return view('admin.agents.index', compact('agents'));
     }
 
@@ -63,7 +63,7 @@ class AgentController extends Controller
         $agent->password = $agent->generatePassword();
 
         $agent->save();
-        $agent->assignRole(Role::Agent);
+        $agent->assignRole(Role::AGENT);
 
         Mail::to($agent)->send(new WelcomeMail($agent));
 

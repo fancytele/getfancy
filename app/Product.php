@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Enums\ProductRenews;
-use Illuminate\Support\Facades\Log;
 
 class Product extends Model
 {
@@ -31,7 +30,7 @@ class Product extends Model
      */
     public function getRenewAttribute()
     {
-        return $this->attributes['renew'] = ProductRenews::getValue($this->name);
+        return $this->attributes['renew'] = ProductRenews::getValue(strtoupper($this->name));
     }
 
     /**

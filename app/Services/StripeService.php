@@ -4,6 +4,7 @@ namespace App\Services;
 
 use Stripe\Customer as StripeCustomer;
 use Stripe\Invoice as StripeInvoice;
+use Stripe\InvoiceItem as StripeInvoiceItem;
 use Stripe\Plan as StripePlan;
 use Stripe\Product as StripeProduct;
 use Stripe\Subscription as StripeSubscription;
@@ -20,7 +21,7 @@ class StripeService
     /**
      * Create a Stripe customer for the given model.
      *
-     * @param  array  $options
+     * @param array $options
      * @return \Stripe\Customer
      */
     public function createCustomer(array $options = [])
@@ -47,11 +48,10 @@ class StripeService
     }
 
     /**
-     * Get a Stripe Product by name.
-     * 
      * @param string $name
      * @return mixed
-     * */
+     * @throws \Stripe\Error\Api
+     */
     public function getProductByName(string $name)
     {
         $products = collect($this->getAllProducts()->data);
@@ -60,9 +60,9 @@ class StripeService
     }
 
     /**
-     * Get a collection of Products.
-     * 
+     * @param int $limit
      * @return \Stripe\Collection
+     * @throws \Stripe\Error\Api
      */
     public function getAllProducts(int $limit = 100)
     {
@@ -74,7 +74,8 @@ class StripeService
      *
      * @param string $product_id
      * @param array $names
-     * @return Illuminate\Support\Collection
+     * @return \Illuminate\Support\Collection
+     * @throws \Stripe\Error\Api
      */
     public function getProductPlansByNames(string $product_id, array $names)
     {
@@ -84,11 +85,10 @@ class StripeService
     }
 
     /**
-     * Get a collection of Plans
-     *
      * @param string $product_id
      * @param integer $limit
      * @return \Stripe\Collection
+     * @throws \Stripe\Error\Api
      */
     public function getAllPlansByProduct(string $product_id, int $limit = 100)
     {
@@ -99,8 +99,26 @@ class StripeService
     }
 
     /**
-     * Get a Stripe Invoice by Id
-     *
+     * @param int $amount | Amount in cents
+     * @param string $customerEmail
+     * @param string $description
+     * @return StripeInvoice
+     * @throws \Stripe\Error\Api
+     */
+    public function createInvoice(int $amount, string $customerEmail, string $description)
+    {
+        $customer = $this->retreiveCustomeByEmail($customerEmail);
+        $this->generateInvoiceItem($amount, $customer->id, $description);
+
+        $invoice = StripeInvoice::create(
+            ['customer' => $customer->id, 'collection_method' => 'charge_automatically'],
+            $this->getStripeKey()
+        );
+
+        return $invoice->pay();
+    }
+
+    /**
      * @param string $id
      * @return \Stripe\Invoice
      */
@@ -109,9 +127,18 @@ class StripeService
         return StripeInvoice::retrieve($id, $this->getStripeKey());
     }
 
-    /** 
+    /**
+     * @param string $subscription_id
+     * @return \Stripe\Subscription
+     */
+    public function getSubscription(string $subscription_id)
+    {
+        return StripeSubscription::retrieve($subscription_id, $this->getStripeKey());
+    }
+
+    /**
      * Build the payload for subscription creation.
-     * 
+     *
      * @param array $options
      * @return array
      */
@@ -134,19 +161,6 @@ class StripeService
     }
 
     /**
-     * Get Subscription by Id
-     *
-     * @param string $subscription_id
-     * @return \Stripe\Subscription
-     */
-    public function getSubscription(string $subscription_id)
-    {
-        return StripeSubscription::retrieve($subscription_id, $this->getStripeKey());
-    }
-
-    /**
-     * Get the Stripe API key.
-     *
      * @return string
      */
     private function getStripeKey()
@@ -162,5 +176,32 @@ class StripeService
 
         $this->stripeKey = config('services.stripe.secret');
         return $this->stripeKey;
+    }
+
+    /**
+     * @param string $email
+     * @return mixed
+     * @throws \Stripe\Error\Api
+     */
+    private function retreiveCustomeByEmail(string $email)
+    {
+        $customers = StripeCustomer::all(['email' => $email], $this->getStripeKey());
+
+        return $customers->data[0];
+    }
+
+    /**
+     * @param int $amount
+     * @param string $customerId
+     * @param string $description
+     */
+    private function generateInvoiceItem(int $amount, string $customerId, string $description)
+    {
+        StripeInvoiceItem::create([
+            'amount' => $amount,
+            'currency' => 'usd',
+            'customer' => $customerId,
+            'description' => $description,
+        ], $this->getStripeKey());
     }
 }

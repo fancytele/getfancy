@@ -4,13 +4,13 @@ namespace App\Enums;
 
 abstract class DIDOrderStatus extends Enum
 {
-    const Pending = "pending";
-    const Completed = "completed";
-    const Canceled = "canceled";
+    const PENDING = "pending";
+    const COMPLETED = "completed";
+    const CANCELED = "canceled";
 }
 
 abstract class DIDNumberType extends Enum
 {
-    const Custom = "custom";
-    const Fancy = "fancy";
+    const CUSTOM = "custom";
+    const FANCY = "fancy";
 }

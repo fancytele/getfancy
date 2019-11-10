@@ -23,7 +23,7 @@
                         <div
                              class="align-items-center d-flex justify-content-between">
                             <button type="submit"
-                                    class="btn btn-primary ladda-button px-4"
+                                    class="btn btn-primary ladda-button js-ladda-submit px-4"
                                     data-style="zoom-out">
                                 @lang('Edit')
                             </button>
@@ -75,7 +75,7 @@
                             @lang('Cancel')
                         </button>
                         <button type="submit"
-                                class="btn btn-lg btn-primary ladda-button rounded-0 w-50"
+                                class="btn btn-lg btn-primary ladda-button js-ladda-submit rounded-0 w-50"
                                 data-style="zoom-out">
                             @lang('Confirm')
                         </button>

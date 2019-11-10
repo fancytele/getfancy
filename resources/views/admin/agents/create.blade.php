@@ -20,7 +20,7 @@
                         @include('admin.agents._form')
 
                         <button type="submit"
-                                class="btn btn-primary ladda-button px-4"
+                                class="btn btn-primary ladda-button js-ladda-submit px-4"
                                 data-style="zoom-out">@lang('Create')</button>
                     </form>
                 </div>

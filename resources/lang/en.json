@@ -26,5 +26,9 @@
     "contactUsSuccessMessage": "We’ll contact you shortly”",
     "contactUsErrorMessage": "An error has ocurred, please try again",
     "checkoutTestimonial": "Like you, our mission is to connect people, therefore the needs of our clients come first.",
-    "User created messsage": "An email has been sent to the User to complete their registration"
+    "User created messsage": "An email has been sent to the User to complete their registration",
+    "Business hours description": "Choose your business hours! (these will be the times your PBX message will be heard).",
+    "Downtime hours description": "Hours where your business is not working.",
+    "Notifications description": "Provide the email to which you will receive your call detail records. Choose the frequency in which you wish to receive these.",
+    "Custom extensions description": "Choose the extension number  customers will dial to reach a person or department"
 }

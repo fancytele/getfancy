@@ -69,7 +69,7 @@
                     </div>
 
                     <!-- Submit -->
-                    <button type="submit" class="btn btn-lg btn-block btn-primary ladda-button mb-3"
+                    <button type="submit" class="btn btn-lg btn-block btn-primary ladda-button js-ladda-submit mb-3"
                             data-style="zoom-out">
                         @lang('Reset Password')
                     </button>

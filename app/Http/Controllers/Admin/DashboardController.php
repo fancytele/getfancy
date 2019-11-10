@@ -27,7 +27,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        if (Auth::user()->hasRole(Role::User)) {
+        if (Auth::user()->hasRole(Role::USER)) {
             $faker = \Faker\Factory::create();
             $calls = collect([]);
             

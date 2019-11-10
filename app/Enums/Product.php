@@ -4,7 +4,7 @@ namespace App\Enums;
 
 abstract class ProductRenews extends Enum
 {
-    const Monthly = "month";
-    const Annually = "year";
-    const Biennially = "two year";
+    const MONTHLY = "month";
+    const ANNUALLY = "year";
+    const BIENNIALLY = "two year";
 }

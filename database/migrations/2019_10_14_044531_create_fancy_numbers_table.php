@@ -23,7 +23,7 @@ class CreateFancyNumbersTable extends Migration
             $table->uuid('did_purchase_id');
             $table->string('did_number');
             $table->string('did_reference');
-            $table->string('did_status')->default(DIDOrderStatus::Pending);
+            $table->string('did_status')->default(DIDOrderStatus::PENDING);
             $table->timestamps();
             $table->softDeletes();
 

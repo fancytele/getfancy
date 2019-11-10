@@ -94,7 +94,7 @@
 
                     <!-- Submit -->
                     <button type="submit"
-                            class="btn btn-lg btn-block btn-primary ladda-button mb-3"
+                            class="btn btn-lg btn-block btn-primary ladda-button js-ladda-submit mb-3"
                             data-style="zoom-out">
                         <span class="ladda-label">@lang('Login')</span>
                     </button>
