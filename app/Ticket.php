@@ -40,4 +40,14 @@ class Ticket extends Model
     {
         return $this->status === TicketStatus::IN_PROGRESS;
     }
+
+    public function fancyNumber()
+    {
+        return $this->belongsTo(FancyNumber::class);
+    }
+
+    public function parent()
+    {
+        return $this->hasOne(Ticket::class, 'id', 'parent_id')->withTrashed();
+    }
 }

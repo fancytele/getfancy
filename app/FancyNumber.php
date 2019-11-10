@@ -32,6 +32,11 @@ class FancyNumber extends Model
         return $this->hasMany(FancySetting::class);
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     /**
      * Get the Ticket for the Fancy Number
      */

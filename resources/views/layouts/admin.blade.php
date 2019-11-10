@@ -78,7 +78,8 @@
 
                         <ul class="navbar-nav">
                             <li class="nav-item">
-                                <a class="nav-link{{ (request()->is('admin/dashboard')) ? ' active' : ''}}" href="{{ route('admin.dashboard') }}">
+                                <a class="nav-link{{ (request()->is('admin/dashboard')) ? ' active' : ''}}"
+                                   href="{{ route('admin.dashboard') }}">
                                     <i class="fe fe-home"></i> Dashboard
                                 </a>
                             </li>
@@ -116,6 +117,14 @@
                                         @endrole
                                     </ul>
                                 </div>
+                            </li>
+                            @endhasanyrole
+                            @hasanyrole('admin|operator')
+                            <li class="nav-item">
+                                <a class="nav-link{{ (request()->is('admin/tickets*')) ? ' active' : ''}}"
+                                   href="{{ route('admin.tickets.index') }}">
+                                    <i class="fe fe-clipboard"></i> Tickets
+                                </a>
                             </li>
                             @endhasanyrole
                         </ul>
