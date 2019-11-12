@@ -25,6 +25,14 @@ class FancyNumber extends Model
     ];
 
     /**
+     * Accesor to get DID number with US format
+     */
+    public function getUsDIDNumberAttribute()
+    {
+        return preg_replace('/(\d{1})(\d{3})(\d{3})(\d{4})/', '$1($2) $3-$4', $this->did_number);
+    }
+
+    /**
      * Get the settings for the Fancy number.
      */
     public function settings()

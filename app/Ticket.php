@@ -32,15 +32,16 @@ class Ticket extends Model
     ];
 
     /**
-     * Return if Ticket is In Progress
-     *
-     * @return bool
+     * @return boolean
      */
     public function inProgress()
     {
         return $this->status === TicketStatus::IN_PROGRESS;
     }
 
+    /**
+     * @return boolean
+     */
     public function fancyNumber()
     {
         return $this->belongsTo(FancyNumber::class);
@@ -49,5 +50,10 @@ class Ticket extends Model
     public function parent()
     {
         return $this->hasOne(Ticket::class, 'id', 'parent_id')->withTrashed();
+    }
+
+    public function assigned()
+    {
+        return $this->belongsTo(User::class, 'assigned_id');
     }
 }
