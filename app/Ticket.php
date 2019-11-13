@@ -32,6 +32,24 @@ class Ticket extends Model
     ];
 
     /**
+     * The attributes that should be cast to native types.
+     *
+     * @var array
+     */
+    protected $casts = [
+        'started_at' => 'datetime',
+        'completed_at' => 'datetime',
+    ];
+
+    /**
+     * @return string
+     */
+    public function getStatusLabelAttribute()
+    {
+        return ucfirst(str_replace('_', ' ', $this->status));
+    }
+
+    /**
      * @return boolean
      */
     public function inProgress()
@@ -42,7 +60,7 @@ class Ticket extends Model
     /**
      * @return boolean
      */
-    public function fancyNumber()
+    public function fancy_number()
     {
         return $this->belongsTo(FancyNumber::class);
     }

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Enums\TicketStatus;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Ticket;
@@ -16,7 +15,7 @@ class TicketController extends Controller
      */
     public function index()
     {
-        $tickets = Ticket::withTrashed()->with(['fancyNumber.user', 'parent'])->get();
+        $tickets = Ticket::withTrashed()->with(['fancy_number.user', 'parent'])->get();
         return view('admin.tickets.index', compact('tickets'));
     }
 
@@ -44,12 +43,14 @@ class TicketController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $id)
     {
-        //
+        $ticket = Ticket::withTrashed()->find($id);
+
+        return view('admin.tickets.show', compact('ticket'));
     }
 
     /**

@@ -87,10 +87,10 @@
                                         </p>
                                     </td>
                                     <td class="align-middle orders-user-name">
-                                        <p class="mb-0">{{ $ticket->fancyNumber->user->full_name }}</p>
+                                        <p class="mb-0">{{ $ticket->fancy_number->user->full_name }}</p>
                                         <p class="mb-0 font-weight-bold">
                                             <i class="fe fe-phone font-weight-bold"></i>
-                                            {{ $ticket->fancyNumber->us_did_number }}
+                                            {{ $ticket->fancy_number->us_did_number }}
                                         </p>
                                     </td>
                                     <td class="align-middle orders-status">
