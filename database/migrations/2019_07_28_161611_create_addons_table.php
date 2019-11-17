@@ -20,7 +20,7 @@ class CreateAddonsTable extends Migration
             $table->string('code');
             $table->float('cost');
             $table->text('description')->nullable();
-            $table->tinyInteger('type')->default(AddonType::SUBSCRIPTION);
+            $table->tinyInteger('type')->default(1);
             $table->timestamps();
         });
     }
