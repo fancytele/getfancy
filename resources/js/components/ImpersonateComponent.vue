@@ -3,7 +3,8 @@
         class="fade fixed-right modal"
         tabindex="-1"
         role="dialog"
-        aria-hidden="true">
+        aria-hidden="true"
+        ref="impersonate-modal">
     <div class="modal-dialog modal-dialog-vertical" 
           role="document">
       <div class="modal-content">
@@ -29,7 +30,9 @@
                 {{ user.first_name }} {{ user.last_name }}
               </a>
             </div>
-            <button class="btn btn-block btn-sm btn-primary" @click="getUsersByRole()" v-show="!isLoading">Load more...</button>
+            <button class="btn btn-block btn-sm btn-primary" @click="getUsersByRole()" v-show="!isLoading && nextPage">
+              Load more...
+            </button>
           </div>
           <div class="text-center">
             <div class="align-middle mb-3 spinner-border text-primary"
@@ -85,6 +88,15 @@ export default {
       this.user = userId;
     }
   },
+  mounted() {
+    $(this.$refs['impersonate-modal']).on('show.bs.modal', (e) => {
+      this.isLoading = false;
+      this.role = null;
+      this.nextPage = null;
+      this.users = [];
+      this.user = null;
+    });
+  },
   computed: {
     formatedRolesUrl() {
       if (!this.role) {
@@ -92,7 +104,7 @@ export default {
       }
       
       if (this.nextPage) {
-        return this.nextPage;
+        return this.rolesUrl.replace('_role_', this.role) + this.nextPage;
       }
       
       return this.rolesUrl.replace('_role_', this.role);

@@ -4973,6 +4973,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['rolesUrl', 'impersonateUrl'],
   data: function data() {
@@ -5012,6 +5015,17 @@ __webpack_require__.r(__webpack_exports__);
       this.user = userId;
     }
   },
+  mounted: function mounted() {
+    var _this2 = this;
+
+    $(this.$refs['impersonate-modal']).on('show.bs.modal', function (e) {
+      _this2.isLoading = false;
+      _this2.role = null;
+      _this2.nextPage = null;
+      _this2.users = [];
+      _this2.user = null;
+    });
+  },
   computed: {
     formatedRolesUrl: function formatedRolesUrl() {
       if (!this.role) {
@@ -5019,7 +5033,7 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       if (this.nextPage) {
-        return this.nextPage;
+        return this.rolesUrl.replace('_role_', this.role) + this.nextPage;
       }
 
       return this.rolesUrl.replace('_role_', this.role);
@@ -70409,6 +70423,7 @@ var render = function() {
   return _c(
     "div",
     {
+      ref: "impersonate-modal",
       staticClass: "fade fixed-right modal",
       attrs: {
         id: "modal-vertical-right",
@@ -70539,8 +70554,8 @@ var render = function() {
                         {
                           name: "show",
                           rawName: "v-show",
-                          value: !_vm.isLoading,
-                          expression: "!isLoading"
+                          value: !_vm.isLoading && _vm.nextPage,
+                          expression: "!isLoading && nextPage"
                         }
                       ],
                       staticClass: "btn btn-block btn-sm btn-primary",
@@ -70550,7 +70565,7 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Load more...")]
+                    [_vm._v("\n            Load more...\n          ")]
                   )
                 ]
               ),

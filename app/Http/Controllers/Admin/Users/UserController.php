@@ -206,7 +206,9 @@ class UserController extends Controller
             ->users()
             ->select(['id', 'first_name', 'last_name'])
             ->orderBy('first_name')
-            ->paginate(5);
+            ->simplePaginate(5);
+
+        $users->setPath('/');
 
         return response()->json($users);
     }
