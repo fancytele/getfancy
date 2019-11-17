@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Subscription extends Model
@@ -24,8 +25,27 @@ class Subscription extends Model
         "trial_ends_at", "ends_at", "created_at", "updated_at"
     ];
 
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|\App\Product
+     */
     public function product()
     {
         return $this->belongsTo(Product::class);
+    }
+
+    /**
+     * Get total active subscriptions by product type
+     *
+     * @return mixed
+     */
+    public static function countByProduct()
+    {
+        return static::selectRaw('products.id, products.name as product_name, IFNULL(count(subscriptions.product_id), 0) as total')
+            ->from('products')
+            ->leftJoin('subscriptions', 'subscriptions.product_id', '=', 'products.id')
+            ->where('products.id', '>', '0')
+            ->orWhere('subscriptions.ends_at', '>=', Carbon::now())
+            ->groupBy('products.id')
+            ->get();
     }
 }

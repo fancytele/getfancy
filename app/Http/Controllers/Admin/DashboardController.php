@@ -4,9 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Enums\Role;
 use App\Http\Controllers\Controller;
+use App\Subscription;
 use App\User;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -30,7 +30,7 @@ class DashboardController extends Controller
         if (Auth::user()->hasRole(Role::USER)) {
             $faker = \Faker\Factory::create();
             $calls = collect([]);
-            
+
             for ($i = 0; $i < 10; $i++) {
                 $calls->add([
                     'started_at' => \Carbon\Carbon::instance($faker->dateTimeThisYear())->toFormattedDateString(),
@@ -47,7 +47,8 @@ class DashboardController extends Controller
         }
 
         $users = User::countByRole();
+        $subscriptions = Subscription::countByProduct();
 
-        return view("admin.dashboard-admin", compact('users'));
+        return view("admin.dashboard-admin", compact('users', 'subscriptions'));
     }
 }
