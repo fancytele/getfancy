@@ -21,13 +21,22 @@ class UsersTableSeeder extends Seeder
 
         $admin->assignRole('admin');
 
-        $agent = User::create([
-            'first_name' => 'Agent',
-            'last_name' => 'Nicoya',
-            'email' => 'amadeusjosue5+agent@gmail.com',
-            'password' => bcrypt('agent_nicoya'),
+        $admin = User::create([
+            'first_name' => 'Claudia',
+            'last_name' => 'Gomez',
+            'email' => 'clau.gomezp@gmail.com',
+            'password' => bcrypt('sadmin'),
         ]);
 
-        $agent->assignRole('agent');
+        $admin->assignRole('admin');
+
+        $admin = User::create([
+            'first_name' => 'Johnny',
+            'last_name' => 'Bosche',
+            'email' => 'jbosche@hyper-tele.com',
+            'password' => bcrypt('sadmin'),
+        ]);
+
+        $admin->assignRole('admin');
     }
 }
