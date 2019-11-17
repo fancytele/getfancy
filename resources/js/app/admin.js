@@ -105,6 +105,11 @@ window.onload = function () {
     el.addEventListener('click', logout);
   });
 
+  // Data Toggle - Bootstrap
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip()
+  })
+
   // Automatically trigger the loading animation on click
   if (typeof Ladda !== 'undefined') {
     Ladda.bind('button[type=submit].js-ladda-submit');

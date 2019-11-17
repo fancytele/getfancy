@@ -11,6 +11,8 @@ const mix = require('laravel-mix');
  |
  */
 
+const productionSourceMaps = false;
+
 // General
 mix.js('resources/js/app.js', 'public/js')
   .copyDirectory('resources/img', 'public/img');
@@ -23,4 +25,5 @@ mix.js('resources/js/web/home.js', 'public/js')
 // App
 mix.js('resources/js/app/login.js', 'public/js')
   .js(['resources/js/app/admin.js'], 'public/js/admin.js')
-  .sass('resources/sass/app/main.scss', 'public/css/app.css');
+  .sass('resources/sass/app/main.scss', 'public/css/app.css')
+  .sourceMaps(productionSourceMaps, 'source-map');

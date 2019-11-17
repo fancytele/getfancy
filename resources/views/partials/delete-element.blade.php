@@ -31,7 +31,7 @@
                             @lang('Cancel')
                         </button>
                         <button type="submit"
-                                class="btn btn-lg btn-danger ladda-button rounded-0 w-50"
+                                class="btn btn-lg btn-danger ladda-button js-ladda-submit rounded-0 w-50"
                                 data-style="zoom-out">
                             @lang('Delete')
                         </button>

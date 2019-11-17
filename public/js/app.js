@@ -4604,7 +4604,7 @@ __webpack_require__.r(__webpack_exports__);
       laddaButton: null,
       reason: '',
       businessHours: {
-        allDay: false,
+        all_day: false,
         days: [{
           id: 'monday',
           text: 'Mon',
@@ -4769,21 +4769,21 @@ __webpack_require__.r(__webpack_exports__);
         audio_type: this.audioType
       }; // Business Hours
 
-      if (this.businessHours.allDay || this.businessHours.days.filter(function (el) {
+      if (this.businessHours.all_day || this.businessHours.days.filter(function (el) {
         return el.enable;
       }).length > 0) {
         payload.business_hours = {
-          all_day: this.businessHours.allDay,
+          all_day: this.businessHours.all_day,
           days: this.businessHours.days
         };
       } // Downtime Hours
 
 
-      if (this.businessHours.allDay === false && this.downtimeHours.enable && this.downtimeHours.days.filter(function (el) {
+      if (this.businessHours.all_day === false && this.downtimeHours.enable && this.downtimeHours.days.filter(function (el) {
         return el.enable;
       }).length > 0) {
         payload.downtime_hours = {
-          all_day: this.downtimeHours.allDay,
+          enable: this.downtimeHours.enable,
           days: this.downtimeHours.days
         };
       } // PBX
@@ -4797,7 +4797,7 @@ __webpack_require__.r(__webpack_exports__);
         payload.business_text = this.pbx.business_text;
       }
 
-      if (this.businessHours.allDay === false) {
+      if (this.businessHours.all_day === false) {
         if (this.pbx.downtime && this.pbx.business > 0) {
           payload.downtime_id = this.pbx.downtime;
         }
@@ -68123,20 +68123,22 @@ var render = function() {
                                 {
                                   name: "model",
                                   rawName: "v-model",
-                                  value: _vm.businessHours.allDay,
-                                  expression: "businessHours.allDay"
+                                  value: _vm.businessHours.all_day,
+                                  expression: "businessHours.all_day"
                                 }
                               ],
                               staticClass: "custom-control-input",
                               attrs: { type: "checkbox", id: "all_day" },
                               domProps: {
-                                checked: Array.isArray(_vm.businessHours.allDay)
-                                  ? _vm._i(_vm.businessHours.allDay, null) > -1
-                                  : _vm.businessHours.allDay
+                                checked: Array.isArray(
+                                  _vm.businessHours.all_day
+                                )
+                                  ? _vm._i(_vm.businessHours.all_day, null) > -1
+                                  : _vm.businessHours.all_day
                               },
                               on: {
                                 change: function($event) {
-                                  var $$a = _vm.businessHours.allDay,
+                                  var $$a = _vm.businessHours.all_day,
                                     $$el = $event.target,
                                     $$c = $$el.checked ? true : false
                                   if (Array.isArray($$a)) {
@@ -68146,21 +68148,21 @@ var render = function() {
                                       $$i < 0 &&
                                         _vm.$set(
                                           _vm.businessHours,
-                                          "allDay",
+                                          "all_day",
                                           $$a.concat([$$v])
                                         )
                                     } else {
                                       $$i > -1 &&
                                         _vm.$set(
                                           _vm.businessHours,
-                                          "allDay",
+                                          "all_day",
                                           $$a
                                             .slice(0, $$i)
                                             .concat($$a.slice($$i + 1))
                                         )
                                     }
                                   } else {
-                                    _vm.$set(_vm.businessHours, "allDay", $$c)
+                                    _vm.$set(_vm.businessHours, "all_day", $$c)
                                   }
                                 }
                               }
@@ -68176,7 +68178,7 @@ var render = function() {
                       "div",
                       {
                         staticClass: "mt-5",
-                        class: { "disabled-setting": _vm.businessHours.allDay }
+                        class: { "disabled-setting": _vm.businessHours.all_day }
                       },
                       _vm._l(_vm.businessHours.days, function(item) {
                         return _c(
@@ -68500,7 +68502,7 @@ var render = function() {
                               attrs: {
                                 type: "checkbox",
                                 id: "enable_downtime",
-                                disabled: _vm.businessHours.allDay
+                                disabled: _vm.businessHours.all_day
                               },
                               domProps: {
                                 checked: Array.isArray(_vm.downtimeHours.enable)
@@ -68552,7 +68554,7 @@ var render = function() {
                         class: {
                           "disabled-setting":
                             !_vm.downtimeHours.enable ||
-                            _vm.businessHours.allDay
+                            _vm.businessHours.all_day
                         }
                       },
                       _vm._l(_vm.downtimeHours.days, function(item) {
@@ -69165,8 +69167,8 @@ var render = function() {
                                 {
                                   name: "show",
                                   rawName: "v-show",
-                                  value: _vm.businessHours.allDay,
-                                  expression: "businessHours.allDay"
+                                  value: _vm.businessHours.all_day,
+                                  expression: "businessHours.all_day"
                                 }
                               ],
                               staticClass: "mt-n2 small text-warning"
@@ -69189,7 +69191,7 @@ var render = function() {
                           "div",
                           {
                             class: {
-                              "disabled-setting": _vm.businessHours.allDay
+                              "disabled-setting": _vm.businessHours.all_day
                             }
                           },
                           [

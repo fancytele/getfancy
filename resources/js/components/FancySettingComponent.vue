@@ -19,13 +19,13 @@
                                         <input type="checkbox"
                                                class="custom-control-input"
                                                id="all_day"
-                                               v-model="businessHours.allDay"/>
+                                               v-model="businessHours.all_day"/>
                                         <span class="custom-control-label"></span>
                                     </label>
                                 </div>
                             </div>
 
-                            <div class="mt-5" :class="{'disabled-setting': businessHours.allDay}">
+                            <div class="mt-5" :class="{'disabled-setting': businessHours.all_day}">
                                 <div class="align-items-baseline content-action-hover d-lg-flex mb-4 mb-lg-1"
                                      v-for="item in businessHours.days" :key="item.id">
                                     <div class="custom-checkbox custom-control custom-control-md d-lg-inline mb-3 mb-lg-0 mr-lg-4">
@@ -109,14 +109,14 @@
                                     <label for="enable_downtime">
                                         <span class="custom-control-text">{{ trans('Enable downtime hours') }}?</span>
                                         <input type="checkbox" class="custom-control-input" id="enable_downtime"
-                                               :disabled="businessHours.allDay" v-model="downtimeHours.enable"/>
+                                               :disabled="businessHours.all_day" v-model="downtimeHours.enable"/>
                                         <span class="custom-control-label"></span>
                                     </label>
                                 </div>
                             </div>
 
                             <div class="mt-5"
-                                 :class="{'disabled-setting': !downtimeHours.enable || businessHours.allDay}">
+                                 :class="{'disabled-setting': !downtimeHours.enable || businessHours.all_day}">
                                 <div class="align-items-baseline content-action-hover d-lg-flex mb-4 mb-lg-1"
                                      v-for="item in downtimeHours.days" :key="item.id">
                                     <div class="custom-checkbox custom-control custom-control-md d-lg-inline mb-3 mb-lg-0 mr-lg-4">
@@ -282,12 +282,12 @@
                                 <fieldset class="mb-4">
                                     <legend class="pl-4">
                                         {{ trans('Message for downtime hours') }}
-                                        <p class="mt-n2 small text-warning" v-show="businessHours.allDay">
+                                        <p class="mt-n2 small text-warning" v-show="businessHours.all_day">
                                             {{ trans('The company is open 24/7. No need for Downtime hours message') }}
                                         </p>
                                     </legend>
 
-                                    <div :class="{'disabled-setting': businessHours.allDay}">
+                                    <div :class="{'disabled-setting': businessHours.all_day}">
                                         <div class="custom-control custom-radio mb-3"
                                              v-for="item in messages.downtime"
                                              :key="item.id">
@@ -622,7 +622,7 @@
         laddaButton: null,
         reason: '',
         businessHours: {
-          allDay: false,
+          all_day: false,
           days: [
             {
               id: 'monday',
@@ -796,17 +796,17 @@
         };
 
         // Business Hours
-        if (this.businessHours.allDay || this.businessHours.days.filter(el => el.enable).length > 0) {
+        if (this.businessHours.all_day || this.businessHours.days.filter(el => el.enable).length > 0) {
           payload.business_hours = {
-            all_day: this.businessHours.allDay,
+            all_day: this.businessHours.all_day,
             days: this.businessHours.days
           };
         }
 
         // Downtime Hours
-        if (this.businessHours.allDay === false && (this.downtimeHours.enable && this.downtimeHours.days.filter(el => el.enable).length > 0)) {
+        if (this.businessHours.all_day === false && (this.downtimeHours.enable && this.downtimeHours.days.filter(el => el.enable).length > 0)) {
           payload.downtime_hours = {
-            all_day: this.downtimeHours.allDay,
+            enable: this.downtimeHours.enable,
             days: this.downtimeHours.days
           };
         }
@@ -820,7 +820,7 @@
           payload.business_text = this.pbx.business_text;
         }
 
-        if (this.businessHours.allDay === false) {
+        if (this.businessHours.all_day === false) {
           if (this.pbx.downtime && this.pbx.business > 0) {
             payload.downtime_id = this.pbx.downtime;
           }
