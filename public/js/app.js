@@ -5007,7 +5007,7 @@ __webpack_require__.r(__webpack_exports__);
         var data = [].concat(_this.users, response.data.data);
         _this.users = data;
       })["catch"](function (error) {
-        console.errro(error);
+        console.error(error);
         _this.isLoading = false;
       });
     },

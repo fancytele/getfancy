@@ -80,7 +80,7 @@ export default {
           let data = [].concat(this.users, response.data.data);
           this.users = data;
         }).catch((error) => {
-          console.errro(error);
+          console.error(error);
           this.isLoading = false;
         });
     },
