@@ -18,7 +18,7 @@ class CreateFancyNumbersTable extends Migration
         Schema::create('fancy_numbers', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
-            $table->string('type')->default(DIDNumberType::Fancy);
+            $table->string('type')->default(DIDNumberType::FANCY);
             $table->uuid('did_id');
             $table->uuid('did_purchase_id');
             $table->string('did_number');
