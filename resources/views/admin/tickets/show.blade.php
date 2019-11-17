@@ -88,7 +88,7 @@
                             <button type="submit"
                                     class="btn btn-primary ladda-button js-ladda-submit mb-4 px-4"
                                     data-style="zoom-out">
-                                <i class="fe fe-login"></i>
+                                <i class="fe fe-layers mr-2"></i>
                                 @lang('Open ticket')
                             </button>
                             </form>
@@ -99,8 +99,8 @@
 
                             <a href="{{ route('admin.tickets.edit', $ticket->id) }}"
                                 class="btn btn-primary mb-4 px-4">
-                                <i class="fe fe-edit-3"></i>
-                                Edit ticket
+                                <i class="fe fe-edit-3 mr-2"></i>
+                                @lang('Edit ticket')
                             </a>
                         @endif
                     </div>

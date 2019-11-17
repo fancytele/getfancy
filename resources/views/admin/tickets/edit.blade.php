@@ -35,19 +35,45 @@
                                 </dd>
                             </dl>
                         </div>
+                        
+                        @empty($settings)
+                            <div class="alert alert-light font-italic" role="alert">
+                                @lang('The user has not set any configuration for his Fancy number')
+                            </div>
+                        @endempty
 
                         <hr>
                         
-                        <dl>
-                            @if($settings->business_hours)
-                                <dt class="text-decoration-underline">Business Hours</dt>
-                                <dd>
-                                    @if($settings->business_hours['all_day'])
-                                        All day
-                                    @else
+                        @isset($settings)                            
+                            <dl>
+                                @if($settings->business_hours)
+                                    <dt class="text-decoration-underline">Business Hours</dt>
+                                    <dd>
+                                        @if($settings->business_hours['all_day'])
+                                            All day
+                                        @else
+                                            <table class="table table-borderless table-sm table-striped w-auto">
+                                                <tbody>
+                                                    @foreach ($settings->business_hours['days'] as $day)
+                                                        @continue($day['enable'] === false)
+                                                        <tr>
+                                                            <td class="font-weight-bold pl-0 py-2">{{ $day['text'] }}</td>
+                                                            <td class="py-2">{{ $day['start']['HH'] }}:{{ $day['start']['mm'] }}</td>
+                                                            <td class="py-2">{{ $day['end']['HH'] }}:{{ $day['end']['mm'] }}</td>
+                                                        </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        @endif
+                                    </dd>
+                                @endif
+
+                                @if($settings->downtime_hours)
+                                    <dt class="text-decoration-underline">Downtime Hours</dt>
+                                    <dd>
                                         <table class="table table-borderless table-sm table-striped w-auto">
                                             <tbody>
-                                                @foreach ($settings->business_hours['days'] as $day)
+                                                @foreach ($settings->downtime_hours['days'] as $day)
                                                     @continue($day['enable'] === false)
                                                     <tr>
                                                         <td class="font-weight-bold pl-0 py-2">{{ $day['text'] }}</td>
@@ -57,105 +83,87 @@
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                    @endif
+                                    </dd>
+                                @endif
+
+                                <dt class="text-decoration-underline">Notifications</dt>
+                                <dd class="mb-4">
+                                    <div>
+                                        <span class="font-weight-bold mr-3">Email: </span>
+                                        <span>{{ $settings->email_notification }}</span>
+                                    </div>
+                                    <div>
+                                        <span class="font-weight-bold mr-1">Period: </span>
+                                        <span>{{ $settings->period_notification_label }}</span>
+                                    </div>
                                 </dd>
-                            @endif
 
-                            @if($settings->downtime_hours)
-                                <dt class="text-decoration-underline">Downtime Hours</dt>
-                                <dd>
-                                    <table class="table table-borderless table-sm table-striped w-auto">
-                                        <tbody>
-                                            @foreach ($settings->downtime_hours['days'] as $day)
-                                                @continue($day['enable'] === false)
-                                                <tr>
-                                                    <td class="font-weight-bold pl-0 py-2">{{ $day['text'] }}</td>
-                                                    <td class="py-2">{{ $day['start']['HH'] }}:{{ $day['start']['mm'] }}</td>
-                                                    <td class="py-2">{{ $day['end']['HH'] }}:{{ $day['end']['mm'] }}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </dd>
-                            @endif
-
-                            <dt class="text-decoration-underline">Notifications</dt>
-                            <dd class="mb-4">
-                                <div>
-                                    <span class="font-weight-bold mr-3">Email: </span>
-                                    <span>{{ $settings->email_notification }}</span>
-                                </div>
-                                <div>
-                                    <span class="font-weight-bold mr-1">Period: </span>
-                                    <span>{{ $settings->period_notification_label }}</span>
-                                </div>
-                            </dd>
-
-                            @if($settings->hasPBX())
-                                <dt class="text-decoration-underline">PBX</dt>
-                                <dd class="mb-3">
-                                    @if($settings->business_message_id || $settings->business_custom_message)
-                                        <div class="pb-3">
-                                            <div class="font-weight-bold">Business Message</div>
-                                            <div>
-                                                @if($settings->business_message_id)
-                                                    {{ $settings->pbx_business->message }}
-                                                @else
-                                                    {{ $settings->business_custom_message }}
-                                                @endif
+                                @if($settings->hasPBX())
+                                    <dt class="text-decoration-underline">PBX</dt>
+                                    <dd class="mb-3">
+                                        @if($settings->business_message_id || $settings->business_custom_message)
+                                            <div class="pb-3">
+                                                <div class="font-weight-bold">Business Message</div>
+                                                <div>
+                                                    @if($settings->business_message_id)
+                                                        {{ $settings->pbx_business->message }}
+                                                    @else
+                                                        {{ $settings->business_custom_message }}
+                                                    @endif
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endif
-                                    @if($settings->downtime_message_id || $settings->downtime_custom_message)
-                                        <div class="pb-3">
-                                            <div class="font-weight-bold">Downtime Message</div>
-                                            <div>
-                                                @if($settings->downtime_message_id)
-                                                    {{ $settings->pbx_downtime->message }}
-                                                @else
-                                                    {{ $settings->downtime_custom_message }}
-                                                @endif
+                                        @endif
+                                        @if($settings->downtime_message_id || $settings->downtime_custom_message)
+                                            <div class="pb-3">
+                                                <div class="font-weight-bold">Downtime Message</div>
+                                                <div>
+                                                    @if($settings->downtime_message_id)
+                                                        {{ $settings->pbx_downtime->message }}
+                                                    @else
+                                                        {{ $settings->downtime_custom_message }}
+                                                    @endif
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endif
-                                    @if($settings->onhold_message_id || $settings->onhold_custom_message)
-                                        <div class="pb-3">
-                                            <div class="font-weight-bold">On-hold Message</div>
-                                            <div>
-                                                @if($settings->onhold_message_id)
-                                                    {{ $settings->pbx_onhold->message }}
-                                                @else
-                                                    {{ $settings->onhold_custom_message }}
-                                                @endif
+                                        @endif
+                                        @if($settings->onhold_message_id || $settings->onhold_custom_message)
+                                            <div class="pb-3">
+                                                <div class="font-weight-bold">On-hold Message</div>
+                                                <div>
+                                                    @if($settings->onhold_message_id)
+                                                        {{ $settings->pbx_onhold->message }}
+                                                    @else
+                                                        {{ $settings->onhold_custom_message }}
+                                                    @endif
+                                                </div>
                                             </div>
-                                        </div>
-                                    @endif
-                                </dd>
-                            @endif
+                                        @endif
+                                    </dd>
+                                @endif
 
-                            @if($settings->extensions)
-                                <dt class="text-decoration-underline">Extensions</dt>
-                                <dd>
-                                    <table class="table table-borderless table-sm table-striped w-auto">
-                                        <tbody>
-                                            @foreach ($settings->extensions as $extension)
-                                                <tr>
-                                                    <td class="font-weight-bold pl-0 py-2">{{ $extension['name'] }}</td>
-                                                    <td class="py-2">{{ $extension['number'] }}</td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
-                                </dd>
-                            @endif
+                                @if($settings->extensions)
+                                    <dt class="text-decoration-underline">Extensions</dt>
+                                    <dd>
+                                        <table class="table table-borderless table-sm table-striped w-auto">
+                                            <tbody>
+                                                @foreach ($settings->extensions as $extension)
+                                                    <tr>
+                                                        <td class="font-weight-bold pl-0 py-2">{{ $extension['name'] }}</td>
+                                                        <td class="py-2">{{ $extension['number'] }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                @endif
 
-                            <dt class="text-decoration-underline">Audio</dt>
-                            <dd class="mb-4">{{ $settings->audio_label }}</dd>
-                        </dl>
+                                <dt class="text-decoration-underline">Audio</dt>
+                                <dd class="mb-4">{{ $settings->audio_label }}</dd>
+                            </dl>
 
-                        <hr>
+                            <hr>
+                        @endisset
 
-                       <a href="{{ route('admin.tickets.update', $ticket->id) }}" class="btn btn-primary" data-toggle="modal"
+                        <a href="{{ route('admin.tickets.update', $ticket->id) }}" class="btn btn-primary" data-toggle="modal"
                            data-backdrop="static" data-target="#ticket-complete">
                             <i class="fe fe-archive"></i> @lang('Complete ticket')
                         </a>
