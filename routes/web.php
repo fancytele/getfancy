@@ -48,6 +48,14 @@ Route::prefix('admin')->group(function () {
     Route::post('agents/{agent}/restore', 'Admin\Users\AgentController@restore')->name('admin.agents.restore');
     Route::resource('agents', 'Admin\Users\AgentController', ['as' => 'admin'])->except(['show']);
 
+    // Operators Management
+    Route::post('operators/{operator}/reset_password', 'Admin\Users\OperatorController@resetPassword')->name('admin.operators.reset_password');
+    Route::post('operators/{operator}/restore', 'Admin\Users\OperatorController@restore')->name('admin.operators.restore');
+    Route::resource('operators', 'Admin\Users\OperatorController', ['as' => 'admin'])->except(['show']);
+
+    Route::post('tickets/{ticket}/open', 'Admin\TicketController@openTicket')->name('admin.tickets.open');
+    Route::resource('tickets', 'Admin\TicketController', ['as' => 'admin'])->except(['create', 'store']);
+
     // DID
     Route::get('dids/regions/{region}/cities', 'Admin\DIDController@getCitiesByRegion')->name('admin.dids.cities');
     Route::get('dids/cities/{city}/availables', 'Admin\DIDController@getAvailableDIDsByCity')->name('admin.dids.availables');

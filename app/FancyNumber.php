@@ -3,12 +3,13 @@
 namespace App;
 
 use App\Enums\TicketStatus;
+use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class FancyNumber extends Model
 {
-    use SoftDeletes;
+    use Userstamps, SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -25,7 +26,15 @@ class FancyNumber extends Model
     ];
 
     /**
-     * Get the settings for the Fancy number.
+     * Accesor to get DID number with US format
+     */
+    public function getUsDIDNumberAttribute()
+    {
+        return preg_replace('/(\d{1})(\d{3})(\d{3})(\d{4})/', '$1($2) $3-$4', $this->did_number);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|mixed
      */
     public function settings()
     {
@@ -33,18 +42,32 @@ class FancyNumber extends Model
     }
 
     /**
-     * Get the Ticket for the Fancy Number
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|\App\User
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany|mixed
      */
     public function tickets()
     {
         return $this->hasMany(Ticket::class);
     }
 
+    /**
+     * @return boolean
+     */
     public function hasPendingTicket()
     {
         return $this->tickets->isNotEmpty() && $this->tickets->where('status', TicketStatus::PENDING)->count() > 0;
     }
 
+    /**
+     * @return boolean
+     */
     public function hasTicketInProgress()
     {
         return $this->tickets->isNotEmpty() && $this->tickets->where('status', TicketStatus::IN_PROGRESS)->count() > 0;

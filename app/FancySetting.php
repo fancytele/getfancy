@@ -17,58 +17,6 @@ class FancySetting extends Model
         'extensions' => 'array',
     ];
 
-    private static $default_days_data = [
-        [
-            'id' => 'monday',
-            'text' => 'Mon',
-            'start' => null,
-            'end' => null,
-            'enable' => false
-        ],
-        [
-            'id' => 'tuesday',
-            'text' => 'Tue',
-            'start' => null,
-            'end' => null,
-            'enable' => false
-        ],
-        [
-            'id' => 'wednesday',
-            'text' => 'Wed',
-            'start' => null,
-            'end' => null,
-            'enable' => false
-        ],
-        [
-            'id' => 'thursday',
-            'text' => 'Thu',
-            'start' => null,
-            'end' => null,
-            'enable' => false
-        ],
-        [
-            'id' => 'friday',
-            'text' => 'Fri',
-            'start' => null,
-            'end' => null,
-            'enable' => false
-        ],
-        [
-            'id' => 'saturday',
-            'text' => 'Sat',
-            'start' => null,
-            'end' => null,
-            'enable' => false
-        ],
-        [
-            'id' => 'sunday',
-            'text' => 'Sun',
-            'start' => null,
-            'end' => null,
-            'enable' => false
-        ]
-    ];
-
     /**
      * The attributes that aren't mass assignable.
      *
@@ -77,27 +25,68 @@ class FancySetting extends Model
     protected $guarded = [];
 
     /**
-     * Get the Fancy Number that owns the Fancy Setting.
+     * @return string
+     */
+    public function getPeriodNotificationLabelAttribute()
+    {
+        return ucfirst(str_replace('_', ' ', $this->period_notification));
+    }
+
+    /**
+     * @return string
+     */
+    public function getAudioLabelAttribute()
+    {
+        return ucfirst(str_replace('_', ' ', $this->audio_type));
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|\App\FancyNumber
      */
     public function fancy_number()
     {
         return $this->belongsTo(FancyNumber::class);
     }
 
-    public static function defaultBusinessHours()
+    /**
+     * Get the selected PBX Bussiness message
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|\App\PBXMessage
+     */
+    public function pbx_business()
     {
-        return [
-            'allDay' => false,
-            'days' => self::$default_days_data
-        ];
+        return $this->belongsTo(PBXMessage::class, 'business_message_id');
     }
 
-    public static function defaultDowntimeHours()
+    /**
+     * Get the selected PBX Downtime message
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|\App\PBXMessage
+     */
+    public function pbx_downtime()
     {
-        return [
-            'enable' => false,
-            'days' => self::$default_days_data
-        ];
+        return $this->belongsTo(PBXMessage::class, 'downtime_message_id');
     }
 
+    /**
+     * Get the selected PBX On-hold message
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|\App\PBXMessage
+     */
+    public function pbx_onhold()
+    {
+        return $this->belongsTo(PBXMessage::class, 'onhold_message_id');
+    }
+
+    /**
+     * @return boolean
+     */
+    public function hasPBX()
+    {
+        $has_business = $this->business_message_id || $this->business_custom_message;
+        $has_downtime = $this->downtime_message_id || $this->downtime_custom_message;
+        $has_onhold = $this->onhold_message_id || $this->onhold_custom_message;
+
+        return $has_business || $has_downtime || $has_onhold;
+    }
 }

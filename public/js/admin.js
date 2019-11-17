@@ -36934,6 +36934,10 @@ window.onload = function () {
   var logoutItems = document.querySelectorAll('.logout-action');
   logoutItems.forEach(function (el) {
     el.addEventListener('click', logout);
+  }); // Data Toggle - Bootstrap
+
+  $(function () {
+    $('[data-toggle="tooltip"]').tooltip();
   }); // Automatically trigger the loading animation on click
 
   if (typeof Ladda !== 'undefined') {
@@ -37550,3 +37554,4 @@ module.exports = __webpack_require__(/*! /var/www/resources/js/app/admin.js */".
 /***/ })
 
 /******/ });
+//# sourceMappingURL=admin.js.map

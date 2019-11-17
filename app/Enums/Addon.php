@@ -4,8 +4,8 @@ namespace App\Enums;
 
 abstract class AddonType extends Enum
 {
-    const SUBSCRIPTION = 1;
-    const OTF = 2;
+    const SUBSCRIPTION = 'subscription';
+    const OTF = 'otf';
 }
 
 abstract class AddonCode

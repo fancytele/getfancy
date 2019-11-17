@@ -7,7 +7,7 @@
                 <strong class="text-capitalize">
                     @lang($alert['title'] ?? $alert['type'])!
                 </strong>
-                @lang($alert['message']).
+                {!! $alert['message'] !!}
             </span>
         </h4>
         <button type="button" class="close" data-dismiss="alert"
