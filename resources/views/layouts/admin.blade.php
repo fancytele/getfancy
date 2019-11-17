@@ -62,20 +62,6 @@
 
                     <!-- Collapse -->
                     <div class="collapse navbar-collapse" id="sidebarCollapse">
-
-                        <!-- Form -->
-                        <form class="mt-4 mb-3 d-md-none">
-                            <div class="input-group input-group-rounded input-group-merge">
-                                <input type="search" class="form-control form-control-rounded form-control-prepended"
-                                       placeholder="Search" aria-label="Search">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <span class="fe fe-search"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-
                         <ul class="navbar-nav">
                             <li class="nav-item">
                                 <a class="nav-link{{ (request()->is('admin/dashboard')) ? ' active' : ''}}"
@@ -153,28 +139,11 @@
                 <!-- MAIN NAVIGATION -->
                 <nav class="navbar navbar-expand-md navbar-light d-none d-md-flex" id="topbar">
                     <div class="container-fluid">
-
-                        <!-- Form -->
-                        <form class="form-inline mr-4 d-none d-md-flex">
-                            <div class="input-group input-group-flush input-group-merge">
-
-                                <!-- Input -->
-                                <input type="search" class="form-control form-control-prepended search"
-                                       placeholder="@lang('Search')" aria-label="Search">
-                                <div class="input-group-prepend">
-                                    <div class="input-group-text">
-                                        <i class="fe fe-search"></i>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-
                         <!-- User -->
-                        <div class="navbar-user">
+                        <div class="navbar-user ml-auto">
 
                             <!-- Dropdown -->
                             <div class="dropdown">
-
                                 <!-- Toggle -->
                                 <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
@@ -190,6 +159,19 @@
 
                                 <!-- Menu -->
                                 <div class="dropdown-menu dropdown-menu-right">
+                                    @role('admin')
+                                        <a href="#" class="dropdown-item"
+                                            data-toggle="modal" data-target="#modal-vertical-right">
+                                            @lang('Login as')...
+                                        </a>
+                                        <div class="dropdown-divider m-0"></div>
+                                    @endrole
+                                    @if(Auth::user()->isImpersonating())
+                                        <a href="{{ route('admin.users.stop_impersonate') }}" class="dropdown-item">
+                                            @lang('Stop viewing as ') {{ Auth::user()->roles->first()->name }}
+                                        </a>
+                                        <div class="dropdown-divider m-0"></div>
+                                    @endif
                                     <a href="{{ route('admin.logout') }}" class="dropdown-item logout-action">
                                         @lang('Logout')
                                     </a>
@@ -198,6 +180,25 @@
                         </div>
                     </div>
                 </nav>
+
+                @if(Auth::user()->isImpersonating())
+                    <div class="alert alert-warning align-items-center d-flex rounded-0" role="alert">
+                        <i class="fe fe-alert-circle font-weight-bold h2 mb-0 mr-3"></i>
+                        <div>
+                            You are logged in as
+                            <strong>{{ Auth::user()->full_name }} (<span>{{ Auth::user()->roles->first()->name }}</span>)</strong>.
+                            <a href="{{ route('admin.users.stop_impersonate') }}">Return to default view</a>
+                        </div>
+                    </div>
+                @elseif (Auth::user()->hasRole('admin'))
+                    <impersonate-component :roles-url="'{{ route('admin.roles.users', '_role_') }}'"
+                                        :impersonate-url="'{{ route('admin.users.impersonate', '_user_')}}'"></impersonate-component>
+                @endif
+
+                
+
+
+        
 
                 <!-- HEADER -->
                 <div class="header">

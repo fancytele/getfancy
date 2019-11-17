@@ -22,7 +22,9 @@ use App\Services\UserService;
 use App\Ticket;
 use App\User;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Spatie\Permission\Models\Role as SpatieRole;
 
 class UserController extends Controller
 {
@@ -150,28 +152,6 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param \App\User $user
-     * @return \Illuminate\Http\Response
-     */
-    public function show(User $user)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\User $user
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(User $user)
-    {
-        //
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
      * @param \App\User $user
@@ -215,13 +195,49 @@ class UserController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Update the specified resource in storage.
      *
-     * @param \App\User $user
+     * @param string $role
      * @return \Illuminate\Http\Response
      */
-    public function destroy(User $user)
+    public function usersByRole(string $role)
     {
-        //
+        $users = SpatieRole::findByName($role)
+            ->users()
+            ->select(['id', 'first_name', 'last_name'])
+            ->orderBy('first_name')
+            ->paginate(5);
+
+        return response()->json($users);
+    }
+
+    /**
+     * Impersonate user
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function impersonate($id)
+    {
+        $user_to_personify = User::find($id);
+
+        if (Auth::user()->hasRole(Role::ADMIN) && $user_to_personify->hasRole(Role::ADMIN) === false) {
+            Auth::user()->setImpersonating($user_to_personify->id);
+        }
+
+        return redirect()->route('admin.dashboard');
+    }
+
+    /**
+     * Stop Impersonate user
+     *
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function stopImpersonate()
+    {
+        Auth::user()->stopImpersonating();
+
+        return redirect()->back();
     }
 }

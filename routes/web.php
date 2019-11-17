@@ -33,34 +33,40 @@ Route::prefix('admin')->group(function () {
     Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
     Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
-    // Dashboard
-    Route::get('dashboard', 'Admin\DashboardController@index')->name('admin.dashboard');
+    // Impersonate user
+    Route::get('roles/{role}/users', 'Admin\Users\UserController@usersByRole')->middleware(['role:admin'])->name('admin.roles.users');
+    Route::get('users/{id}/impersonate', 'Admin\Users\UserController@impersonate')->name('admin.users.impersonate');
+    Route::get('users/stop', 'Admin\Users\UserController@stopImpersonate')->name('admin.users.stop_impersonate');
 
-    // Users Management
-    Route::post('users/{user}/reset_password', 'Admin\Users\UserController@resetPassword')->name('admin.users.reset_password');
-    Route::post('users/{user}/restore', 'Admin\Users\UserController@restore')->name('admin.users.restore');
-    Route::get('users/{user}/edit/fancy', 'Admin\Users\UserController@editFancy')->name('admin.users.edit_fancy');
-    Route::put('users/{user}/update/fancy', 'Admin\Users\UserController@updateFancy')->name('admin.users.update_fancy');
-    Route::resource('users', 'Admin\Users\UserController', ['as' => 'admin'])->except(['show']);
+    Route::middleware(['impersonate'])->group(function () {
+        // Dashboard
+        Route::get('dashboard', 'Admin\DashboardController@index')->name('admin.dashboard');
 
-    // Agents Management
-    Route::post('agents/{agent}/reset_password', 'Admin\Users\AgentController@resetPassword')->name('admin.agents.reset_password');
-    Route::post('agents/{agent}/restore', 'Admin\Users\AgentController@restore')->name('admin.agents.restore');
-    Route::resource('agents', 'Admin\Users\AgentController', ['as' => 'admin'])->except(['show']);
+        // Users Management
+        Route::post('users/{user}/reset_password', 'Admin\Users\UserController@resetPassword')->name('admin.users.reset_password');
+        Route::get('users/{user}/edit/fancy', 'Admin\Users\UserController@editFancy')->name('admin.users.edit_fancy');
+        Route::put('users/{user}/update/fancy', 'Admin\Users\UserController@updateFancy')->name('admin.users.update_fancy');
+        Route::resource('users', 'Admin\Users\UserController', ['as' => 'admin'])->except(['show', 'edit', 'destroy']);
 
-    // Operators Management
-    Route::post('operators/{operator}/reset_password', 'Admin\Users\OperatorController@resetPassword')->name('admin.operators.reset_password');
-    Route::post('operators/{operator}/restore', 'Admin\Users\OperatorController@restore')->name('admin.operators.restore');
-    Route::resource('operators', 'Admin\Users\OperatorController', ['as' => 'admin'])->except(['show']);
+        // Agents Management
+        Route::post('agents/{agent}/reset_password', 'Admin\Users\AgentController@resetPassword')->name('admin.agents.reset_password');
+        Route::post('agents/{agent}/restore', 'Admin\Users\AgentController@restore')->name('admin.agents.restore');
+        Route::resource('agents', 'Admin\Users\AgentController', ['as' => 'admin'])->except(['show']);
 
-    Route::post('tickets/{ticket}/open', 'Admin\TicketController@openTicket')->name('admin.tickets.open');
-    Route::resource('tickets', 'Admin\TicketController', ['as' => 'admin'])->except(['create', 'store']);
+        // Operators Management
+        Route::post('operators/{operator}/reset_password', 'Admin\Users\OperatorController@resetPassword')->name('admin.operators.reset_password');
+        Route::post('operators/{operator}/restore', 'Admin\Users\OperatorController@restore')->name('admin.operators.restore');
+        Route::resource('operators', 'Admin\Users\OperatorController', ['as' => 'admin'])->except(['show']);
 
-    // DID
-    Route::get('dids/regions/{region}/cities', 'Admin\DIDController@getCitiesByRegion')->name('admin.dids.cities');
-    Route::get('dids/cities/{city}/availables', 'Admin\DIDController@getAvailableDIDsByCity')->name('admin.dids.availables');
-    Route::post('dids/reserve', 'Admin\DIDController@storeReservation')->name('admin.dids.create_reservation');
-    Route::delete('dids/reserve/{did}', 'Admin\DIDController@destroyReservation')->name('admin.dids.destroy_reservation');
+        Route::post('tickets/{ticket}/open', 'Admin\TicketController@openTicket')->name('admin.tickets.open');
+        Route::resource('tickets', 'Admin\TicketController', ['as' => 'admin'])->except(['create', 'store']);
+
+        // DID
+        Route::get('dids/regions/{region}/cities', 'Admin\DIDController@getCitiesByRegion')->name('admin.dids.cities');
+        Route::get('dids/cities/{city}/availables', 'Admin\DIDController@getAvailableDIDsByCity')->name('admin.dids.availables');
+        Route::post('dids/reserve', 'Admin\DIDController@storeReservation')->name('admin.dids.create_reservation');
+        Route::delete('dids/reserve/{did}', 'Admin\DIDController@destroyReservation')->name('admin.dids.destroy_reservation');
+    });
 });
 
 

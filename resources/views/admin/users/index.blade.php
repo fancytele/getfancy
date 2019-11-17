@@ -120,37 +120,9 @@
                                     @endif
                                 </td>
                                 <td class="align-middle">
-                                    @if($user->is_active)
-                                        <a href="{{ route('admin.users.edit', $user->id) }}"
-                                           class="font-weight-normal h5 px-2">
-                                            @lang('Edit')
-                                        </a>
-                                        @if($user->fancy_number)
-                                            |
-                                            <a href="{{ route('admin.users.edit_fancy', $user->id) }}"
-                                            class="font-weight-normal h5 px-2">
-                                                @lang('Fancy Settings')
-                                            </a>
-                                        @endif
-                                        |
-                                        <a href="{{ route('admin.users.destroy', $user->id) }}"
-                                           class="font-weight-normal h5 px-2"
-                                           data-toggle="modal" data-backdrop="static"
-                                           data-target="#delete-element"
-                                           data-name="@lang('User')"
-                                           data-detail="{{ $user->email }}"
-                                           data-action="{{ route('admin.users.destroy', $user->id) }}">
-                                            @lang('Delete')
-                                        </a>
-                                    @else
-                                        <a href="{{ route('admin.users.restore', $user->id) }}"
-                                           class="font-weight-normal h5 px-2"
-                                           data-toggle="modal" data-backdrop="static"
-                                           data-target="#restore-element"
-                                           data-name="@lang('User')"
-                                           data-detail="{{ $user->email }}"
-                                           data-user-action="{{ route('admin.users.restore', $user->id) }}">
-                                            @lang('Restore')
+                                    @if($user->fancy_number)
+                                        <a href="{{ route('admin.users.edit_fancy', $user->id) }}" class="font-weight-normal h5 px-2">
+                                            @lang('Fancy Settings')
                                         </a>
                                     @endif
                                 </td>

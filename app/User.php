@@ -8,6 +8,7 @@ use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Spatie\Permission\Traits\HasRoles;
 
@@ -158,8 +159,35 @@ class User extends Authenticatable
         return $this->invoice()->where('user_id', $this->id)->where('addon_id', $addonId)->count('id') > 0;
     }
 
+    /**
+     * @return bool
+     */
     public function hasTicketInProgress()
     {
         return $this->tickets->isNotEmpty() && $this->tickets->where('status', TicketStatus::IN_PROGRESS)->count() > 0;
+    }
+
+    /**
+     * @return void
+     */
+    public function setImpersonating($id)
+    {
+        Session::put('impersonate', $id);
+    }
+
+    /**
+     * @return void
+     */
+    public function stopImpersonating()
+    {
+        Session::forget('impersonate');
+    }
+
+    /**
+     * @return bool
+     */
+    public function isImpersonating()
+    {
+        return Session::has('impersonate');
     }
 }
