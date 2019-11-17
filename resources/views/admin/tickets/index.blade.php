@@ -22,7 +22,7 @@
 
         @if($tickets->isNotEmpty ())
             <div class="card" data-toggle="lists"
-                data-options='{"valueNames": ["orders-number", "orders-user-name", "orders-status"]}'>
+                data-options='{"valueNames": ["orders-ticket", "orders-user-name", "orders-started-at", "orders-completed-at", "orders-response-time", "orders-status"]}'>
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
@@ -45,19 +45,37 @@
                             <tr>
                                 <th scope="col">
                                     <a href="#" class="text-muted sort"
-                                    data-sort="orders-number">
+                                       data-sort="orders-ticket">
                                         @lang('Ticket #')
                                     </a>
                                 </th>
                                 <th scope="col">
                                     <a href="#" class="text-muted sort"
-                                    data-sort="orders-user-name">
-                                        @lang('User name')
+                                       data-sort="orders-user-name">
+                                        @lang('User')
                                     </a>
                                 </th>
                                 <th scope="col">
                                     <a href="#" class="text-muted sort"
-                                    data-sort="orders-status">
+                                       data-sort="orders-started-at">
+                                        @lang('Started at')
+                                    </a>
+                                </th>
+                                <th scope="col">
+                                    <a href="#" class="text-muted sort"
+                                       data-sort="orders-completed-at">
+                                        @lang('Completed at')
+                                    </a>
+                                </th>
+                                <th scope="col">
+                                    <a href="#" class="text-muted sort"
+                                       data-sort="orders-response-time">
+                                        @lang('Response time')
+                                    </a>
+                                </th>
+                                <th scope="col">
+                                    <a href="#" class="text-muted sort"
+                                       data-sort="orders-status">
                                         @lang('Status')
                                     </a>
                                 </th>
@@ -69,7 +87,7 @@
                         <tbody class="list">
                             @foreach($tickets as $ticket)
                                 <tr>
-                                    <td scope="row" class="align-middle">
+                                    <td scope="row" class="align-middle orders-ticket">
                                         <p class="font-weight-bold mb-0">
                                             Ticket #{{ $ticket->id }}
                                             @if($ticket->parent_id)
@@ -93,23 +111,36 @@
                                             {{ $ticket->fancy_number->us_did_number }}
                                         </p>
                                     </td>
+                                    <td class="align-middle orders-started-at">
+                                        {{ optional($ticket->started_at)->isoFormat('lll') ?? '---' }}
+                                    </td>
+                                    <td class="align-middle orders-completed-at">
+                                        {{ optional($ticket->completed_at)->isoFormat('lll') ?? '---' }}
+                                    </td>
+                                    <td class="align-middle orders-response-time">
+                                        @if($ticket->isCompleted())
+                                            {{ $ticket->completed_at->diffForHumans($ticket->started_at, ['parts' => 2]) }}
+                                        @else
+                                            <span>---</span>
+                                        @endif
+                                    </td>
                                     <td class="align-middle orders-status">
-                                        @if($ticket->status === 'pending')
+                                        @if($ticket->isPending())
                                             <div
                                                 class="badge badge-soft-dark font-size-inherit">
                                                 @lang('Pending')
                                             </div>
-                                        @elseif($ticket->status == 'in_progress')
+                                        @elseif($ticket->inProgress())
                                             <div
                                                 class="badge badge-soft-primary font-size-inherit">
                                                 @lang('In progress')
                                             </div>
-                                        @elseif($ticket->status == 'completed')
+                                        @elseif($ticket->isCompleted())
                                             <div
                                                 class="badge badge-soft-success font-size-inherit">
                                                 @lang('Completed')
                                             </div>
-                                        @elseif($ticket->status == 'removed')
+                                        @elseif($ticket->isRemoved())
                                             <div
                                                 class="badge badge-soft-danger font-size-inherit">
                                                 @lang('Removed')
@@ -117,23 +148,25 @@
                                         @endif
                                     </td>
                                     <td class="align-middle">
-                                        @if($ticket->status != 'in_progress')
-                                            <a href="{{ route('admin.tickets.show', $ticket->id) }}"
-                                            class="font-weight-normal h5 px-2">
-                                                @lang('View')
-                                            </a>
-                                        @endif
-                                        @if($ticket->status == 'in_progress')
-                                            <a href="{{ route('admin.tickets.show', $ticket->id) }}"
-                                            class="font-weight-normal h5 px-2">
+                                        <a href="{{ route('admin.tickets.show', $ticket->id) }}" class="font-weight-normal h5 px-2">
+                                            @lang('View')
+                                        </a>
+                                        @if($ticket->inProgress())
+                                            |
+                                           <a href="{{ route('admin.tickets.edit', $ticket->id) }}"
+                                               class="font-weight-normal h5 px-2">
                                                 @lang('Edit')
                                             </a>
                                         @endif
-                                        @if($ticket->status != 'removed' && $ticket->status != 'completed' && auth()->user()->can('remove ticket'))
+                                        @if (auth()->user()->can('remove ticket') && ($ticket->isPending() || $ticket->inProgress()))
                                             |
-                                            <a href="{{ route('admin.tickets.show', $ticket->id) }}"
-                                            class="font-weight-normal h5 px-2">
-                                                @lang('Remove')
+                                            <a href="{{ route('admin.tickets.destroy', $ticket->id) }}"
+                                               class="font-weight-normal h5 px-2"
+                                               data-toggle="modal" data-backdrop="static"
+                                               data-target="#delete-element"
+                                               data-name="@lang('Ticket') #{{ $ticket->id }}"
+                                               data-action="{{ route('admin.tickets.destroy', $ticket->id) }}">
+                                                @lang('Delete')
                                             </a>
                                         @endif
                                     </td>
@@ -145,4 +178,9 @@
             </div>
         @endif
     </div>
+
+    <!-- Modals -->
+    @if($tickets->isNotEmpty())
+        @include('partials.delete-element')
+    @endif
 @endsection

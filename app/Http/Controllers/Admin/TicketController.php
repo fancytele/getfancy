@@ -2,12 +2,25 @@
 
 namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Enums\DIDOrderStatus;
+use App\Enums\TicketStatus;
 use App\Http\Controllers\Controller;
 use App\Ticket;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth', 'role:admin|operator']);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -20,24 +33,24 @@ class TicketController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
+     * @param \App\Ticket $ticket
      */
-    public function create()
+    public function openTicket(Ticket $ticket)
     {
-        //
-    }
+        if ($ticket->isOpen()) {
+            return redirect()->back()->with('alert', [
+                'type' => 'warning',
+                'message' => "Ticket #$ticket->id has already been open."
+            ]);
+        }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        $ticket->status = TicketStatus::IN_PROGRESS;
+        $ticket->started_at = Carbon::now();
+        $ticket->assigned_id = Auth::id();
+
+        $ticket->save();
+
+        return redirect()->route('admin.tickets.edit', $ticket->id);
     }
 
     /**
@@ -56,34 +69,66 @@ class TicketController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Ticket $ticket
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Ticket $ticket)
     {
-        //
+        if ($ticket->isPending()) {
+            $ticket_url = route('admin.tickets.show', $ticket->id);
+
+            return redirect()->route('admin.tickets.index')->with('alert', [
+                'type' => 'warning',
+                'message' => "Ticket #$ticket->id must be <strong>Open</strong> before editing. Click <a href=\"$ticket_url\">here</a> to open the ticket"
+            ]);
+        }
+
+        if ($ticket->isCompleted() || $ticket->isRemoved()) {
+            return redirect()->route('admin.tickets.show', $ticket->id);
+        }
+
+        $settings = $ticket->fancy_number->settings()->first();
+
+        return view('admin.tickets.edit', compact('ticket', 'settings'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Ticket $ticket
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Ticket $ticket)
     {
-        //
+        $ticket->status = TicketStatus::COMPLETED;
+        $ticket->completed_at = Carbon::now();
+
+        $ticket->save();
+
+        $fancy_number = $ticket->fancy_number;
+        $fancy_number->did_status = DIDOrderStatus::COMPLETED;
+        $fancy_number->save();
+
+        return response()->redirectToRoute('admin.tickets.index')->with('alert', [
+            'type' => 'success',
+            'message' => 'Ticket# ' . $ticket->id . ' completed'
+        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Ticket $ticket
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Ticket $ticket)
     {
-        //
+        $ticket->delete();
+
+        return response()->redirectToRoute('admin.tickets.index')->with('alert', [
+            'type' => 'danger',
+            'title' => 'success',
+            'message' => 'Ticket #' . $ticket->id . ' inactivated'
+        ]);
     }
 }

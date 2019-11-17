@@ -53,7 +53,8 @@ Route::prefix('admin')->group(function () {
     Route::post('operators/{operator}/restore', 'Admin\Users\OperatorController@restore')->name('admin.operators.restore');
     Route::resource('operators', 'Admin\Users\OperatorController', ['as' => 'admin'])->except(['show']);
 
-    Route::resource('tickets', 'Admin\TicketController', ['as' => 'admin']);
+    Route::post('tickets/{ticket}/open', 'Admin\TicketController@openTicket')->name('admin.tickets.open');
+    Route::resource('tickets', 'Admin\TicketController', ['as' => 'admin'])->except(['create', 'store']);
 
     // DID
     Route::get('dids/regions/{region}/cities', 'Admin\DIDController@getCitiesByRegion')->name('admin.dids.cities');

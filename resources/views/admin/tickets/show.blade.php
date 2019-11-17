@@ -10,61 +10,101 @@
             <i class="fe fe-arrow-left mr-2"></i>
             @lang('Return to list')
         </a>
-        <div class="card">
-            <div class="card-body">
-                <dl>
-                    <dt>Ticket #</dt>
-                    <dd class="mb-4 text-black-50">
-                        {{ $ticket->id }}
-                        <div
-                            class="badge @ticket_badge_status($ticket->status) ml-2">
-                            @lang($ticket->status_label)
-                        </div>
-                    </dd>
-
-                    <dt>Started at</dt>
-                    <dd class="mb-4 text-black-50">
-                        {{ optional($ticket->started_at)->isoFormat('lll') ?? '---' }}
-                    </dd>
-
-                    <dt>Completed at</dt>
-                    <dd class="mb-4 text-black-50">
-                        {{ optional($ticket->completed_at)->isoFormat('lll') ?? '---' }}
-                    </dd>
-
-                    <dt>Assigned to</dt>
-                    <dd class="mb-4 text-black-50">
-                        @if($ticket->assigned_id)
-                            @if($ticket->assigned->hasRole('operator'))
-                                <a href="{{ route('admin.operators.edit', $ticket->assigned_id) }}"
-                                    target="_blank" rel="noopener noreferrer">
-                                    {{ $ticket->assigned->full_name }}
-                                    <i class="fe fe-external-link"></i>
-                                </a>
-                            @else 
-                                {{ $ticket->assigned->full_name }}
-                            @endif
-                        @else
-                            <span>Unassigned</span>
+        
+        <div class="row">
+            <div class="col-lg-6 col-xl-4">
+                <div class="card">
+                    <div class="card-body pb-0">
+                        @if($ticket->isPending())
+                            <form action="{{ route('admin.tickets.open', $ticket->id) }}" method="POST">
+                            @csrf
                         @endif
-                    </dd>
-                </dl>
 
-                <hr>
-                
-                <dl>
-                    <dt>User</dt>
-                    <dd class="mb-4 text-black-50">
-                        <a href="{{ route('admin.users.edit', $ticket->fancy_number->user_id) }}"
-                            target="_blank" rel="noopener noreferrer">
-                            {{ $ticket->fancy_number->user->full_name }}
-                            <i class="fe fe-external-link"></i>
-                        </a>
-                    </dd>
+                        <dl>
+                            <dt>Ticket #</dt>
+                            <dd class="mb-4 text-black-50">
+                                {{ $ticket->id }}
+                                <div
+                                    class="badge @ticket_badge_status($ticket->status) ml-2">
+                                    @lang($ticket->status_label)
+                                </div>                        
+                            </dd>
 
-                    <dt>Fancy Number</dt>
-                    <dd class="mb-4 text-black-50">{{ $ticket->fancy_number->us_did_number }}</dd>
-                </dl>
+                            @if($ticket->reason)
+                                <dt>Removed by</dt>
+                                <dd class="mb-4 text-black-50">
+                                    {{ $ticket->removed_by->full_name }}
+                                </dd>
+
+                                <dt>Reason</dt>
+                                <dd class="mb-4 text-black-50">
+                                    {{ $ticket->reason }}
+                                </dd>
+                            @endif
+
+                            <dt>Started at</dt>
+                            <dd class="mb-4 text-black-50">
+                                {{ optional($ticket->started_at)->isoFormat('lll') ?? '---' }}
+                            </dd>
+
+                            <dt>Completed at</dt>
+                            <dd class="mb-4 text-black-50">
+                                {{ optional($ticket->completed_at)->isoFormat('lll') ?? '---' }}
+                            </dd>
+
+                            <dt>Assigned to</dt>
+                            <dd class="mb-4 text-black-50">
+                                @if($ticket->assigned_id)
+                                    @if($ticket->assigned->hasRole('operator'))
+                                        <a href="{{ route('admin.operators.edit', $ticket->assigned_id) }}"
+                                            target="_blank" rel="noopener noreferrer">
+                                            {{ $ticket->assigned->full_name }}
+                                            <i class="fe fe-external-link"></i>
+                                        </a>
+                                    @else 
+                                        {{ $ticket->assigned->full_name }}
+                                    @endif
+                                @else
+                                    <span>Unassigned</span>
+                                @endif
+                            </dd>
+                        </dl>
+
+                        <hr>
+                        
+                        <dl>
+                            <dt>User</dt>
+                            <dd class="mb-4 text-black-50">
+                                {{ $ticket->fancy_number->user->full_name }}
+                            </dd>
+
+                            <dt>Fancy Number</dt>
+                            <dd class="mb-4 text-black-50">{{ $ticket->fancy_number->us_did_number }}</dd>
+                        </dl>
+
+                        @if($ticket->isPending())
+                            <hr>
+
+                            <button type="submit"
+                                    class="btn btn-primary ladda-button js-ladda-submit mb-4 px-4"
+                                    data-style="zoom-out">
+                                <i class="fe fe-login"></i>
+                                @lang('Open ticket')
+                            </button>
+                            </form>
+                        @endif
+
+                        @if($ticket->inProgress())
+                            <hr>
+
+                            <a href="{{ route('admin.tickets.edit', $ticket->id) }}"
+                                class="btn btn-primary mb-4 px-4">
+                                <i class="fe fe-edit-3"></i>
+                                Edit ticket
+                            </a>
+                        @endif
+                    </div>
+                </div>
             </div>
         </div>
     </div>
