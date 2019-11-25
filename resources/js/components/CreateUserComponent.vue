@@ -771,7 +771,7 @@
                             </legend>
                             <div class="overflow-auto row vh-max-35">
                                 <div
-                                        class="col-md-4 cursor-pointer mb-3"
+                                        class="col-md-6 cursor-pointer mb-3"
                                         v-for="item in availablesDIDs"
                                         :key="item.id"
                                 >

@@ -5,7 +5,7 @@
            id="code" name="code"
            value="{{ old('code',  $agent->employee_code ?? '') }}" required
            autofocus>
-    @error('first_name')
+    @error('code')
     <span class="invalid-feedback" role="alert">
         <strong>{{ $message }}</strong>
     </span>

@@ -4560,6 +4560,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -67854,7 +67856,7 @@ var render = function() {
                               "div",
                               {
                                 key: item.id,
-                                staticClass: "col-md-4 cursor-pointer mb-3"
+                                staticClass: "col-md-6 cursor-pointer mb-3"
                               },
                               [
                                 _c(
@@ -69105,7 +69107,9 @@ var render = function() {
             _c("div", { staticClass: "card-body" }, [
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-xl-4" }, [
-                  _c("h2", { staticClass: "mb-1" }, [_vm._v("PBX")]),
+                  _c("h2", { staticClass: "mb-1" }, [
+                    _vm._v(_vm._s(_vm.trans("PBX profile")))
+                  ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "text-black-50" }, [
                     _vm._v(_vm._s(_vm.trans("Choose your PBX message")) + ".")
@@ -69227,7 +69231,13 @@ var render = function() {
                                     staticClass: "custom-control-label",
                                     attrs: { for: "business_message_0" }
                                   },
-                                  [_vm._v("Custom")]
+                                  [
+                                    _vm._v(
+                                      "\n                                          " +
+                                        _vm._s(_vm.trans("Custom message")) +
+                                        "\n                                        "
+                                    )
+                                  ]
                                 )
                               ]
                             ),

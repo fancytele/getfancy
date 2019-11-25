@@ -236,7 +236,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-xl-4">
-                            <h2 class="mb-1">PBX</h2>
+                            <h2 class="mb-1">{{ trans('PBX profile') }}</h2>
                             <p class="text-black-50">{{ trans('Choose your PBX message') }}.</p>
                         </div>
                         <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
@@ -265,7 +265,9 @@
                                                    class="custom-control-input"
                                                    value="0"
                                                    v-model="pbx.business"/>
-                                            <label class="custom-control-label" for="business_message_0">Custom</label>
+                                            <label class="custom-control-label" for="business_message_0">
+                                              {{ trans('Custom message') }}
+                                            </label>
                                         </div>
                                         <div class="form-group pl-4"
                                              :class="{'disabled-setting': pbx.business != 0}">

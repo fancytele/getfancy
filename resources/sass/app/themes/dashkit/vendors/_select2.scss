@@ -21,7 +21,7 @@
 .select2-container--default .select2-search--dropdown .select2-search__field {
   display: block;
   width: 100%;
-  height: $input-height;
+  height: $input-height !important;
   padding: $input-padding-y $input-padding-x;
   font-size: $font-size-base;
   line-height: $input-line-height;
