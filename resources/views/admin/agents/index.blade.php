@@ -8,7 +8,7 @@
     @section('header-action')
         <a href="{{ route('admin.agents.create') }}" class="btn btn-primary">
             <i class="fe fe-user-plus mr-2"></i>
-            @lang('Create agent')
+            @lang('Create Agent')
         </a>
     @endsection
 @endif

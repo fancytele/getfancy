@@ -43,7 +43,7 @@ class AppServiceProvider extends ServiceProvider
                         echo 'badge-soft-success';
                         break;
 
-                    case '" . TicketStatus::REMOVED . "':
+                    case '" . TicketStatus::CANCELED . "':
                         echo 'badge-soft-danger';
                         break;
 

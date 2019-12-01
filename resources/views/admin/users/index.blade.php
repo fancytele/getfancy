@@ -8,7 +8,7 @@
 @section('header-action')
     <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
         <i class="fe fe-user-plus mr-2"></i>
-        @lang('Create user')
+        @lang('Create User')
     </a>
 @endsection
 @endif
@@ -21,13 +21,13 @@
                     <div class="card card-flush">
                         <div class="card-body text-center">
                             <h1 class="display-4">
-                                @lang('No users yet'). 😭
+                                @lang('No Users yet'). 😭
                             </h1>
 
                             <a href="{{ route('admin.users.create') }}"
                                class="btn btn-primary">
                                 <i class="fe fe-user-plus mr-2"></i>
-                                @lang('Create user')
+                                @lang('Create User')
                             </a>
                         </div>
                     </div>

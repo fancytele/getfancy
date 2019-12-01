@@ -3467,6 +3467,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -3505,6 +3511,7 @@ __webpack_require__.r(__webpack_exports__);
       userCreated: null,
       errors: {},
       sameAddress: false,
+      reservationHasExpired: false,
       reservationDID: {
         region: null,
         city: null,
@@ -3720,6 +3727,7 @@ __webpack_require__.r(__webpack_exports__);
         number: this.reservationDID.item.attributes.number,
         reservation: response.data.id
       };
+      this.reservationHasExpired = false;
       this.user.did = Object.assign(reservation, response.data.attributes);
       this.$nextTick(function () {
         _this6.reservationDID.searchSubmit = null;
@@ -3749,6 +3757,7 @@ __webpack_require__.r(__webpack_exports__);
       this.user.did = {};
       this.reservationDID.item = {};
       this.reservationDID.cancelSubmit = null;
+      this.reservationHasExpired = true;
       this.resetSearchDIDs();
       this.$nextTick(function () {
         _this8.reservationDID.searchSubmit = Ladda.create(document.querySelector('#submit-search-did'));
@@ -67590,6 +67599,10 @@ var render = function() {
                       ]
                     )
                   ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm.reservationHasExpired
+                ? _c("div", { staticClass: "col-auto" }, [_vm._m(0)])
                 : _vm._e()
             ])
           ])
@@ -67629,7 +67642,7 @@ var render = function() {
                       [_vm._v(_vm._s(_vm.trans("Reserve DID")))]
                     ),
                     _vm._v(" "),
-                    _vm._m(0)
+                    _vm._m(1)
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-body" }, [
@@ -68150,6 +68163,21 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "mt-2 mt-md-0 text-warning text-right" }, [
+      _c("p", { staticClass: "mb-0" }, [
+        _c("i", { staticClass: "fe fe-alert-triangle" }),
+        _vm._v(" "),
+        _c("strong", { staticClass: "text-decoration-underline" }, [
+          _vm._v("DID has expired")
+        ]),
+        _vm._v(", please select a new DID\n                                ")
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

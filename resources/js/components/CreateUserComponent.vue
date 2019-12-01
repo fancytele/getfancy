@@ -167,7 +167,7 @@
                                         <b>{{ trans('Expires in') }}:</b>
                                         <countdown-timer
                                                 :end-date="user.did.expire_at"
-                                                v-on:countdown-over="reservationOver()"
+                                                @countdown-over="reservationOver()"
                                         ></countdown-timer>
                                     </p>
                                 </div>
@@ -669,8 +669,16 @@
                                         <strong class="text-decoration-underline">DID reservation expires in:</strong>
                                         <countdown-timer
                                                 :end-date="user.did.expire_at"
-                                                v-on:countdown-over="reservationOver()"
+                                                @countdown-over="reservationOver()"
                                         ></countdown-timer>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-auto" v-if="reservationHasExpired">
+                                <div class="mt-2 mt-md-0 text-warning text-right">
+                                    <p class="mb-0">
+                                      <i class="fe fe-alert-triangle"></i>
+                                      <strong class="text-decoration-underline">DID has expired</strong>, please select a new DID
                                     </p>
                                 </div>
                             </div>
@@ -687,8 +695,7 @@
                 class="modal fade"
                 aria-hidden="true"
                 aria-labelledby="search-did-title"
-                v-if="!userHasReservation"
-        >
+                v-if="!userHasReservation">
             <div role="document" class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -849,8 +856,7 @@
                 role="dialog"
                 class="modal fade"
                 aria-hidden="true"
-                v-if="userCreated !== null"
-        >
+                v-if="userCreated !== null">
             <div role="document" class="modal-dialog modal-dialog-centered modal-sm">
                 <div class="modal-content">
                     <div class="modal-body p-0">
@@ -915,6 +921,7 @@
         userCreated: null,
         errors: {},
         sameAddress: false,
+        reservationHasExpired: false,
         reservationDID: {
           region: null,
           city: null,
@@ -1154,6 +1161,7 @@
           reservation: response.data.id,
         };
 
+        this.reservationHasExpired = false;
         this.user.did = Object.assign(reservation, response.data.attributes);
 
         this.$nextTick(() => {
@@ -1187,6 +1195,7 @@
         this.user.did = {};
         this.reservationDID.item = {};
         this.reservationDID.cancelSubmit = null;
+        this.reservationHasExpired = true;
 
         this.resetSearchDIDs();
 

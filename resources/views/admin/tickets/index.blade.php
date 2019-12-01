@@ -22,7 +22,7 @@
 
         @if($tickets->isNotEmpty ())
             <div class="card" data-toggle="lists"
-                data-options='{"valueNames": ["orders-ticket", "orders-user-name", "orders-started-at", "orders-completed-at", "orders-response-time", "orders-status"]}'>
+                data-options='{"valueNames": ["orders-ticket", "orders-user-name", "orders-created-at", "orders-started", "orders-completed", "orders-status"]}'>
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
@@ -57,20 +57,20 @@
                                 </th>
                                 <th scope="col">
                                     <a href="#" class="text-muted sort"
-                                       data-sort="orders-started-at">
-                                        @lang('Started at')
+                                       data-sort="orders-created-at">
+                                        @lang('Created at')
                                     </a>
                                 </th>
                                 <th scope="col">
                                     <a href="#" class="text-muted sort"
-                                       data-sort="orders-completed-at">
-                                        @lang('Completed at')
+                                       data-sort="orders-started">
+                                        @lang('Started')
                                     </a>
                                 </th>
                                 <th scope="col">
                                     <a href="#" class="text-muted sort"
-                                       data-sort="orders-response-time">
-                                        @lang('Response time')
+                                       data-sort="orders-completed">
+                                        @lang('Completed')
                                     </a>
                                 </th>
                                 <th scope="col">
@@ -96,8 +96,8 @@
                                             @endif
                                         </p>
                                         <p class="mb-0 text-black-50">
+                                            <i class="fe fe-user font-weight-bold"></i>
                                             @if($ticket->assigned)
-                                                <i class="fe fe-user font-weight-bold"></i>
                                                 {{ $ticket->assigned->full_name}}
                                             @else
                                                 <em>@lang('Unassigned')</em>
@@ -106,23 +106,31 @@
                                     </td>
                                     <td class="align-middle orders-user-name">
                                         <p class="mb-0">{{ $ticket->fancy_number->user->full_name }}</p>
-                                        <p class="mb-0 font-weight-bold">
-                                            <i class="fe fe-phone font-weight-bold"></i>
+                                        <p class="mb-0 text-black-50">
+                                            <i class="fe fe-phone"></i>
                                             {{ $ticket->fancy_number->us_did_number }}
                                         </p>
                                     </td>
-                                    <td class="align-middle orders-started-at">
-                                        {{ optional($ticket->started_at)->isoFormat('lll') ?? '---' }}
+                                    <td class="align-middle orders-created-at">
+                                            {{ optional($ticket->created_at)->isoFormat('lll') ?? '---' }}
+                                        </td>
+                                    <td class="align-middle orders-started">
+                                        <span>
+                                            @if($ticket->isOpen() && !$ticket->isCanceled())
+                                                {{ $ticket->started_at->diffForHumans($ticket->created_at, ['parts' => 2]) }} created
+                                            @else
+                                                ---
+                                            @endif
+                                        </span>
                                     </td>
-                                    <td class="align-middle orders-completed-at">
-                                        {{ optional($ticket->completed_at)->isoFormat('lll') ?? '---' }}
-                                    </td>
-                                    <td class="align-middle orders-response-time">
-                                        @if($ticket->isCompleted())
-                                            {{ $ticket->completed_at->diffForHumans($ticket->started_at, ['parts' => 2]) }}
-                                        @else
-                                            <span>---</span>
-                                        @endif
+                                    <td class="align-middle orders-completed">
+                                        <span>
+                                            @if($ticket->isCompleted())
+                                                {{ $ticket->completed_at->diffForHumans($ticket->started_at, ['parts' => 2]) }} started
+                                            @else
+                                                ---
+                                            @endif
+                                        </span>
                                     </td>
                                     <td class="align-middle orders-status">
                                         @if($ticket->isPending())
@@ -140,7 +148,7 @@
                                                 class="badge badge-soft-success font-size-inherit">
                                                 @lang('Completed')
                                             </div>
-                                        @elseif($ticket->isRemoved())
+                                        @elseif($ticket->isCanceled())
                                             <div
                                                 class="badge badge-soft-danger font-size-inherit">
                                                 @lang('Removed')

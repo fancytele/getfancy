@@ -16,7 +16,7 @@ class Ticket extends Model
         parent::boot();
 
         static::deleting(function ($model) {
-            $model->status = TicketStatus::REMOVED;
+            $model->status = TicketStatus::CANCELED;
             $model->save();
         });
     }
@@ -76,9 +76,9 @@ class Ticket extends Model
     /**
      * @return boolean
      */
-    public function isRemoved()
+    public function isCanceled()
     {
-        return $this->status === TicketStatus::REMOVED;
+        return $this->status === TicketStatus::CANCELED;
     }
 
     /**

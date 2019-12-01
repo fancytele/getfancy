@@ -83,7 +83,7 @@ class TicketController extends Controller
             ]);
         }
 
-        if ($ticket->isCompleted() || $ticket->isRemoved()) {
+        if ($ticket->isCompleted() || $ticket->isCanceled()) {
             return redirect()->route('admin.tickets.show', $ticket->id);
         }
 

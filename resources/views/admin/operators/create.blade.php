@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('page-subtitle', __('User management'))
-@section('page-title', __('Create operator'))
+@section('page-title', __('Create Operator'))
 
 @section('content')
 <div class="container-fluid">

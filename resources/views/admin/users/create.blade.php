@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('page-subtitle', __('User management'))
-@section('page-title', __('Create user'))
+@section('page-title', __('Create User'))
 
 @push('head-scripts')
 <script src="{{ asset('js/lang.js') }}" defer></script>
