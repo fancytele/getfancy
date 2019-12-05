@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Enums\TicketCategory;
 use App\Enums\TicketStatus;
 use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Model;
@@ -48,6 +49,14 @@ class Ticket extends Model
     public function getStatusLabelAttribute()
     {
         return ucfirst(str_replace('_', ' ', $this->status));
+    }
+
+    /**
+     * @return string
+     */
+    public function getCategoryLabelAttribute()
+    {
+        return ucfirst(str_replace('_', ' ', $this->category));
     }
 
     /**
@@ -134,5 +143,13 @@ class Ticket extends Model
     public function belongsToAuthenticatedUser()
     {
         return $this->assigned_id === Auth::id();
+    }
+
+    /**
+     * @return boolean
+     */
+    public function hasBeenUpdated()
+    {
+        return $this->category === TicketCategory::UPDATE;
     }
 }

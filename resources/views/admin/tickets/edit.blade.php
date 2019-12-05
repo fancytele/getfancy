@@ -11,6 +11,16 @@
             @lang('Return to list')
         </a>
 
+        @if($ticket->hasBeenUpdated())
+            <div class="alert alert-warning align-items-center d-flex" role="alert">
+                <i class="display-4 fe fe-alert-triangle mr-4"></i>
+                <div>
+                    <strong>The Ticket has been updated</strong>.
+                    Please review all the settings once again.
+                </div>
+            </div>
+        @endif
+
         <div class="row">
             <div class="col-lg-8">
                 <div class="card">

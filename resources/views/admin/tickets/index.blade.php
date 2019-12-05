@@ -90,10 +90,7 @@
                                     <td scope="row" class="align-middle orders-ticket">
                                         <p class="font-weight-bold mb-0">
                                             Ticket #{{ $ticket->id }}
-                                            @if($ticket->parent_id)
-                                                <i class="fe fe-git-branch font-weight-bold" data-toggle="tooltip" data-placement="top"
-                                                title="Related to Ticket #{{$ticket->parent_id}}"></i>
-                                            @endif
+                                            <span class="badge badge-dark">{{ $ticket->category_label }}</span>
                                         </p>
                                         <p class="mb-0 text-black-50">
                                             <i class="fe fe-user font-weight-bold"></i>
