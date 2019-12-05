@@ -159,7 +159,7 @@
                                         <a href="{{ route('admin.tickets.show', $ticket->id) }}" class="font-weight-normal h5 px-2">
                                             @lang('View')
                                         </a>
-                                        @if($ticket->inProgress())
+                                        @if($ticket->inProgress() && $ticket->belongsToAuthenticatedUser())
                                             |
                                            <a href="{{ route('admin.tickets.edit', $ticket->id) }}"
                                                class="font-weight-normal h5 px-2">

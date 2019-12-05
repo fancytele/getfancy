@@ -6,6 +6,7 @@ use App\Enums\TicketStatus;
 use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Auth;
 
 class Ticket extends Model
 {
@@ -125,5 +126,13 @@ class Ticket extends Model
     public function removed_by()
     {
         return $this->belongsTo(User::class, 'reason_by');
+    }
+
+    /**
+     * @return boolean
+     */
+    public function belongsToAuthenticatedUser()
+    {
+        return $this->assigned_id === Auth::id();
     }
 }

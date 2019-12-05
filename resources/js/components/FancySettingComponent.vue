@@ -501,52 +501,6 @@
             </button>
         </form>
 
-        <div class="modal fade" id="reason-modal" tabindex="-1" role="dialog"
-             aria-labelledby="reason-modal-label" aria-hidden="true"
-             v-if="ticketInProgress" ref="reason-modal">
-            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-                <div class="modal-content">
-                    <div class="align-items-center d-flex modal-header py-3">
-                        <h5 class="h3 mb-0 modal-title" id="reason-modal-label">Reason</h5>
-                        <button type="button"
-                                data-dismiss="modal"
-                                aria-label="Close"
-                                class="close py-0"
-                                @click="hideReasonModal()">
-                            <i class="fe fe-x-circle"></i>
-                        </button>
-                    </div>
-                    <div class="modal-body p-0">
-                        <form :action="urlAction" @submit.prevent="saveSetting()">
-                            <label class="w-100">
-                                <textarea class="form-control form-control-flush px-4 resize-none"
-                                          name="reason"
-                                          id="reason"
-                                          rows="5"
-                                          placeholder="Specify why this change is necessary"
-                                          v-model="reason"
-                                          ref="reason-input">
-                                </textarea>
-                            </label>
-                            <div class="d-flex overflow-hidden rounded-bottom">
-                                <button type="button"
-                                        class="btn btn-lg btn-outline-light rounded-0 text-body w-50"
-                                        data-dismiss="modal"
-                                        @click="hideReasonModal()">
-                                    {{ trans('Cancel') }}
-                                </button>
-                                <button type="submit"
-                                        class="btn btn-lg btn-primary rounded-0 w-50"
-                                        :disabled="reason === ''">
-                                    {{ trans('Confirm') }}
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-
         <div id="success-modal"
              tabindex="-2"
              role="dialog"
@@ -583,12 +537,6 @@
 
   export default {
     props: {
-      ticketInProgress: {
-        type: Boolean,
-        default() {
-          return false;
-        }
-      },
       hasProfessionalRecording: {
         type: Boolean,
         default() {
@@ -622,7 +570,6 @@
         settingsSaved: false,
         isProcessing: false,
         laddaButton: null,
-        reason: '',
         businessHours: {
           all_day: false,
           days: [
@@ -850,39 +797,15 @@
           payload.audio_type = 'professional';
         }
 
-        // Reason, only if Ticket in progress exists
-        if (this.ticketInProgress) {
-          payload.ticket_in_progress = this.ticketInProgress;
-          payload.reason = this.reason;
-        }
-
         return payload;
       },
-      showReasonModal() {
-        $(this.$refs['reason-modal']).modal({
-          backdrop: 'static',
-          keyboard: false
-        }).on('shown.bs.modal', () => this.$refs['reason-input'].focus());
-      },
-      hideReasonModal() {
-        this.reason = '';
-      },
       saveSetting() {
-        if (this.ticketInProgress && this.reason === '') {
-          this.showReasonModal();
-          return false;
-        }
-
         if (this.isProcessing) {
           return false;
         }
 
         this.isProcessing = true;
         this.laddaButton.start();
-
-        if (this.$refs['reason-modal']) {
-          $(this.$refs['reason-modal']).modal('hide');
-        }
 
         axios.put(this.urlAction, this.getSettingPayload())
           .then(() => {

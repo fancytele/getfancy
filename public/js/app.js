@@ -4525,61 +4525,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    ticketInProgress: {
-      type: Boolean,
-      "default": function _default() {
-        return false;
-      }
-    },
     hasProfessionalRecording: {
       type: Boolean,
       "default": function _default() {
@@ -4613,7 +4561,6 @@ __webpack_require__.r(__webpack_exports__);
       settingsSaved: false,
       isProcessing: false,
       laddaButton: null,
-      reason: '',
       businessHours: {
         all_day: false,
         days: [{
@@ -4836,36 +4783,12 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.buyProfessionalRecording) {
         payload.audio_type = 'professional';
-      } // Reason, only if Ticket in progress exists
-
-
-      if (this.ticketInProgress) {
-        payload.ticket_in_progress = this.ticketInProgress;
-        payload.reason = this.reason;
       }
 
       return payload;
     },
-    showReasonModal: function showReasonModal() {
-      var _this2 = this;
-
-      $(this.$refs['reason-modal']).modal({
-        backdrop: 'static',
-        keyboard: false
-      }).on('shown.bs.modal', function () {
-        return _this2.$refs['reason-input'].focus();
-      });
-    },
-    hideReasonModal: function hideReasonModal() {
-      this.reason = '';
-    },
     saveSetting: function saveSetting() {
-      var _this3 = this;
-
-      if (this.ticketInProgress && this.reason === '') {
-        this.showReasonModal();
-        return false;
-      }
+      var _this2 = this;
 
       if (this.isProcessing) {
         return false;
@@ -4873,27 +4796,22 @@ __webpack_require__.r(__webpack_exports__);
 
       this.isProcessing = true;
       this.laddaButton.start();
-
-      if (this.$refs['reason-modal']) {
-        $(this.$refs['reason-modal']).modal('hide');
-      }
-
       axios.put(this.urlAction, this.getSettingPayload()).then(function () {
-        _this3.settingsSaved = true;
+        _this2.settingsSaved = true;
 
-        _this3.laddaButton.stop();
+        _this2.laddaButton.stop();
 
-        _this3.$nextTick(function () {
-          $(_this3.$refs['success-modal']).modal({
+        _this2.$nextTick(function () {
+          $(_this2.$refs['success-modal']).modal({
             backdrop: 'static',
             keyboard: false
           });
         });
       })["catch"](function (error) {
         console.error(error);
-        _this3.isProcessing = false;
+        _this2.isProcessing = false;
 
-        _this3.laddaButton.stop();
+        _this2.laddaButton.stop();
       });
     }
   },
@@ -70181,169 +70099,6 @@ var render = function() {
         )
       ]
     ),
-    _vm._v(" "),
-    _vm.ticketInProgress
-      ? _c(
-          "div",
-          {
-            ref: "reason-modal",
-            staticClass: "modal fade",
-            attrs: {
-              id: "reason-modal",
-              tabindex: "-1",
-              role: "dialog",
-              "aria-labelledby": "reason-modal-label",
-              "aria-hidden": "true"
-            }
-          },
-          [
-            _c(
-              "div",
-              {
-                staticClass: "modal-dialog modal-dialog-centered modal-sm",
-                attrs: { role: "document" }
-              },
-              [
-                _c("div", { staticClass: "modal-content" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass: "align-items-center d-flex modal-header py-3"
-                    },
-                    [
-                      _c(
-                        "h5",
-                        {
-                          staticClass: "h3 mb-0 modal-title",
-                          attrs: { id: "reason-modal-label" }
-                        },
-                        [_vm._v("Reason")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "button",
-                        {
-                          staticClass: "close py-0",
-                          attrs: {
-                            type: "button",
-                            "data-dismiss": "modal",
-                            "aria-label": "Close"
-                          },
-                          on: {
-                            click: function($event) {
-                              return _vm.hideReasonModal()
-                            }
-                          }
-                        },
-                        [_c("i", { staticClass: "fe fe-x-circle" })]
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "modal-body p-0" }, [
-                    _c(
-                      "form",
-                      {
-                        attrs: { action: _vm.urlAction },
-                        on: {
-                          submit: function($event) {
-                            $event.preventDefault()
-                            return _vm.saveSetting()
-                          }
-                        }
-                      },
-                      [
-                        _c("label", { staticClass: "w-100" }, [
-                          _c("textarea", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.reason,
-                                expression: "reason"
-                              }
-                            ],
-                            ref: "reason-input",
-                            staticClass:
-                              "form-control form-control-flush px-4 resize-none",
-                            attrs: {
-                              name: "reason",
-                              id: "reason",
-                              rows: "5",
-                              placeholder:
-                                "Specify why this change is necessary"
-                            },
-                            domProps: { value: _vm.reason },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.reason = $event.target.value
-                              }
-                            }
-                          })
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            staticClass: "d-flex overflow-hidden rounded-bottom"
-                          },
-                          [
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-lg btn-outline-light rounded-0 text-body w-50",
-                                attrs: {
-                                  type: "button",
-                                  "data-dismiss": "modal"
-                                },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.hideReasonModal()
-                                  }
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(_vm.trans("Cancel")) +
-                                    "\n                            "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "btn btn-lg btn-primary rounded-0 w-50",
-                                attrs: {
-                                  type: "submit",
-                                  disabled: _vm.reason === ""
-                                }
-                              },
-                              [
-                                _vm._v(
-                                  "\n                                " +
-                                    _vm._s(_vm.trans("Confirm")) +
-                                    "\n                            "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ]
-                    )
-                  ])
-                ])
-              ]
-            )
-          ]
-        )
-      : _vm._e(),
     _vm._v(" "),
     _vm.settingsSaved
       ? _c(

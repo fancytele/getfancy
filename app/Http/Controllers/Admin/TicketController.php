@@ -87,6 +87,13 @@ class TicketController extends Controller
             return redirect()->route('admin.tickets.show', $ticket->id);
         }
 
+        if (!$ticket->belongsToAuthenticatedUser()) {
+            return redirect()->route('admin.tickets.index')->with('alert', [
+                'type' => 'warning',
+                'message' => "Ticket #$ticket->id has already been assigned to another Operator"
+            ]);
+        }
+
         $settings = $ticket->fancy_number->settings()->first();
 
         return view('admin.tickets.edit', compact('ticket', 'settings'));
