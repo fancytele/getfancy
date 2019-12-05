@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Addon;
 use App\Enums\AddonCode;
 use App\Enums\FancyAudioType;
+use App\Enums\TicketCategory;
 use App\Enums\TicketStatus;
 use App\Events\RegisterInvoiceEvent;
 use App\FancyNumber;
@@ -38,12 +39,12 @@ class FancySettingService
     {
         $setting = FancySetting::firstOrNew(['fancy_number_id' => $this->fancyNumber->id]);
 
-        $this->cleanExistingTicket($request->user()->id, $request->input('reason'));
+        $this->UpdateExistingTicket();
 
         $setting->business_hours = $request->input('business_hours');
         $setting->downtime_hours = $request->input('downtime_hours');
-        $setting->email_notification = (string)$request->input('notification.email');
-        $setting->period_notification = (string)$request->input('notification.period');
+        $setting->email_notification = (string) $request->input('notification.email');
+        $setting->period_notification = (string) $request->input('notification.period');
 
         $setting->business_message_id = $request->input('business_id');
 
@@ -88,7 +89,7 @@ class FancySettingService
     public function getSettingsToEdit()
     {
         if (is_null($this->user->fancy_setting)) {
-            return (object)[];
+            return (object) [];
         }
 
         return collect([
@@ -111,28 +112,20 @@ class FancySettingService
         ]);
     }
 
-    /**
-     * @param int $userId
-     * @param string|null $reason
-     */
-    private function cleanExistingTicket(int $userId, string $reason = null)
+    private function UpdateExistingTicket()
     {
-        if ($this->fancyNumber->hasPendingTicket() === false) {
+        if (!$this->fancyNumber->hasOpenTicket()) {
             $new_ticket = new Ticket();
             $new_ticket->fancy_number_id = $this->fancyNumber->id;
 
-            if ($this->fancyNumber->hasTicketInProgress()) {
-                $current_ticket = $this->fancyNumber->tickets->firstWhere('status', TicketStatus::IN_PROGRESS);
-                $current_ticket->reason = $reason;
-                $current_ticket->reason_by = $userId;
-
-                $current_ticket->delete();
-
-                $new_ticket->parent_id = $current_ticket->id;
-                $new_ticket->assigned_id = $current_ticket->assigned_id;
-            }
-
             $new_ticket->save();
+        }
+
+        if ($this->fancyNumber->hasTicketInProgress()) {
+            $current_ticket = $this->fancyNumber->tickets->firstWhere('status', TicketStatus::IN_PROGRESS);
+            $current_ticket->category = TicketCategory::UPDATE;
+
+            $current_ticket->save();
         }
     }
 

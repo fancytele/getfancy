@@ -60,9 +60,11 @@ class FancyNumber extends Model
     /**
      * @return boolean
      */
-    public function hasPendingTicket()
+    public function hasOpenTicket()
     {
-        return $this->tickets->isNotEmpty() && $this->tickets->where('status', TicketStatus::PENDING)->count() > 0;
+        $count = $this->tickets->whereIn('status', [TicketStatus::PENDING, TicketStatus::IN_PROGRESS])->count();
+
+        return $this->tickets->isNotEmpty() && $count > 0;
     }
 
     /**

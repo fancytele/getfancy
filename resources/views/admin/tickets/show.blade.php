@@ -94,7 +94,7 @@
                             </form>
                         @endif
 
-                        @if($ticket->inProgress())
+                        @if($ticket->inProgress() && $ticket->belongsToAuthenticatedUser())
                             <hr>
 
                             <a href="{{ route('admin.tickets.edit', $ticket->id) }}"
