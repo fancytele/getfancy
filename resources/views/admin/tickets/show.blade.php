@@ -21,7 +21,10 @@
                         @endif
 
                         <dl>
-                            <dt>Ticket #</dt>
+                            <dt>
+                                Ticket # 
+                                <span class="font-italic small"> - {{ $ticket->category_label }}</span>
+                            </dt>
                             <dd class="mb-4 text-black-50">
                                 {{ $ticket->id }}
                                 <div

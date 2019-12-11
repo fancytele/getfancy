@@ -14,3 +14,8 @@ abstract class DIDNumberType extends Enum
     const CUSTOM = "custom";
     const FANCY = "fancy";
 }
+
+abstract class DIDCDRStatus
+{
+    const COMPLETED = 'Completed';
+}

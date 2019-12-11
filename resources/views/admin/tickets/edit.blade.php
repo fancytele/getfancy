@@ -26,15 +26,15 @@
                 <div class="card">
                     <div class="card-body">                            
                         <div>
-                            <dl class="d-md-inline-block mr-md-6">
+                            <dl>
                                 <dt>Ticket #</dt>
                                 <dd>{{ $ticket->id }}</dd>
                             </dl>
-                            <dl class="d-md-inline-block mr-md-6">
+                            <dl>
                                 <dt>User</dt>
                                 <dd>{{ $ticket->fancy_number->user->full_name }}</dd>
                             </dl>
-                            <dl class="d-md-inline-block mr-md-6">
+                            <dl>
                                 <dt>Fancy Number</dt>
                                 <dd>
                                     <a href="https://my.didww.com/user_dids/{{ $ticket->fancy_number->did_id }}"

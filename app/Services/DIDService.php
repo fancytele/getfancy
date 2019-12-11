@@ -2,9 +2,11 @@
 
 namespace App\Services;
 
+use App\Enums\DIDCDRStatus;
 use Didww\Configuration as DIDWWConfiguration;
 use Didww\Credentials as DIDWWCredentials;
 use Didww\Item\AvailableDid as DIDWWAvailableDID;
+use Didww\Item\CdrExport as DIDWWCDRExport;
 use Didww\Item\City as DIDWWCity;
 use Didww\Item\Country as DIDWWCountry;
 use Didww\Item\Did as DIDWW;
@@ -13,10 +15,13 @@ use Didww\Item\Order as DIDWWOrder;
 use Didww\Item\OrderItem\ReservationDid as DIDWWOrderItemReservation;
 use Didww\Item\Region as DIDWWRegion;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
 class DIDService
 {
+    const CDR_MAX_TIMES = 200;
+
     /**
      * The DID API key.
      *
@@ -206,6 +211,58 @@ class DIDService
                 'did_group_id' => $item->getDidGroupId()
             ]
         ];
+    }
+
+    public function getCDRReport(string $did, int $year, int $month)
+    {
+        // generate cdr export
+        $cdr_export = new DIDWWCDRExport();
+        $cdr_export->setFilerDidNumber($did);
+        $cdr_export->setFilterYear($year);
+        $cdr_export->setFilterMonth($month);
+
+        $cdr_export_document = $cdr_export->save();
+        $data = $cdr_export_document->getData();
+        $id = $data->getId();
+
+        // Get CSV file URL
+        $find_cdr = null;
+        $times = 0;
+
+        do {
+            $cdr_export_document = DIDWWCDRExport::find($id);
+            $find_cdr = $cdr_export_document->getData();
+            $times += 1;
+        } while ($find_cdr->status !== DIDCDRStatus::COMPLETED && $times <= self::CDR_MAX_TIMES);
+
+        $file_name = $id . '.csv';
+
+        if ($find_cdr->download(Storage::path($file_name))) {
+            $lines = explode("\n", Storage::get($file_name));
+            $headers = str_getcsv(array_shift($lines));
+
+            if (empty($lines[0])) {
+                return [];
+            }
+            
+            $data = [];
+
+            foreach ($lines as $line) {
+                $row = [];
+
+                foreach (str_getcsv($line) as $key => $field) {
+                    $row[$headers[$key]] = $field;
+                }
+
+                $row = array_filter($row);
+                $data[] = $row;
+            }
+
+            Storage::delete($file_name);
+            return $data;
+        }
+
+        return [];
     }
 
     /**

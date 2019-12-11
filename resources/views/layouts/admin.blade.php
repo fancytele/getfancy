@@ -195,11 +195,6 @@
                                         :impersonate-url="'{{ route('admin.users.impersonate', '_user_')}}'"></impersonate-component>
                 @endif
 
-                
-
-
-        
-
                 <!-- HEADER -->
                 <div class="header">
                     <div class="container-fluid">

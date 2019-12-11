@@ -3,6 +3,15 @@
 @section('page-subtitle', 'Overwiew')
 @section('page-title', 'Dashboard')
 
+@section('header-action')
+<form action="" method="GET">
+    <label for="date-picker" class="sr-only">Date range</label>
+    <input type="text" id="date-picker" class="form-control" placeholder="Search by date range" data-toggle="flatpickr"
+           value="{{ $range }}"
+           data-options='{"mode": "range", "altInput": true, "altFormat": "M j, Y", "dateFormat": "Y-m-d"}'>
+</form>
+@endsection
+
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -11,16 +20,14 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col text-truncate">
-                            <h6
-                                class="card-title text-uppercase text-muted mb-2">
+                            <h6 class="card-title text-uppercase text-muted mb-2">
                                 Total calls
                             </h6>
 
-                            <span class="h2 mb-0">308</span>
+                            <span class="h2 mb-0">{{ $overview['total'] }}</span>
                         </div>
                         <div class="col-auto">
-                            <span
-                                  class="h2 fe fe-phone-call text-muted mb-0"></span>
+                            <span class="h2 fe fe-phone-call text-muted mb-0"></span>
                         </div>
                     </div>
                 </div>
@@ -32,19 +39,17 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col text-truncate">
-                            <h6
-                                class="card-title text-uppercase text-muted mb-2">
+                            <h6 class="card-title text-uppercase text-muted mb-2">
                                 Successful calls
                             </h6>
 
-                            <span class="h2 mb-0">294</span>
+                            <span class="h2 mb-0">{{ $overview['successful'] }}</span>
                             <span class="badge badge-soft-success mt-n1">
-                                95.5%
+                                {{ $overview['successful_average'] }}%
                             </span>
                         </div>
                         <div class="col-auto">
-                            <span
-                                  class="h2 fe fe-phone-call text-success mb-0"></span>
+                            <span class="h2 fe fe-phone-call text-success mb-0"></span>
                         </div>
                     </div>
                 </div>
@@ -56,19 +61,17 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col text-truncate">
-                            <h6
-                                class="card-title text-uppercase text-muted mb-2">
+                            <h6 class="card-title text-uppercase text-muted mb-2">
                                 Unsuccessful calls
                             </h6>
 
-                            <span class="h2 mb-0">14</span>
+                            <span class="h2 mb-0">{{ $overview['unsuccessful'] }}</span>
                             <span class="badge badge-soft-danger mt-n1">
-                                4.5%
+                                {{ $overview['unsuccessful_average'] }}%
                             </span>
                         </div>
                         <div class="col-auto">
-                            <span
-                                  class="h2 fe fe-phone-missed text-danger mb-0"></span>
+                            <span class="h2 fe fe-phone-missed text-danger mb-0"></span>
                         </div>
                     </div>
                 </div>
@@ -80,12 +83,11 @@
                 <div class="card-body">
                     <div class="row align-items-center">
                         <div class="col text-truncate">
-                            <h6
-                                class="card-title text-uppercase text-muted mb-2">
+                            <h6 class="card-title text-uppercase text-muted mb-2">
                                 Average call durations
                             </h6>
 
-                            <span class="h2 mb-0">1:45 min</span>
+                            <span class="h2 mb-0">{{ $overview['duration'] }} min</span>
                         </div>
                         <div class="col-auto">
                             <span class="h2 fe fe-clock text-muted mb-0"></span>
@@ -122,13 +124,10 @@
 
                             <!-- Switch -->
                             <div class="custom-control custom-switch">
-                                <input type="checkbox"
-                                       class="custom-control-input"
-                                       id="cardToggle" data-toggle="chart"
+                                <input type="checkbox" class="custom-control-input" id="cardToggle" data-toggle="chart"
                                        data-target="#callsChart"
                                        data-add='{"data":{"datasets":[{"data":[3,1,0,3,0,0,4,3,0],"backgroundColor":"#fad7dd","label":"Missed"}]}}'>
-                                <label class="custom-control-label"
-                                       for="cardToggle"></label>
+                                <label class="custom-control-label" for="cardToggle"></label>
                             </div>
 
                         </div>
@@ -160,8 +159,7 @@
                 </div>
                 <div class="card-body">
                     <div class="chart chart-appended">
-                        <canvas id="extensionsChart" class="chart-canvas"
-                                data-toggle="legend"
+                        <canvas id="extensionsChart" class="chart-canvas" data-toggle="legend"
                                 data-target="#extensionsChartLegend"></canvas>
                     </div>
 
@@ -184,19 +182,10 @@
                             <span class="fe fe-search text-muted"></span>
                         </div>
                         <div class="col">
-                            <input type="search"
-                                   class="form-control form-control-flush search"
-                                   placeholder="Search">
+                            <input type="search" class="form-control form-control-flush search" placeholder="Search">
                         </div>
                     </form>
 
-                </div>
-                <div class="col-3">
-                    <label for="date-picker" class="sr-only">Date range</label>
-                    <input type="text" id="date-picker" class="form-control"
-                           placeholder="Search by date range"
-                           data-toggle="flatpickr"
-                           data-options='{"mode": "range"}'>
                 </div>
             </div>
         </div>
@@ -205,38 +194,32 @@
                 <thead>
                     <tr>
                         <th>
-                            <a href="#" class="text-muted sort"
-                               data-sort="calls-did">
+                            <a href="#" class="text-muted sort" data-sort="calls-did">
                                 Date
                             </a>
                         </th>
                         <th>
-                            <a href="#" class="text-muted sort"
-                               data-sort="calls-source">
+                            <a href="#" class="text-muted sort" data-sort="calls-source">
                                 Source
                             </a>
                         </th>
                         <th>
-                            <a href="#" class="text-muted sort"
-                               data-sort="calls-destination">
+                            <a href="#" class="text-muted sort" data-sort="calls-destination">
                                 Destination
                             </a>
                         </th>
                         <th>
-                            <a href="#" class="text-muted sort"
-                               data-sort="calls-duration">
+                            <a href="#" class="text-muted sort" data-sort="calls-duration">
                                 Duration (min)
                             </a>
                         </th>
                         <th colspan="2">
-                            <a href="#" class="text-muted sort"
-                               data-sort="calls-state">
+                            <a href="#" class="text-muted sort" data-sort="calls-state">
                                 State
                             </a>
                         </th>
                         <th colspan="2">
-                            <a href="#" class="text-muted sort"
-                               data-sort="calls-disconector">
+                            <a href="#" class="text-muted sort" data-sort="calls-disconector">
                                 Attemp number
                             </a>
                         </th>
@@ -259,13 +242,11 @@
                         </td>
                         <td class="calls-state" colspan="2">
                             @if($call['success'])
-                            <div
-                                 class="badge badge-soft-success font-size-inherit">
+                            <div class="badge badge-soft-success font-size-inherit">
                                 Success
                             </div>
                             @else
-                            <div
-                                 class="badge badge-soft-danger font-size-inherit">
+                            <div class="badge badge-soft-danger font-size-inherit">
                                 Missed
                             </div>
                             @endif
@@ -283,14 +264,12 @@
     <nav class="d-flex justify-content-center">
         <ul class="pagination">
             <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1"
-                   aria-disabled="true">Previous</a>
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
             </li>
             <li class="page-item"><a class="page-link" href="#">1</a>
             </li>
             <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2 <span
-                          class="sr-only">(current)</span></a>
+                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
             </li>
             <li class="page-item"><a class="page-link" href="#">3</a>
             </li>
