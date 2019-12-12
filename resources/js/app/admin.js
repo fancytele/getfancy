@@ -11,6 +11,9 @@ function logout(event) {
 }
 
 function initCallsChar(chart) {
+  const labels = JSON.parse(chart.dataset.labels);
+  const values = JSON.parse(chart.dataset.values);
+
   new Chart(chart, {
     type: 'bar',
     options: {
@@ -43,43 +46,10 @@ function initCallsChar(chart) {
       }
     },
     data: {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+      labels,
       datasets: [{
         label: 'Calls',
-        data: [23, 35, 30, 33, 45, 28, 23, 29, 48]
-      }]
-    }
-  });
-}
-
-function initExtensionsChar(chart) {
-  new Chart(chart, {
-    type: 'doughnut',
-    options: {
-      tooltips: {
-        callbacks: {
-          title: function (item, data) {
-            return data.labels[item[0].index];
-          },
-          label: function (item, data) {
-            const value = data.datasets[0].data[item.index];
-            let content = '';
-
-            content += '<span class="popover-body-value">' + value + '%</span>';
-            return content;
-          }
-        }
-      }
-    },
-    data: {
-      labels: ['Sales', 'Support', 'Accounting'],
-      datasets: [{
-        data: [60, 25, 15],
-        backgroundColor: [
-          '#704895',
-          '#a381c2',
-          '#D2DDEC'
-        ]
+        data: values
       }]
     }
   });
@@ -92,11 +62,13 @@ if (typeof callChart !== 'undefined' && callChart) {
   initCallsChar(callChart);
 }
 
-const extensionChart = document.getElementById('extensionsChart');
-
-if (typeof extensionChart !== 'undefined' && extensionChart) {
-  initExtensionsChar(extensionChart);
-}
+const changeCallTableHeight = function (e, callTable) {
+  if (e.matches) {
+    callTable.style.height = "308px";
+  } else {
+    callTable.style.height = "auto";
+  }
+};
 
 window.onload = function () {
   let logoutItems = document.querySelectorAll('.logout-action');
@@ -113,6 +85,15 @@ window.onload = function () {
   // Automatically trigger the loading animation on click
   if (typeof Ladda !== 'undefined') {
     Ladda.bind('button[type=submit].js-ladda-submit');
+  }
+
+  const callTable = document.getElementById('table-calls');
+
+  if (callChart && callTable) {
+    let breakpoint = window.matchMedia('(min-width: 1200px)');
+
+    breakpoint.addListener((e) => changeCallTableHeight(e, callTable));
+    changeCallTableHeight(breakpoint, callTable);
   }
 
   // Delte and Retore element

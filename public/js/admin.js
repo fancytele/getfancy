@@ -36848,6 +36848,8 @@ function logout(event) {
 }
 
 function initCallsChar(chart) {
+  var labels = JSON.parse(chart.dataset.labels);
+  var values = JSON.parse(chart.dataset.values);
   new chart_js__WEBPACK_IMPORTED_MODULE_0___default.a(chart, {
     type: 'bar',
     options: {
@@ -36880,38 +36882,10 @@ function initCallsChar(chart) {
       }
     },
     data: {
-      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'],
+      labels: labels,
       datasets: [{
         label: 'Calls',
-        data: [23, 35, 30, 33, 45, 28, 23, 29, 48]
-      }]
-    }
-  });
-}
-
-function initExtensionsChar(chart) {
-  new chart_js__WEBPACK_IMPORTED_MODULE_0___default.a(chart, {
-    type: 'doughnut',
-    options: {
-      tooltips: {
-        callbacks: {
-          title: function title(item, data) {
-            return data.labels[item[0].index];
-          },
-          label: function label(item, data) {
-            var value = data.datasets[0].data[item.index];
-            var content = '';
-            content += '<span class="popover-body-value">' + value + '%</span>';
-            return content;
-          }
-        }
-      }
-    },
-    data: {
-      labels: ['Sales', 'Support', 'Accounting'],
-      datasets: [{
-        data: [60, 25, 15],
-        backgroundColor: ['#704895', '#a381c2', '#D2DDEC']
+        data: values
       }]
     }
   });
@@ -36924,11 +36898,13 @@ if (typeof callChart !== 'undefined' && callChart) {
   initCallsChar(callChart);
 }
 
-var extensionChart = document.getElementById('extensionsChart');
-
-if (typeof extensionChart !== 'undefined' && extensionChart) {
-  initExtensionsChar(extensionChart);
-}
+var changeCallTableHeight = function changeCallTableHeight(e, callTable) {
+  if (e.matches) {
+    callTable.style.height = "308px";
+  } else {
+    callTable.style.height = "auto";
+  }
+};
 
 window.onload = function () {
   var logoutItems = document.querySelectorAll('.logout-action');
@@ -36942,6 +36918,16 @@ window.onload = function () {
 
   if (typeof Ladda !== 'undefined') {
     Ladda.bind('button[type=submit].js-ladda-submit');
+  }
+
+  var callTable = document.getElementById('table-calls');
+
+  if (callChart && callTable) {
+    var breakpoint = window.matchMedia('(min-width: 1200px)');
+    breakpoint.addListener(function (e) {
+      return changeCallTableHeight(e, callTable);
+    });
+    changeCallTableHeight(breakpoint, callTable);
   } // Delte and Retore element
 
 

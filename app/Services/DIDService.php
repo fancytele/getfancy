@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Enums\DIDCDRStatus;
+use Carbon\Carbon;
 use Didww\Configuration as DIDWWConfiguration;
 use Didww\Credentials as DIDWWCredentials;
 use Didww\Item\AvailableDid as DIDWWAvailableDID;
@@ -244,18 +245,27 @@ class DIDService
             if (empty($lines[0])) {
                 return [];
             }
-            
+
             $data = [];
 
             foreach ($lines as $line) {
                 $row = [];
 
                 foreach (str_getcsv($line) as $key => $field) {
-                    $row[$headers[$key]] = $field;
+                    if ($headers[$key] == 'Date/Time (UTC)') {
+                        $date = new Carbon($field);
+                        $row['Date'] = $date->toDateString();
+                        $row['Time'] = $date->toTimeString();
+                     } else {
+
+                        $row[$headers[$key]] = $field;
+                    }
                 }
 
-                $row = array_filter($row);
-                $data[] = $row;
+                if (!empty($line)) {
+                    $row = array_filter($row);
+                    $data[] = $row;
+                }
             }
 
             Storage::delete($file_name);

@@ -6,8 +6,8 @@
 @section('header-action')
 <form action="" method="GET">
     <label for="date-picker" class="sr-only">Date range</label>
-    <input type="text" id="date-picker" class="form-control" placeholder="Search by date range" data-toggle="flatpickr"
-           value="{{ $range }}"
+    <input type="text" id="dashboard-date-picker" class="form-control" placeholder="Search by date range"
+           data-toggle="flatpickr" disabled value="{{ $range }}"
            data-options='{"mode": "range", "altInput": true, "altFormat": "M j, Y", "dateFormat": "Y-m-d"}'>
 </form>
 @endsection
@@ -15,6 +15,25 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
+        <div class="col-12 col-lg-6 col-xl">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row align-items-center">
+                        <div class="col text-truncate">
+                            <h6 class="card-title text-uppercase text-muted mb-2">
+                                Fancy Number
+                            </h6>
+
+                            <span class="h2 mb-0">{{ $user->fancy_number->us_did_number }}</span>
+                        </div>
+                        <div class="col-auto">
+                            <span class="h2 fe fe-phone text-primary mb-0"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="col-12 col-lg-6 col-xl">
             <div class="card">
                 <div class="card-body">
@@ -98,10 +117,11 @@
         </div>
     </div>
 
+    @if(count($calls) > 0)
     <div class="row">
-        <div class="col-12 col-xl-8">
+        <div class="col-12 col-xl-5">
             <!-- Calls -->
-            <div class="card">
+            <div class="card" id="chart-calls">
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
@@ -112,7 +132,7 @@
                             </h4>
 
                         </div>
-                        <div class="col-auto mr-n3">
+                        {{-- <div class="col-auto mr-n3">
 
                             <!-- Caption -->
                             <span class="text-muted">
@@ -125,12 +145,12 @@
                             <!-- Switch -->
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="cardToggle" data-toggle="chart"
-                                       data-target="#callsChart"
+                                       data-target="#callsChart"                                       
                                        data-add='{"data":{"datasets":[{"data":[3,1,0,3,0,0,4,3,0],"backgroundColor":"#fad7dd","label":"Missed"}]}}'>
                                 <label class="custom-control-label" for="cardToggle"></label>
                             </div>
 
-                        </div>
+                        </div> --}}
                     </div> <!-- / .row -->
 
                 </div>
@@ -138,145 +158,110 @@
 
                     <!-- Chart -->
                     <div class="chart">
-                        <canvas id="callsChart" class="chart-canvas"></canvas>
+                        <canvas id="callsChart" 
+                                class="chart-canvas" 
+                                data-labels='@json($chart["labels"])'
+                                data-values='@json($chart["values"])'></canvas>
                     </div>
 
                 </div>
             </div>
         </div>
-
-        <div class="col-12 col-xl-4">
-            <!-- Call by extensions -->
-            <div class="card">
+        <div class="col-12 col-xl-7">
+            <!-- Card -->
+            <div class="card" data-toggle="lists"
+                 data-options='{"valueNames": ["calls-did", "calls-source", "calls-duration", "calls-state"]}'>
                 <div class="card-header">
                     <div class="row align-items-center">
                         <div class="col">
-                            <h4 class="card-header-title">
-                                Calls by extension
-                            </h4>
+
+                            <!-- Search -->
+                            <form class="row align-items-center">
+                                <div class="col-auto pr-0">
+                                    <span class="fe fe-search text-muted"></span>
+                                </div>
+                                <div class="col">
+                                    <input type="search" class="form-control form-control-flush search"
+                                           placeholder="Search">
+                                </div>
+                            </form>
+
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <div class="chart chart-appended">
-                        <canvas id="extensionsChart" class="chart-canvas" data-toggle="legend"
-                                data-target="#extensionsChartLegend"></canvas>
-                    </div>
+                <div class="table-responsive">
+                    <table class="table table-hover table-sm table-nowrap card-table">
+                        <thead>
+                            <tr>
+                                <th width="25%">
+                                    <a href="#" class="text-muted sort" data-sort="calls-did">
+                                        Date
+                                    </a>
+                                </th>
+                                <th width="25%">
+                                    <a href="#" class="text-muted sort" data-sort="calls-source">
+                                        Call number
+                                    </a>
+                                </th>
+                                <th width="25%">
+                                    <a href="#" class="text-muted sort" data-sort="calls-duration">
+                                        Duration (min)
+                                    </a>
+                                </th>
+                                <th colspan="2" width="25%">
+                                    <a href="#" class="text-muted sort" data-sort="calls-state">
+                                        State
+                                    </a>
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+                    <div id="table-calls" class="overflow-auto">
+                        <table class="table table-hover table-sm table-nowrap card-table">
+                            <tbody class="list">
+                                @foreach ($calls as $call)
+                                <tr>
+                                    <td class="calls-did" width="25%">
+                                        {{ (new \Carbon\Carbon($call['Date']))->toFormattedDateString() }}
+                                        <p class="mb-0">
+                                            {{ $call['Time'] }}
+                                        </p>
+                                    </td>
+                                    <td class="calls-source" width="25%">
+                                        @if(is_numeric($call['Source']))
+                                        {{ preg_replace('/(\d{1})(\d{3})(\d{3})(\d{4})/', '$1($2) $3-$4', $call['Source']) }}
+                                        @else
+                                        <span class="text-capitalize">{{ $call['Source'] }}</span>
+                                        @endif
+                                    </td>
+                                    <td class="calls-duration" width="25%">
+                                        @isset($call['Duration (secs)'])
+                                        {{ gmdate("i:s",  $call['Duration (secs)']) }} min
+                                        @else
+                                        00:00 min
+                                        @endisset
 
-                    <div id="extensionsChartLegend" class="chart-legend"></div>
+                                    </td>
+                                    <td class="calls-state" colspan="2" width="25%">
+                                        @if($call['Disconnect Code'] == 200)
+                                        <div class="badge badge-soft-success font-size-inherit">
+                                            Success
+                                        </div>
+                                        @else
+                                        <div class="badge badge-soft-danger font-size-inherit">
+                                            Missed
+                                        </div>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-    <!-- Card -->
-    <div class="card" data-toggle="lists"
-         data-options='{"valueNames": ["calls-did", "calls-source", "calls-destination", "calls-duration", "calls-state", "calls-atemp"]}'>
-        <div class="card-header">
-            <div class="row align-items-center">
-                <div class="col">
-
-                    <!-- Search -->
-                    <form class="row align-items-center">
-                        <div class="col-auto pr-0">
-                            <span class="fe fe-search text-muted"></span>
-                        </div>
-                        <div class="col">
-                            <input type="search" class="form-control form-control-flush search" placeholder="Search">
-                        </div>
-                    </form>
-
-                </div>
-            </div>
-        </div>
-        <div class="table-responsive">
-            <table class="table table-hover table-sm table-nowrap card-table">
-                <thead>
-                    <tr>
-                        <th>
-                            <a href="#" class="text-muted sort" data-sort="calls-did">
-                                Date
-                            </a>
-                        </th>
-                        <th>
-                            <a href="#" class="text-muted sort" data-sort="calls-source">
-                                Source
-                            </a>
-                        </th>
-                        <th>
-                            <a href="#" class="text-muted sort" data-sort="calls-destination">
-                                Destination
-                            </a>
-                        </th>
-                        <th>
-                            <a href="#" class="text-muted sort" data-sort="calls-duration">
-                                Duration (min)
-                            </a>
-                        </th>
-                        <th colspan="2">
-                            <a href="#" class="text-muted sort" data-sort="calls-state">
-                                State
-                            </a>
-                        </th>
-                        <th colspan="2">
-                            <a href="#" class="text-muted sort" data-sort="calls-disconector">
-                                Attemp number
-                            </a>
-                        </th>
-                    </tr>
-                </thead>
-                <tbody class="list">
-                    @foreach ($calls as $call)
-                    <tr>
-                        <td class="calls-did">
-                            {{ $call['started_at'] }}
-                        </td>
-                        <td class="calls-source">
-                            {{ $call['source'] }}
-                        </td>
-                        <td class="calls-destination">
-                            {{ $call['destination'] }}
-                        </td>
-                        <td class="calls-duration">
-                            {{ $call['duration'] }}
-                        </td>
-                        <td class="calls-state" colspan="2">
-                            @if($call['success'])
-                            <div class="badge badge-soft-success font-size-inherit">
-                                Success
-                            </div>
-                            @else
-                            <div class="badge badge-soft-danger font-size-inherit">
-                                Missed
-                            </div>
-                            @endif
-                        </td>
-                        <td class="calls-attemp" colspan="2">
-                            {{ $call['attemp_number'] }}
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <nav class="d-flex justify-content-center">
-        <ul class="pagination">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">1</a>
-            </li>
-            <li class="page-item active" aria-current="page">
-                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="page-item"><a class="page-link" href="#">3</a>
-            </li>
-            <li class="page-item">
-                <a class="page-link" href="#">Next</a>
-            </li>
-        </ul>
-    </nav>
+    @endif
 </div>
 @endsection

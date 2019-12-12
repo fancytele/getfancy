@@ -32,7 +32,9 @@ class DashboardController extends Controller
         if (Auth::user()->hasRole(Role::USER)) {
             $carbon = new Carbon();
             $range = $carbon->firstOfMonth()->format('Y-m-d') . ' to ' . $carbon->today()->format('Y-m-d');
-            
+
+            $calls = [];
+            $chart = ['labels' => [], 'values' => []];
             $overview = [
                 'total' => 0,
                 'successful' => 0,
@@ -42,15 +44,16 @@ class DashboardController extends Controller
                 'duration' => 0
             ];
 
-            $did_service = new DIDService();
-            $fancy_number = Auth::user()->fancy_number; // '50640000229'
+            $user = Auth::user();
+            $fancy_number = $user->fancy_number; // '50640000229'
 
             if ($fancy_number) {
-                $report = collect($did_service->getCDRReport($fancy_number->did_number, $carbon->year, $carbon->month));
+                $did_service = new DIDService();
+                $calls = collect($did_service->getCDRReport($fancy_number->did_number, $carbon->year, $carbon->month));
 
-                if ($report->isNotEmpty()) {
-                    $total_calls = $report->count();
-                    $successful_calls = $report->where('Disconnect Code', 200)->count();
+                if ($calls->isNotEmpty()) {
+                    $total_calls = $calls->count();
+                    $successful_calls = $calls->where('Disconnect Code', 200)->count();
                     $successful_average = number_format(($successful_calls / $total_calls) * 100, 2);
 
                     $unsuccessful_calls = $total_calls - $successful_calls;
@@ -62,29 +65,22 @@ class DashboardController extends Controller
                         'successful_average' => $successful_average,
                         'unsuccessful' => $unsuccessful_calls,
                         'unsuccessful_average' => $unsuccessful_average,
-                        'duration' => gmdate("i:s",  number_format($report->avg('Duration (secs)')))
+                        'duration' => gmdate("i:s",  number_format($calls->avg('Duration (secs)')))
                     ];
 
                     $dashboard['overview'] = $overview;
+                    $group = $calls->groupBy('Date');
+
+                    foreach ($group as $key => $value) {
+                        $date = new Carbon($key);
+
+                        $chart['labels'][] = $date->shortEnglishDayOfWeek . ', ' . $date->day;
+                        $chart['values'][] = $value->where('Disconnect Code', 200)->count();
+                    }
                 }
             }
 
-            $faker = \Faker\Factory::create();
-            $calls = collect([]);
-
-            for ($i = 0; $i < 10; $i++) {
-                $calls->add([
-                    'started_at' => \Carbon\Carbon::instance($faker->dateTimeThisYear())->toFormattedDateString(),
-                    'duration' => $faker->numberBetween(1, 5) . ':' . $faker->numberBetween(1, 60),
-                    'source' => $faker->tollFreePhoneNumber,
-                    'destination' => 'sip:' . $faker->e164PhoneNumber . '@' . $faker->ipv4,
-                    'attemp_number' => $faker->numberBetween(1, 2),
-                    'success' => $faker->boolean(90)
-                ]);
-            }
-
-            $calls = $calls->sortByDesc('started_at')->values();
-            return view('admin.dashboard', compact('range', 'overview', 'calls'));
+            return view('admin.dashboard', compact('user', 'chart', 'range', 'overview', 'calls'));
         }
 
         $users = User::countByRole();
