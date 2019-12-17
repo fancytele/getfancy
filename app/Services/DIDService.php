@@ -15,7 +15,9 @@ use Didww\Item\DidReservation as DIDWWReservation;
 use Didww\Item\Order as DIDWWOrder;
 use Didww\Item\OrderItem\ReservationDid as DIDWWOrderItemReservation;
 use Didww\Item\Region as DIDWWRegion;
+use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -230,11 +232,16 @@ class DIDService
         $find_cdr = null;
         $times = 0;
 
-        do {
-            $cdr_export_document = DIDWWCDRExport::find($id);
-            $find_cdr = $cdr_export_document->getData();
-            $times += 1;
-        } while ($find_cdr->status !== DIDCDRStatus::COMPLETED && $times <= self::CDR_MAX_TIMES);
+        try {
+            do {
+                $cdr_export_document = DIDWWCDRExport::find($id);
+                $find_cdr = $cdr_export_document->getData();
+                $times += 1;
+            } while ($find_cdr->status !== DIDCDRStatus::COMPLETED && $times <= self::CDR_MAX_TIMES);
+        } catch (Exception $e) {
+            Log::error($e->getMessage());
+            return [];
+        }
 
         $file_name = $id . '.csv';
 
@@ -256,7 +263,7 @@ class DIDService
                         $date = new Carbon($field);
                         $row['Date'] = $date->toDateString();
                         $row['Time'] = $date->toTimeString();
-                     } else {
+                    } else {
 
                         $row[$headers[$key]] = $field;
                     }
