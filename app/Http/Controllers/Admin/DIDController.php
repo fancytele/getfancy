@@ -20,7 +20,7 @@ class DIDController extends Controller
      */
     public function __construct(DIDService $didService)
     {
-        $this->middleware(['auth', 'role:admin|agent']);
+        $this->middleware(['auth', 'role:admin|agent|user']);
         $this->didService = $didService;
     }
 

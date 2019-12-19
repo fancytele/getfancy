@@ -133,8 +133,8 @@ class UserService
     {
         $user = $this->model;
 
-        if (!$user->fancy_number) {
-            return [];
+        if ($user->hasNewTicketPending()) {
+            return ['message' => 'Your Fancy Number is been processing'];
         }
 
         // '50640000229'
@@ -142,7 +142,7 @@ class UserService
         $calls = $this->getCalls($user->fancy_number->did_number, $carbon->year, $carbon->month);
 
         if ($calls->isEmpty()) {
-            return compact('user');
+            return ['message' => 'No data to show'];
         }
 
         $chart = $this->getCallsChart($calls);

@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Enums\Role;
+use App\Enums\TicketCategory;
 use App\Enums\TicketStatus;
 use App\Traits\Userstamps;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -165,6 +166,20 @@ class User extends Authenticatable
     public function hasTicketInProgress()
     {
         return $this->tickets->isNotEmpty() && $this->tickets->where('status', TicketStatus::IN_PROGRESS)->count() > 0;
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasNewTicketPending()
+    {
+        if ($this->tickets->isEmpty()) {
+            return false;
+        }
+
+        return $this->tickets->where('category', TicketCategory::NEW_ACCOUNT)
+            ->whereIn('status', [TicketStatus::PENDING, TicketStatus::IN_PROGRESS])
+            ->count() > 0;
     }
 
     /**

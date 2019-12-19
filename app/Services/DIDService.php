@@ -14,6 +14,7 @@ use Didww\Item\Did as DIDWW;
 use Didww\Item\DidReservation as DIDWWReservation;
 use Didww\Item\Order as DIDWWOrder;
 use Didww\Item\OrderItem\ReservationDid as DIDWWOrderItemReservation;
+use Didww\Item\OrderItem\AvailableDid as DIDWWOrderItemAvailable;
 use Didww\Item\Region as DIDWWRegion;
 use Exception;
 use Illuminate\Support\Facades\Auth;
@@ -183,37 +184,17 @@ class DIDService
             'include' => 'available_did.did_group.stock_keeping_units'
         ])->getData();
 
-        $sku = $this->getDefaultStockKeepingUnit($did_reservation->availableDID());
+        return $this->purchaseDID($did_reservation->availableDID(), true);
+    }
 
-        $orderItem = new DIDWWOrderItemReservation();
-        $orderItem->setDidReservationId($did_reservation->getId());
-        $orderItem->setSku($sku);
+    /**
+     * @param string $did
+     */
+    public function purchaseAvailableDID(string $did)
+    {
+        $available_did = $this->getAvailableDID($did);
 
-        $order = new DIDWWOrder();
-        $order->setItems([$orderItem]);
-
-        $orderDocument = $order->save();
-
-        $order = $orderDocument->getData();
-        $item = $order->getItems()[0];
-
-        return [
-            'id' => $order->getId(),
-            'amount' => $order->amount,
-            'status' => $order->status,
-            'created_at' => $order->created_at,
-            'description' => $order->description,
-            'reference' => $order->reference,
-            'item' => [
-                'qty' => $item->getQty(),
-                'nrc' => $item->getNrc(),
-                'mrc' => $item->getMrc(),
-                'prorated_mrc' => $item->getProratedMrc(),
-                'billed_from' => $item->getBilledFrom(),
-                'billed_to' => $item->getBilledTo(),
-                'did_group_id' => $item->getDidGroupId()
-            ]
-        ];
+        return $this->purchaseDID($available_did);
     }
 
     public function getCDRReport(string $did, int $year, int $month)
@@ -290,12 +271,82 @@ class DIDService
      */
     private function getDefaultStockKeepingUnit($did)
     {
-        $did_group = $did->getIncluded()->didGroup();
+        $did_group = $did->didGroup();
         $skus = $did_group->getIncluded()->stockKeepingUnits;
 
         $sku = $skus->where('channels_included_count', $this::AMOUNT_CHANNEL_DEFAULT)->first();
 
         return $sku ? $sku : $skus->first();
+    }
+
+    /**
+     * Get given DID or return random available DID
+     * 
+     * @param string $did
+     * @return DIDWWAvailableDID
+     */
+    private function getAvailableDID(string $did)
+    {
+        if (!empty($did)) {
+            return DIDWWAvailableDID::find($did, [
+                'include' => 'did_group.stock_keeping_units'
+            ])->getData();
+        }
+
+        $available_dids = DIDWWAvailableDID::all([
+            'include' => 'did_group.stock_keeping_units',
+        ]);
+
+        $dids = $available_dids->getData()->all();
+
+        return $dids[array_rand($dids)];
+    }
+
+    /**
+     * @param DIDWWAvailableDID $available_did
+     * @param bool $is_reservation
+     */
+    private function purchaseDID(DIDWWAvailableDID $available_did, bool $is_reservation = false)
+    {
+        $sku = $this->getDefaultStockKeepingUnit($available_did);
+        $order_item = null;
+
+        if ($is_reservation) {
+            $order_item = new DIDWWOrderItemReservation();
+            $order_item->setDidReservationId($available_did->getId());
+        } else {
+            $order_item = new DIDWWOrderItemAvailable();
+            $order_item->setAvailableDidId($available_did->getId());
+        }
+
+        $order_item->setSku($sku);
+
+        $order = new DIDWWOrder();
+        $order->setItems([$order_item]);
+
+        $order_document = $order->save();
+
+        $order = $order_document->getData();
+        $item = $order->getItems()[0];
+
+        return [
+            'id' => $order->getId(),
+            'number' => $available_did->getNumber(),
+            'amount' => $order->amount,
+            'status' => $order->status,
+            'created_at' => $order->created_at,
+            'description' => $order->description,
+            'reference' => $order->reference,
+            'item' => [
+                'qty' => $item->getQty(),
+                'nrc' => $item->getNrc(),
+                'mrc' => $item->getMrc(),
+                'prorated_mrc' => $item->getProratedMrc(),
+                'billed_from' => $item->getBilledFrom(),
+                'billed_to' => $item->getBilledTo(),
+                'did_group_id' => $item->getDidGroupId()
+            ]
+        ];
     }
 
     /**

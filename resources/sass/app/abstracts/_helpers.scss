@@ -36,6 +36,12 @@
   max-height: 35vh;
 }
 
+@include media-breakpoint-up(md) {
+  .w-md-auto {
+    width: auto !important;
+  }
+}
+
 @include media-breakpoint-up(xl) {
   .border-xl-left {
     border-left: 1px solid $gray-300;

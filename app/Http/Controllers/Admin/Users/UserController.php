@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Admin\Users;
 use App\Addon;
 use App\Enums\AddonCode;
 use App\Enums\AddonType;
+use App\Enums\DIDNumberType;
 use App\Enums\FancyNotificationPeriod;
 use App\Enums\Role;
 use App\Enums\TicketStatus;
 use App\Events\RegisterInvoiceEvent;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\FancyNumberRequest;
 use App\Http\Requests\FancySettingRequest;
 use App\Http\Requests\UserRequest;
 use App\Mail\WelcomeMail;
@@ -21,7 +23,6 @@ use App\Services\StripeService;
 use App\Services\UserService;
 use App\Ticket;
 use App\User;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role as SpatieRole;
@@ -35,7 +36,9 @@ class UserController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['auth', 'role:admin|agent']);
+        $this->middleware('auth');
+        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy']);
+        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy']);
     }
 
     /**
@@ -146,6 +149,54 @@ class UserController extends Controller
         $ticket->save();
 
         return response()->json(['success' => true, 'user' => $user->model()->id]);
+    }
+
+    /**
+     * @return \Illuminate\Http\Response
+     */
+    public function createFancy()
+    {
+        if (Auth::user()->fancy_number) {
+            return redirect()->route('admin.dashboard');
+        }
+
+        $did_service = new DIDService();
+        $did_country = $did_service->getCountryByISO('US');
+        $did_regions = $did_service->getRegionsByCountry($did_country['id']);
+
+        $urls = [
+            'create_fancy' => route('admin.users.store_fancy', Auth::id()),
+            'fancy_settings' => route('admin.users.edit_fancy', '_user_'),
+            'did_cities' => route('admin.dids.cities', '_region_'),
+            'dids_availables' => route('admin.dids.availables', '_city_'),
+            'did_reservation' => route('admin.dids.create_reservation'),
+        ];
+
+        return view('admin.users.create-fancy', compact('did_country', 'did_regions', 'urls'));
+    }
+
+    /**
+     * Store a new Fancy Number
+     *
+     * @param \App\Http\Requests\FancyNumberRequest $request
+     * @return \Illuminate\Http\Response
+     */
+    public function StoreFancy(FancyNumberRequest $request)
+    {
+        $did_service = new DIDService();
+        $did_purchase = $did_service->purchaseAvailableDID($request->input('data.did.id', ''));
+
+        // Create User Fancy number
+        $user_service = new UserService($request->user());
+        $user_service->assignFancyNumber($did_purchase['number'], $request->input('number_type'), $did_purchase);
+
+        // Create Ticket
+        $ticket = new Ticket();
+        $ticket->fancy_number_id = $user_service->fancyNumberModel()->id;
+        $ticket->status = TicketStatus::PENDING;
+        $ticket->save();
+
+        return response()->json(['success' => true, 'user' => $request->user()->id]);
     }
 
     /**

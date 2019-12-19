@@ -17738,6 +17738,12 @@ button:focus {
   max-height: 35vh;
 }
 
+@media (min-width: 768px) {
+  .w-md-auto {
+    width: auto !important;
+  }
+}
+
 @media (min-width: 1200px) {
   .border-xl-left {
     border-left: 1px solid #E3EBF6;

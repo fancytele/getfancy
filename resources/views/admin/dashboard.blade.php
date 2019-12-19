@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin-sidebar')
 
 @section('page-subtitle', 'Overwiew')
 @section('page-title', 'Dashboard')
@@ -272,14 +272,8 @@
                     <div class="card card-flush">
                         <div class="card-body text-center">
                             <h1 class="display-4">
-                                @lang('Missing Fancy number'). 😭
+                                @lang($message). 😭
                             </h1>
-
-                            <a href="#"
-                            class="btn btn-primary">
-                                <i class="fe fe-user-plus mr-2"></i>
-                                @lang('Register Fancy Number')
-                            </a>
                         </div>
                     </div>
                 </div>

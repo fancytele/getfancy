@@ -31,6 +31,10 @@ class DashboardController extends Controller
     public function index()
     {
         if (Auth::user()->hasRole(Role::USER)) {
+            if (!Auth::user()->fancy_number) {
+                return redirect()->route('admin.users.create_fancy', Auth::id());
+            }
+
             $dashboard_info = (new UserService(Auth::user()))->dashboardInfo();
 
             return view('admin.dashboard', $dashboard_info);

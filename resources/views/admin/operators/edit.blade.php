@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin-sidebar')
 
 @section('page-subtitle', __('User management'))
 @section('page-title', __('Edit operator'))
