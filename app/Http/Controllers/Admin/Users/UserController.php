@@ -95,10 +95,7 @@ class UserController extends Controller
         $stripe_product = $stripe_service->getProductByName($product->name);
 
         // Get all product Plans (base and subscription add-ons)
-        $stripe_plans = $stripe_service->getProductPlansByNames(
-            $stripe_product->id,
-            Arr::prepend($data['addons'], $product->name)
-        );
+        $stripe_plans = $stripe_service->getProductPlansByNames($stripe_product->id, [$product->name]);
 
         $stripe_plans_id = $stripe_plans->map(function ($item) {
             return ['plan' => $item->id];
@@ -129,7 +126,7 @@ class UserController extends Controller
         $user->createSubscription($product->id, $stripe_product->id, $stripe_subscription);
 
         // Create Invoice for One Time Fee Add-ons
-        $addons = Addon::where('type', AddonType::OTF)->whereIn('code', $data['addons'])->get();
+        $addons = Addon::whereIn('code', $data['addons'])->get();
 
         $addons->each(function ($addon) use ($data, $user, $stripe_service) {
             $stripe_invoice = $stripe_service->createInvoice($addon->cost * 100, $data['email'], $addon->name);

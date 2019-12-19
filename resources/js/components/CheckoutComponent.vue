@@ -156,12 +156,204 @@
 
               <hr class="mx-n5" />
 
-              <!-- Billing Information -->
               <div class="pt-4">
                 <h3 class="ml-n2 text-capitalize">
                   <span class="border border-2 border-primary checkout-step mr-2 rounded-circle text-primary">2</span>
+                  {{ trans('Business information') }}
+                </h3>
+                <div class="row">
+                  <div class="col-md-4">
+                      <div class="form-group">
+                        <label for="company_name">{{ trans('Company name') }}</label>
+                          <input
+                            type="text"
+                            class="form-control"
+                            id="company_name"
+                            name="company_name"
+                            required
+                            :class="{'is-invalid': errors.hasOwnProperty('company_name')}"
+                            v-model="checkout.company_name"
+                          />
+                          <div
+                                  class="invalid-feedback"
+                                  v-if="errors.hasOwnProperty('company_name')"
+                          >{{ errors.company_name[0] }}
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="company_phone">{{ trans('Company phone') }}</label>
+                      <input
+                        type="tel"
+                        class="form-control"
+                        id="company_phone"
+                        name="company_phone"
+                        required
+                        :class="{'is-invalid': errors.hasOwnProperty('company_phone')}"
+                        v-model="checkout.company_phone"
+                      />
+                      <div
+                        class="invalid-feedback"
+                        v-if="errors.hasOwnProperty('company_phone')"
+                      >{{ errors.company_phone[0] }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="form-group">
+                      <label for="company_contact_name">{{ trans('Company contact name') }}</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="company_contact_name"
+                        name="company_contact_name"
+                        :class="{'is-invalid': errors.hasOwnProperty('company_contact_name')}"
+                        v-model="checkout.company_contact_name"
+                      />
+                      <div
+                        class="invalid-feedback"
+                        v-if="errors.hasOwnProperty('company_contact_name')"
+                      >{{ errors.company_contact_name[0] }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="company_country">{{ trans('Country') }}</label>
+                      <select2
+                        name="company_country"
+                        id="company_country"
+                        class="form-control"
+                        :options="countries"
+                        :class="{'is-invalid select2-hidden-accessible': errors.hasOwnProperty('company_country'), 'form-control select2-hidden-accessible': !errors.hasOwnProperty('company_country')}"
+                        v-model="checkout.company_country"
+                        required
+                      >
+                        <option disabled value>---</option>
+                      </select2>
+                      <div
+                        class="invalid-feedback"
+                        v-if="errors.hasOwnProperty('company_country')"
+                      >{{ errors.company_country[0] }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="company_city">{{ trans('City') }}</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="company_city"
+                        name="company_city"
+                        required
+                        :class="{'is-invalid': errors.hasOwnProperty('company_city')}"
+                        v-model="checkout.company_city"
+                      />
+                      <div
+                        class="invalid-feedback"
+                        v-if="errors.hasOwnProperty('company_city')"
+                      >{{ errors.company_city[0] }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="company_state">{{ trans('State, Providence, Region') }}</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="company_state"
+                        name="company_state"
+                        required
+                        :class="{'is-invalid': errors.hasOwnProperty('company_state')}"
+                        v-model="checkout.company_state"
+                      />
+                      <div
+                        class="invalid-feedback"
+                        v-if="errors.hasOwnProperty('company_state')"
+                      >{{ errors.company_state[0] }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label for="company_zip_code">{{ trans('Zip Code') }}</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="company_zip_code"
+                        name="company_zip_code"
+                        required
+                        :class="{'is-invalid': errors.hasOwnProperty('company_zip_code')}"
+                        v-model="checkout.company_zip_code"
+                      />
+                      <div
+                        class="invalid-feedback"
+                        v-if="errors.hasOwnProperty('company_zip_code')"
+                      >{{ errors.company_zip_code[0] }}
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                        <label for="company_address1">{{ trans('Address') }} 1</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="company_address1"
+                          name="company_address1"
+                          required
+                          :placeholder="trans('Street address, P.O. box, company name, c/o')"
+                          :class="{'is-invalid': errors.hasOwnProperty('company_address1')}"
+                          v-model="checkout.company_address1"
+                        />
+                        <div
+                          class="invalid-feedback"
+                          v-if="errors.hasOwnProperty('company_address1')"
+                        >{{ errors.company_address1[0] }}
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="company_address2">{{ trans('Address') }} 2</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="company_address2"
+                        name="company_address2"
+                        :placeholder="trans('Apartment, suite, unit, building, floor, etc')"
+                        v-model="checkout.company_address2"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="mx-n5" />
+          
+              <!-- Billing Information -->
+              <div class="pt-4">
+                <h3 class="ml-n2 text-capitalize">
+                  <span class="border border-2 border-primary checkout-step mr-2 rounded-circle text-primary">3</span>
                   {{ trans('Billing information') }}
                 </h3>
+                <div class="custom-control custom-switch my-4">
+                  <input
+                    type="checkbox"
+                    class="custom-control-input"
+                    id="same-address"
+                    name="same-address"
+                    v-model="sameAddress"
+                    @change="toggleSameAddress()"
+                  />
+                  <label
+                    class="custom-control-label"
+                    for="same-address"
+                  >{{ trans('Same as Company address') }}?</label>
+                </div>
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
@@ -171,9 +363,10 @@
                         id="country"
                         class="form-control"
                         :options="countries"
+                        :disabled="sameAddress"
                         :class="{'is-invalid': errors.hasOwnProperty('country')}"
                         :readonly="isProcessing"
-                        v-model="checkout.country"
+                        v-model="checkout.billing_country"
                         required
                       >
                         <option disabled value>---</option>
@@ -194,7 +387,8 @@
                         name="city"
                         placeholder="---"
                         required
-                        v-model="checkout.city"
+                        v-model="checkout.billing_city"
+                        :disabled="sameAddress"
                         :class="{'is-invalid': errors.hasOwnProperty('city')}"
                         :readonly="isProcessing"
                       />
@@ -214,7 +408,8 @@
                         name="state"
                         placeholder="---"
                         required
-                        v-model="checkout.state"
+                        v-model="checkout.billing_state"
+                        :disabled="sameAddress"
                         :class="{'is-invalid': errors.hasOwnProperty('state')}"
                         :readonly="isProcessing"
                       />
@@ -233,7 +428,8 @@
                         id="zip_code"
                         name="zip_code"
                         required
-                        v-model="checkout.zip_code"
+                        v-model="checkout.billing_zip_code"
+                        :disabled="sameAddress"
                         :class="{'is-invalid': errors.hasOwnProperty('zip_code')}"
                         :readonly="isProcessing"
                       />
@@ -245,22 +441,44 @@
                   </div>
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label for="address">{{ trans('Address') }}</label>
+                      <label for="billing_address1">{{ trans('Address') }} 1</label>
                       <input
                         type="text"
                         class="form-control"
-                        id="address"
-                        name="address"
+                        id="billing_address1"
+                        name="billing_address1"
                         :placeholder="trans('Street address, P.O. box, company name, c/o')"
                         required
-                        v-model="checkout.address"
-                        :class="{'is-invalid': errors.hasOwnProperty('address')}"
+                        v-model="checkout.billing_address1"
+                        :disabled="sameAddress"
+                        :class="{'is-invalid': errors.hasOwnProperty('billing_address1')}"
                         :readonly="isProcessing"
                       />
                       <div
                         class="invalid-feedback"
-                        v-if="errors.hasOwnProperty('address')"
-                      >{{ errors.address[0] }}</div>
+                        v-if="errors.hasOwnProperty('billing_address1')"
+                      >{{ errors.billing_address1[0] }}</div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="billing_address2">{{ trans('Address') }} 2</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="billing_address2"
+                        name="billing_address2"
+                        :placeholder="trans('Apartment, suite, unit, building, floor, etc')"
+                        required
+                        v-model="checkout.billing_address2"
+                        :disabled="sameAddress"
+                        :class="{'is-invalid': errors.hasOwnProperty('billing_address2')}"
+                        :readonly="isProcessing"
+                      />
+                      <div
+                        class="invalid-feedback"
+                        v-if="errors.hasOwnProperty('billing_address2')"
+                      >{{ errors.billing_address2[0] }}</div>
                     </div>
                   </div>
                 </div>
@@ -272,7 +490,7 @@
               <!-- Additional Features -->
               <div class="pt-4">
                 <h3 class="ml-n2">
-                  <span class="border border-2 border-primary checkout-step mr-2 rounded-circle text-primary">3</span>
+                  <span class="border border-2 border-primary checkout-step mr-2 rounded-circle text-primary">4</span>
                   {{ trans('Additional Features') }}
                 </h3>
                 <div>
@@ -301,7 +519,7 @@
               <!-- Payment Information -->
               <div class="pt-4">
                 <h3 class="ml-n2 text-capitalize">
-                  <span class="border border-2 border-primary checkout-step mr-2 rounded-circle text-primary">4</span>
+                  <span class="border border-2 border-primary checkout-step mr-2 rounded-circle text-primary">5</span>
                   {{ trans('Payment information') }}
                 </h3>
                 <div>
@@ -540,6 +758,7 @@ export default {
   },
   data() {
     return {
+      sameAddress: false,
       laddaButton: null,
       complete: false,
       stripe: process.env.MIX_STRIPE_KEY,
@@ -578,11 +797,24 @@ export default {
         email_confirmation: '',
         password: '',
         password_confirmation: '',
-        country: '',
-        city: '',
-        state: '',
-        zip_code: '',
-        address: '',
+        company_name: '',
+        company_phone: '',
+        company_contact_name: '',
+        company_country: '',
+        company_city: '',
+        company_state: '',
+        company_zip_code: '',
+        company_address1: '',
+        company_address2: '',
+        billing_country: '',
+        billing_city: '',
+        billing_state: '',
+        billing_zip_code: '',
+        billing_address1: '',
+        billing_address2: '',
+        stripe_token: '',
+        number_type: '',
+        phone_number: '',
         addons: [],
         recaptcha: ''
       }
@@ -608,6 +840,16 @@ export default {
     stripeChange($event) {
       this.complete = $event.complete;
       this.stripeError = $event.error ? $event.error.message : '';
+    },
+    toggleSameAddress() {
+      if (this.sameAddress) {
+        this.checkout.billing_country = this.checkout.company_country;
+        this.checkout.billing_city = this.checkout.company_city;
+        this.checkout.billing_state = this.checkout.company_state;
+        this.checkout.billing_zip_code = this.checkout.company_zip_code;
+        this.checkout.billing_address1 = this.checkout.company_address1;
+        this.checkout.billing_address2 = this.checkout.company_address2;
+      }
     },
     submit() {
       if (this.isProcessing) {

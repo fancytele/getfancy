@@ -362,14 +362,11 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-7">
+                    <div class="col-md-6 offset-lg-1">
                         <div
                              class="bg-white d-flex flex-column flex-lg-row overflow-hidden quote rounded shadow">
-                            <div class="bg-cover quote-img w-lg-50"
-                                 style="background-image: url({{ asset('img/web/johnny-bosche.jpg') }})">
-                            </div>
                             <div
-                                 class="pb-2 position-relative pt-5 px-4 w-lg-75">
+                                 class="pb-2 position-relative pt-5 px-4">
                                 <i
                                    class="la la-3x la-quote-left text-info quote-icon"></i>
                                 <blockquote class="quote-cite">

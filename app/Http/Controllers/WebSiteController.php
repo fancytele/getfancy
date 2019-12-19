@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Addon;
+use App\Enums\AddonCode;
 use App\Product;
 use App\Mail\ContactUsMail;
 use App\Mail\HaveUsCallYouMail;
@@ -43,7 +44,7 @@ class WebSiteController extends Controller
         }
 
         $product = $products->firstWhere('slug', $slug);
-        $addons = Addon::subscription()->orderBy('code')->get();
+        $addons = Addon::subscription()->orWhere('code', AddonCode::PROFESSIONAL_RECORDING)->get();
 
         return view('checkout', compact('product', 'addons'));
     }

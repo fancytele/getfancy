@@ -1841,6 +1841,226 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_recaptcha__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-recaptcha */ "./node_modules/vue-recaptcha/dist/vue-recaptcha.es.js");
 /* harmony import */ var vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-stripe-elements-plus */ "./node_modules/vue-stripe-elements-plus/dist/index.js");
 /* harmony import */ var vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_1__);
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2380,7 +2600,10 @@ __webpack_require__.r(__webpack_exports__);
     VueRecaptcha: vue_recaptcha__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
+    var _checkout;
+
     return {
+      sameAddress: false,
       laddaButton: null,
       complete: false,
       stripe: "pk_TMBfEj9GXcGCePpgJAFLIb8tHWpEA",
@@ -2410,7 +2633,7 @@ __webpack_require__.r(__webpack_exports__);
       stripeError: '',
       isProcessing: true,
       countries: [],
-      checkout: {
+      checkout: (_checkout = {
         checkout_product: this.product.slug,
         stripe_token: '',
         first_name: '',
@@ -2419,14 +2642,22 @@ __webpack_require__.r(__webpack_exports__);
         email_confirmation: '',
         password: '',
         password_confirmation: '',
-        country: '',
-        city: '',
-        state: '',
-        zip_code: '',
-        address: '',
-        addons: [],
-        recaptcha: ''
-      }
+        company_name: '',
+        company_phone: '',
+        company_contact_name: '',
+        company_country: '',
+        company_city: '',
+        company_state: '',
+        company_zip_code: '',
+        company_address1: '',
+        company_address2: '',
+        billing_country: '',
+        billing_city: '',
+        billing_state: '',
+        billing_zip_code: '',
+        billing_address1: '',
+        billing_address2: ''
+      }, _defineProperty(_checkout, "stripe_token", ''), _defineProperty(_checkout, "number_type", ''), _defineProperty(_checkout, "phone_number", ''), _defineProperty(_checkout, "addons", []), _defineProperty(_checkout, "recaptcha", ''), _checkout)
     };
   },
   methods: {
@@ -2448,6 +2679,16 @@ __webpack_require__.r(__webpack_exports__);
     stripeChange: function stripeChange($event) {
       this.complete = $event.complete;
       this.stripeError = $event.error ? $event.error.message : '';
+    },
+    toggleSameAddress: function toggleSameAddress() {
+      if (this.sameAddress) {
+        this.checkout.billing_country = this.checkout.company_country;
+        this.checkout.billing_city = this.checkout.company_city;
+        this.checkout.billing_state = this.checkout.company_state;
+        this.checkout.billing_zip_code = this.checkout.company_zip_code;
+        this.checkout.billing_address1 = this.checkout.company_address1;
+        this.checkout.billing_address2 = this.checkout.company_address2;
+      }
     },
     submit: function submit() {
       var _this2 = this;
@@ -64762,10 +65003,575 @@ var render = function() {
                     ),
                     _vm._v(
                       "\n                " +
+                        _vm._s(_vm.trans("Business information")) +
+                        "\n              "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "company_name" } }, [
+                          _vm._v(_vm._s(_vm.trans("Company name")))
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.checkout.company_name,
+                              expression: "checkout.company_name"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.errors.hasOwnProperty(
+                              "company_name"
+                            )
+                          },
+                          attrs: {
+                            type: "text",
+                            id: "company_name",
+                            name: "company_name",
+                            required: ""
+                          },
+                          domProps: { value: _vm.checkout.company_name },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.checkout,
+                                "company_name",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.hasOwnProperty("company_name")
+                          ? _c("div", { staticClass: "invalid-feedback" }, [
+                              _vm._v(
+                                _vm._s(_vm.errors.company_name[0]) +
+                                  "\n                        "
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "company_phone" } }, [
+                          _vm._v(_vm._s(_vm.trans("Company phone")))
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.checkout.company_phone,
+                              expression: "checkout.company_phone"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.errors.hasOwnProperty(
+                              "company_phone"
+                            )
+                          },
+                          attrs: {
+                            type: "tel",
+                            id: "company_phone",
+                            name: "company_phone",
+                            required: ""
+                          },
+                          domProps: { value: _vm.checkout.company_phone },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.checkout,
+                                "company_phone",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.hasOwnProperty("company_phone")
+                          ? _c("div", { staticClass: "invalid-feedback" }, [
+                              _vm._v(
+                                _vm._s(_vm.errors.company_phone[0]) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-4" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c(
+                          "label",
+                          { attrs: { for: "company_contact_name" } },
+                          [_vm._v(_vm._s(_vm.trans("Company contact name")))]
+                        ),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.checkout.company_contact_name,
+                              expression: "checkout.company_contact_name"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.errors.hasOwnProperty(
+                              "company_contact_name"
+                            )
+                          },
+                          attrs: {
+                            type: "text",
+                            id: "company_contact_name",
+                            name: "company_contact_name"
+                          },
+                          domProps: {
+                            value: _vm.checkout.company_contact_name
+                          },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.checkout,
+                                "company_contact_name",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.hasOwnProperty("company_contact_name")
+                          ? _c("div", { staticClass: "invalid-feedback" }, [
+                              _vm._v(
+                                _vm._s(_vm.errors.company_contact_name[0]) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c(
+                        "div",
+                        { staticClass: "form-group" },
+                        [
+                          _c("label", { attrs: { for: "company_country" } }, [
+                            _vm._v(_vm._s(_vm.trans("Country")))
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "select2",
+                            {
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid select2-hidden-accessible": _vm.errors.hasOwnProperty(
+                                  "company_country"
+                                ),
+                                "form-control select2-hidden-accessible": !_vm.errors.hasOwnProperty(
+                                  "company_country"
+                                )
+                              },
+                              attrs: {
+                                name: "company_country",
+                                id: "company_country",
+                                options: _vm.countries,
+                                required: ""
+                              },
+                              model: {
+                                value: _vm.checkout.company_country,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.checkout, "company_country", $$v)
+                                },
+                                expression: "checkout.company_country"
+                              }
+                            },
+                            [
+                              _c(
+                                "option",
+                                { attrs: { disabled: "", value: "" } },
+                                [_vm._v("---")]
+                              )
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _vm.errors.hasOwnProperty("company_country")
+                            ? _c("div", { staticClass: "invalid-feedback" }, [
+                                _vm._v(
+                                  _vm._s(_vm.errors.company_country[0]) +
+                                    "\n                    "
+                                )
+                              ])
+                            : _vm._e()
+                        ],
+                        1
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "company_city" } }, [
+                          _vm._v(_vm._s(_vm.trans("City")))
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.checkout.company_city,
+                              expression: "checkout.company_city"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.errors.hasOwnProperty(
+                              "company_city"
+                            )
+                          },
+                          attrs: {
+                            type: "text",
+                            id: "company_city",
+                            name: "company_city",
+                            required: ""
+                          },
+                          domProps: { value: _vm.checkout.company_city },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.checkout,
+                                "company_city",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.hasOwnProperty("company_city")
+                          ? _c("div", { staticClass: "invalid-feedback" }, [
+                              _vm._v(
+                                _vm._s(_vm.errors.company_city[0]) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "company_state" } }, [
+                          _vm._v(_vm._s(_vm.trans("State, Providence, Region")))
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.checkout.company_state,
+                              expression: "checkout.company_state"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.errors.hasOwnProperty(
+                              "company_state"
+                            )
+                          },
+                          attrs: {
+                            type: "text",
+                            id: "company_state",
+                            name: "company_state",
+                            required: ""
+                          },
+                          domProps: { value: _vm.checkout.company_state },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.checkout,
+                                "company_state",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.hasOwnProperty("company_state")
+                          ? _c("div", { staticClass: "invalid-feedback" }, [
+                              _vm._v(
+                                _vm._s(_vm.errors.company_state[0]) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-6" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "company_zip_code" } }, [
+                          _vm._v(_vm._s(_vm.trans("Zip Code")))
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.checkout.company_zip_code,
+                              expression: "checkout.company_zip_code"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.errors.hasOwnProperty(
+                              "company_zip_code"
+                            )
+                          },
+                          attrs: {
+                            type: "number",
+                            id: "company_zip_code",
+                            name: "company_zip_code",
+                            required: ""
+                          },
+                          domProps: { value: _vm.checkout.company_zip_code },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.checkout,
+                                "company_zip_code",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.hasOwnProperty("company_zip_code")
+                          ? _c("div", { staticClass: "invalid-feedback" }, [
+                              _vm._v(
+                                _vm._s(_vm.errors.company_zip_code[0]) +
+                                  "\n                    "
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "company_address1" } }, [
+                          _vm._v(_vm._s(_vm.trans("Address")) + " 1")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.checkout.company_address1,
+                              expression: "checkout.company_address1"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.errors.hasOwnProperty(
+                              "company_address1"
+                            )
+                          },
+                          attrs: {
+                            type: "text",
+                            id: "company_address1",
+                            name: "company_address1",
+                            required: "",
+                            placeholder: _vm.trans(
+                              "Street address, P.O. box, company name, c/o"
+                            )
+                          },
+                          domProps: { value: _vm.checkout.company_address1 },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.checkout,
+                                "company_address1",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.hasOwnProperty("company_address1")
+                          ? _c("div", { staticClass: "invalid-feedback" }, [
+                              _vm._v(
+                                _vm._s(_vm.errors.company_address1[0]) +
+                                  "\n                      "
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "company_address2" } }, [
+                          _vm._v(_vm._s(_vm.trans("Address")) + " 2")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.checkout.company_address2,
+                              expression: "checkout.company_address2"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "company_address2",
+                            name: "company_address2",
+                            placeholder: _vm.trans(
+                              "Apartment, suite, unit, building, floor, etc"
+                            )
+                          },
+                          domProps: { value: _vm.checkout.company_address2 },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.checkout,
+                                "company_address2",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("hr", { staticClass: "mx-n5" }),
+                _vm._v(" "),
+                _c("div", { staticClass: "pt-4" }, [
+                  _c("h3", { staticClass: "ml-n2 text-capitalize" }, [
+                    _c(
+                      "span",
+                      {
+                        staticClass:
+                          "border border-2 border-primary checkout-step mr-2 rounded-circle text-primary"
+                      },
+                      [_vm._v("3")]
+                    ),
+                    _vm._v(
+                      "\n                " +
                         _vm._s(_vm.trans("Billing information")) +
                         "\n              "
                     )
                   ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "custom-control custom-switch my-4" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.sameAddress,
+                            expression: "sameAddress"
+                          }
+                        ],
+                        staticClass: "custom-control-input",
+                        attrs: {
+                          type: "checkbox",
+                          id: "same-address",
+                          name: "same-address"
+                        },
+                        domProps: {
+                          checked: Array.isArray(_vm.sameAddress)
+                            ? _vm._i(_vm.sameAddress, null) > -1
+                            : _vm.sameAddress
+                        },
+                        on: {
+                          change: [
+                            function($event) {
+                              var $$a = _vm.sameAddress,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = null,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    (_vm.sameAddress = $$a.concat([$$v]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.sameAddress = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.sameAddress = $$c
+                              }
+                            },
+                            function($event) {
+                              return _vm.toggleSameAddress()
+                            }
+                          ]
+                        }
+                      }),
+                      _vm._v(" "),
+                      _c(
+                        "label",
+                        {
+                          staticClass: "custom-control-label",
+                          attrs: { for: "same-address" }
+                        },
+                        [
+                          _vm._v(
+                            _vm._s(_vm.trans("Same as Company address")) + "?"
+                          )
+                        ]
+                      )
+                    ]
+                  ),
                   _vm._v(" "),
                   _c("div", { staticClass: "row" }, [
                     _c("div", { staticClass: "col-md-6" }, [
@@ -64790,15 +65596,16 @@ var render = function() {
                                 name: "country",
                                 id: "country",
                                 options: _vm.countries,
+                                disabled: _vm.sameAddress,
                                 readonly: _vm.isProcessing,
                                 required: ""
                               },
                               model: {
-                                value: _vm.checkout.country,
+                                value: _vm.checkout.billing_country,
                                 callback: function($$v) {
-                                  _vm.$set(_vm.checkout, "country", $$v)
+                                  _vm.$set(_vm.checkout, "billing_country", $$v)
                                 },
-                                expression: "checkout.country"
+                                expression: "checkout.billing_country"
                               }
                             },
                             [
@@ -64831,8 +65638,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.checkout.city,
-                              expression: "checkout.city"
+                              value: _vm.checkout.billing_city,
+                              expression: "checkout.billing_city"
                             }
                           ],
                           staticClass: "form-control",
@@ -64845,9 +65652,10 @@ var render = function() {
                             name: "city",
                             placeholder: "---",
                             required: "",
+                            disabled: _vm.sameAddress,
                             readonly: _vm.isProcessing
                           },
-                          domProps: { value: _vm.checkout.city },
+                          domProps: { value: _vm.checkout.billing_city },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
@@ -64855,7 +65663,7 @@ var render = function() {
                               }
                               _vm.$set(
                                 _vm.checkout,
-                                "city",
+                                "billing_city",
                                 $event.target.value
                               )
                             }
@@ -64881,8 +65689,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.checkout.state,
-                              expression: "checkout.state"
+                              value: _vm.checkout.billing_state,
+                              expression: "checkout.billing_state"
                             }
                           ],
                           staticClass: "form-control",
@@ -64895,9 +65703,10 @@ var render = function() {
                             name: "state",
                             placeholder: "---",
                             required: "",
+                            disabled: _vm.sameAddress,
                             readonly: _vm.isProcessing
                           },
-                          domProps: { value: _vm.checkout.state },
+                          domProps: { value: _vm.checkout.billing_state },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
@@ -64905,7 +65714,7 @@ var render = function() {
                               }
                               _vm.$set(
                                 _vm.checkout,
-                                "state",
+                                "billing_state",
                                 $event.target.value
                               )
                             }
@@ -64931,8 +65740,8 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.checkout.zip_code,
-                              expression: "checkout.zip_code"
+                              value: _vm.checkout.billing_zip_code,
+                              expression: "checkout.billing_zip_code"
                             }
                           ],
                           staticClass: "form-control",
@@ -64944,9 +65753,10 @@ var render = function() {
                             id: "zip_code",
                             name: "zip_code",
                             required: "",
+                            disabled: _vm.sameAddress,
                             readonly: _vm.isProcessing
                           },
-                          domProps: { value: _vm.checkout.zip_code },
+                          domProps: { value: _vm.checkout.billing_zip_code },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
@@ -64954,7 +65764,7 @@ var render = function() {
                               }
                               _vm.$set(
                                 _vm.checkout,
-                                "zip_code",
+                                "billing_zip_code",
                                 $event.target.value
                               )
                             }
@@ -64971,8 +65781,8 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "col-md-12" }, [
                       _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "address" } }, [
-                          _vm._v(_vm._s(_vm.trans("Address")))
+                        _c("label", { attrs: { for: "billing_address1" } }, [
+                          _vm._v(_vm._s(_vm.trans("Address")) + " 1")
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -64980,25 +65790,28 @@ var render = function() {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.checkout.address,
-                              expression: "checkout.address"
+                              value: _vm.checkout.billing_address1,
+                              expression: "checkout.billing_address1"
                             }
                           ],
                           staticClass: "form-control",
                           class: {
-                            "is-invalid": _vm.errors.hasOwnProperty("address")
+                            "is-invalid": _vm.errors.hasOwnProperty(
+                              "billing_address1"
+                            )
                           },
                           attrs: {
                             type: "text",
-                            id: "address",
-                            name: "address",
+                            id: "billing_address1",
+                            name: "billing_address1",
                             placeholder: _vm.trans(
                               "Street address, P.O. box, company name, c/o"
                             ),
                             required: "",
+                            disabled: _vm.sameAddress,
                             readonly: _vm.isProcessing
                           },
-                          domProps: { value: _vm.checkout.address },
+                          domProps: { value: _vm.checkout.billing_address1 },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
@@ -65006,16 +65819,71 @@ var render = function() {
                               }
                               _vm.$set(
                                 _vm.checkout,
-                                "address",
+                                "billing_address1",
                                 $event.target.value
                               )
                             }
                           }
                         }),
                         _vm._v(" "),
-                        _vm.errors.hasOwnProperty("address")
+                        _vm.errors.hasOwnProperty("billing_address1")
                           ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(_vm._s(_vm.errors.address[0]))
+                              _vm._v(_vm._s(_vm.errors.billing_address1[0]))
+                            ])
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-md-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "billing_address2" } }, [
+                          _vm._v(_vm._s(_vm.trans("Address")) + " 2")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.checkout.billing_address2,
+                              expression: "checkout.billing_address2"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.errors.hasOwnProperty(
+                              "billing_address2"
+                            )
+                          },
+                          attrs: {
+                            type: "text",
+                            id: "billing_address2",
+                            name: "billing_address2",
+                            placeholder: _vm.trans(
+                              "Apartment, suite, unit, building, floor, etc"
+                            ),
+                            required: "",
+                            disabled: _vm.sameAddress,
+                            readonly: _vm.isProcessing
+                          },
+                          domProps: { value: _vm.checkout.billing_address2 },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.checkout,
+                                "billing_address2",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.hasOwnProperty("billing_address2")
+                          ? _c("div", { staticClass: "invalid-feedback" }, [
+                              _vm._v(_vm._s(_vm.errors.billing_address2[0]))
                             ])
                           : _vm._e()
                       ])
@@ -65033,7 +65901,7 @@ var render = function() {
                         staticClass:
                           "border border-2 border-primary checkout-step mr-2 rounded-circle text-primary"
                       },
-                      [_vm._v("3")]
+                      [_vm._v("4")]
                     ),
                     _vm._v(
                       "\n                " +
@@ -65145,7 +66013,7 @@ var render = function() {
                         staticClass:
                           "border border-2 border-primary checkout-step mr-2 rounded-circle text-primary"
                       },
-                      [_vm._v("4")]
+                      [_vm._v("5")]
                     ),
                     _vm._v(
                       "\n                " +
