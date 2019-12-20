@@ -168,6 +168,11 @@ class DIDService
     public function destroyReservation(string $reservation)
     {
         $available_reservation = DIDWWReservation::find($reservation)->getData();
+
+        if (!$available_reservation) {
+            return false;
+        }
+
         $available_reservation->delete();
 
         return true;
@@ -178,13 +183,18 @@ class DIDService
      *
      * @param string $reservation A DID reservation UUID 
      */
-    public function purchaseReservation(string $reservation)
+    public function purchaseReservation(string $reservation, string $number)
     {
         $did_reservation = DIDWWReservation::find($reservation, [
             'include' => 'available_did.did_group.stock_keeping_units'
         ])->getData();
 
-        return $this->purchaseDID($did_reservation->availableDID(), true);
+        throw_unless($did_reservation, new Exception('DID is no longer available'));
+
+        $did_available = $did_reservation->availableDID();
+        $did_group = $did_available->getIncluded()->didGroup();
+
+        return $this->purchaseDID($did_reservation->getId(), $number, $did_group, true);
     }
 
     /**
@@ -194,7 +204,8 @@ class DIDService
     {
         $available_did = $this->getAvailableDID($did);
 
-        return $this->purchaseDID($available_did);
+        $did_group = $available_did->didGroup();
+        return $this->purchaseDID($available_did->getId(), $available_did->getNumber(), $did_group);
     }
 
     public function getCDRReport(string $did, int $year, int $month)
@@ -267,11 +278,11 @@ class DIDService
      * Get default Stock Keeping Unit (SKU)
      *
      * @param $did
+     * @param $did_group
      * @return \Didww\Item\StockKeepingUnit
      */
-    private function getDefaultStockKeepingUnit($did)
+    private function getDefaultStockKeepingUnit($did_group)
     {
-        $did_group = $did->didGroup();
         $skus = $did_group->getIncluded()->stockKeepingUnits;
 
         $sku = $skus->where('channels_included_count', $this::AMOUNT_CHANNEL_DEFAULT)->first();
@@ -303,20 +314,22 @@ class DIDService
     }
 
     /**
-     * @param DIDWWAvailableDID $available_did
+     * @param string $available_did
+     * @param string $number
+     * @param $did_group
      * @param bool $is_reservation
      */
-    private function purchaseDID(DIDWWAvailableDID $available_did, bool $is_reservation = false)
+    private function purchaseDID(string $id, string $number, $did_group, bool $is_reservation = false)
     {
-        $sku = $this->getDefaultStockKeepingUnit($available_did);
+        $sku = $this->getDefaultStockKeepingUnit($did_group);
         $order_item = null;
 
         if ($is_reservation) {
             $order_item = new DIDWWOrderItemReservation();
-            $order_item->setDidReservationId($available_did->getId());
+            $order_item->setDidReservationId($id);
         } else {
             $order_item = new DIDWWOrderItemAvailable();
-            $order_item->setAvailableDidId($available_did->getId());
+            $order_item->setAvailableDidId($id);
         }
 
         $order_item->setSku($sku);
@@ -331,7 +344,7 @@ class DIDService
 
         return [
             'id' => $order->getId(),
-            'number' => $available_did->getNumber(),
+            'number' => $number,
             'amount' => $order->amount,
             'status' => $order->status,
             'created_at' => $order->created_at,

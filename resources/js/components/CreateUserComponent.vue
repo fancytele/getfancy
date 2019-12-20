@@ -662,6 +662,10 @@
                                         class="d-inline-block mb-0 ml-lg-3 mt-3 mt-lg-0 text-danger"
                                         v-if="Object.keys(errors).length > 0"
                                 >{{ trans('Something went wrong, please review all the steps') }}</p>
+                                <p
+                                        class="d-inline-block mb-0 ml-lg-3 mt-3 mt-lg-0 text-danger"
+                                        v-if="errorMessage"
+                                >{{ trans('errorMessage') }}</p>
                             </div>
                             <div class="col-auto" v-if="userHasReservation">
                                 <div class="mt-2 mt-md-0 text-danger text-right">
@@ -920,6 +924,7 @@
         isProcessing: true,
         userCreated: null,
         errors: {},
+        errorMessage: '',
         sameAddress: false,
         reservationHasExpired: false,
         reservationDID: {
@@ -1305,6 +1310,7 @@
 
         this.toggleProcessing();
         this.errors = {};
+        this.errorMessage = '';
         this.laddaButton.start();
 
         createToken()
@@ -1332,6 +1338,10 @@
           })
           .catch(error => {
             const data = error.response.data;
+
+            if (data.message) {
+              this.errorMessage = data.mesage;
+            }
 
             if (data.errors) {
               this.errors = data.errors;

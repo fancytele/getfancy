@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Admin\Users;
 
 use App\Addon;
 use App\Enums\AddonCode;
-use App\Enums\AddonType;
-use App\Enums\DIDNumberType;
 use App\Enums\FancyNotificationPeriod;
 use App\Enums\Role;
 use App\Enums\TicketStatus;
@@ -23,9 +21,12 @@ use App\Services\StripeService;
 use App\Services\UserService;
 use App\Ticket;
 use App\User;
+use Exception;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Spatie\Permission\Models\Role as SpatieRole;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
@@ -117,9 +118,14 @@ class UserController extends Controller
 
         // TODO: Catch error to delete Stripe Customer and Subscription and send response to user
         $did_service = new DIDService();
-        $did_purchase = $did_service->purchaseReservation($did_data['reservation']);
 
-        \Log::info(print_r($did_purchase, true));
+        try {
+            $did_purchase = $did_service->purchaseReservation($did_data['reservation'], $did_data['number']);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage()], Response::HTTP_NOT_FOUND);
+        };
+
+        Log::info(print_r($did_purchase, true));
 
         // Create Fancy User        
         $user_service = new UserService();
@@ -181,7 +187,7 @@ class UserController extends Controller
      * @param \App\Http\Requests\FancyNumberRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function StoreFancy(FancyNumberRequest $request)
+    public function storeFancy(FancyNumberRequest $request)
     {
         $did_service = new DIDService();
         $did_purchase = $did_service->purchaseAvailableDID($request->input('data.did.id', ''));

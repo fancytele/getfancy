@@ -4141,6 +4141,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -4178,6 +4182,7 @@ __webpack_require__.r(__webpack_exports__);
       isProcessing: true,
       userCreated: null,
       errors: {},
+      errorMessage: '',
       sameAddress: false,
       reservationHasExpired: false,
       reservationDID: {
@@ -4538,6 +4543,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.toggleProcessing();
       this.errors = {};
+      this.errorMessage = '';
       this.laddaButton.start();
       Object(vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_0__["createToken"])().then(function (data) {
         _this13.user.stripe_token = data.token.id;
@@ -4563,6 +4569,10 @@ __webpack_require__.r(__webpack_exports__);
         });
       })["catch"](function (error) {
         var data = error.response.data;
+
+        if (data.message) {
+          _this14.errorMessage = data.mesage;
+        }
 
         if (data.errors) {
           _this14.errors = data.errors;
@@ -75096,6 +75106,17 @@ var render = function() {
                           )
                         )
                       ]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.errorMessage
+                  ? _c(
+                      "p",
+                      {
+                        staticClass:
+                          "d-inline-block mb-0 ml-lg-3 mt-3 mt-lg-0 text-danger"
+                      },
+                      [_vm._v(_vm._s(_vm.trans("errorMessage")))]
                     )
                   : _vm._e()
               ]),
