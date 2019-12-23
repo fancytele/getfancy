@@ -672,22 +672,6 @@
                 {{ trans('More') }}...
               </li>
             </ul>
-
-            <hr class="border-white-50" />
-
-            <div class="mt-6">
-              <blockquote class="blockquote blockquote-fancy">
-                <p class="font-italic">{{ trans('checkoutTestimonial') }}</p>
-                <footer class="blockquote-footer font-weight-bold text-white">
-                  <img
-                    class="mr-3 rounded-circle w-15"
-                    src="/img/web/johnny-bosche.jpg"
-                    alt="Johnny Bosche"
-                  />
-                  Johnny Bosche
-                </footer>
-              </blockquote>
-            </div>
           </div>
 
           <!-- Summary -->
@@ -875,13 +859,13 @@ export default {
           window.location.href = response.data.route;
         })
         .catch(error => {
-          const data = error.response.data;
-          this.generalError = data.message;
-          this.errors = data.errors;
-
           this.laddaButton.stop();
           this.toggleProcessing();
           this.resetRecaptcha();
+
+          const data = error.response.data;
+          this.generalError = data.message;
+          this.errors = data.errors;
         });
     },
     onVerify: function(response) {

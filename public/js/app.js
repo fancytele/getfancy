@@ -2550,22 +2550,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2715,15 +2699,15 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       axios.post(this.action, this.checkout).then(function (response) {
         window.location.href = response.data.route;
       })["catch"](function (error) {
-        var data = error.response.data;
-        _this3.generalError = data.message;
-        _this3.errors = data.errors;
-
         _this3.laddaButton.stop();
 
         _this3.toggleProcessing();
 
         _this3.resetRecaptcha();
+
+        var data = error.response.data;
+        _this3.generalError = data.message;
+        _this3.errors = data.errors;
       });
     },
     onVerify: function onVerify(response) {
@@ -72522,22 +72506,6 @@ var render = function() {
                       "...\n            "
                   )
                 ])
-              ]),
-              _vm._v(" "),
-              _c("hr", { staticClass: "border-white-50" }),
-              _vm._v(" "),
-              _c("div", { staticClass: "mt-6" }, [
-                _c(
-                  "blockquote",
-                  { staticClass: "blockquote blockquote-fancy" },
-                  [
-                    _c("p", { staticClass: "font-italic" }, [
-                      _vm._v(_vm._s(_vm.trans("checkoutTestimonial")))
-                    ]),
-                    _vm._v(" "),
-                    _vm._m(7)
-                  ]
-                )
               ])
             ]),
             _vm._v(" "),
@@ -72661,22 +72629,6 @@ var staticRenderFns = [
     return _c("span", { staticClass: "mr-2" }, [
       _c("i", { staticClass: "far fa-check-circle" })
     ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "footer",
-      { staticClass: "blockquote-footer font-weight-bold text-white" },
-      [
-        _c("img", {
-          staticClass: "mr-3 rounded-circle w-15",
-          attrs: { src: "/img/web/johnny-bosche.jpg", alt: "Johnny Bosche" }
-        }),
-        _vm._v("\n                Johnny Bosche\n              ")
-      ]
-    )
   }
 ]
 render._withStripped = true

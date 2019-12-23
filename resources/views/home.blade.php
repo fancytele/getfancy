@@ -1,170 +1,147 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSRF Token -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+        <!-- CSRF Token -->
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name') }}</title>
+        <title>{{ config('app.name') }}</title>
 
-    <!-- Scripts -->
-    <script src="/js/lang.js" defer></script>
-    <script src="{{ asset('js/home.js') }}" defer></script>
+        <!-- Scripts -->
+        <script src="/js/lang.js" defer></script>
+        <script src="{{ asset('js/home.js') }}" defer></script>
 
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-    <link rel="stylesheet"
-          href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css">
+        <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css">
 
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+        <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
-    <!-- Styles -->
-    <link href="{{ asset('css/web.css') }}" rel="stylesheet">
+        <!-- Styles -->
+        <link href="{{ asset('css/web.css') }}" rel="stylesheet">
 
-    @env('production')
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async
-            src="https://www.googletagmanager.com/gtag/js?id=UA-143244951-1">
-    </script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
+        @env('production')
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143244951-1">
+        </script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             
             gtag('config', 'UA-143244951-1');
-    </script>
-    @endenv
-</head>
+        </script>
+        @endenv
+    </head>
 
-<body>
-    <!-- Header -->
-    <header>
-        <nav id="fancy-navbar"
-             class="bg-transparent border-0 fixed-top navbar navbar-dark navbar-expand-md pt-4">
-            <div class="align-items-end container d-flex">
-                <a href="{{ url('/') }}">
-                    {{-- TODO: Change to SVG --}}
-                    <img class="fancy-logo"
-                         src="{{ URL::asset('img/logo-primary.png') }}"
-                         alt="Fancy Logo">
-                </a>
-                <button class="navbar-toggler" type="button"
-                        data-toggle="collapse" data-target="#fancy-menu"
-                        aria-controls="fancy-menu" aria-expanded="false"
-                        aria-label="Toggle navigation">
-                    <i
-                       class="font-weight-bold la la-2x la-bars text-primary"></i>
-                </button>
-                <div class="collapse navbar-collapse flex-column align-items-end"
-                     id="fancy-menu">
-                    <button type="button" class="close" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
+    <body>
+        <!-- Header -->
+        <header>
+            <nav id="fancy-navbar" class="bg-transparent border-0 fixed-top navbar navbar-dark navbar-expand-md pt-4">
+                <div class="align-items-end container d-flex">
+                    <a href="{{ url('/') }}">
+                        {{-- TODO: Change to SVG --}}
+                        <img class="fancy-logo" src="{{ URL::asset('img/logo-primary.png') }}" alt="Fancy Logo">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#fancy-menu"
+                            aria-controls="fancy-menu" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="font-weight-bold la la-2x la-bars text-primary"></i>
                     </button>
-                    <div class="d-md-flex d-none mb-4 small">
-                        @if(App::isLocale('en'))
-                        <span class="text-muted">English</span>
-                        @else
-                        <a href="{{ route('web.locale', 'en') }}"
-                           class="text-body">
-                            English
-                        </a>
-                        @endif
-                        <span class="px-3">|</span>
-                        @if(App::isLocale('es'))
-                        <span class="text-muted">Español</span>
-                        @else
-                        <a href="{{ route('web.locale', 'es') }}"
-                           class="text-body">
-                            Español
-                        </a>
-                        @endif
+                    <div class="collapse navbar-collapse flex-column align-items-end" id="fancy-menu">
+                        <button type="button" class="close" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <div class="d-md-flex d-none mb-4 small">
+                            @if(App::isLocale('en'))
+                            <span class="text-muted">English</span>
+                            @else
+                            <a href="{{ route('web.locale', 'en') }}" class="text-body">
+                                English
+                            </a>
+                            @endif
+                            <span class="px-3">|</span>
+                            @if(App::isLocale('es'))
+                            <span class="text-muted">Español</span>
+                            @else
+                            <a href="{{ route('web.locale', 'es') }}" class="text-body">
+                                Español
+                            </a>
+                            @endif
+                        </div>
+                        <ul class="align-items-center d-flex ml-auto navbar-nav text-lowercase">
+                            <li class="nav-item">
+                                <a class="font-weight-bold nav-link text-body" href="#features">
+                                    @lang('Solutions')
+                                    <span class="sr-only">(current)</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="font-weight-bold nav-link text-body" href="#how-it-works">
+                                    @lang('How It Works')
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="font-weight-bold nav-link text-body" href="#plans">@lang('Our Plans')</a>
+                            </li>
+                            @guest
+                            <li class="nav-item">
+                                <a href="{{ route('admin.login') }}"
+                                   class="btn btn-primary btn-sm px-4 py-2 text-capitalize">
+                                    @lang('Login')
+                                </a>
+                            </li>
+                            @endguest
+
+                            @auth
+                            <li class="nav-item">
+                                <a href="{{ route('admin.dashboard') }}"
+                                   class="btn btn-primary btn-sm px-3 py-2 text-capitalize">
+                                    @lang('Dashboard')
+                                </a>
+                            </li>
+                            @endauth
+                        </ul>
                     </div>
-                    <ul
-                        class="align-items-center d-flex ml-auto navbar-nav text-lowercase">
-                        <li class="nav-item">
-                            <a class="font-weight-bold nav-link text-body"
-                               href="#features">
-                                @lang('Features')
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="font-weight-bold nav-link text-body"
-                               href="#how-it-works">
-                                @lang('How It Works')
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="font-weight-bold nav-link text-body"
-                               href="#plans">@lang('Our Plans')</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="font-weight-bold nav-link text-body"
-                               href="#testimonial">@lang('Testimonial')</a>
-                        </li>
-                        @guest
-                        <li class="nav-item">
-                            <a href="{{ route('admin.login') }}"
-                               class="btn btn-primary btn-sm px-4 py-2 text-capitalize">
-                                @lang('Login')
-                            </a>
-                        </li>
-                        @endguest
-
-                        @auth
-                        <li class="nav-item">
-                            <a href="{{ route('admin.dashboard') }}"
-                               class="btn btn-primary btn-sm px-3 py-2 text-capitalize">
-                                @lang('Dashboard')
-                            </a>
-                        </li>
-                        @endauth
-                    </ul>
                 </div>
-            </div>
-        </nav>
-    </header>
-    <!-- / Header -->
+            </nav>
+        </header>
+        <!-- / Header -->
 
-    <div id="have-us-call-you" class="call-you-box position-fixed">
-        <div class="bg-white call-you-content rounded">
-            <h3 class="bg-primary call-you-title rounded-top">
-                @lang('Have us call you!')
-            </h3>
+        <div id="have-us-call-you" class="call-you-box position-fixed">
+            <div class="bg-white call-you-content rounded">
+                <h3 class="bg-primary call-you-title rounded-top">
+                    @lang('Have us call you!')
+                </h3>
 
-            <form action="/callyou" method="POST"
-                  class="overflow-hidden p-4 position-relative">
-                <div class="form-group">
-                    <label for="name" class="m-0">@lang('Name')</label>
-                    <input type="text" class="form-control" name="name"
-                           id="name" required>
-                </div>
-                <div class="form-group">
-                    <label for="phone" class="m-0">
-                        @lang('Phone Number')
-                    </label>
-                    <input type="tel" class="form-control" name="phone"
-                           placeholder="(000) 000-0000" id="phone" required>
-                </div>
-                <div class="call-you-error d-none small text-danger">
-                    @lang('An error has ocurred, please try again')
-                </div>
+                <form action="/callyou" method="POST" class="overflow-hidden p-4 position-relative">
+                    <div class="form-group">
+                        <label for="name" class="m-0">@lang('Name')</label>
+                        <input type="text" class="form-control" name="name" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone" class="m-0">
+                            @lang('Phone Number')
+                        </label>
+                        <input type="tel" class="form-control" name="phone" placeholder="(000) 000-0000" id="phone"
+                               required>
+                    </div>
+                    <div class="call-you-error d-none small text-danger">
+                        @lang('An error has ocurred, please try again')
+                    </div>
 
-                <button type="submit"
-                        class="btn btn-lg btn-outline-primary ladda-button ml-auto mt-2"
-                        data-style="zoom-out" data-spinner-color="#704895">
-                    @lang('Submit')
-                </button>
+                    <button type="submit" class="btn btn-lg btn-outline-primary ladda-button ml-auto mt-2"
+                            data-style="zoom-out" data-spinner-color="#704895">
+                        @lang('Submit')
+                    </button>
 
-                <div class="bg-white call-you-message d-flex position-absolute">
-                    <h3 class="call-you-message-text m-auto position-relative">
-                        <svg x="0px" y="0px" viewBox="0 0 296.938 296.938"
-                             class="call-you-message-icon position-absolute">
-                            <path
-                                  d="M208.924,188.481h-20.788v-20.215c5-5.883,8.861-12.365,12.098-18.87c1.267-0.226,2.7-0.642,3.961-1.244
+                    <div class="bg-white call-you-message d-flex position-absolute">
+                        <h3 class="call-you-message-text m-auto position-relative">
+                            <svg x="0px" y="0px" viewBox="0 0 296.938 296.938"
+                                 class="call-you-message-icon position-absolute">
+                                <path d="M208.924,188.481h-20.788v-20.215c5-5.883,8.861-12.365,12.098-18.87c1.267-0.226,2.7-0.642,3.961-1.244
                                 c5.791-2.767,11.125-9.509,14.133-18.036c3.468-9.827,3.093-20.162-0.75-25.881c0.514-10.615,0.203-40.198-18.395-60.944
                                 c-3.086-3.442-6.506-6.423-10.252-8.965C185.688,14.666,169.498,0,149.43,0c-19.75,0-37.762,14.317-41.314,33.575
                                 c-7.074,4.054-13.037,9.307-17.735,15.734c-10.271,14.054-13.492,33.92-9.41,54.926c-5.297,5.275-6.436,14.558-2.444,25.882
@@ -187,492 +164,376 @@
                                 c-33.137,5.827-83.967,7.346-139.946-17.624c2.258-20.604,18.398-52.314,33.973-56.772l59.518,46.548
                                 c1.335,1.043,2.937,1.564,4.542,1.564c1.604,0,3.207-0.521,4.542-1.564l59.518-46.548c15.628,4.474,31.826,36.39,33.995,56.987
                                 C238.392,265.165,218.32,273.759,190.383,278.671z">
-                            </path>
-                        </svg>
-                        @lang('Thank you!'),
-                        <span class="d-block font-weight-light h4 mb-0 mt-2">
-                            @lang('One of our agents will call you shortly!')
-                        </span>
-                    </h3>
-                </div>
-            </form>
-        </div>
-        <button
-                class="btn btn-lg btn-primary call-you-button py-3 rounded-circle">
-            <i class="la la-phone"></i>
-            <i class="la la-times"></i>
-        </button>
-    </div>
-
-    <main>
-        <!-- Hero Section -->
-        <section id="home" class="fancy-section hero pt-7 pt-sm-8">
-            <div class="container">
-                <div class="row" data-aos="zoom-in">
-                    <div class="col-md-7">
-                        <h1
-                            class="display-3 font-heading font-weight-bold line-height-md text-primary">
-                            @lang('Hero Title')
-                        </h1>
-                        <p class="my-md-5 w-75">
-                            @lang('Hero Message')
-                        </p>
-                        <div class="d-inline-block">
-                            <a href="#plans" id="get-started"
-                               class="btn btn-block btn-lg btn-primary px-6 rounded text-uppercase">
-                                @lang('Get Started')
-                            </a>
-                            <p class="mb-0">
-                                <small class="text-muted">
-                                    @lang('Different plans, same benefits').
-                                    @lang('Cancel any time').
-                                </small>
-                            </p>
-                        </div>
+                                </path>
+                            </svg>
+                            @lang('Thank you!'),
+                            <span class="d-block font-weight-light h4 mb-0 mt-2">
+                                @lang('One of our agents will call you shortly!')
+                            </span>
+                        </h3>
                     </div>
-                    <div class="col-md-5">
-                        <img src="{{ asset('/img/web/hero-draw.svg') }}"
-                             alt="Business man"
-                             class="d-flex hero-img img-fluid ml-auto">
-                    </div>
-                </div>
+                </form>
             </div>
-        </section>
-        <!-- / Hero Section -->
+            <button class="btn btn-lg btn-primary call-you-button py-3 rounded-circle">
+                <i class="la la-phone"></i>
+                <i class="la la-times"></i>
+            </button>
+        </div>
 
-        <!-- Features Section -->
-        <section id="features" class="bg-primary text-white">
-            <div class="fancy-section">
+        <main>
+            <!-- Hero Section -->
+            <section id="home" class="fancy-section hero pt-7 pt-sm-8">
                 <div class="container">
+                    <div class="row" data-aos="zoom-in">
+                        <div class="col-md-7">
+                            <h1 class="display-3 font-heading font-weight-bold line-height-md text-primary">
+                                @lang('Hero Title')
+                            </h1>
+                            <p class="my-md-5 w-75">
+                                Fancy is a cloud-based communications solution for all kinds of businesses designed to
+                                save your business time and money and provide you with the information you need.
+                            </p>
+                            <div class="d-inline-block">
+                                <a href="#plans" id="get-started"
+                                   class="btn btn-block btn-lg btn-primary px-6 rounded text-uppercase">
+                                    @lang('Get Fancy')
+                                </a>
+                                <p class="mb-0">
+                                    <small class="text-muted">
+                                        @lang('Cancel anytime. Flexible plans with the best deals in the market. ').
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <img src="{{ asset('/img/web/hero-draw.svg') }}" alt="Business man"
+                                 class="d-flex hero-img img-fluid ml-auto">
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- / Hero Section -->
+
+            <!-- Features Section -->
+            <section id="features" class="bg-primary text-white">
+                <div class="fancy-section">
+                    <div class="container">
+                        <div class="text-center" data-aos="fade-up">
+                            <h2 class="display-4 font-heading">
+                                @lang('Solutions')
+                            </h2>
+                            <p class="m-auto text-info w-lg-75">
+                                @lang('Enterprise level system, built for your small business')
+                            </p>
+                        </div>
+                        <div class="mt-7 row">
+                            <div class="col-md-4 mb-3" data-aos="fade-up">
+                                <div class="mb-4">
+                                    <span class="bg-info h1 px-2 py-1 rounded-circle">
+                                        <i class="la la-globe position-relative top-1"></i>
+                                    </span>
+                                </div>
+                                <h4 class="font-weight-bold">
+                                    @lang('Work anywhere')
+                                </h4>
+                                <p>
+                                    @lang('Take your calls at the beach, at your coworking space or at home with our simple forwarding service.')
+                                </p>
+                            </div>
+                            <div class="col-md-4 mb-3" data-aos="fade-up">
+                                <div class="mb-4">
+                                    <span class="bg-info h1 px-2 py-1 rounded-circle">
+                                        <i class="la la-globe position-relative top-1"></i>
+                                    </span>
+                                </div>
+                                <h4 class="font-weight-bold">
+                                    @lang('Convenience')
+                                </h4>
+                                <p>
+                                    @lang('we work with your existing phone, or provide you with a new one.')
+                                </p>
+                            </div>
+                            <div class="col-md-4 mb-3" data-aos="fade-up">
+                                <div class="mb-4">
+                                    <span class="bg-info h1 px-2 py-1 rounded-circle">
+                                        <i class="la la-globe position-relative top-1"></i>
+                                    </span>
+                                </div>
+                                <h4 class="font-weight-bold">
+                                    @lang('Affordable prices')
+                                </h4>
+                                <p>
+                                    @lang('Best prices on the market.')
+                                </p>
+                            </div>
+
+                            <div class="col-md-4 mb-3" data-aos="fade-up">
+                                <div class="mb-4">
+                                    <span class="bg-info h1 px-2 py-1 rounded-circle">
+                                        <i class="la la-globe position-relative top-1"></i>
+                                    </span>
+                                </div>
+                                <h4 class="font-weight-bold">
+                                    @lang('Management tools')
+                                </h4>
+                                <p>
+                                    @lang('Edit or add new extensions, create call log reports, manage calls, record phone calls and much, much more.')
+                                </p>
+                            </div>
+                            <div class="col-md-4 mb3" data-aos="fade-up">
+                                <div class="mb-4">
+                                    <span class="bg-info h1 px-2 py-1 rounded-circle">
+                                        <i class="la la-globe position-relative top-1"></i>
+                                    </span>
+                                </div>
+                                <h4 class="font-weight-bold">
+                                    @lang('Ease')
+                                </h4>
+                                <p>
+                                    @lang('We do all the work, you just take your calls.')
+                                </p>
+                            </div>
+                            <div class="col-md-4 mb3" data-aos="fade-up">
+                                <div class="mb-4">
+                                    <span class="bg-info h1 px-2 py-1 rounded-circle">
+                                        <i class="la la-globe position-relative top-1"></i>
+                                    </span>
+                                </div>
+                                <h4 class="font-weight-bold">
+                                    @lang('Smart Data')
+                                </h4>
+                                <p>
+                                    @lang('Get daily reports, and insights.')
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <svg class="h-60 w-100" preserveAspectRatio="none" viewBox="0 0 100 100">
+                    <polygon class="fill-body" points="0,80 100,0 100,100 0,100" />
+                </svg>
+            </section>
+            <!-- / Features Section -->
+
+            <!-- How It Works Section -->
+            <section id="how-it-works" class="fancy-section">
+                <div class="container pb-5" data-aos="fade-up">
+                    <h2 class="display-4 font-heading mb-6 text-primary">
+                        @lang('How It Works')
+                    </h2>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="work-list">
+                                <div class="mb-5 media">
+                                    <div class="work-item-left">
+                                        <img src="{{ asset('/img/web/phone-office.svg') }}" class="img-fluid"
+                                             alt="Phone office">
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="mt-0">
+                                            @lang('Pick a number of your choice')
+                                        </h4>
+                                        <small>
+                                            @lang('Pick a number Message')
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="mb-5 media">
+                                    <div class="work-item-left">
+                                        <img src="{{ asset('/img/web/microphone-svgrepo-com.svg') }}"
+                                             class="d-flex img-fluid m-auto w-60" alt="Phone office">
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="mt-0">
+                                            @lang('Record greetings')
+                                        </h4>
+                                        <small>
+                                            @lang('Record greetings Message')
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="mb-5 media">
+                                    <div class="work-item-left">
+                                        <img src="{{ asset('/img/web/people-extensions.svg') }}" class="img-fluid"
+                                             alt="Phone office">
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="mt-0">
+                                            @lang('Add as many extensions as you want')
+                                        </h4>
+                                        <small>
+                                            @lang('Choose & customize extensions to forward your calls anywhere to your home, your office or your mobile')
+                                        </small>
+                                    </div>
+                                </div>
+                                <div class="mb-5 media">
+                                    <div class="work-item-left">
+                                        <img src="{{ asset('/img/web/phone-office.svg') }}" class="img-fluid"
+                                             alt="Phone office">
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="mt-0">
+                                            @lang('Receive Reports')
+                                        </h4>
+                                        <small>
+                                            @lang('Monthly Weekly or Daily call reports and data insights on your calls.')
+                                        </small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <!-- / How It Works Section -->
+
+            <!-- Plans Section -->
+            <section id="plans" class="bg-white fancy-section pb-6 text-center">
+                <div class="container" data-aos="fade-up">
                     <div class="text-center" data-aos="fade-up">
-                        <h2 class="display-4 font-heading">
-                            @lang('Features')
+                        <h2 class="display-4 font-heading text-primary">
+                            @lang('Our plans')
                         </h2>
-                        <p class="m-auto text-info w-lg-75">
-                            @lang('Feature Message')
+                        <p class="mx-auto w-lg-75">
+                            @lang('Fancy\'s subscription program features the greatest value and benefits to give you the best possible experience. Each membership price tier is equipped with the same great features.')
                         </p>
                     </div>
-                    <div class="mt-7 row">
-                        <div class="col-md-4 mb-3" data-aos="fade-up">
-                            <div class="mb-4">
-                                <span
-                                      class="bg-info h1 px-2 py-1 rounded-circle">
-                                    <i
-                                       class="la la-globe position-relative top-1"></i>
-                                </span>
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2">
+                            <div>
+                                <h2 class="display-1 text-primary plan-wrapper">
+                                    @foreach ($products as $product)
+                                    <span id="{{ $product->slug }}"
+                                          class="plan-item{{ $product->is_primary ? ' active' : '' }}">
+                                        <span class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3">$</span>
+                                        <span class="plan-amount">{{ $product->cost }}</span>
+                                        @if($product->discount)
+                                        <small
+                                               class="badge badge-pill badge-success font-weight-bold plan-save position-absolute px-3 py-2">
+                                            @lang('Save') {{ $product->discount }}
+                                        </small>
+                                        @endif
+                                    </span>
+                                    @endforeach
+                                </h2>
+
+                                <div class="btn-group" role="group" aria-label="Our Plans Button Groups">
+                                    @foreach ($products as $product)
+                                    <button type="button"
+                                            class="btn btn-outline-light{{ $product->is_primary ? ' active' : '' }}"
+                                            data-type="{{ $product->slug }}">@lang($product->name)</button>
+                                    @endforeach
+                                </div>
+
+                                <p>
+                                    <small class="font-italic text-muted">
+                                        @lang('Different payment plans, same features')
+                                    </small>
+                                </p>
                             </div>
-                            <h4 class="font-weight-bold">
-                                @lang('Work anywhere')
-                            </h4>
-                            <p>
-                                @lang('Work anywhere Message')
-                            </p>
-                        </div>
-                        <div class="col-md-4 mb-3" data-aos="fade-up">
-                            <div class="mb-4">
-                                <span
-                                      class="bg-info h1 px-2 py-1 rounded-circle">
-                                    <i
-                                       class="la la-globe position-relative top-1"></i>
-                                </span>
+
+                            <div class="my-5 row">
+                                <div class="col-md-6">
+                                    <ul
+                                        class="border-bottom border-top d-md-inline-block list-group list-group-flush text-left">
+                                        <li class="list-group-item px-lg-4">
+                                            @lang('Unlimited extensions')
+                                        </li>
+                                        <li class="list-group-item px-lg-4">
+                                            @lang('Customer support')
+                                        </li>
+                                        <li class="list-group-item px-lg-4">
+                                            @lang('All minutes = fixed')
+                                        </li>
+                                        <li class="list-group-item px-lg-4">
+                                            @lang('Choose your number')
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul
+                                        class="border-bottom border-top d-md-inline-block list-group list-group-flush text-left">
+                                        <li class="list-group-item px-lg-4">
+                                            @lang('Conference call')
+                                        </li>
+                                        <li class="list-group-item px-lg-4">
+                                            @lang('Custom voice')
+                                        </li>
+                                        <li class="list-group-item px-lg-4">
+                                            @lang('Recording voice')
+                                        </li>
+                                        <li class="list-group-item px-lg-4">
+                                            @lang('Recording voicemail to Email')
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
-                            <h4 class="font-weight-bold">
-                                @lang('Management tools')
-                            </h4>
-                            <p>
-                                @lang('Management tools Message')
-                            </p>
-                        </div>
-                        <div class="col-md-4 mb3" data-aos="fade-up">
-                            <div class="mb-4">
-                                <span
-                                      class="bg-info h1 px-2 py-1 rounded-circle">
-                                    <i
-                                       class="la la-globe position-relative top-1"></i>
-                                </span>
-                            </div>
-                            <h4 class="font-weight-bold">
-                                @lang('Relability')
-                            </h4>
-                            <p>
-                                @lang('Relability Message')
-                            </p>
+
+                            <a id="plan-buy" href="#" class="btn btn-primary px-7 rounded-pill">
+                                @lang('Buy now')
+                            </a>
                         </div>
                     </div>
                 </div>
-            </div>
-            <svg class="h-60 w-100" preserveAspectRatio="none"
-                 viewBox="0 0 100 100">
-                <polygon class="fill-body" points="0,80 100,0 100,100 0,100" />
-            </svg>
-        </section>
-        <!-- / Features Section -->
+            </section>
+            <!-- / Plans Section -->
+        </main>
 
-        <!-- How It Works Section -->
-        <section id="how-it-works" class="fancy-section">
-            <div class="container pb-5" data-aos="fade-up">
-                <h2 class="display-4 font-heading mb-6 text-primary">
-                    @lang('How It Works')
-                </h2>
-                <div class="row">
-                    <div class="col-md-6 col-lg-5">
-                        <div class="work-list">
-                            <div class="mb-5 media">
-                                <div class="work-item-left">
-                                    <img src="{{ asset('/img/web/phone-office.svg') }}"
-                                         class="img-fluid" alt="Phone office">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="mt-0">
-                                        @lang('Pick a number of your choice')
-                                    </h4>
-                                    <small>
-                                        @lang('Pick a number Message')
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="mb-5 media">
-                                <div class="work-item-left">
-                                    <img src="{{ asset('/img/web/microphone-svgrepo-com.svg') }}"
-                                         class="d-flex img-fluid m-auto w-60"
-                                         alt="Phone office">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="mt-0">
-                                        @lang('Record greetings')
-                                    </h4>
-                                    <small>
-                                        @lang('Record greetings Message')
-                                    </small>
-                                </div>
-                            </div>
-                            <div class="mb-5 media">
-                                <div class="work-item-left">
-                                    <img src="{{ asset('/img/web/people-extensions.svg') }}"
-                                         class="img-fluid" alt="Phone office">
-                                </div>
-                                <div class="media-body">
-                                    <h4 class="mt-0">
-                                        @lang('Add extensions')
-                                    </h4>
-                                    <small>
-                                        @lang('Add extensions Message')
-                                    </small>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-6 offset-lg-1">
-                        <div
-                             class="bg-white d-flex flex-column flex-lg-row overflow-hidden quote rounded shadow">
-                            <div
-                                 class="pb-2 position-relative pt-5 px-4">
-                                <i
-                                   class="la la-3x la-quote-left text-info quote-icon"></i>
-                                <blockquote class="quote-cite">
-                                    <p class="font-italic">
-                                        @lang('Quote1')
-                                    </p>
-                                    <p class="font-italic">
-                                        @lang('Quote2')
-                                    </p>
-                                    <footer>
-                                        <strong class="d-block">
-                                            Johnny Bosche
-                                        </strong>
-                                        CEO, Fancy
-                                    </footer>
-                                </blockquote>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- / How It Works Section -->
-
-        <!-- Plans Section -->
-        <section id="plans" class="bg-white fancy-section pb-6 text-center">
+        <footer class="footer overflow-hidden text-white">
             <div class="container" data-aos="fade-up">
-                <div class="row">
-                    <div class="col-md-8 offset-md-2">
-                        <div>
-                            <h2 class="display-1 text-primary plan-wrapper">
-                                @foreach ($products as $product)
-                                <span id="{{ $product->slug }}"
-                                      class="plan-item{{ $product->is_primary ? ' active' : '' }}">
-                                    <span
-                                          class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3">$</span>
-                                    <span
-                                          class="plan-amount">{{ $product->cost }}</span>
-                                    @if($product->discount)
-                                    <small
-                                           class="badge badge-pill badge-success font-weight-bold plan-save position-absolute px-3 py-2">
-                                        @lang('Save') {{ $product->discount }}
-                                    </small>
-                                    @endif
-                                </span>
-                                @endforeach
-                            </h2>
+                <h3 class="display-4 font-weight-bold mb-4 text-center">
+                    @lang('Contact Us')
+                </h3>
 
-                            <div class="btn-group" role="group"
-                                 aria-label="Our Plans Button Groups">
-                                @foreach ($products as $product)
-                                <button type="button"
-                                        class="btn btn-outline-light{{ $product->is_primary ? ' active' : '' }}"
-                                        data-type="{{ $product->slug }}">@lang($product->name)</button>
-                                @endforeach
-                            </div>
-
-                            <p>
-                                <small class="font-italic text-muted">
-                                    @lang('Different plans, same benefits')
-                                </small>
-                            </p>
-                        </div>
-
-                        <div class="my-5 row">
-                            <div class="col-md-6">
-                                <ul
-                                    class="border-bottom border-top d-md-inline-block list-group list-group-flush text-left">
-                                    <li class="list-group-item px-lg-4">
-                                        @lang('Unlimited extensions')
-                                    </li>
-                                    <li class="list-group-item px-lg-4">
-                                        @lang('Customer support')
-                                    </li>
-                                    <li class="list-group-item px-lg-4">
-                                        @lang('All minutes = fixed')
-                                    </li>
-                                    <li class="list-group-item px-lg-4">
-                                        @lang('Choose your number')
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="col-md-6">
-                                <ul
-                                    class="border-bottom border-top d-md-inline-block list-group list-group-flush text-left">
-                                    <li class="list-group-item px-lg-4">
-                                        @lang('Conference call')
-                                    </li>
-                                    <li class="list-group-item px-lg-4">
-                                        @lang('Custom voice')
-                                    </li>
-                                    <li class="list-group-item px-lg-4">
-                                        @lang('Recording voice')
-                                    </li>
-                                    <li class="list-group-item px-lg-4">
-                                        @lang('Recording voicemail to Email')
-                                    </li>
-                                </ul>
+                <form action="contactus" method="POST" class="mb-5">
+                    <div class="row">
+                        <div class="col-md-8 offset-md-2">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="name" class="sr-only">
+                                            @lang('Full Name')
+                                        </label>
+                                        <input type="text" class="form-control w-100" name="name" id="name"
+                                               placeholder="@lang('Full Name')" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="email" class="sr-only">
+                                            @lang('E-mail')
+                                        </label>
+                                        <input type="email" class="form-control w-100" name="email" id="email"
+                                               placeholder="@lang('E-mail')" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="message" class="sr-only">
+                                            @lang('Message')
+                                        </label>
+                                        <textarea class="form-control" name="message" id="message" rows="5"
+                                                  placeholder="@lang('Message')" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="text-center w-100">
+                                    <p class="d-none text-message"></p>
+                                </div>
+                                <div class="col-md-12 text-center">
+                                    <button type="submit" class="btn btn-primary font-weight-bold px-6">
+                                        @lang('Submit')
+                                    </button>
+                                </div>
                             </div>
                         </div>
-
-                        <a id="plan-buy" href="#"
-                           class="btn btn-primary px-7 rounded-pill">
-                            @lang('Buy now')
-                        </a>
                     </div>
-                </div>
+                </form>
+
+                <p class="border-top pt-2 text-center">
+                    <small>&copy; Fancy 2019</small>
+                </p>
             </div>
-        </section>
-        <!-- / Plans Section -->
-
-        <!-- Testimonials Section -->
-        <section id="testimonial" class="fancy-section position-relative">
-            <svg class="h-65 h-sm-100 position-absolute pull-left pull-top w-100 w-sm-50"
-                 preserveAspectRatio="none" viewBox="0 0 100 100">
-                <polygon class="fill-primary d-md-none"
-                         points="0,0 100,0 100,80 0,100" />
-                <polygon class="fill-primary d-none d-md-block"
-                         points="0,0 100,0 90,100 0,100" />
-            </svg>
-            <div class="container py-4" data-aos="fade-up">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="pt-md-6 px-4 px-sm-0 py-4">
-                            <h2 class="display-3 font-heading mb-0 text-white">
-                                @lang('What people think of')
-                            </h2>
-                            <img src="{{ asset('/img/logo-light.png') }}"
-                                 alt="Logo Secondary" class="mt-3">
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        <div id="carouselExampleFade" class="carousel slide"
-                             data-interval="false">
-                            <div class="carousel-inner">
-                                <div class="carousel-item active">
-                                    <div
-                                         class="bg-white d-flex m-4 overflow-hidden quote rounded shadow">
-                                        <div
-                                             class="position-relative px-4 py-5">
-                                            <i
-                                               class="la la-3x la-quote-left text-info quote-icon"></i>
-                                            <blockquote class="m-0 quote-cite">
-                                                <p class="font-italic">
-                                                    @lang('Testimony1')
-                                                </p>
-                                                <footer>
-                                                    <strong class="d-block">
-                                                        Cindy Smith
-                                                    </strong>
-                                                </footer>
-                                            </blockquote>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div
-                                         class="bg-white d-flex m-4 overflow-hidden quote rounded shadow">
-                                        <div
-                                             class="position-relative px-4 py-5">
-                                            <i
-                                               class="la la-3x la-quote-left text-info quote-icon"></i>
-                                            <blockquote class="m-0 quote-cite">
-                                                <p class="font-italic">
-                                                    @lang('Testimony2')
-                                                </p>
-                                                <footer>
-                                                    <strong class="d-block">
-                                                        Cindy Smith
-                                                    </strong>
-                                                </footer>
-                                            </blockquote>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div
-                                         class="bg-white d-flex m-4 overflow-hidden quote rounded shadow">
-                                        <div
-                                             class="position-relative px-4 py-5">
-                                            <i
-                                               class="la la-3x la-quote-left text-info quote-icon"></i>
-                                            <blockquote class="m-0 quote-cite">
-                                                <p class="font-italic">
-                                                    @lang('Testimony3')
-                                                </p>
-                                                <footer>
-                                                    <strong class="d-block">
-                                                        Cindy Smith
-                                                    </strong>
-                                                </footer>
-                                            </blockquote>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="carousel-item">
-                                    <div
-                                         class="bg-white d-flex m-4 overflow-hidden quote rounded shadow">
-                                        <div
-                                             class="position-relative px-4 py-5">
-                                            <i
-                                               class="la la-3x la-quote-left text-info quote-icon"></i>
-                                            <blockquote class="m-0 quote-cite">
-                                                <p class="font-italic">
-                                                    @lang('Testimony4')
-                                                </p>
-                                                <footer>
-                                                    <strong class="d-block">
-                                                        Cindy Smith
-                                                    </strong>
-                                                </footer>
-                                            </blockquote>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <ol class="carousel-indicators position-relative">
-                                <li data-target="#carouselExampleFade"
-                                    data-slide-to="0"
-                                    class="active border rounded-circle"></li>
-                                <li data-target="#carouselExampleFade"
-                                    data-slide-to="1"
-                                    class="border rounded-circle">
-                                </li>
-                                <li data-target="#carouselExampleFade"
-                                    data-slide-to="2"
-                                    class="border rounded-circle">
-                                </li>
-                                <li data-target="#carouselExampleFade"
-                                    data-slide-to="3"
-                                    class="border rounded-circle">
-                                </li>
-                            </ol>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- / Testimonials Section -->
-    </main>
-
-    <footer class="footer overflow-hidden text-white">
-        <div class="container" data-aos="fade-up">
-            <h3 class="display-4 font-weight-bold mb-4 text-center">
-                @lang('Contact Us')
-            </h3>
-
-            <form action="contactus" method="POST" class="mb-5">
-                <div class="row">
-                    <div class="col-md-8 offset-md-2">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name" class="sr-only">
-                                        @lang('Full Name')
-                                    </label>
-                                    <input type="text"
-                                           class="form-control w-100"
-                                           name="name" id="name"
-                                           placeholder="@lang('Full Name')"
-                                           required>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="email" class="sr-only">
-                                        @lang('E-mail')
-                                    </label>
-                                    <input type="email"
-                                           class="form-control w-100"
-                                           name="email" id="email"
-                                           placeholder="@lang('E-mail')"
-                                           required>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="form-group">
-                                    <label for="message" class="sr-only">
-                                        @lang('Message')
-                                    </label>
-                                    <textarea class="form-control"
-                                              name="message" id="message"
-                                              rows="5"
-                                              placeholder="@lang('Message')"
-                                              required></textarea>
-                                </div>
-                            </div>
-                            <div class="text-center w-100">
-                                <p class="d-none text-message"></p>
-                            </div>
-                            <div class="col-md-12 text-center">
-                                <button type="submit"
-                                        class="btn btn-primary font-weight-bold px-6">
-                                    @lang('Submit')
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-
-            <p class="border-top pt-2 text-center">
-                <small>&copy; Fancy 2019</small>
-            </p>
-        </div>
-    </footer>
-</body>
+        </footer>
+    </body>
 
 </html>
