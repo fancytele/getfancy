@@ -196,6 +196,8 @@ class UserController extends Controller
         $user_service = new UserService($request->user());
         $user_service->assignFancyNumber($did_purchase['number'], $request->input('number_type'), $did_purchase);
 
+        $request->user()->update(['phone_number' => $request->input('phone_number')]);
+
         // Create Ticket
         $ticket = new Ticket();
         $ticket->fancy_number_id = $user_service->fancyNumberModel()->id;

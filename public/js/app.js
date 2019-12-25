@@ -2996,6 +2996,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -3037,6 +3038,7 @@ __webpack_require__.r(__webpack_exports__);
       submitButton: null,
       selectedDID: {},
       phoneNumber: '',
+      unmasKedPhoneNumber: '',
       phoneNumberMask: {
         mask: '(000) 000-0000'
       }
@@ -3179,11 +3181,14 @@ __webpack_require__.r(__webpack_exports__);
     toggleProcessing: function toggleProcessing() {
       this.isProcessing = !this.isProcessing;
     },
+    onCompleteDate: function onCompleteDate(e) {
+      this.unmasKedPhoneNumber = e.detail.unmaskedValue;
+    },
     submit: function submit() {
       var _this6 = this;
 
       var data = {
-        phone_number: this.phoneNumber,
+        phone_number: this.unmasKedPhoneNumber,
         number_type: this.numberType
       };
 
@@ -72758,6 +72763,7 @@ var render = function() {
                       },
                       domProps: { value: _vm.phoneNumber },
                       on: {
+                        complete: _vm.onCompleteDate,
                         input: function($event) {
                           if ($event.target.composing) {
                             return

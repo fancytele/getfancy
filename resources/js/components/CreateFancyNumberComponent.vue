@@ -33,6 +33,7 @@
                 aria-describedby="phoneHelp"
                 v-imask="phoneNumberMask"
                 v-model="phoneNumber"
+                @complete="onCompleteDate"
               />
               <p
                 id="phoneHelp"
@@ -225,6 +226,7 @@ export default {
       submitButton: null,
       selectedDID: {},
       phoneNumber: '',
+      unmasKedPhoneNumber: '',
       phoneNumberMask: {
         mask: '(000) 000-0000'
       }
@@ -369,9 +371,12 @@ export default {
     toggleProcessing() {
       this.isProcessing = !this.isProcessing;
     },
+    onCompleteDate: function(e) {
+      this.unmasKedPhoneNumber = e.detail.unmaskedValue
+    },
     submit() {
       let data = {
-        phone_number: this.phoneNumber,
+        phone_number: this.unmasKedPhoneNumber,
         number_type: this.numberType
       };
 

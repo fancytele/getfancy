@@ -113,6 +113,14 @@
                                 </a>
                             </li>
                             @endhasanyrole
+                            @hasrole('user')
+                            <li class="nav-item">
+                                <a class="nav-link{{ (request()->is('*edit/fancy')) ? ' active' : ''}}"
+                                   href="{{ route('admin.users.edit_fancy', Auth::id()) }}">
+                                    <i class="fe fe-settings"></i> Fancy Settings
+                                </a>
+                            </li>
+                            @endhasanyrole
                         </ul>
 
                         <!-- Push content down -->
