@@ -162,17 +162,19 @@
           </div>
         </transition>
 
-        <button
-          class="btn btn-primary ladda-button px-4"
-          type="submit"
-          id="submit-fancy-number"
-          data-style="zoom-out"
-          v-show="showSubmitButton"
-          @click.prevent="submit()"
-        >
-          Go to settings
-          <i class="fe fe-settings"></i>
-        </button>
+        <div class="text-right">
+          <button
+            class="btn btn-primary ladda-button px-4"
+            type="submit"
+            id="submit-fancy-number"
+            data-style="zoom-out"
+            v-show="showSubmitButton"
+            @click.prevent="submit()"
+          >
+            <i class="fe fe-settings"></i>
+            Continue to settings
+          </button>
+        </div>
       </form>
     </div>
   </div>

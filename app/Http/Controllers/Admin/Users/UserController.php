@@ -38,7 +38,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy']);
+        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy']);
         $this->middleware(['role:user'])->only(['createFancy', 'storeFancy']);
     }
 
@@ -245,7 +245,17 @@ class UserController extends Controller
     {
         (new FancySettingService($user))->SaveSetting($request);
 
-        return response()->json(['message' => 'success']);
+        if ($request->user()->hasRole(Role::USER)) {
+            return response()->json([
+                'text' => 'Go to Dashboard',
+                'url' => route('admin.dashboard')
+            ]);
+        }
+
+        return response()->json([
+            'text' => 'Return to User list',
+            'url' => route('admin.users.index')
+        ]);
     }
 
     /**

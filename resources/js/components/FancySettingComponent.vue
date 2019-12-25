@@ -521,8 +521,8 @@
                             </div>
                         </div>
                         <div class="overflow-hidden rounded-bottom">
-                            <a :href="urlUserList" class="btn btn-block btn-lg btn-success rounded-0">
-                                {{ trans('Return to list') }}
+                            <a :href="successModal.url" class="btn btn-block btn-lg btn-success rounded-0">
+                                {{ trans(successModal.text) }}
                             </a>
                         </div>
                     </div>
@@ -559,10 +559,6 @@
         type: String,
         required: true
       },
-      urlUserList: {
-        type: String,
-        required: true
-      }
     },
     data() {
       return {
@@ -691,7 +687,11 @@
           onhold_text: ''
         },
         extensions: [],
-        audioType: 'predefined'
+        audioType: 'predefined',
+        successModal: {
+          text: '',
+          url: '',
+        },
       };
     },
     components: {
@@ -808,9 +808,11 @@
         this.laddaButton.start();
 
         axios.put(this.urlAction, this.getSettingPayload())
-          .then(() => {
+          .then((response) => {
             this.settingsSaved = true;
             this.laddaButton.stop();
+
+            this.successModal = response.data;
 
             this.$nextTick(() => {
               $(this.$refs['success-modal']).modal({backdrop: 'static', keyboard: false});

@@ -16,7 +16,7 @@ class FancySettingRequest extends FormRequest
      */
     public function authorize()
     {
-        return $this->user()->can(Permission::UPDATE_USER);
+        return true;
     }
 
     /**

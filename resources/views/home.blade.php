@@ -200,7 +200,7 @@
                                 </a>
                                 <p class="mb-0">
                                     <small class="text-muted">
-                                        @lang('Cancel anytime. Flexible plans with the best deals in the market. ').
+                                        @lang('Cancel anytime. Flexible plans with the best deals in the market').
                                     </small>
                                 </p>
                             </div>
@@ -322,7 +322,7 @@
                         @lang('How It Works')
                     </h2>
                     <div class="row">
-                        <div class="col-md-7">
+                        <div class="col-md-6">
                             <div class="work-list">
                                 <div class="mb-5 media">
                                     <div class="work-item-left">
@@ -352,6 +352,10 @@
                                         </small>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="work-list">
                                 <div class="mb-5 media">
                                     <div class="work-item-left">
                                         <img src="{{ asset('/img/web/people-extensions.svg') }}" class="img-fluid"

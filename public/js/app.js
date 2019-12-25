@@ -2994,6 +2994,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -5211,10 +5213,6 @@ __webpack_require__.r(__webpack_exports__);
     urlAction: {
       type: String,
       required: true
-    },
-    urlUserList: {
-      type: String,
-      required: true
     }
   },
   data: function data() {
@@ -5328,7 +5326,11 @@ __webpack_require__.r(__webpack_exports__);
         onhold_text: ''
       },
       extensions: [],
-      audioType: 'predefined'
+      audioType: 'predefined',
+      successModal: {
+        text: '',
+        url: ''
+      }
     };
   },
   components: {
@@ -5458,10 +5460,12 @@ __webpack_require__.r(__webpack_exports__);
 
       this.isProcessing = true;
       this.laddaButton.start();
-      axios.put(this.urlAction, this.getSettingPayload()).then(function () {
+      axios.put(this.urlAction, this.getSettingPayload()).then(function (response) {
         _this2.settingsSaved = true;
 
         _this2.laddaButton.stop();
+
+        _this2.successModal = response.data;
 
         _this2.$nextTick(function () {
           $(_this2.$refs['success-modal']).modal({
@@ -73152,35 +73156,37 @@ var render = function() {
                   : _vm._e()
               ]),
               _vm._v(" "),
-              _c(
-                "button",
-                {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.showSubmitButton,
-                      expression: "showSubmitButton"
+              _c("div", { staticClass: "text-right" }, [
+                _c(
+                  "button",
+                  {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.showSubmitButton,
+                        expression: "showSubmitButton"
+                      }
+                    ],
+                    staticClass: "btn btn-primary ladda-button px-4",
+                    attrs: {
+                      type: "submit",
+                      id: "submit-fancy-number",
+                      "data-style": "zoom-out"
+                    },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.submit()
+                      }
                     }
-                  ],
-                  staticClass: "btn btn-primary ladda-button px-4",
-                  attrs: {
-                    type: "submit",
-                    id: "submit-fancy-number",
-                    "data-style": "zoom-out"
                   },
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      return _vm.submit()
-                    }
-                  }
-                },
-                [
-                  _vm._v("\n        Go to settings\n        "),
-                  _c("i", { staticClass: "fe fe-settings" })
-                ]
-              )
+                  [
+                    _c("i", { staticClass: "fe fe-settings" }),
+                    _vm._v("\n          Continue to settings\n        ")
+                  ]
+                )
+              ])
             ],
             1
           )
@@ -77747,12 +77753,12 @@ var render = function() {
                           {
                             staticClass:
                               "btn btn-block btn-lg btn-success rounded-0",
-                            attrs: { href: _vm.urlUserList }
+                            attrs: { href: _vm.successModal.url }
                           },
                           [
                             _vm._v(
                               "\n                            " +
-                                _vm._s(_vm.trans("Return to list")) +
+                                _vm._s(_vm.trans(_vm.successModal.text)) +
                                 "\n                        "
                             )
                           ]
