@@ -84,7 +84,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="font-weight-bold nav-link text-body" href="#plans">@lang('Our Plans')</a>
+                                <a class="font-weight-bold nav-link text-body" href="#plans">@lang('Our plans')</a>
                             </li>
                             @guest
                             <li class="nav-item">
@@ -190,8 +190,7 @@
                                 @lang('Hero Title')
                             </h1>
                             <p class="my-md-5 w-75">
-                                Fancy is a cloud-based communications solution for all kinds of businesses designed to
-                                save your business time and money and provide you with the information you need.
+                                @lang('Hero Message')
                             </p>
                             <div class="d-inline-block">
                                 <a href="#plans" id="get-started"
@@ -200,7 +199,7 @@
                                 </a>
                                 <p class="mb-0">
                                     <small class="text-muted">
-                                        @lang('Cancel anytime. Flexible plans with the best deals in the market').
+                                        @lang('Cancel anytime').
                                     </small>
                                 </p>
                             </div>
@@ -223,7 +222,7 @@
                                 @lang('Solutions')
                             </h2>
                             <p class="m-auto text-info w-lg-75">
-                                @lang('Enterprise level system, built for your small business')
+                                @lang('Solutions Message')
                             </p>
                         </div>
                         <div class="mt-7 row">
@@ -237,7 +236,7 @@
                                     @lang('Work anywhere')
                                 </h4>
                                 <p>
-                                    @lang('Take your calls at the beach, at your coworking space or at home with our simple forwarding service.')
+                                    @lang('Work anywhere Message')
                                 </p>
                             </div>
                             <div class="col-md-4 mb-3" data-aos="fade-up">
@@ -250,7 +249,7 @@
                                     @lang('Convenience')
                                 </h4>
                                 <p>
-                                    @lang('we work with your existing phone, or provide you with a new one.')
+                                    @lang('Convenience Message')
                                 </p>
                             </div>
                             <div class="col-md-4 mb-3" data-aos="fade-up">
@@ -263,7 +262,7 @@
                                     @lang('Affordable prices')
                                 </h4>
                                 <p>
-                                    @lang('Best prices on the market.')
+                                    @lang('Affordable prices Message')
                                 </p>
                             </div>
 
@@ -277,7 +276,7 @@
                                     @lang('Management tools')
                                 </h4>
                                 <p>
-                                    @lang('Edit or add new extensions, create call log reports, manage calls, record phone calls and much, much more.')
+                                    @lang('Management tools Message')
                                 </p>
                             </div>
                             <div class="col-md-4 mb3" data-aos="fade-up">
@@ -290,7 +289,7 @@
                                     @lang('Ease')
                                 </h4>
                                 <p>
-                                    @lang('We do all the work, you just take your calls.')
+                                    @lang('Ease Message')
                                 </p>
                             </div>
                             <div class="col-md-4 mb3" data-aos="fade-up">
@@ -300,10 +299,10 @@
                                     </span>
                                 </div>
                                 <h4 class="font-weight-bold">
-                                    @lang('Smart Data')
+                                    @lang('Smart data')
                                 </h4>
                                 <p>
-                                    @lang('Get daily reports, and insights.')
+                                    @lang('Smart data Message')
                                 </p>
                             </div>
                         </div>
@@ -345,7 +344,7 @@
                                     </div>
                                     <div class="media-body">
                                         <h4 class="mt-0">
-                                            @lang('Record greetings')
+                                            @lang('Record greetings or use recording service')
                                         </h4>
                                         <small>
                                             @lang('Record greetings Message')
@@ -366,7 +365,7 @@
                                             @lang('Add as many extensions as you want')
                                         </h4>
                                         <small>
-                                            @lang('Choose & customize extensions to forward your calls anywhere to your home, your office or your mobile')
+                                            @lang('Add extensions Message')
                                         </small>
                                     </div>
                                 </div>
@@ -377,10 +376,10 @@
                                     </div>
                                     <div class="media-body">
                                         <h4 class="mt-0">
-                                            @lang('Receive Reports')
+                                            @lang('Receive reports')
                                         </h4>
                                         <small>
-                                            @lang('Monthly Weekly or Daily call reports and data insights on your calls.')
+                                            @lang('Receive reports Message')
                                         </small>
                                     </div>
                                 </div>
@@ -399,7 +398,7 @@
                             @lang('Our plans')
                         </h2>
                         <p class="mx-auto w-lg-75">
-                            @lang('Fancy\'s subscription program features the greatest value and benefits to give you the best possible experience. Each membership price tier is equipped with the same great features.')
+                            @lang('Our plans Message')
                         </p>
                     </div>
                     <div class="row">
