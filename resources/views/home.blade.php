@@ -86,6 +86,10 @@
                             <li class="nav-item">
                                 <a class="font-weight-bold nav-link text-body" href="#plans">@lang('Our plans')</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="font-weight-bold nav-link text-body"
+                                   href="#about">@lang('About us')</a>
+                            </li>
                             @guest
                             <li class="nav-item">
                                 <a href="{{ route('admin.login') }}"
@@ -221,9 +225,6 @@
                             <h2 class="display-4 font-heading">
                                 @lang('Solutions')
                             </h2>
-                            <p class="m-auto text-info w-lg-75">
-                                @lang('Solutions Message')
-                            </p>
                         </div>
                         <div class="mt-7 row">
                             <div class="col-md-4 mb-3" data-aos="fade-up">
@@ -315,11 +316,14 @@
             <!-- / Features Section -->
 
             <!-- How It Works Section -->
-            <section id="how-it-works" class="fancy-section">
+            <section id="how-it-works" class="border-bottom fancy-section">
                 <div class="container pb-5" data-aos="fade-up">
-                    <h2 class="display-4 font-heading mb-6 text-primary">
-                        @lang('How It Works')
-                    </h2>
+                    <div class="mb-6">
+                        <h2 class="display-4 font-heading mb-1 text-primary">
+                            @lang('How It Works')
+                        </h2>
+                        <p class="small">@lang('How It Works Message')</p>
+                    </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="work-list">
@@ -480,6 +484,34 @@
                 </div>
             </section>
             <!-- / Plans Section -->
+
+            <!-- Testimonials Section -->
+        <section id="about" class="fancy-section position-relative">
+            <svg class="h-20 h-sm-100 position-absolute pull-left pull-top w-100 w-sm-50"
+                 preserveAspectRatio="none" viewBox="0 0 100 100">
+                <polygon class="fill-primary d-md-none"
+                         points="0,0 100,0 100,80 0,100" />
+                <polygon class="fill-primary d-none d-md-block"
+                         points="0,0 100,0 90,100 0,100" />
+            </svg>
+            <div class="container py-md-4" data-aos="fade-up">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="pt-md-0 px-4 px-sm-0 py-4">
+                            <h2 class="display-3 d-md-inline-block font-heading mr-3 text-white">
+                                @lang('About')
+                            </h2>
+                            <img src="{{ asset('/img/logo-light.png') }}"
+                                 alt="Logo Secondary">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <p class="mt-7 mt-md-0">@lang('About us message')</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- / Testimonials Section -->
         </main>
 
         <footer class="footer overflow-hidden text-white">
@@ -533,7 +565,7 @@
                 </form>
 
                 <p class="border-top pt-2 text-center">
-                    <small>&copy; Fancy 2019</small>
+                    <small>&copy; Fancy {{ date('Y') }}</small>
                 </p>
             </div>
         </footer>
