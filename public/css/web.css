@@ -12659,6 +12659,10 @@ a.text-white:focus {
   font-family: "Oxygen", sans-serif;
 }
 
+.h-20 {
+  height: 20rem;
+}
+
 .h-50 {
   height: 50%;
 }
@@ -12784,7 +12788,7 @@ a.text-white:focus {
 }
 
 .footer {
-  background-color: #262f36;
+  background-color: #1a1a1a;
   padding: 3rem 0 0.2rem;
 }
 
@@ -12967,7 +12971,7 @@ a.text-white:focus {
 
 .work-list .work-item-left {
   margin-right: 1.25rem;
-  width: 2.8125rem;
+  width: 3rem;
 }
 
 @media (max-width: 767.98px) {
