@@ -58,7 +58,7 @@
 
                 <div class="col-md-4">
                   <div class="form-group">
-                    <label for="did_region">{{ trans('Region') }}</label>
+                    <label for="did_region">{{ trans('State') }}</label>
                     <select2
                       name="did_region"
                       id="did_region"

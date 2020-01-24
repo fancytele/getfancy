@@ -1,4 +1,4 @@
-@extends('layouts.admin-sidebar')
+@extends('layouts.admin')
 
 @section('page-subtitle', __('Ticket management'))
 

@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin', ['hide_menu' => true])
 
 @section('page-subtitle', __('Edit User'))
 
