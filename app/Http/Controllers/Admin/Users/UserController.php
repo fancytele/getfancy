@@ -278,7 +278,7 @@ class UserController extends Controller
             ->orderBy('first_name')
             ->simplePaginate(5);
 
-        $users->setPath('/');
+        $users->setPath('');
 
         return response()->json($users);
     }
