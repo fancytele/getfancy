@@ -7,7 +7,7 @@
 <div class="container-fluid">
     <div class="row">
         @foreach ($users as $user)
-            <div class="col-12 col-lg-6 col-xl">
+            <div class="col-12 col-lg-6 col-xl-3">
                 <div class="card">
                     <div class="card-body">
                         <div class="row align-items-center">
@@ -31,7 +31,7 @@
         @endforeach
 
         @foreach ($subscriptions as $subscription)
-            <div class="col-12 col-lg-6 col-xl">
+            <div class="col-12 col-lg-6 col-xl-3">
                 <div class="card">
                     <div class="card-body">
                         <div class="row align-items-center">
