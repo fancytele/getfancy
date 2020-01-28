@@ -171,7 +171,7 @@ class UserController extends Controller
         $did_regions = $did_service->getRegionsByCountry($did_country['id']);
 
         $urls = [
-            'create_fancy' => route('admin.users.store_fancy', Auth::id()),
+            'create_fancy' => route('admin.users.store_fancy'),
             'fancy_settings' => route('admin.users.edit_fancy', '_user_'),
             'did_cities' => route('admin.dids.cities', '_region_'),
             'dids_availables' => route('admin.dids.availables', '_city_'),
@@ -245,6 +245,10 @@ class UserController extends Controller
      */
     public function updateFancy(FancySettingRequest $request, User $user)
     {
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+
         (new FancySettingService($user))->SaveSetting($request);
 
         if ($request->user()->hasRole(Role::USER)) {
