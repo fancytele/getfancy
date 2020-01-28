@@ -24,8 +24,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DIDService
 {
-    const CDR_MAX_TIMES = 200;
-
     /**
      * The DID API key.
      *
@@ -34,10 +32,23 @@ class DIDService
     private $apiKey;
 
     /**
+     * The DID Environment
+     * 
+     * @var string
+     */
+    private $env;
+
+    /**
      * Const to get Stock Keeping Units with amount of channel
      * 
      */
     private const AMOUNT_CHANNEL_DEFAULT = 0;
+
+    /**
+     * Amount of attemps to get CDR report
+     */
+    private const CDR_MAX_TIMES = 200;
+
 
     /**
      * Create a new controller instance.
@@ -46,7 +57,7 @@ class DIDService
      */
     public function __construct()
     {
-        $credentials = new DIDWWCredentials($this->getApiKey(), 'production');
+        $credentials = new DIDWWCredentials($this->getApiKey(), $this->getEnv());
 
         DIDWWConfiguration::configure($credentials);
     }
@@ -363,8 +374,6 @@ class DIDService
     }
 
     /**
-     * Get the DID API key.
-     *
      * @return string
      */
     private function getApiKey()
@@ -375,5 +384,18 @@ class DIDService
 
         $this->apiKey = config('services.didww.key');
         return $this->apiKey;
+    }
+
+    /**
+     * @return string
+     */
+    private function getEnv()
+    {
+        if ($this->env) {
+            return $this->env;
+        }
+
+        $this->env = config('services.didww.env');
+        return $this->env;
     }
 }
