@@ -131,7 +131,7 @@ class DIDService
 
         $result = $did_availables->getData();
 
-        if ($result->isEmpty()) {
+        if (is_null($result)) {
             return [];
         }
 

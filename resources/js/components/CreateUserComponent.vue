@@ -351,17 +351,13 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="company_country">{{ trans('Country') }}</label>
-                                        <select2
-                                                name="company_country"
-                                                id="company_country"
-                                                class="form-control"
-                                                :options="countries"
-                                                :class="{'is-invalid select2-hidden-accessible': errors.hasOwnProperty('company_country'), 'form-control select2-hidden-accessible': !errors.hasOwnProperty('company_country')}"
-                                                v-model="user.company_country"
-                                                required
-                                        >
-                                            <option disabled value>---</option>
-                                        </select2>
+                                        <v-select name="company_country"
+                                          id="company_country"
+                                          label="Name"
+                                          v-model="user.company_country"
+                                          :reduce="country => country.code"
+                                          :options="countries"
+                                          required></v-select>
                                         <div
                                                 class="invalid-feedback"
                                                 v-if="errors.hasOwnProperty('company_country')"
@@ -488,18 +484,14 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="billing_country">{{ trans('Country') }}</label>
-                                        <select2
-                                                name="billing_country"
-                                                id="billing_country"
-                                                class="form-control select2-hidden-accessible"
-                                                :options="countries"
-                                                :disabled="sameAddress"
-                                                :class="{'is-invalid select2-hidden-accessible': errors.hasOwnProperty('billing_country'), 'form-control select2-hidden-accessible': !errors.hasOwnProperty('billing_country')}"
-                                                v-model="user.billing_country"
-                                                required
-                                        >
-                                            <option disabled value>---</option>
-                                        </select2>
+                                        <v-select name="billing_country"
+                                          id="billing_country"
+                                          label="Name"
+                                          v-model="user.billing_country"
+                                          :disabled="sameAddress"
+                                          :reduce="country => country.code"
+                                          :options="countries"
+                                          required></v-select>
                                         <div
                                                 class="invalid-feedback"
                                                 v-if="errors.hasOwnProperty('billing_country')"
@@ -722,16 +714,13 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                     <label for="did_region">{{ trans('Region') }}</label>
-                                    <select2
-                                            name="did_region"
-                                            id="did_region"
-                                            class="form-control select2-hidden-accessible"
-                                            :options="didRegions"
-                                            :class="{'is-invalid select2-hidden-accessible': errors.hasOwnProperty('did_region'), 'form-control select2-hidden-accessible': !errors.hasOwnProperty('did_region')}"
-                                            v-model="reservationDID.region"
-                                    >
-                                        <option disabled value>---</option>
-                                    </select2>
+                                    <v-select name="did_region"
+                                      id="did_region"
+                                      label="text"
+                                      v-model="reservationDID.region"
+                                      :reduce="region => region.id"
+                                      :options="didRegions"
+                                      required></v-select>
                                 </div>
                             </div>
 
@@ -745,18 +734,14 @@
                                     >
                                         <span class="sr-only">{{ trans('Loading') }}...</span>
                                     </div>
-
-                                    <select2
-                                            name="did_city"
-                                            id="did_city"
-                                            class="form-control select2-hidden-accessible"
-                                            :options="reservationDID.cities"
-                                            :class="{'is-invalid select2-hidden-accessible': errors.hasOwnProperty('did_city'), 'form-control select2-hidden-accessible': !errors.hasOwnProperty('did_city')}"
-                                            v-model="reservationDID.city"
-                                            :disabled="!reservationDID.region || isProcessing"
-                                    >
-                                        <option disabled value>---</option>
-                                    </select2>
+                                    <v-select name="did_city"
+                                      id="did_city"
+                                      label="text"
+                                      v-model="reservationDID.city"
+                                      :reduce="city => city.id"
+                                      :options="reservationDID.cities"
+                                      :disabled="!reservationDID.region || isProcessing"
+                                      required></v-select>
                                 </div>
                             </div>
 
@@ -886,538 +871,543 @@
 </template>
 
 <script>
-  import {Card, createToken} from 'vue-stripe-elements-plus';
+import { Card, createToken } from 'vue-stripe-elements-plus';
 
-  export default {
-    props: {
-      locale: {
-        type: String,
-        required: true
-      },
-      urls: {
-        type: Object,
-        required: true
-      },
-      didCountry: {
-        type: Object,
-        required: true
-      },
-      didRegions: {
-        type: Array,
-        required: true
-      },
-      products: {
-        type: Array,
-        required: true
-      },
-      addons: {
-        type: Array,
-        required: true
-      }
+export default {
+  props: {
+    locale: {
+      type: String,
+      required: true
     },
-    components: {
-      Card
+    urls: {
+      type: Object,
+      required: true
     },
-    data() {
-      return {
-        laddaButton: null,
-        isProcessing: true,
-        userCreated: null,
-        errors: {},
-        errorMessage: '',
-        sameAddress: false,
-        reservationHasExpired: false,
-        reservationDID: {
-          region: null,
-          city: null,
-          item: {},
-          isLoading: false,
-          isSearchingCities: false,
-          existsMoreAvailableDIDs: true,
-          searchSubmit: null,
-          cancelSubmit: null,
-          hasError: false,
-          cities: []
-        },
-        steps: [
-          {
-            id: 'plans',
-            title: 'Plan & features',
-            description: 'Select plan and one or more features',
-            isActive: true,
-            isCompleted: false,
-            required: ['product']
-          },
-          {
-            id: 'fancy-number',
-            title: 'Fancy Number',
-            description: 'Virtual number reservation',
-            isActive: false,
-            isCompleted: false,
-            required: ['number_type', 'phone_number', 'did']
-          },
-          {
-            id: 'personal-information',
-            title: 'Personal information',
-            description: 'User and Company information',
-            isActive: false,
-            isCompleted: false,
-            required: [
-              'first_name',
-              'last_name',
-              'email',
-              'email_confirmation',
-              'company_name',
-              'company_phone',
-              'company_country',
-              'company_city',
-              'company_state',
-              'company_zip_code',
-              'company_address1'
-            ]
-          },
-          {
-            id: 'payment-information',
-            title: 'Payment information',
-            description: 'Billing address and credic card',
-            isActive: false,
-            isCompleted: false,
-            required: [
-              'billing_country',
-              'billing_city',
-              'billing_state',
-              'billing_zip_code',
-              'billing_address1'
-            ]
-          }
-        ],
-        currentStep: {},
-        countries: {},
-        availablesDIDs: [],
+    didCountry: {
+      type: Object,
+      required: true
+    },
+    didRegions: {
+      type: Array,
+      required: true
+    },
+    products: {
+      type: Array,
+      required: true
+    },
+    addons: {
+      type: Array,
+      required: true
+    }
+  },
+  components: {
+    Card
+  },
+  data() {
+    return {
+      laddaButton: null,
+      isProcessing: true,
+      userCreated: null,
+      errors: {},
+      errorMessage: '',
+      sameAddress: false,
+      reservationHasExpired: false,
+      reservationDID: {
+        region: null,
+        city: null,
+        item: {},
+        isLoading: false,
+        isSearchingCities: false,
         existsMoreAvailableDIDs: true,
-        stripe: {
-          key: process.env.MIX_STRIPE_KEY,
-          options: {
-            elements: {
-              locale: this.locale
-            },
-            style: {
-              base: {
-                color: '#32325d',
-                fontFamily: '"Cerebri Sans", sans-serif',
-                fontSmoothing: 'antialiased',
-                fontSize: '16px',
-                '::placeholder': {
-                  color: '#b1c2d9'
-                }
-              },
-              invalid: {
-                color: '#e63757',
-                iconColor: '#e63757'
+        searchSubmit: null,
+        cancelSubmit: null,
+        hasError: false,
+        cities: []
+      },
+      steps: [
+        {
+          id: 'plans',
+          title: 'Plan & features',
+          description: 'Select plan and one or more features',
+          isActive: true,
+          isCompleted: false,
+          required: ['product']
+        },
+        {
+          id: 'fancy-number',
+          title: 'Fancy Number',
+          description: 'Virtual number reservation',
+          isActive: false,
+          isCompleted: false,
+          required: ['number_type', 'phone_number', 'did']
+        },
+        {
+          id: 'personal-information',
+          title: 'Personal information',
+          description: 'User and Company information',
+          isActive: false,
+          isCompleted: false,
+          required: [
+            'first_name',
+            'last_name',
+            'email',
+            'email_confirmation',
+            'company_name',
+            'company_phone',
+            'company_country',
+            'company_city',
+            'company_state',
+            'company_zip_code',
+            'company_address1'
+          ]
+        },
+        {
+          id: 'payment-information',
+          title: 'Payment information',
+          description: 'Billing address and credic card',
+          isActive: false,
+          isCompleted: false,
+          required: [
+            'billing_country',
+            'billing_city',
+            'billing_state',
+            'billing_zip_code',
+            'billing_address1'
+          ]
+        }
+      ],
+      currentStep: {},
+      countries: [],
+      availablesDIDs: [],
+      existsMoreAvailableDIDs: true,
+      stripe: {
+        key: process.env.MIX_STRIPE_KEY,
+        options: {
+          elements: {
+            locale: this.locale
+          },
+          style: {
+            base: {
+              color: '#32325d',
+              fontFamily: '"Cerebri Sans", sans-serif',
+              fontSmoothing: 'antialiased',
+              fontSize: '16px',
+              '::placeholder': {
+                color: '#b1c2d9'
               }
             },
-            hidePostalCode: true
+            invalid: {
+              color: '#e63757',
+              iconColor: '#e63757'
+            }
           },
-          validationCompleted: false,
-          error: ''
+          hidePostalCode: true
         },
-        user: {
-          product: this.products[0].slug,
-          addons: [],
-          first_name: '',
-          last_name: '',
-          email: '',
-          email_confirmation: '',
-          company_name: '',
-          company_phone: '',
-          company_contact_name: '',
-          company_country: '',
-          company_city: '',
-          company_state: '',
-          company_zip_code: '',
-          company_address1: '',
-          company_address2: '',
-          billing_country: '',
-          billing_city: '',
-          billing_state: '',
-          billing_zip_code: '',
-          billing_address1: '',
-          billing_address2: '',
-          stripe_token: '',
-          number_type: '',
-          phone_number: '',
-          did: {}
-        }
+        validationCompleted: false,
+        error: ''
+      },
+      user: {
+        product: this.products[0].slug,
+        addons: [],
+        first_name: '',
+        last_name: '',
+        email: '',
+        email_confirmation: '',
+        company_name: '',
+        company_phone: '',
+        company_contact_name: '',
+        company_country: 'US',
+        company_city: '',
+        company_state: '',
+        company_zip_code: '',
+        company_address1: '',
+        company_address2: '',
+        billing_country: 'US',
+        billing_city: '',
+        billing_state: '',
+        billing_zip_code: '',
+        billing_address1: '',
+        billing_address2: '',
+        stripe_token: '',
+        number_type: '',
+        phone_number: '',
+        did: {}
+      }
+    };
+  },
+  methods: {
+    setCountryList() {
+      axios
+        .get('https://datahub.io/core/country-list/r/data.json')
+        .then(response => (this.countries = response.data))
+        .then(() => this.toggleProcessing());
+    },
+    getDIDCities() {
+      if (this.isProcessing) {
+        return;
+      }
+
+      this.toggleProcessing();
+      this.reservationDID.isSearchingCities = true;
+
+      axios
+        .get(this.didCityUrl)
+        .then(this.setDIDCityList)
+        .catch(error => console.error(error))
+        .then(() => {
+          this.toggleProcessing();
+          this.reservationDID.isSearchingCities = false;
+        });
+    },
+    setDIDCityList(response) {
+      this.reservationDID.cities = response.data;
+
+      this.$nextTick(() => {
+        this.reservationDID.city = response.data[0].id;
+      });
+    },
+    getAvailablesDIDs() {
+      if (this.reservationDID.isLoading || !this.reservationDID.city) {
+        return;
+      }
+
+      this.toggleSearchDIDLoading();
+      this.existsMoreAvailableDIDs = true;
+      this.reservationDID.hasError = false;
+
+      axios
+        .get(this.didAvailableUrl)
+        .then(this.setAvailablesDIDsList)
+        .catch(() => (this.reservationDID.hasError = true))
+        .then(this.toggleSearchDIDLoading);
+    },
+    setAvailablesDIDsList(response) {
+      if (this.availablesDIDs.length === 0) {
+        this.availablesDIDs = response.data;
+        return;
+      }
+
+      let mergedData = [].concat(this.availablesDIDs, response.data);
+      let uniqueDIDs = _.uniqBy(mergedData, 'attributes.number');
+
+      if (uniqueDIDs.length === this.availablesDIDs.length) {
+        this.existsMoreAvailableDIDs = false;
+        return;
+      }
+
+      this.availablesDIDs = uniqueDIDs;
+    },
+    toggleSearchDIDLoading() {
+      this.reservationDID.isLoading = !this.reservationDID.isLoading;
+    },
+    resetSearchDIDs() {
+      this.availablesDIDs = [];
+      this.existsMoreAvailableDIDs = true;
+
+      this.reservationDID.item = {};
+      this.reservationDID.cities = [];
+      this.reservationDID.region = null;
+      this.reservationDID.city = null;
+      this.reservationDID.hasError = false;
+    },
+    searchAvailablesDIDs() {
+      this.availablesDIDs = [];
+      this.getAvailablesDIDs();
+    },
+    reserveDID() {
+      if (this.isProcessing) {
+        return;
+      }
+
+      this.toggleProcessing();
+      this.reservationDID.searchSubmit.start();
+
+      axios
+        .post(this.urls.did_reservation, { did: this.reservationDID.item.id })
+        .then(this.setSuccessfullReservation)
+        .catch(error => {
+          console.error(error);
+          this.reservationDID.hasError = true;
+
+          if (this.reservationDID.searchSubmit) {
+            this.reservationDID.searchSubmit.stop();
+          }
+        })
+        .then(this.toggleProcessing);
+    },
+    setSuccessfullReservation(response) {
+      let reservation = {
+        id: this.reservationDID.item.id,
+        number: this.reservationDID.item.attributes.number,
+        reservation: response.data.id
       };
+
+      this.reservationHasExpired = false;
+      this.user.did = Object.assign(reservation, response.data.attributes);
+
+      this.$nextTick(() => {
+        this.reservationDID.searchSubmit = null;
+        this.reservationDID.cancelSubmit = Ladda.create(
+          document.querySelector('#cancel-reservation-did')
+        );
+      });
+
+      $('#search-did').modal('hide');
     },
-    methods: {
-      setCountryList() {
-        axios
-          .get('https://datahub.io/core/country-list/r/data.json')
-          .then(response => {
-            this.countries = response.data.map(el => {
-              return {
-                id: el.Code,
-                text: el.Name
-              };
+    cancelReservationDID() {
+      if (!this.userHasReservation) {
+        return;
+      }
+
+      this.reservationDID.cancelSubmit.start();
+
+      axios
+        .delete(`${this.urls.did_reservation}/${this.user.did.reservation}`)
+        .then(this.reservationOver)
+        .catch(error => {
+          if (this.reservationDID.cancelSubmit) {
+            this.reservationDID.cancelSubmit.stop();
+          }
+
+          console.error(error);
+        });
+    },
+    reservationOver() {
+      this.user.did = {};
+      this.reservationDID.item = {};
+      this.reservationDID.cancelSubmit = null;
+      this.reservationHasExpired = true;
+
+      this.resetSearchDIDs();
+
+      this.$nextTick(() => {
+        this.reservationDID.searchSubmit = Ladda.create(
+          document.querySelector('#submit-search-did')
+        );
+      });
+    },
+    stripeChange($event) {
+      this.stripe.validationCompleted = $event.complete;
+      this.stripe.error = $event.error ? $event.error.message : '';
+    },
+    toggleProcessing() {
+      this.isProcessing = !this.isProcessing;
+    },
+    currentStepIsCompleted() {
+      this.errors = {};
+
+      this.currentStep.required.forEach(el => {
+        if (Array.isArray(this.user[el]) && this.user[el].length === 0) {
+          this.$set(this.errors, el, ['This field is required']);
+        }
+
+        if (
+          this.user[el] instanceof Object &&
+          Object.keys(this.user[el]).length === 0
+        ) {
+          this.$set(this.errors, el, ['This field is required']);
+        }
+
+        if (this.user[el] === '') {
+          this.$set(this.errors, el, ['This field is required']);
+        }
+      });
+
+      return Object.keys(this.errors).length === 0;
+    },
+    changeToStep(step) {
+      if (this.isProcessing) {
+        return false;
+      }
+
+      const stepIndex = this.steps.findIndex(el => el === step);
+      const currentStepIndex = this.steps.findIndex(
+        el => el === this.currentStep
+      );
+
+      if (stepIndex - currentStepIndex > 1) {
+        return false;
+      }
+
+      if (stepIndex > currentStepIndex && !this.currentStepIsCompleted()) {
+        return false;
+      }
+
+      const previousStep = this.currentStep;
+      previousStep.isActive = false;
+
+      for (let i = stepIndex + 1; i < this.steps.length - 1; i++) {
+        this.steps[i].isCompleted = false;
+      }
+
+      if (stepIndex > currentStepIndex) {
+        previousStep.isCompleted = true;
+      }
+
+      this.currentStep = step;
+      this.currentStep.isActive = true;
+
+      if (step.id === this.steps[this.steps.length - 1].id) {
+        this.toggleSameAddress();
+      }
+    },
+    goToPreviousStep() {
+      const currentStepIndex = this.steps.findIndex(
+        el => el === this.currentStep
+      );
+
+      if (this.hasPreviousStep) {
+        this.changeToStep(this.steps[currentStepIndex - 1]);
+      }
+    },
+    goToNextStep() {
+      const currentStepIndex = this.steps.findIndex(
+        el => el === this.currentStep
+      );
+
+      if (!this.isLastStep) {
+        this.changeToStep(this.steps[currentStepIndex + 1]);
+      }
+    },
+    toggleSameAddress() {
+      if (this.sameAddress) {
+        this.user.billing_country = this.user.company_country;
+        this.user.billing_city = this.user.company_city;
+        this.user.billing_state = this.user.company_state;
+        this.user.billing_zip_code = this.user.company_zip_code;
+        this.user.billing_address1 = this.user.company_address1;
+        this.user.billing_address2 = this.user.company_address2;
+      }
+    },
+    submit() {
+      if (this.isProcessing) {
+        return;
+      }
+
+      this.toggleProcessing();
+      this.errors = {};
+      this.errorMessage = '';
+      this.laddaButton.start();
+
+      createToken()
+        .then(data => {
+          this.user.stripe_token = data.token.id;
+          this.processPayment();
+        })
+        .catch(error => {
+          this.toggleProcessing();
+          this.laddaButton.stop();
+        });
+    },
+    processPayment() {
+      axios
+        .post(this.urls.create_user, this.user)
+        .then(response => {
+          this.userCreated = response.data.user;
+
+          this.$nextTick(() => {
+            $('#user-created-message').modal({
+              backdrop: 'static',
+              keyboard: false
             });
-          })
-          .then(() => {
-            this.toggleProcessing();
           });
-      },
-      getDIDCities() {
-        if (this.isProcessing) {
-          return;
-        }
+        })
+        .catch(error => {
+          const data = error.response.data;
 
-        this.toggleProcessing();
-        this.reservationDID.isSearchingCities = true;
-
-        axios
-          .get(this.didCityUrl)
-          .then(this.setDIDCityList)
-          .catch(error => console.error(error))
-          .then(() => {
-            this.toggleProcessing();
-            this.reservationDID.isSearchingCities = false;
-          });
-      },
-      setDIDCityList(response) {
-        this.reservationDID.cities = response.data;
-
-        this.$nextTick(() => {
-          this.reservationDID.city = response.data[0].id;
-        });
-      },
-      getAvailablesDIDs() {
-        if (this.reservationDID.isLoading || !this.reservationDID.city) {
-          return;
-        }
-
-        this.toggleSearchDIDLoading();
-        this.existsMoreAvailableDIDs = true;
-        this.reservationDID.hasError = false;
-
-        axios
-          .get(this.didAvailableUrl)
-          .then(this.setAvailablesDIDsList)
-          .catch(() => (this.reservationDID.hasError = true))
-          .then(this.toggleSearchDIDLoading);
-      },
-      setAvailablesDIDsList(response) {
-        if (this.availablesDIDs.length === 0) {
-          this.availablesDIDs = response.data;
-          return;
-        }
-
-        let mergedData = [].concat(this.availablesDIDs, response.data);
-        let uniqueDIDs = _.uniqBy(mergedData, 'attributes.number');
-
-        if (uniqueDIDs.length === this.availablesDIDs.length) {
-          this.existsMoreAvailableDIDs = false;
-          return;
-        }
-
-        this.availablesDIDs = uniqueDIDs;
-      },
-      toggleSearchDIDLoading() {
-        this.reservationDID.isLoading = !this.reservationDID.isLoading;
-      },
-      resetSearchDIDs() {
-        this.availablesDIDs = [];
-        this.existsMoreAvailableDIDs = true;
-
-        this.reservationDID.item = {};
-        this.reservationDID.cities = [];
-        this.reservationDID.region = null;
-        this.reservationDID.city = null;
-        this.reservationDID.hasError = false;
-      },
-      searchAvailablesDIDs() {
-        this.availablesDIDs = [];
-        this.getAvailablesDIDs();
-      },
-      reserveDID() {
-        if (this.isProcessing) {
-          return;
-        }
-
-        this.toggleProcessing();
-        this.reservationDID.searchSubmit.start();
-
-        axios
-          .post(this.urls.did_reservation, {did: this.reservationDID.item.id})
-          .then(this.setSuccessfullReservation)
-          .catch(error => {
-            console.error(error);
-            this.reservationDID.hasError = true;
-
-            if (this.reservationDID.searchSubmit) {
-              this.reservationDID.searchSubmit.stop();
-            }
-          })
-          .then(this.toggleProcessing);
-      },
-      setSuccessfullReservation(response) {
-        let reservation = {
-          id: this.reservationDID.item.id,
-          number: this.reservationDID.item.attributes.number,
-          reservation: response.data.id,
-        };
-
-        this.reservationHasExpired = false;
-        this.user.did = Object.assign(reservation, response.data.attributes);
-
-        this.$nextTick(() => {
-          this.reservationDID.searchSubmit = null;
-          this.reservationDID.cancelSubmit = Ladda.create(
-            document.querySelector('#cancel-reservation-did')
-          );
-        });
-
-        $('#search-did').modal('hide');
-      },
-      cancelReservationDID() {
-        if (!this.userHasReservation) {
-          return;
-        }
-
-        this.reservationDID.cancelSubmit.start();
-
-        axios
-          .delete(`${this.urls.did_reservation}/${this.user.did.reservation}`)
-          .then(this.reservationOver)
-          .catch(error => {
-            if (this.reservationDID.cancelSubmit) {
-              this.reservationDID.cancelSubmit.stop();
-            }
-
-            console.error(error);
-          });
-      },
-      reservationOver() {
-        this.user.did = {};
-        this.reservationDID.item = {};
-        this.reservationDID.cancelSubmit = null;
-        this.reservationHasExpired = true;
-
-        this.resetSearchDIDs();
-
-        this.$nextTick(() => {
-          this.reservationDID.searchSubmit = Ladda.create(
-            document.querySelector('#submit-search-did')
-          );
-        });
-      },
-      stripeChange($event) {
-        this.stripe.validationCompleted = $event.complete;
-        this.stripe.error = $event.error ? $event.error.message : '';
-      },
-      toggleProcessing() {
-        this.isProcessing = !this.isProcessing;
-      },
-      currentStepIsCompleted() {
-        this.errors = {};
-
-        this.currentStep.required.forEach(el => {
-          if (Array.isArray(this.user[el]) && this.user[el].length === 0) {
-            this.$set(this.errors, el, ['This field is required']);
+          if (data.message) {
+            this.errorMessage = data.mesage;
           }
 
-          if (
-            this.user[el] instanceof Object &&
-            Object.keys(this.user[el]).length === 0
-          ) {
-            this.$set(this.errors, el, ['This field is required']);
+          if (data.errors) {
+            this.errors = data.errors;
           }
 
-          if (this.user[el] === '') {
-            this.$set(this.errors, el, ['This field is required']);
-          }
+          this.laddaButton.stop();
+          this.toggleProcessing();
         });
-
-        return Object.keys(this.errors).length === 0;
-      },
-      changeToStep(step) {
-        if (this.isProcessing) {
-          return false;
-        }
-
-        const stepIndex = this.steps.findIndex(el => el === step);
-        const currentStepIndex = this.steps.findIndex(
-          el => el === this.currentStep
-        );
-
-        if (stepIndex - currentStepIndex > 1) {
-          return false;
-        }
-
-        if (stepIndex > currentStepIndex && !this.currentStepIsCompleted()) {
-          return false;
-        }
-
-        const previousStep = this.currentStep;
-        previousStep.isActive = false;
-
-        for (let i = stepIndex + 1; i < this.steps.length - 1; i++) {
-          this.steps[i].isCompleted = false;
-        }
-
-        if (stepIndex > currentStepIndex) {
-          previousStep.isCompleted = true;
-        }
-
-        this.currentStep = step;
-        this.currentStep.isActive = true;
-
-        if (step.id === this.steps[this.steps.length - 1].id) {
-          this.toggleSameAddress();
-        }
-      },
-      goToPreviousStep() {
-        const currentStepIndex = this.steps.findIndex(
-          el => el === this.currentStep
-        );
-
-        if (this.hasPreviousStep) {
-          this.changeToStep(this.steps[currentStepIndex - 1]);
-        }
-      },
-      goToNextStep() {
-        const currentStepIndex = this.steps.findIndex(
-          el => el === this.currentStep
-        );
-
-        if (!this.isLastStep) {
-          this.changeToStep(this.steps[currentStepIndex + 1]);
-        }
-      },
-      toggleSameAddress() {
-        if (this.sameAddress) {
-          this.user.billing_country = this.user.company_country;
-          this.user.billing_city = this.user.company_city;
-          this.user.billing_state = this.user.company_state;
-          this.user.billing_zip_code = this.user.company_zip_code;
-          this.user.billing_address1 = this.user.company_address1;
-          this.user.billing_address2 = this.user.company_address2;
-        }
-      },
-      submit() {
-        if (this.isProcessing) {
-          return;
-        }
-
-        this.toggleProcessing();
-        this.errors = {};
-        this.errorMessage = '';
-        this.laddaButton.start();
-
-        createToken()
-          .then(data => {
-            this.user.stripe_token = data.token.id;
-            this.processPayment();
-          })
-          .catch(error => {
-            this.toggleProcessing();
-            this.laddaButton.stop();
-          });
-      },
-      processPayment() {
-        axios
-          .post(this.urls.create_user, this.user)
-          .then(response => {
-            this.userCreated = response.data.user;
-
-            this.$nextTick(() => {
-              $('#user-created-message').modal({
-                backdrop: 'static',
-                keyboard: false
-              });
-            });
-          })
-          .catch(error => {
-            const data = error.response.data;
-
-            if (data.message) {
-              this.errorMessage = data.mesage;
-            }
-
-            if (data.errors) {
-              this.errors = data.errors;
-            }
-
-            this.laddaButton.stop();
-            this.toggleProcessing();
-          });
-      }
-    },
-    filters: {
-      phone: function (value) {
-        return value
-          .replace(/[^0-9]/g, '')
-          .replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, '$1($2) $3-$4');
-      }
-    },
-    computed: {
-      hasPreviousStep() {
-        const currentStepIndex = this.steps.findIndex(el => el === this.currentStep);
-
-        return currentStepIndex > 0;
-      },
-      isLastStep() {
-        const currentStepIndex = this.steps.findIndex(el => el === this.currentStep);
-
-        return currentStepIndex === this.steps.length - 1;
-      },
-      didCityUrl() {
-        return this.urls.did_cities.replace('_region_', this.reservationDID.region);
-      },
-      didAvailableUrl() {
-        if (!this.reservationDID.city) {
-          return '';
-        }
-
-        return this.urls.dids_availables.replace('_city_', this.reservationDID.city);
-      },
-      reserveDIDCity() {
-        return this.reservationDID.city;
-      },
-      reserveDIDRegion() {
-        return this.reservationDID.region;
-      },
-      userHasReservation() {
-        return this.user.did.hasOwnProperty('reservation');
-      },
-      fancySettingUrl() {
-        if (this.userCreated === null) {
-          return '';
-        }
-
-        return this.urls.fancy_settings.replace('_user_', this.userCreated);
-      }
-    },
-    watch: {
-      reserveDIDCity() {
-        this.availablesDIDs = [];
-        this.reservationDID.item = {};
-        this.reservationDID.hasError = false;
-      },
-      reserveDIDRegion(newValue) {
-        this.reservationDID.city = null;
-        this.reservationDID.cities = [];
-
-        if (newValue) {
-          this.getDIDCities();
-        }
-      }
-    },
-    mounted() {
-      this.currentStep = this.steps[0];
-      this.setCountryList();
-
-      this.reservationDID.searchSubmit = Ladda.create(document.querySelector('#submit-search-did'));
-      this.laddaButton = Ladda.create(document.querySelector('#submit-create-user'));
     }
-  };
+  },
+  filters: {
+    phone: function(value) {
+      return value
+        .replace(/[^0-9]/g, '')
+        .replace(/(\d{1})(\d{3})(\d{3})(\d{4})/, '$1($2) $3-$4');
+    }
+  },
+  computed: {
+    hasPreviousStep() {
+      const currentStepIndex = this.steps.findIndex(
+        el => el === this.currentStep
+      );
+
+      return currentStepIndex > 0;
+    },
+    isLastStep() {
+      const currentStepIndex = this.steps.findIndex(
+        el => el === this.currentStep
+      );
+
+      return currentStepIndex === this.steps.length - 1;
+    },
+    didCityUrl() {
+      return this.urls.did_cities.replace(
+        '_region_',
+        this.reservationDID.region
+      );
+    },
+    didAvailableUrl() {
+      if (!this.reservationDID.city) {
+        return '';
+      }
+
+      return this.urls.dids_availables.replace(
+        '_city_',
+        this.reservationDID.city
+      );
+    },
+    reserveDIDCity() {
+      return this.reservationDID.city;
+    },
+    reserveDIDRegion() {
+      return this.reservationDID.region;
+    },
+    userHasReservation() {
+      return this.user.did.hasOwnProperty('reservation');
+    },
+    fancySettingUrl() {
+      if (this.userCreated === null) {
+        return '';
+      }
+
+      return this.urls.fancy_settings.replace('_user_', this.userCreated);
+    }
+  },
+  watch: {
+    reserveDIDCity() {
+      this.availablesDIDs = [];
+      this.reservationDID.item = {};
+      this.reservationDID.hasError = false;
+    },
+    reserveDIDRegion(newValue) {
+      this.reservationDID.city = null;
+      this.reservationDID.cities = [];
+
+      if (newValue) {
+        this.getDIDCities();
+      }
+    }
+  },
+  mounted() {
+    this.currentStep = this.steps[0];
+    this.setCountryList();
+
+    this.reservationDID.searchSubmit = Ladda.create(
+      document.querySelector('#submit-search-did')
+    );
+    this.laddaButton = Ladda.create(
+      document.querySelector('#submit-create-user')
+    );
+  }
+};
 </script>

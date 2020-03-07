@@ -221,17 +221,13 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="company_country">{{ trans('Country') }}</label>
-                      <select2
-                        name="company_country"
-                        id="company_country"
-                        class="form-control"
-                        :options="countries"
-                        :class="{'is-invalid select2-hidden-accessible': errors.hasOwnProperty('company_country'), 'form-control select2-hidden-accessible': !errors.hasOwnProperty('company_country')}"
-                        v-model="checkout.company_country"
-                        required
-                      >
-                        <option disabled value>---</option>
-                      </select2>
+                      <v-select name="company_country"
+                                id="company_country"
+                                label="Name"
+                                v-model="checkout.company_country"
+                                :reduce="country => country.Code"
+                                :options="countries"
+                                required></v-select>
                       <div
                         class="invalid-feedback"
                         v-if="errors.hasOwnProperty('company_country')"
@@ -358,19 +354,14 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="country">{{ trans('Country') }}</label>
-                      <select2
-                        name="country"
-                        id="country"
-                        class="form-control"
-                        :options="countries"
-                        :disabled="sameAddress"
-                        :class="{'is-invalid': errors.hasOwnProperty('country')}"
-                        :readonly="isProcessing"
-                        v-model="checkout.billing_country"
-                        required
-                      >
-                        <option disabled value>---</option>
-                      </select2>
+                      <v-select name="country"
+                                id="country"
+                                label="Name"
+                                v-model="checkout.billing_country"
+                                :disabled="sameAddress"
+                                :reduce="country => country.Code"
+                                :options="countries"
+                                required></v-select>
                       <div
                         class="invalid-feedback"
                         v-if="errors.hasOwnProperty('country')"
@@ -506,7 +497,10 @@
                       />
                       <label class="custom-control-label" :for="item.code">
                         {{ trans(item.name) }}
-                        <small class="d-block text-black-50">${{ item.cost }}</small>
+                        <small class="d-block text-black-50">
+                          ${{ item.cost }}
+                          <span v-if="isOTF(item)"> - One Time Payment</span>
+                        </small>
                       </label>
                     </div>
                   </div>
@@ -784,7 +778,7 @@ export default {
         company_name: '',
         company_phone: '',
         company_contact_name: '',
-        company_country: '',
+        company_country: 'US',
         company_city: '',
         company_state: '',
         company_zip_code: '',
@@ -808,15 +802,8 @@ export default {
     setCountryList() {
       axios
         .get('https://datahub.io/core/country-list/r/data.json')
-        .then(response => {
-          this.countries = response.data.map(el => {
-            return {
-              id: el.Code,
-              text: el.Name
-            };
-          });
-        })
-        .then(this.toggleProcessing);
+        .then(response => (this.countries = response.data))
+        .then(() => this.toggleProcessing);
     },
     toggleProcessing() {
       this.isProcessing = !this.isProcessing;
@@ -834,6 +821,9 @@ export default {
         this.checkout.billing_address1 = this.checkout.company_address1;
         this.checkout.billing_address2 = this.checkout.company_address2;
       }
+    },
+    isOTF(item) {
+      return item.type === 'otf';
     },
     submit() {
       if (this.isProcessing) {
@@ -881,6 +871,8 @@ export default {
   },
   mounted() {
     this.laddaButton = Ladda.create(document.querySelector('#submit-payment'));
+  },
+  created() {
     this.setCountryList();
   },
   computed: {

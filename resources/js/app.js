@@ -8,6 +8,9 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+const vSelect = require('vue-select').default;
+Vue.component('v-select', vSelect);
+
 // JSON lang
 window.Vue.prototype.trans = string => _.get(window.i18n, string) || string;
 

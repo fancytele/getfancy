@@ -59,16 +59,12 @@
                 <div class="col-md-4">
                   <div class="form-group">
                     <label for="did_region">{{ trans('State') }}</label>
-                    <select2
-                      name="did_region"
+                    <v-select name="did_region"
                       id="did_region"
-                      class="form-control select2-hidden-accessible"
-                      :options="didRegions"
-                      :class="{'is-invalid select2-hidden-accessible': errors.hasOwnProperty('did_region'), 'form-control select2-hidden-accessible': !errors.hasOwnProperty('did_region')}"
+                      label="text"
                       v-model="region"
-                    >
-                      <option disabled value>---</option>
-                    </select2>
+                      :reduce="region => region.id"
+                      :options="didRegions"></v-select>
                   </div>
                 </div>
 
@@ -82,18 +78,13 @@
                     >
                       <span class="sr-only">{{ trans('Loading') }}...</span>
                     </div>
-
-                    <select2
-                      name="did_city"
+                    <v-select name="did_city"
                       id="did_city"
-                      class="form-control select2-hidden-accessible"
-                      :options="cities"
-                      :class="{'is-invalid select2-hidden-accessible': errors.hasOwnProperty('did_city'), 'form-control select2-hidden-accessible': !errors.hasOwnProperty('did_city')}"
+                      label="text"
                       v-model="city"
+                      :reduce="city => city.id"
                       :disabled="!region || isProcessing"
-                    >
-                      <option disabled value>---</option>
-                    </select2>
+                      :options="cities"></v-select>
                   </div>
                 </div>
 
@@ -213,7 +204,7 @@ export default {
     return {
       errors: {},
       isLoading: false,
-      isProcessing: false,
+      isProcessing: true,
       isSearchingCities: false,
       existsMoreAvailableDIDs: false,
       hasError: false,
@@ -284,17 +275,8 @@ export default {
 
       axios
         .get('https://datahub.io/core/country-list/r/data.json')
-        .then(response => {
-          this.countries = response.data.map(el => {
-            return {
-              id: el.Code,
-              text: el.Name
-            };
-          });
-        })
-        .then(() => {
-          this.toggleProcessing();
-        });
+        .then(response => (this.countries = response.data))
+        .then(() => this.toggleProcessing);
     },
     getDIDCities() {
       if (this.isProcessing) {
@@ -372,7 +354,7 @@ export default {
       this.isProcessing = !this.isProcessing;
     },
     onCompleteDate: function(e) {
-      this.unmasKedPhoneNumber = e.detail.unmaskedValue
+      this.unmasKedPhoneNumber = e.detail.unmaskedValue;
     },
     submit() {
       let data = {

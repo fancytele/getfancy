@@ -11,7 +11,7 @@
 @section('content')
 <div class="container">
     <div class="justify-content-center mb-3 mt-6 row">
-        <div class="col-md-10 col-lg-7">
+        <div class="col-md-10 col-lg-8">
             <create-fancy-number-component 
                 :urls='@json($urls)'
                 :did-country='@json($did_country)'

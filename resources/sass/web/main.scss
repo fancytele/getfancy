@@ -35,7 +35,6 @@
 // Vendor Extensions
 @import "vendor_extensions/carousel";
 @import "vendor_extensions/stripe-element";
-@import "../app/themes/dashkit/vendors/select2";
 
 @import "~ladda/dist/ladda-themeless.min";
-@import "~select2/dist/css/select2.min.css";
+@import "~vue-select/src/scss/vue-select.scss";
