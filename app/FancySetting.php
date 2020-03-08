@@ -40,6 +40,11 @@ class FancySetting extends Model
         return ucfirst(str_replace('_', ' ', $this->audio_type));
     }
 
+    public function getAudioDownloadUrlAttribute()
+    {
+        return \Storage::disk('s3')->url($this->audio_url);
+    }
+
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|\App\FancyNumber
      */
