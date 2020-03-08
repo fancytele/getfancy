@@ -355,7 +355,7 @@
                                           id="company_country"
                                           label="Name"
                                           v-model="user.company_country"
-                                          :reduce="country => country.code"
+                                          :reduce="country => country.Code"
                                           :options="countries"
                                           required></v-select>
                                         <div
@@ -480,7 +480,7 @@
                                 </div>
                             </div>
 
-                            <div class="row">
+                            <div class="row" v-if="!sameAddress">
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="billing_country">{{ trans('Country') }}</label>
@@ -489,7 +489,7 @@
                                           label="Name"
                                           v-model="user.billing_country"
                                           :disabled="sameAddress"
-                                          :reduce="country => country.code"
+                                          :reduce="country => country.Code"
                                           :options="countries"
                                           required></v-select>
                                         <div
@@ -910,7 +910,7 @@ export default {
       userCreated: null,
       errors: {},
       errorMessage: '',
-      sameAddress: false,
+      sameAddress: true,
       reservationHasExpired: false,
       reservationDID: {
         region: null,
@@ -1246,10 +1246,6 @@ export default {
 
       this.currentStep = step;
       this.currentStep.isActive = true;
-
-      if (step.id === this.steps[this.steps.length - 1].id) {
-        this.toggleSameAddress();
-      }
     },
     goToPreviousStep() {
       const currentStepIndex = this.steps.findIndex(
@@ -1300,6 +1296,8 @@ export default {
         });
     },
     processPayment() {
+      this.toggleSameAddress();
+
       axios
         .post(this.urls.create_user, this.user)
         .then(response => {

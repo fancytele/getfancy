@@ -202,7 +202,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label for="company_contact_name">{{ trans('Company contact name') }}</label>
+                      <label class="text-nowrap" for="company_contact_name">{{ trans('Company contact name') }}</label>
                       <input
                         type="text"
                         class="form-control"
@@ -350,7 +350,7 @@
                     for="same-address"
                   >{{ trans('Same as Company address') }}?</label>
                 </div>
-                <div class="row">
+                <div class="row" v-if="!sameAddress">
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="country">{{ trans('Country') }}</label>
@@ -736,7 +736,7 @@ export default {
   },
   data() {
     return {
-      sameAddress: false,
+      sameAddress: true,
       laddaButton: null,
       complete: false,
       stripe: process.env.MIX_STRIPE_KEY,
@@ -803,7 +803,7 @@ export default {
       axios
         .get('https://datahub.io/core/country-list/r/data.json')
         .then(response => (this.countries = response.data))
-        .then(() => this.toggleProcessing);
+        .then(() => this.toggleProcessing());
     },
     toggleProcessing() {
       this.isProcessing = !this.isProcessing;
@@ -843,6 +843,8 @@ export default {
         .catch(error => this.stripeError.message);
     },
     processPayment() {
+      this.toggleSameAddress();
+
       axios
         .post(this.action, this.checkout)
         .then(response => {

@@ -49,7 +49,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::role(Role::USER)->withTrashed()->get();
+        $users = User::role(Role::USER)->with('fancy_number')->withTrashed()->get();
 
         return view('admin.users.index', compact('users'));
     }
