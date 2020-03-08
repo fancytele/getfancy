@@ -2,7 +2,7 @@
 
 @section('page-subtitle', __('Edit User'))
 
-@section('page-title', __('Fancy Setting'))
+@section('page-title', __('Fancy Settings'))
 
 @push('head-scripts')
     <script src="{{ asset('js/lang.js') }}" defer></script>
@@ -21,7 +21,8 @@
             :settings='@json($settings)'
             :notification-periods='@json($notification_periods)'
             :messages='@json($messages)'
-            :url-action="'{{ route('admin.users.update_fancy', $user->id) }}'">
+            :url-action="'{{ route('admin.users.update_fancy', $user->id) }}'"
+            :allow-upload-audio='@json($allow_upload_audio)'>
         </fancy-setting-component>
     </div>
 @endsection

@@ -47,7 +47,7 @@ Route::prefix('admin')->group(function () {
         Route::get('users/create/fancy', 'Admin\Users\UserController@createFancy')->name('admin.users.create_fancy');
         Route::post('users/store/fancy', 'Admin\Users\UserController@storeFancy')->name('admin.users.store_fancy');
         Route::get('users/{user}/edit/fancy', 'Admin\Users\UserController@editFancy')->name('admin.users.edit_fancy');
-        Route::put('users/{user}/update/fancy', 'Admin\Users\UserController@updateFancy')->name('admin.users.update_fancy');
+        Route::post('users/{user}/update/fancy', 'Admin\Users\UserController@updateFancy')->name('admin.users.update_fancy');
         Route::resource('users', 'Admin\Users\UserController', ['as' => 'admin'])->except(['show', 'edit', 'destroy']);
 
         // Agents Management

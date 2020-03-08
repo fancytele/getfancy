@@ -209,6 +209,7 @@
     "Sat": "Sab",
     "Sun": "Dom",
     "Go to Fancy Settings": "Ir a Configuración de Fancy",
+    "Fancy Settings": "Configurar Número Fancy",
     "Operator": "Operadores",
     "Operator list": "Lista de Operadores",
     "Create Operator": "Crear Operador",
@@ -217,5 +218,7 @@
     "Operator updated": "Operador actualizado",
     "Operator inactivated": "Operador inhabilitado",
     "Operator restored": "Operador habilitado",
-    "Operator password reseted": "Contraseña reiniciada"
+    "Operator password reseted": "Contraseña reiniciada",
+    "PBX Message": "Mensaje PBX",
+    "Select custom audio": "Seleccionar audio personalizado"
 }

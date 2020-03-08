@@ -41,10 +41,8 @@ class FancySettingService
 
         $this->UpdateExistingTicket();
 
-        $setting->business_hours = $request->input('business_hours');
-        $setting->downtime_hours = $request->input('downtime_hours');
-        $setting->email_notification = (string) $request->input('notification.email');
-        $setting->period_notification = (string) $request->input('notification.period');
+        $setting->email_notification = (string) $request->input('notification_email');
+        $setting->period_notification = (string) $request->input('notification_period');
 
         $setting->business_message_id = $request->input('business_id');
 
@@ -54,24 +52,17 @@ class FancySettingService
             $setting->business_custom_message = null;
         }
 
-        $setting->downtime_message_id = $request->input('downtime_id');
+        $extensions = $request->input('extensions');
 
-        if (is_null($setting->downtime_message_id) && $request->has('downtime_text')) {
-            $setting->downtime_custom_message = $request->input('downtime_text');
-        } else {
-            $setting->downtime_custom_message = null;
+        if (!is_null($extensions)) {
+            $setting->extensions = json_decode($extensions);
         }
 
-        $setting->onhold_message_id = $request->input('onhold_id');
-
-        if (is_null($setting->onhold_message_id) && $request->has('onhold_text')) {
-            $setting->onhold_custom_message = $request->input('onhold_text');
-        } else {
-            $setting->onhold_custom_message = null;
-        }
-
-        $setting->extensions = $request->input('extensions');
         $setting->audio_type = $request->input('audio_type');
+
+        if ($request->hasfile('audio_file')) {
+            $setting->audio_url = \Storage::disk('s3')->put('audios', $request->file('audio_file'));
+        }
 
         $this->fancyNumber->settings()->save($setting);
 

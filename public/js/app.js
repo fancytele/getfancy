@@ -4904,256 +4904,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -5175,6 +4925,14 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       required: true
     },
+    allowUploadAudio: {
+      type: Boolean,
+      "default": false
+    },
+    lang: {
+      type: String,
+      "default": 'en'
+    },
     urlAction: {
       type: String,
       required: true
@@ -5186,112 +4944,17 @@ __webpack_require__.r(__webpack_exports__);
       settingsSaved: false,
       isProcessing: false,
       laddaButton: null,
-      businessHours: {
-        all_day: false,
-        days: [{
-          id: 'monday',
-          text: 'Mon',
-          start: null,
-          end: null,
-          enable: false
-        }, {
-          id: 'tuesday',
-          text: 'Tue',
-          start: null,
-          end: null,
-          enable: false
-        }, {
-          id: 'wednesday',
-          text: 'Wed',
-          start: null,
-          end: null,
-          enable: false
-        }, {
-          id: 'thursday',
-          text: 'Thu',
-          start: null,
-          end: null,
-          enable: false
-        }, {
-          id: 'friday',
-          text: 'Fri',
-          start: null,
-          end: null,
-          enable: false
-        }, {
-          id: 'saturday',
-          text: 'Sat',
-          start: null,
-          end: null,
-          enable: false
-        }, {
-          id: 'sunday',
-          text: 'Sun',
-          start: null,
-          end: null,
-          enable: false
-        }]
-      },
-      downtimeHours: {
-        enable: false,
-        days: [{
-          id: 'monday',
-          text: 'Mon',
-          start: null,
-          end: null,
-          enable: false
-        }, {
-          id: 'tuesday',
-          text: 'Tue',
-          start: null,
-          end: null,
-          enable: false
-        }, {
-          id: 'wednesday',
-          text: 'Wed',
-          start: null,
-          end: null,
-          enable: false
-        }, {
-          id: 'thursday',
-          text: 'Thu',
-          start: null,
-          end: null,
-          enable: false
-        }, {
-          id: 'friday',
-          text: 'Fri',
-          start: null,
-          end: null,
-          enable: false
-        }, {
-          id: 'saturday',
-          text: 'Sat',
-          start: null,
-          end: null,
-          enable: false
-        }, {
-          id: 'sunday',
-          text: 'Sun',
-          start: null,
-          end: null,
-          enable: false
-        }]
-      },
       notification: {
         email: '',
         period: 'daily'
       },
       pbx: {
         business: null,
-        business_text: '',
-        downtime: null,
-        downtime_text: '',
-        onhold: null,
-        onhold_text: ''
+        business_text: ''
       },
       extensions: [],
       audioType: 'predefined',
+      audioFile: null,
       successModal: {
         text: '',
         url: ''
@@ -5351,70 +5014,38 @@ __webpack_require__.r(__webpack_exports__);
       this.extensions.splice(index, 1);
     },
     getSettingPayload: function getSettingPayload() {
-      var payload = {
-        notification: this.notification,
-        audio_type: this.audioType
-      }; // Business Hours
-
-      if (this.businessHours.all_day || this.businessHours.days.filter(function (el) {
-        return el.enable;
-      }).length > 0) {
-        payload.business_hours = {
-          all_day: this.businessHours.all_day,
-          days: this.businessHours.days
-        };
-      } // Downtime Hours
-
-
-      if (this.businessHours.all_day === false && this.downtimeHours.enable && this.downtimeHours.days.filter(function (el) {
-        return el.enable;
-      }).length > 0) {
-        payload.downtime_hours = {
-          enable: this.downtimeHours.enable,
-          days: this.downtimeHours.days
-        };
-      } // PBX
-
+      var formData = new FormData();
+      formData.append('notification_email', this.notification.email);
+      formData.append('notification_period', this.notification.period);
+      formData.append('audio_type', this.audioType);
+      formData.append('audio_file', this.audioFile); // PBX
 
       if (this.pbx.business && this.pbx.business > 0) {
-        payload.business_id = this.pbx.business;
+        formData.append('business_id', this.pbx.business);
       }
 
       if (this.pbx.business > 0 && this.pbx.business_text) {
-        payload.business_text = this.pbx.business_text;
-      }
-
-      if (this.businessHours.all_day === false) {
-        if (this.pbx.downtime && this.pbx.business > 0) {
-          payload.downtime_id = this.pbx.downtime;
-        }
-
-        if (this.pbx.downtime > 0 && this.pbx.downtime_text) {
-          payload.downtime_text = this.pbx.downtime_text;
-        }
-      }
-
-      if (this.pbx.onhold && this.pbx.onhold > 0) {
-        payload.onhold_id = this.pbx.onhold;
-      }
-
-      if (this.pbx.onhold > 0 && this.pbx.onhold_text) {
-        payload.onhold_text = this.pbx.onhold_text;
+        formData.append('business_text', this.pbx.business_text);
       } // Extensions
 
 
       if (this.extensions.length > 0) {
-        payload.extensions = this.extensions.filter(function (el) {
+        formData.append('extensions', JSON.stringify(this.extensions.filter(function (el) {
           return el.number && el.name;
-        });
+        })));
       } // Audio
 
 
       if (this.buyProfessionalRecording) {
-        payload.audio_type = 'professional';
+        formData.append('audio_type', 'professional');
       }
 
-      return payload;
+      return formData;
+    },
+    setAudioFile: function setAudioFile(event) {
+      // process your files, read as DataUrl or upload...
+      console.log(event.target.files[0]);
+      this.audioFile = event.target.files[0];
     },
     saveSetting: function saveSetting() {
       var _this2 = this;
@@ -5425,7 +5056,13 @@ __webpack_require__.r(__webpack_exports__);
 
       this.isProcessing = true;
       this.laddaButton.start();
-      axios.put(this.urlAction, this.getSettingPayload()).then(function (response) {
+      var data = this.getSettingPayload();
+      console.log(data);
+      axios.post(this.urlAction, data, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }).then(function (response) {
         _this2.settingsSaved = true;
 
         _this2.laddaButton.stop();
@@ -5447,14 +5084,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   created: function created() {
-    if (this.settings.business_hours) {
-      this.businessHours = this.settings.business_hours;
-    }
-
-    if (this.settings.downtime_hours) {
-      this.downtimeHours = this.settings.downtime_hours;
-    }
-
     if (this.settings.notification) {
       this.notification = this.settings.notification;
     }
@@ -69711,760 +69340,6 @@ var render = function() {
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-xl-4" }, [
                   _c("h2", { staticClass: "mb-1" }, [
-                    _vm._v(_vm._s(_vm.trans("Business hours")))
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "text-black-50" }, [
-                    _vm._v(_vm._s(_vm.trans("Business hours description")))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
-                  },
-                  [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "custom-control custom-control-block custom-switch"
-                        },
-                        [
-                          _c("label", { attrs: { for: "all_day" } }, [
-                            _c("span", { staticClass: "custom-control-text" }, [
-                              _vm._v(_vm._s(_vm.trans("Open 24/7")) + "?")
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.businessHours.all_day,
-                                  expression: "businessHours.all_day"
-                                }
-                              ],
-                              staticClass: "custom-control-input",
-                              attrs: { type: "checkbox", id: "all_day" },
-                              domProps: {
-                                checked: Array.isArray(
-                                  _vm.businessHours.all_day
-                                )
-                                  ? _vm._i(_vm.businessHours.all_day, null) > -1
-                                  : _vm.businessHours.all_day
-                              },
-                              on: {
-                                change: function($event) {
-                                  var $$a = _vm.businessHours.all_day,
-                                    $$el = $event.target,
-                                    $$c = $$el.checked ? true : false
-                                  if (Array.isArray($$a)) {
-                                    var $$v = null,
-                                      $$i = _vm._i($$a, $$v)
-                                    if ($$el.checked) {
-                                      $$i < 0 &&
-                                        _vm.$set(
-                                          _vm.businessHours,
-                                          "all_day",
-                                          $$a.concat([$$v])
-                                        )
-                                    } else {
-                                      $$i > -1 &&
-                                        _vm.$set(
-                                          _vm.businessHours,
-                                          "all_day",
-                                          $$a
-                                            .slice(0, $$i)
-                                            .concat($$a.slice($$i + 1))
-                                        )
-                                    }
-                                  } else {
-                                    _vm.$set(_vm.businessHours, "all_day", $$c)
-                                  }
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "custom-control-label" })
-                          ])
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "mt-5",
-                        class: { "disabled-setting": _vm.businessHours.all_day }
-                      },
-                      _vm._l(_vm.businessHours.days, function(item) {
-                        return _c(
-                          "div",
-                          {
-                            key: item.id,
-                            staticClass:
-                              "align-items-baseline content-action-hover d-lg-flex mb-4 mb-lg-1"
-                          },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "custom-checkbox custom-control custom-control-md d-lg-inline mb-3 mb-lg-0 mr-lg-4"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: item.enable,
-                                      expression: "item.enable"
-                                    }
-                                  ],
-                                  staticClass: "custom-control-input",
-                                  attrs: {
-                                    type: "checkbox",
-                                    id: "business_" + item.id
-                                  },
-                                  domProps: {
-                                    checked: Array.isArray(item.enable)
-                                      ? _vm._i(item.enable, null) > -1
-                                      : item.enable
-                                  },
-                                  on: {
-                                    change: [
-                                      function($event) {
-                                        var $$a = item.enable,
-                                          $$el = $event.target,
-                                          $$c = $$el.checked ? true : false
-                                        if (Array.isArray($$a)) {
-                                          var $$v = null,
-                                            $$i = _vm._i($$a, $$v)
-                                          if ($$el.checked) {
-                                            $$i < 0 &&
-                                              _vm.$set(
-                                                item,
-                                                "enable",
-                                                $$a.concat([$$v])
-                                              )
-                                          } else {
-                                            $$i > -1 &&
-                                              _vm.$set(
-                                                item,
-                                                "enable",
-                                                $$a
-                                                  .slice(0, $$i)
-                                                  .concat($$a.slice($$i + 1))
-                                              )
-                                          }
-                                        } else {
-                                          _vm.$set(item, "enable", $$c)
-                                        }
-                                      },
-                                      function($event) {
-                                        return _vm.toggleHour(item)
-                                      }
-                                    ]
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass:
-                                      "align-items-start label-day custom-control-label",
-                                    attrs: { for: "business_" + item.id }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                        " +
-                                        _vm._s(_vm.trans(item.text)) +
-                                        "\n                                    "
-                                    )
-                                  ]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "d-inline-block mr-4" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "sr-only",
-                                  attrs: {
-                                    for: "business_" + item.id + "_open_time"
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                        Start time\n                                    "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "input-group input-group-sm input-group-time"
-                                },
-                                [
-                                  _c("vue-timepicker", {
-                                    attrs: {
-                                      "input-class": "form-control",
-                                      id: "business_" + item.id + "_open_time",
-                                      name:
-                                        "business_" + item.id + "_open_time",
-                                      "aria-label":
-                                        "business_" + item.text + " open time",
-                                      "aria-describedby":
-                                        "business_" +
-                                        item.id +
-                                        "-open-time-icon",
-                                      disabled: !item.enable,
-                                      "minute-interval": "30"
-                                    },
-                                    model: {
-                                      value: item.start,
-                                      callback: function($$v) {
-                                        _vm.$set(item, "start", $$v)
-                                      },
-                                      expression: "item.start"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "input-group-append" },
-                                    [
-                                      _c(
-                                        "span",
-                                        {
-                                          staticClass: "input-group-text",
-                                          attrs: {
-                                            id:
-                                              "business_" +
-                                              item.id +
-                                              "-open-time-icon"
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fe fe-clock"
-                                          })
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "d-inline-block mr-4" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "sr-only",
-                                  attrs: { for: item.id + "_close_time" }
-                                },
-                                [_vm._v("Start time")]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "input-group input-group-sm input-group-time"
-                                },
-                                [
-                                  _c("vue-timepicker", {
-                                    attrs: {
-                                      "input-class": "form-control",
-                                      id: "business_" + item.id + "_close_time",
-                                      name:
-                                        "business_" + item.id + "_close_time",
-                                      "aria-label":
-                                        "business_" + item.text + " close time",
-                                      "aria-describedby":
-                                        "business_" +
-                                        item.id +
-                                        "-close-time-icon",
-                                      disabled: !item.enable,
-                                      "minute-interval": "30"
-                                    },
-                                    model: {
-                                      value: item.end,
-                                      callback: function($$v) {
-                                        _vm.$set(item, "end", $$v)
-                                      },
-                                      expression: "item.end"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "input-group-append" },
-                                    [
-                                      _c(
-                                        "span",
-                                        {
-                                          staticClass: "input-group-text",
-                                          attrs: {
-                                            id: item.id + "-close-time-icon"
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fe fe-clock"
-                                          })
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "action btn btn-link pl-0 pl-lg-3 text-decoration-underline",
-                                class: { invisible: item.enable === false },
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.copyHours(
-                                      _vm.businessHours,
-                                      item
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c("i", { staticClass: "fe fe-copy" }),
-                                _vm._v(
-                                  "\n                                    " +
-                                    _vm._s(_vm.trans("Copy to all")) +
-                                    "\n                                "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      }),
-                      0
-                    )
-                  ]
-                )
-              ])
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
-          },
-          [
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-xl-4" }, [
-                  _c("h2", { staticClass: "mb-1" }, [
-                    _vm._v(_vm._s(_vm.trans("Downtime hours")))
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "text-black-50" }, [
-                    _vm._v(_vm._s(_vm.trans("Downtime hours description")))
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
-                  },
-                  [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "custom-control custom-control-block custom-switch"
-                        },
-                        [
-                          _c("label", { attrs: { for: "enable_downtime" } }, [
-                            _c("span", { staticClass: "custom-control-text" }, [
-                              _vm._v(
-                                _vm._s(_vm.trans("Enable downtime hours")) + "?"
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.downtimeHours.enable,
-                                  expression: "downtimeHours.enable"
-                                }
-                              ],
-                              staticClass: "custom-control-input",
-                              attrs: {
-                                type: "checkbox",
-                                id: "enable_downtime",
-                                disabled: _vm.businessHours.all_day
-                              },
-                              domProps: {
-                                checked: Array.isArray(_vm.downtimeHours.enable)
-                                  ? _vm._i(_vm.downtimeHours.enable, null) > -1
-                                  : _vm.downtimeHours.enable
-                              },
-                              on: {
-                                change: function($event) {
-                                  var $$a = _vm.downtimeHours.enable,
-                                    $$el = $event.target,
-                                    $$c = $$el.checked ? true : false
-                                  if (Array.isArray($$a)) {
-                                    var $$v = null,
-                                      $$i = _vm._i($$a, $$v)
-                                    if ($$el.checked) {
-                                      $$i < 0 &&
-                                        _vm.$set(
-                                          _vm.downtimeHours,
-                                          "enable",
-                                          $$a.concat([$$v])
-                                        )
-                                    } else {
-                                      $$i > -1 &&
-                                        _vm.$set(
-                                          _vm.downtimeHours,
-                                          "enable",
-                                          $$a
-                                            .slice(0, $$i)
-                                            .concat($$a.slice($$i + 1))
-                                        )
-                                    }
-                                  } else {
-                                    _vm.$set(_vm.downtimeHours, "enable", $$c)
-                                  }
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _c("span", { staticClass: "custom-control-label" })
-                          ])
-                        ]
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass: "mt-5",
-                        class: {
-                          "disabled-setting":
-                            !_vm.downtimeHours.enable ||
-                            _vm.businessHours.all_day
-                        }
-                      },
-                      _vm._l(_vm.downtimeHours.days, function(item) {
-                        return _c(
-                          "div",
-                          {
-                            key: item.id,
-                            staticClass:
-                              "align-items-baseline content-action-hover d-lg-flex mb-4 mb-lg-1"
-                          },
-                          [
-                            _c(
-                              "div",
-                              {
-                                staticClass:
-                                  "custom-checkbox custom-control custom-control-md d-lg-inline mb-3 mb-lg-0 mr-lg-4"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: item.enable,
-                                      expression: "item.enable"
-                                    }
-                                  ],
-                                  staticClass: "custom-control-input",
-                                  attrs: {
-                                    type: "checkbox",
-                                    id: "downtime_" + item.id
-                                  },
-                                  domProps: {
-                                    checked: Array.isArray(item.enable)
-                                      ? _vm._i(item.enable, null) > -1
-                                      : item.enable
-                                  },
-                                  on: {
-                                    change: [
-                                      function($event) {
-                                        var $$a = item.enable,
-                                          $$el = $event.target,
-                                          $$c = $$el.checked ? true : false
-                                        if (Array.isArray($$a)) {
-                                          var $$v = null,
-                                            $$i = _vm._i($$a, $$v)
-                                          if ($$el.checked) {
-                                            $$i < 0 &&
-                                              _vm.$set(
-                                                item,
-                                                "enable",
-                                                $$a.concat([$$v])
-                                              )
-                                          } else {
-                                            $$i > -1 &&
-                                              _vm.$set(
-                                                item,
-                                                "enable",
-                                                $$a
-                                                  .slice(0, $$i)
-                                                  .concat($$a.slice($$i + 1))
-                                              )
-                                          }
-                                        } else {
-                                          _vm.$set(item, "enable", $$c)
-                                        }
-                                      },
-                                      function($event) {
-                                        return _vm.toggleHour(item)
-                                      }
-                                    ]
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass:
-                                      "align-items-start label-day custom-control-label",
-                                    attrs: { for: "downtime_" + item.id }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                        " +
-                                        _vm._s(_vm.trans(item.text)) +
-                                        "\n                                    "
-                                    )
-                                  ]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "d-inline-block mr-4" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "sr-only",
-                                  attrs: {
-                                    for: "downtime_" + item.id + "_start_time"
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "Start\n                                        time"
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "input-group input-group-sm input-group-time"
-                                },
-                                [
-                                  _c("vue-timepicker", {
-                                    attrs: {
-                                      "input-class": "form-control",
-                                      id: "downtime_" + item.id + "_start_time",
-                                      name:
-                                        "downtime_" + item.id + "_start_time",
-                                      "aria-label":
-                                        "downtime_" + item.text + " start time",
-                                      "aria-describedby":
-                                        "downtime_" +
-                                        item.id +
-                                        "-start-time-icon",
-                                      disabled: !item.enable,
-                                      "minute-interval": "30"
-                                    },
-                                    model: {
-                                      value: item.start,
-                                      callback: function($$v) {
-                                        _vm.$set(item, "start", $$v)
-                                      },
-                                      expression: "item.start"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "input-group-append" },
-                                    [
-                                      _c(
-                                        "span",
-                                        {
-                                          staticClass: "input-group-text",
-                                          attrs: {
-                                            id:
-                                              "downtime_" +
-                                              item.id +
-                                              "-start-time-icon"
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fe fe-clock"
-                                          })
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c("div", { staticClass: "d-inline-block mr-4" }, [
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "sr-only",
-                                  attrs: {
-                                    for: "downtime_" + item.id + "_end_time"
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "Start\n                                        time"
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "input-group input-group-sm input-group-time"
-                                },
-                                [
-                                  _c("vue-timepicker", {
-                                    attrs: {
-                                      "input-class": "form-control",
-                                      id: "downtime_" + item.id + "_end_time",
-                                      name: "downtime_" + item.id + "_end_time",
-                                      "aria-label":
-                                        "downtime_" + item.text + " end time",
-                                      "aria-describedby":
-                                        "downtime_" +
-                                        item.id +
-                                        "-end-time-icon",
-                                      disabled: !item.enable,
-                                      "minute-interval": "30"
-                                    },
-                                    model: {
-                                      value: item.end,
-                                      callback: function($$v) {
-                                        _vm.$set(item, "end", $$v)
-                                      },
-                                      expression: "item.end"
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "div",
-                                    { staticClass: "input-group-append" },
-                                    [
-                                      _c(
-                                        "span",
-                                        {
-                                          staticClass: "input-group-text",
-                                          attrs: {
-                                            id:
-                                              "downtime_" +
-                                              item.id +
-                                              "-end-time-icon"
-                                          }
-                                        },
-                                        [
-                                          _c("i", {
-                                            staticClass: "fe fe-clock"
-                                          })
-                                        ]
-                                      )
-                                    ]
-                                  )
-                                ],
-                                1
-                              )
-                            ]),
-                            _vm._v(" "),
-                            _c(
-                              "button",
-                              {
-                                staticClass:
-                                  "action btn btn-link pl-0 pl-lg-3 text-decoration-underline",
-                                class: { invisible: item.enable === false },
-                                attrs: { type: "button" },
-                                on: {
-                                  click: function($event) {
-                                    return _vm.copyHours(
-                                      _vm.downtimeHours,
-                                      item
-                                    )
-                                  }
-                                }
-                              },
-                              [
-                                _c("i", { staticClass: "fe fe-copy" }),
-                                _vm._v(
-                                  "\n                                    " +
-                                    _vm._s(_vm.trans("Copy to all")) +
-                                    "\n                                "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      }),
-                      0
-                    )
-                  ]
-                )
-              ])
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
-          },
-          [
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-xl-4" }, [
-                  _c("h2", { staticClass: "mb-1" }, [
                     _vm._v(_vm._s(_vm.trans("Notifications")))
                   ]),
                   _vm._v(" "),
@@ -70602,7 +69477,7 @@ var render = function() {
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-xl-4" }, [
                   _c("h2", { staticClass: "mb-1" }, [
-                    _vm._v(_vm._s(_vm.trans("PBX profile")))
+                    _vm._v(_vm._s(_vm.trans("PBX Message")))
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "text-black-50" }, [
@@ -70770,352 +69645,6 @@ var render = function() {
                                       _vm.$set(
                                         _vm.pbx,
                                         "business_text",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                })
-                              ]
-                            )
-                          ],
-                          2
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("fieldset", { staticClass: "mb-4" }, [
-                        _c("legend", { staticClass: "pl-4" }, [
-                          _vm._v(
-                            "\n                                    " +
-                              _vm._s(_vm.trans("Message for downtime hours")) +
-                              "\n                                    "
-                          ),
-                          _c(
-                            "p",
-                            {
-                              directives: [
-                                {
-                                  name: "show",
-                                  rawName: "v-show",
-                                  value: _vm.businessHours.all_day,
-                                  expression: "businessHours.all_day"
-                                }
-                              ],
-                              staticClass: "mt-n2 small text-warning"
-                            },
-                            [
-                              _vm._v(
-                                "\n                                        " +
-                                  _vm._s(
-                                    _vm.trans(
-                                      "The company is open 24/7. No need for Downtime hours message"
-                                    )
-                                  ) +
-                                  "\n                                    "
-                              )
-                            ]
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          {
-                            class: {
-                              "disabled-setting": _vm.businessHours.all_day
-                            }
-                          },
-                          [
-                            _vm._l(_vm.messages.downtime, function(item) {
-                              return _c(
-                                "div",
-                                {
-                                  key: item.id,
-                                  staticClass:
-                                    "custom-control custom-radio mb-3"
-                                },
-                                [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.pbx.downtime,
-                                        expression: "pbx.downtime"
-                                      }
-                                    ],
-                                    staticClass: "custom-control-input",
-                                    attrs: {
-                                      type: "radio",
-                                      id: item.type + "_message_" + item.id,
-                                      name: "downtime-message"
-                                    },
-                                    domProps: {
-                                      value: item.id,
-                                      checked: _vm._q(_vm.pbx.downtime, item.id)
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        return _vm.$set(
-                                          _vm.pbx,
-                                          "downtime",
-                                          item.id
-                                        )
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "label",
-                                    {
-                                      staticClass: "custom-control-label",
-                                      attrs: {
-                                        for: item.type + "_message_" + item.id
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                            " +
-                                          _vm._s(_vm.trans(item.message)) +
-                                          "\n                                        "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "custom-control custom-radio mb-3"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.pbx.downtime,
-                                      expression: "pbx.downtime"
-                                    }
-                                  ],
-                                  staticClass: "custom-control-input",
-                                  attrs: {
-                                    type: "radio",
-                                    id: "downtime_message_0",
-                                    name: "downtime_message",
-                                    value: "0"
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(_vm.pbx.downtime, "0")
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      return _vm.$set(_vm.pbx, "downtime", "0")
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "custom-control-label",
-                                    attrs: { for: "downtime_message_0" }
-                                  },
-                                  [_vm._v("Custom")]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "form-group pl-4",
-                                class: {
-                                  "disabled-setting": _vm.pbx.downtime != 0
-                                }
-                              },
-                              [
-                                _c("textarea", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.pbx.downtime_text,
-                                      expression: "pbx.downtime_text"
-                                    }
-                                  ],
-                                  staticClass: "form-control resize-none",
-                                  attrs: {
-                                    name: "downtime_message_custom",
-                                    id: "downtime_message_custom",
-                                    rows: "3",
-                                    disabled: _vm.pbx.downtime != 0
-                                  },
-                                  domProps: { value: _vm.pbx.downtime_text },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.pbx,
-                                        "downtime_text",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                })
-                              ]
-                            )
-                          ],
-                          2
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("fieldset", { staticClass: "mb-4" }, [
-                        _c("legend", { staticClass: "pl-4" }, [
-                          _vm._v(_vm._s(_vm.trans("Message for on-hold calls")))
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _vm._l(_vm.messages.onhold, function(item) {
-                              return _c(
-                                "div",
-                                {
-                                  key: item.id,
-                                  staticClass:
-                                    "custom-control custom-radio mb-3"
-                                },
-                                [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.pbx.onhold,
-                                        expression: "pbx.onhold"
-                                      }
-                                    ],
-                                    staticClass: "custom-control-input",
-                                    attrs: {
-                                      type: "radio",
-                                      id: item.type + "_message_" + item.id,
-                                      name: "onhold-message"
-                                    },
-                                    domProps: {
-                                      value: item.id,
-                                      checked: _vm._q(_vm.pbx.onhold, item.id)
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        return _vm.$set(
-                                          _vm.pbx,
-                                          "onhold",
-                                          item.id
-                                        )
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "label",
-                                    {
-                                      staticClass: "custom-control-label",
-                                      attrs: {
-                                        for: item.type + "_message_" + item.id
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                            " +
-                                          _vm._s(_vm.trans(item.message)) +
-                                          "\n                                        "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "custom-control custom-radio mb-3"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.pbx.onhold,
-                                      expression: "pbx.onhold"
-                                    }
-                                  ],
-                                  staticClass: "custom-control-input",
-                                  attrs: {
-                                    type: "radio",
-                                    id: "onhold_message_0",
-                                    name: "onhold_message",
-                                    value: "0"
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(_vm.pbx.onhold, "0")
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      return _vm.$set(_vm.pbx, "onhold", "0")
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "custom-control-label",
-                                    attrs: { for: "onhold_message_0" }
-                                  },
-                                  [_vm._v("Custom")]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "form-group pl-4",
-                                class: {
-                                  "disabled-setting": _vm.pbx.onhold != 0
-                                }
-                              },
-                              [
-                                _c("textarea", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.pbx.onhold_text,
-                                      expression: "pbx.onhold_text"
-                                    }
-                                  ],
-                                  staticClass: "form-control resize-none",
-                                  attrs: {
-                                    name: "onhold_message_custom",
-                                    id: "onhold_message_custom",
-                                    rows: "3",
-                                    disabled: _vm.pbx.onhold != 0
-                                  },
-                                  domProps: { value: _vm.pbx.onhold_text },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.pbx,
-                                        "onhold_text",
                                         $event.target.value
                                       )
                                     }
@@ -71377,151 +69906,189 @@ var render = function() {
                           }
                         },
                         [
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "custom-control custom-control-md custom-radio d-xl-inline-block mb-4 mr-6"
-                            },
-                            [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.audioType,
-                                    expression: "audioType"
-                                  }
-                                ],
-                                staticClass: "custom-control-input",
-                                attrs: {
-                                  type: "radio",
-                                  id: "predefined_audio",
-                                  name: "type_audio",
-                                  value: "predefined"
-                                },
-                                domProps: {
-                                  checked: _vm._q(_vm.audioType, "predefined")
-                                },
-                                on: {
-                                  change: function($event) {
-                                    _vm.audioType = "predefined"
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "custom-control-label",
-                                  attrs: { for: "predefined_audio" }
-                                },
-                                [_vm._v("Predefined")]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _c(
-                            "div",
-                            {
-                              staticClass:
-                                "custom-control custom-control-md custom-radio d-xl-inline-block mb-4 mr-6"
-                            },
-                            [
-                              _c("input", {
-                                directives: [
-                                  {
-                                    name: "model",
-                                    rawName: "v-model",
-                                    value: _vm.audioType,
-                                    expression: "audioType"
-                                  }
-                                ],
-                                staticClass: "custom-control-input",
-                                attrs: {
-                                  type: "radio",
-                                  id: "custom_audio",
-                                  name: "type_audio",
-                                  value: "custom"
-                                },
-                                domProps: {
-                                  checked: _vm._q(_vm.audioType, "custom")
-                                },
-                                on: {
-                                  change: function($event) {
-                                    _vm.audioType = "custom"
-                                  }
-                                }
-                              }),
-                              _vm._v(" "),
-                              _c(
-                                "label",
-                                {
-                                  staticClass: "custom-control-label",
-                                  attrs: { for: "custom_audio" }
-                                },
-                                [_vm._v("Custom")]
-                              )
-                            ]
-                          ),
-                          _vm._v(" "),
-                          _vm.hasProfessionalRecording
-                            ? _c(
-                                "div",
-                                {
-                                  staticClass:
-                                    "custom-control custom-control-md custom-radio d-xl-inline-block mb-4 "
-                                },
-                                [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.audioType,
-                                        expression: "audioType"
-                                      }
-                                    ],
-                                    staticClass: "custom-control-input",
-                                    attrs: {
-                                      type: "radio",
-                                      id: "professional_audio",
-                                      name: "type_audio",
-                                      value: "professional"
-                                    },
-                                    domProps: {
-                                      checked: _vm._q(
-                                        _vm.audioType,
-                                        "professional"
-                                      )
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        _vm.audioType = "professional"
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "label",
+                          _c("div", [
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "custom-control custom-control-md custom-radio d-xl-inline-block mb-4 mr-6"
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
                                     {
-                                      staticClass: "custom-control-label",
-                                      attrs: { for: "professional_audio" }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                      " +
-                                          _vm._s(
-                                            _vm.trans(
-                                              "Professional Greeting/Custom Recordings"
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.audioType,
+                                      expression: "audioType"
+                                    }
+                                  ],
+                                  staticClass: "custom-control-input",
+                                  attrs: {
+                                    type: "radio",
+                                    id: "predefined_audio",
+                                    name: "type_audio",
+                                    value: "predefined"
+                                  },
+                                  domProps: {
+                                    checked: _vm._q(_vm.audioType, "predefined")
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      _vm.audioType = "predefined"
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "custom-control-label",
+                                    attrs: { for: "predefined_audio" }
+                                  },
+                                  [_vm._v("Predefined")]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              {
+                                staticClass:
+                                  "custom-control custom-control-md custom-radio d-xl-inline-block mb-4 mr-6"
+                              },
+                              [
+                                _c("input", {
+                                  directives: [
+                                    {
+                                      name: "model",
+                                      rawName: "v-model",
+                                      value: _vm.audioType,
+                                      expression: "audioType"
+                                    }
+                                  ],
+                                  staticClass: "custom-control-input",
+                                  attrs: {
+                                    type: "radio",
+                                    id: "custom_audio",
+                                    name: "type_audio",
+                                    value: "custom"
+                                  },
+                                  domProps: {
+                                    checked: _vm._q(_vm.audioType, "custom")
+                                  },
+                                  on: {
+                                    change: function($event) {
+                                      _vm.audioType = "custom"
+                                    }
+                                  }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "custom-control-label",
+                                    attrs: { for: "custom_audio" }
+                                  },
+                                  [_vm._v("Custom")]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm.hasProfessionalRecording
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "custom-control custom-control-md custom-radio d-xl-inline-block mb-4 "
+                                  },
+                                  [
+                                    _c("input", {
+                                      directives: [
+                                        {
+                                          name: "model",
+                                          rawName: "v-model",
+                                          value: _vm.audioType,
+                                          expression: "audioType"
+                                        }
+                                      ],
+                                      staticClass: "custom-control-input",
+                                      attrs: {
+                                        type: "radio",
+                                        id: "professional_audio",
+                                        name: "type_audio",
+                                        value: "professional"
+                                      },
+                                      domProps: {
+                                        checked: _vm._q(
+                                          _vm.audioType,
+                                          "professional"
+                                        )
+                                      },
+                                      on: {
+                                        change: function($event) {
+                                          _vm.audioType = "professional"
+                                        }
+                                      }
+                                    }),
+                                    _vm._v(" "),
+                                    _c(
+                                      "label",
+                                      {
+                                        staticClass: "custom-control-label",
+                                        attrs: { for: "professional_audio" }
+                                      },
+                                      [
+                                        _vm._v(
+                                          "\n                                        " +
+                                            _vm._s(
+                                              _vm.trans(
+                                                "Professional Greeting/Custom Recordings"
+                                              )
+                                            ) +
+                                            "\n                                      "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              : _vm._e()
+                          ]),
+                          _vm._v(" "),
+                          _vm.allowUploadAudio && _vm.audioType == "custom"
+                            ? _c("div", { staticClass: "custom-file mb-4" }, [
+                                _c("input", {
+                                  staticClass: "custom-file-input",
+                                  attrs: {
+                                    type: "file",
+                                    id: "audioFile",
+                                    accept: ".mp3,audio/*",
+                                    lang: _vm.lang
+                                  },
+                                  on: { change: _vm.setAudioFile }
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "label",
+                                  {
+                                    staticClass: "custom-file-label",
+                                    attrs: { for: "audioFile" }
+                                  },
+                                  [
+                                    _vm.audioFile == null
+                                      ? _c("span", [
+                                          _vm._v(
+                                            _vm._s(
+                                              _vm.trans("Select custom audio")
                                             )
-                                          ) +
-                                          "\n                                    "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
+                                          )
+                                        ])
+                                      : _c("span", [
+                                          _vm._v(_vm._s(_vm.audioFile.name))
+                                        ])
+                                  ]
+                                )
+                              ])
                             : _vm._e()
                         ]
                       ),

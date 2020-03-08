@@ -230,7 +230,8 @@ class UserController extends Controller
             'has_professional_recording' => $user->hasBoughtAddon($addon->id),
             'settings' => (new FancySettingService($user))->getSettingsToEdit(),
             'notification_periods' => FancyNotificationPeriod::getValues(),
-            'messages' => PBXMessage::get(['id', 'message', 'type'])->groupBy('type')->toArray()
+            'messages' => PBXMessage::get(['id', 'message', 'type'])->groupBy('type')->toArray(),
+            'allow_upload_audio' => $user->hasRole(Role::USER)
         ];
 
         return view('admin.users.edit-fancy', $data);

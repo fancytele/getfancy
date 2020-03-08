@@ -27,8 +27,8 @@ class FancySettingRequest extends FormRequest
     public function rules()
     {
         return [
-            'notification.email' => 'required|email',
-            'notification.period' => ['required', Rule::in(FancyNotificationPeriod::getValues())],
+            'notification_email' => 'required|email',
+            'notification_period' => ['required', Rule::in(FancyNotificationPeriod::getValues())],
             'reason' => 'required_if:ticket_in_progress,true'
         ];
     }
