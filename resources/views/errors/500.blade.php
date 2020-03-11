@@ -24,7 +24,7 @@
 
                     <!-- Heading -->
                     <h1 class="display-4 mb-3">
-                        There’s no page here 😭
+                        There’s no page here
                     </h1>
 
                     <!-- Subheading -->

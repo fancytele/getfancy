@@ -21,7 +21,7 @@
                     <div class="card card-flush">
                         <div class="card-body text-center">
                             <h1 class="display-4">
-                                @lang('No Operators yet'). 😭
+                                @lang('No Operators yet').
                             </h1>
 
                             <a href="{{ route('admin.operators.create') }}"

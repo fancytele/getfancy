@@ -12,7 +12,7 @@
                     <div class="card card-flush">
                         <div class="card-body text-center">
                             <h1 class="display-4">
-                                @lang('No tickets yet'). 😭
+                                @lang('No tickets yet').
                             </h1>
                         </div>
                     </div>

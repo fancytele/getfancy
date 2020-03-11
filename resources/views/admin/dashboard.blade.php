@@ -272,7 +272,7 @@
                     <div class="card card-flush">
                         <div class="card-body text-center">
                             <h1 class="display-4">
-                                @lang($message). 😭
+                                @lang($message).
                             </h1>
                         </div>
                     </div>

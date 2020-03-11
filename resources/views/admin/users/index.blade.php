@@ -21,7 +21,7 @@
                 <div class="card card-flush">
                     <div class="card-body text-center">
                         <h1 class="display-4">
-                            @lang('No Users yet'). 😭
+                            @lang('No Users yet').
                         </h1>
 
                         <a href="{{ route('admin.users.create') }}"
