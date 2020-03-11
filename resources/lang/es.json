@@ -200,7 +200,7 @@
     "Custom extensions description": "Elija el número de extensión que los clientes marcarán para comunicarse con una persona o departamento",
     "Number": "Número",
     "Add a new extension": "Agregar una nueva extensión",
-    "Save setting": "Guardar configuración",
+    "Save settings": "Guardar configuración",
     "Mon": "Lun",
     "Tue": "Mar",
     "Wed": "Mie",
@@ -220,5 +220,7 @@
     "Operator restored": "Operador habilitado",
     "Operator password reseted": "Contraseña reiniciada",
     "PBX Message": "Mensaje PBX",
-    "Select custom audio": "Seleccionar audio personalizado"
+    "Select custom audio": "Seleccionar audio personalizado",
+    "Audio description": "El audio predefinido es audio generado automáticamente por Fancy. También puede cargar grabaciones personales o comprar una grabación profesional",
+    "Upload personal Recording": "Subir grabación personal"
 }

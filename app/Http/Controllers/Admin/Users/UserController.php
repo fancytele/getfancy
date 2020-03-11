@@ -22,6 +22,7 @@ use App\Services\UserService;
 use App\Ticket;
 use App\User;
 use Exception;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
@@ -213,7 +214,7 @@ class UserController extends Controller
      * @param \App\User $user
      * @return \Illuminate\Http\Response
      */
-    public function editFancy(User $user)
+    public function editFancy(Request $request, User $user)
     {
         if (is_null($user->fancy_number)) {
             return redirect()->back()->with('alert', [
@@ -231,7 +232,7 @@ class UserController extends Controller
             'settings' => (new FancySettingService($user))->getSettingsToEdit(),
             'notification_periods' => FancyNotificationPeriod::getValues(),
             'messages' => PBXMessage::get(['id', 'message', 'type'])->groupBy('type')->toArray(),
-            'allow_upload_audio' => $user->hasRole(Role::USER)
+            'allow_upload_audio' => $request->user()->hasRole(Role::USER)
         ];
 
         return view('admin.users.edit-fancy', $data);

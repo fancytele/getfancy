@@ -69946,7 +69946,7 @@ var render = function() {
                                     staticClass: "custom-control-label",
                                     attrs: { for: "predefined_audio" }
                                   },
-                                  [_vm._v("Predefined")]
+                                  [_vm._v(_vm._s(_vm.trans("Predefined")))]
                                 )
                               ]
                             ),
@@ -69990,7 +69990,13 @@ var render = function() {
                                     staticClass: "custom-control-label",
                                     attrs: { for: "custom_audio" }
                                   },
-                                  [_vm._v("Custom")]
+                                  [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.trans("Upload personal Recording")
+                                      )
+                                    )
+                                  ]
                                 )
                               ]
                             ),
@@ -70207,7 +70213,7 @@ var render = function() {
           [
             _vm._v(
               "\n            " +
-                _vm._s(_vm.trans("Save setting")) +
+                _vm._s(_vm.trans("Save settings")) +
                 "\n        "
             )
           ]

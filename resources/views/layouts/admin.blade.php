@@ -131,15 +131,15 @@
 
                             <div class="mb-3 text-center text-white">
                                 @if(App::isLocale('en'))
-                                <span class="text-muted">English</span>
+                                <span class="text-white">English</span>
                                 @else
-                                <a href="{{ route('web.locale', 'en') }}" class="text-white">English</a>
+                                <a href="{{ route('web.locale', 'en') }}" class="text-muted">English</a>
                                 @endif
                                 <span class="px-3">|</span>
                                 @if(App::isLocale('es'))
-                                <span class="text-muted">Español</span>
+                                <span class="text-white">Español</span>
                                 @else
-                                <a href="{{ route('web.locale', 'es') }}" class="text-white">Español</a>
+                                <a href="{{ route('web.locale', 'es') }}" class="text-muted">Español</a>
                                 @endif
                             </div>
                         </div>

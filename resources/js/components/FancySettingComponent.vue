@@ -184,7 +184,7 @@
                                                 class="custom-control-input"
                                                 value="predefined"
                                                 v-model="audioType"/>
-                                          <label for="predefined_audio" class="custom-control-label">Predefined</label>
+                                          <label for="predefined_audio" class="custom-control-label">{{ trans('Predefined') }}</label>
                                       </div>
                                       <div class="custom-control custom-control-md custom-radio d-xl-inline-block mb-4 mr-6">
                                           <input type="radio"
@@ -193,7 +193,7 @@
                                                 value="custom"
                                                 class="custom-control-input"
                                                 v-model="audioType"/>
-                                          <label for="custom_audio" class="custom-control-label">Custom</label>
+                                          <label for="custom_audio" class="custom-control-label">{{ trans('Upload personal Recording') }}</label>
                                       </div>
                                       <div class="custom-control custom-control-md custom-radio d-xl-inline-block mb-4 "
                                           v-if="hasProfessionalRecording">
@@ -247,7 +247,7 @@
                     id="submit-fancy-setting"
                     class="btn btn-primary btn btn-primary ladda-button"
                     data-style="zoom-out">
-                {{ trans('Save setting') }}
+                {{ trans('Save settings') }}
             </button>
         </form>
 
