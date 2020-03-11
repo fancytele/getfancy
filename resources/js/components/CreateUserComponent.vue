@@ -348,6 +348,40 @@
                                         </div>
                                     </div>
                                 </div>
+                                
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="company_address1">{{ trans('Address') }} 1</label>
+                                        <input
+                                                type="text"
+                                                class="form-control"
+                                                id="company_address1"
+                                                name="company_address1"
+                                                required
+                                                :placeholder="trans('Street address, P.O. box, company name, c/o')"
+                                                :class="{'is-invalid': errors.hasOwnProperty('company_address1')}"
+                                                v-model="user.company_address1"
+                                        />
+                                        <div
+                                                class="invalid-feedback"
+                                                v-if="errors.hasOwnProperty('company_address1')"
+                                        >{{ errors.company_address1[0] }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="company_address2">{{ trans('Address') }} 2</label>
+                                        <input
+                                                type="text"
+                                                class="form-control"
+                                                id="company_address2"
+                                                name="company_address2"
+                                                :placeholder="trans('Apartment, suite, unit, building, floor, etc')"
+                                                v-model="user.company_address2"
+                                        />
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="company_country">{{ trans('Country') }}</label>
@@ -422,39 +456,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="company_address1">{{ trans('Address') }} 1</label>
-                                        <input
-                                                type="text"
-                                                class="form-control"
-                                                id="company_address1"
-                                                name="company_address1"
-                                                required
-                                                :placeholder="trans('Street address, P.O. box, company name, c/o')"
-                                                :class="{'is-invalid': errors.hasOwnProperty('company_address1')}"
-                                                v-model="user.company_address1"
-                                        />
-                                        <div
-                                                class="invalid-feedback"
-                                                v-if="errors.hasOwnProperty('company_address1')"
-                                        >{{ errors.company_address1[0] }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="company_address2">{{ trans('Address') }} 2</label>
-                                        <input
-                                                type="text"
-                                                class="form-control"
-                                                id="company_address2"
-                                                name="company_address2"
-                                                :placeholder="trans('Apartment, suite, unit, building, floor, etc')"
-                                                v-model="user.company_address2"
-                                        />
-                                    </div>
-                                </div>
                             </div>
                         </fieldset>
                     </div>
@@ -481,6 +482,41 @@
                             </div>
 
                             <div class="row" v-if="!sameAddress">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="billing_address1">{{ trans('Address') }} 1</label>
+                                        <input
+                                                type="text"
+                                                class="form-control"
+                                                id="billing_address1"
+                                                name="billing_address1"
+                                                required
+                                                :disabled="sameAddress"
+                                                :placeholder="trans('Street address, P.O. box, company name, c/o')"
+                                                :class="{'is-invalid': errors.hasOwnProperty('billing_address1')}"
+                                                v-model="user.billing_address1"
+                                        />
+                                        <div
+                                                class="invalid-feedback"
+                                                v-if="errors.hasOwnProperty('billing_address1')"
+                                        >{{ errors.billing_address1[0] }}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label for="billing_address2">{{ trans('Address') }} 2</label>
+                                        <input
+                                                type="text"
+                                                class="form-control"
+                                                id="billing_address2"
+                                                name="billing_address2"
+                                                :disabled="sameAddress"
+                                                :placeholder="trans('Apartment, suite, unit, building, floor, etc')"
+                                                v-model="user.billing_address2"
+                                        />
+                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="billing_country">{{ trans('Country') }}</label>
@@ -557,41 +593,6 @@
                                                 v-if="errors.hasOwnProperty('billing_zip_code')"
                                         >{{ errors.billing_zip_code[0] }}
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="billing_address1">{{ trans('Address') }} 1</label>
-                                        <input
-                                                type="text"
-                                                class="form-control"
-                                                id="billing_address1"
-                                                name="billing_address1"
-                                                required
-                                                :disabled="sameAddress"
-                                                :placeholder="trans('Street address, P.O. box, company name, c/o')"
-                                                :class="{'is-invalid': errors.hasOwnProperty('billing_address1')}"
-                                                v-model="user.billing_address1"
-                                        />
-                                        <div
-                                                class="invalid-feedback"
-                                                v-if="errors.hasOwnProperty('billing_address1')"
-                                        >{{ errors.billing_address1[0] }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <div class="form-group">
-                                        <label for="billing_address2">{{ trans('Address') }} 2</label>
-                                        <input
-                                                type="text"
-                                                class="form-control"
-                                                id="billing_address2"
-                                                name="billing_address2"
-                                                :disabled="sameAddress"
-                                                :placeholder="trans('Apartment, suite, unit, building, floor, etc')"
-                                                v-model="user.billing_address2"
-                                        />
                                     </div>
                                 </div>
                             </div>

@@ -218,6 +218,39 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                        <label for="company_address1">{{ trans('Address') }} 1</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="company_address1"
+                          name="company_address1"
+                          required
+                          :placeholder="trans('Street address, P.O. box, company name, c/o')"
+                          :class="{'is-invalid': errors.hasOwnProperty('company_address1')}"
+                          v-model="checkout.company_address1"
+                        />
+                        <div
+                          class="invalid-feedback"
+                          v-if="errors.hasOwnProperty('company_address1')"
+                        >{{ errors.company_address1[0] }}
+                        </div>
+                    </div>
+                  </div>
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="company_address2">{{ trans('Address') }} 2</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="company_address2"
+                        name="company_address2"
+                        :placeholder="trans('Apartment, suite, unit, building, floor, etc')"
+                        v-model="checkout.company_address2"
+                      />
+                    </div>
+                  </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="company_country">{{ trans('Country') }}</label>
@@ -292,39 +325,6 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-12">
-                    <div class="form-group">
-                        <label for="company_address1">{{ trans('Address') }} 1</label>
-                        <input
-                          type="text"
-                          class="form-control"
-                          id="company_address1"
-                          name="company_address1"
-                          required
-                          :placeholder="trans('Street address, P.O. box, company name, c/o')"
-                          :class="{'is-invalid': errors.hasOwnProperty('company_address1')}"
-                          v-model="checkout.company_address1"
-                        />
-                        <div
-                          class="invalid-feedback"
-                          v-if="errors.hasOwnProperty('company_address1')"
-                        >{{ errors.company_address1[0] }}
-                        </div>
-                    </div>
-                  </div>
-                  <div class="col-12">
-                    <div class="form-group">
-                      <label for="company_address2">{{ trans('Address') }} 2</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="company_address2"
-                        name="company_address2"
-                        :placeholder="trans('Apartment, suite, unit, building, floor, etc')"
-                        v-model="checkout.company_address2"
-                      />
-                    </div>
-                  </div>
                 </div>
               </div>
 
@@ -351,6 +351,48 @@
                   >{{ trans('Same as Company address') }}?</label>
                 </div>
                 <div class="row" v-if="!sameAddress">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="billing_address1">{{ trans('Address') }} 1</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="billing_address1"
+                        name="billing_address1"
+                        :placeholder="trans('Street address, P.O. box, company name, c/o')"
+                        required
+                        v-model="checkout.billing_address1"
+                        :disabled="sameAddress"
+                        :class="{'is-invalid': errors.hasOwnProperty('billing_address1')}"
+                        :readonly="isProcessing"
+                      />
+                      <div
+                        class="invalid-feedback"
+                        v-if="errors.hasOwnProperty('billing_address1')"
+                      >{{ errors.billing_address1[0] }}</div>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label for="billing_address2">{{ trans('Address') }} 2</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="billing_address2"
+                        name="billing_address2"
+                        :placeholder="trans('Apartment, suite, unit, building, floor, etc')"
+                        required
+                        v-model="checkout.billing_address2"
+                        :disabled="sameAddress"
+                        :class="{'is-invalid': errors.hasOwnProperty('billing_address2')}"
+                        :readonly="isProcessing"
+                      />
+                      <div
+                        class="invalid-feedback"
+                        v-if="errors.hasOwnProperty('billing_address2')"
+                      >{{ errors.billing_address2[0] }}</div>
+                    </div>
+                  </div>
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="country">{{ trans('Country') }}</label>
@@ -428,48 +470,6 @@
                         class="invalid-feedback"
                         v-if="errors.hasOwnProperty('zip_code')"
                       >{{ errors.zip_code[0] }}</div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="billing_address1">{{ trans('Address') }} 1</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="billing_address1"
-                        name="billing_address1"
-                        :placeholder="trans('Street address, P.O. box, company name, c/o')"
-                        required
-                        v-model="checkout.billing_address1"
-                        :disabled="sameAddress"
-                        :class="{'is-invalid': errors.hasOwnProperty('billing_address1')}"
-                        :readonly="isProcessing"
-                      />
-                      <div
-                        class="invalid-feedback"
-                        v-if="errors.hasOwnProperty('billing_address1')"
-                      >{{ errors.billing_address1[0] }}</div>
-                    </div>
-                  </div>
-                  <div class="col-md-12">
-                    <div class="form-group">
-                      <label for="billing_address2">{{ trans('Address') }} 2</label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="billing_address2"
-                        name="billing_address2"
-                        :placeholder="trans('Apartment, suite, unit, building, floor, etc')"
-                        required
-                        v-model="checkout.billing_address2"
-                        :disabled="sameAddress"
-                        :class="{'is-invalid': errors.hasOwnProperty('billing_address2')}"
-                        :readonly="isProcessing"
-                      />
-                      <div
-                        class="invalid-feedback"
-                        v-if="errors.hasOwnProperty('billing_address2')"
-                      >{{ errors.billing_address2[0] }}</div>
                     </div>
                   </div>
                 </div>

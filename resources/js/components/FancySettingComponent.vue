@@ -59,7 +59,7 @@
                         <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
                             <div>
                                 <fieldset class="mb-4">
-                                    <legend class="pl-4">{{ trans('Message for business hours') }}</legend>
+                                    <legend class="pl-4">{{ trans('Message') }}</legend>
                                     <div>
                                         <div class="custom-control custom-radio mb-3"
                                              v-for="item in messages.business"

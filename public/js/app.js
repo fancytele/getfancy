@@ -4104,6 +4104,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -65035,6 +65036,103 @@ var render = function() {
                       ])
                     ]),
                     _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "company_address1" } }, [
+                          _vm._v(_vm._s(_vm.trans("Address")) + " 1")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.checkout.company_address1,
+                              expression: "checkout.company_address1"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.errors.hasOwnProperty(
+                              "company_address1"
+                            )
+                          },
+                          attrs: {
+                            type: "text",
+                            id: "company_address1",
+                            name: "company_address1",
+                            required: "",
+                            placeholder: _vm.trans(
+                              "Street address, P.O. box, company name, c/o"
+                            )
+                          },
+                          domProps: { value: _vm.checkout.company_address1 },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.checkout,
+                                "company_address1",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.hasOwnProperty("company_address1")
+                          ? _c("div", { staticClass: "invalid-feedback" }, [
+                              _vm._v(
+                                _vm._s(_vm.errors.company_address1[0]) +
+                                  "\n                      "
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "company_address2" } }, [
+                          _vm._v(_vm._s(_vm.trans("Address")) + " 2")
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.checkout.company_address2,
+                              expression: "checkout.company_address2"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "text",
+                            id: "company_address2",
+                            name: "company_address2",
+                            placeholder: _vm.trans(
+                              "Apartment, suite, unit, building, floor, etc"
+                            )
+                          },
+                          domProps: { value: _vm.checkout.company_address2 },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.checkout,
+                                "company_address2",
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
                     _c("div", { staticClass: "col-md-6" }, [
                       _c(
                         "div",
@@ -65234,103 +65332,6 @@ var render = function() {
                             ])
                           : _vm._e()
                       ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-12" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "company_address1" } }, [
-                          _vm._v(_vm._s(_vm.trans("Address")) + " 1")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.checkout.company_address1,
-                              expression: "checkout.company_address1"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.errors.hasOwnProperty(
-                              "company_address1"
-                            )
-                          },
-                          attrs: {
-                            type: "text",
-                            id: "company_address1",
-                            name: "company_address1",
-                            required: "",
-                            placeholder: _vm.trans(
-                              "Street address, P.O. box, company name, c/o"
-                            )
-                          },
-                          domProps: { value: _vm.checkout.company_address1 },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.checkout,
-                                "company_address1",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.hasOwnProperty("company_address1")
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(
-                                _vm._s(_vm.errors.company_address1[0]) +
-                                  "\n                      "
-                              )
-                            ])
-                          : _vm._e()
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-12" }, [
-                      _c("div", { staticClass: "form-group" }, [
-                        _c("label", { attrs: { for: "company_address2" } }, [
-                          _vm._v(_vm._s(_vm.trans("Address")) + " 2")
-                        ]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.checkout.company_address2,
-                              expression: "checkout.company_address2"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          attrs: {
-                            type: "text",
-                            id: "company_address2",
-                            name: "company_address2",
-                            placeholder: _vm.trans(
-                              "Apartment, suite, unit, building, floor, etc"
-                            )
-                          },
-                          domProps: { value: _vm.checkout.company_address2 },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.checkout,
-                                "company_address2",
-                                $event.target.value
-                              )
-                            }
-                          }
-                        })
-                      ])
                     ])
                   ])
                 ]),
@@ -65424,6 +65425,124 @@ var render = function() {
                   _vm._v(" "),
                   !_vm.sameAddress
                     ? _c("div", { staticClass: "row" }, [
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "billing_address1" } },
+                              [_vm._v(_vm._s(_vm.trans("Address")) + " 1")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.checkout.billing_address1,
+                                  expression: "checkout.billing_address1"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.errors.hasOwnProperty(
+                                  "billing_address1"
+                                )
+                              },
+                              attrs: {
+                                type: "text",
+                                id: "billing_address1",
+                                name: "billing_address1",
+                                placeholder: _vm.trans(
+                                  "Street address, P.O. box, company name, c/o"
+                                ),
+                                required: "",
+                                disabled: _vm.sameAddress,
+                                readonly: _vm.isProcessing
+                              },
+                              domProps: {
+                                value: _vm.checkout.billing_address1
+                              },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.checkout,
+                                    "billing_address1",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.errors.hasOwnProperty("billing_address1")
+                              ? _c("div", { staticClass: "invalid-feedback" }, [
+                                  _vm._v(_vm._s(_vm.errors.billing_address1[0]))
+                                ])
+                              : _vm._e()
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-md-12" }, [
+                          _c("div", { staticClass: "form-group" }, [
+                            _c(
+                              "label",
+                              { attrs: { for: "billing_address2" } },
+                              [_vm._v(_vm._s(_vm.trans("Address")) + " 2")]
+                            ),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.checkout.billing_address2,
+                                  expression: "checkout.billing_address2"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.errors.hasOwnProperty(
+                                  "billing_address2"
+                                )
+                              },
+                              attrs: {
+                                type: "text",
+                                id: "billing_address2",
+                                name: "billing_address2",
+                                placeholder: _vm.trans(
+                                  "Apartment, suite, unit, building, floor, etc"
+                                ),
+                                required: "",
+                                disabled: _vm.sameAddress,
+                                readonly: _vm.isProcessing
+                              },
+                              domProps: {
+                                value: _vm.checkout.billing_address2
+                              },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.checkout,
+                                    "billing_address2",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _vm.errors.hasOwnProperty("billing_address2")
+                              ? _c("div", { staticClass: "invalid-feedback" }, [
+                                  _vm._v(_vm._s(_vm.errors.billing_address2[0]))
+                                ])
+                              : _vm._e()
+                          ])
+                        ]),
+                        _vm._v(" "),
                         _c("div", { staticClass: "col-md-6" }, [
                           _c(
                             "div",
@@ -65623,124 +65742,6 @@ var render = function() {
                             _vm.errors.hasOwnProperty("zip_code")
                               ? _c("div", { staticClass: "invalid-feedback" }, [
                                   _vm._v(_vm._s(_vm.errors.zip_code[0]))
-                                ])
-                              : _vm._e()
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-12" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
-                              "label",
-                              { attrs: { for: "billing_address1" } },
-                              [_vm._v(_vm._s(_vm.trans("Address")) + " 1")]
-                            ),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.checkout.billing_address1,
-                                  expression: "checkout.billing_address1"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              class: {
-                                "is-invalid": _vm.errors.hasOwnProperty(
-                                  "billing_address1"
-                                )
-                              },
-                              attrs: {
-                                type: "text",
-                                id: "billing_address1",
-                                name: "billing_address1",
-                                placeholder: _vm.trans(
-                                  "Street address, P.O. box, company name, c/o"
-                                ),
-                                required: "",
-                                disabled: _vm.sameAddress,
-                                readonly: _vm.isProcessing
-                              },
-                              domProps: {
-                                value: _vm.checkout.billing_address1
-                              },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.checkout,
-                                    "billing_address1",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors.hasOwnProperty("billing_address1")
-                              ? _c("div", { staticClass: "invalid-feedback" }, [
-                                  _vm._v(_vm._s(_vm.errors.billing_address1[0]))
-                                ])
-                              : _vm._e()
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-12" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
-                              "label",
-                              { attrs: { for: "billing_address2" } },
-                              [_vm._v(_vm._s(_vm.trans("Address")) + " 2")]
-                            ),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.checkout.billing_address2,
-                                  expression: "checkout.billing_address2"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              class: {
-                                "is-invalid": _vm.errors.hasOwnProperty(
-                                  "billing_address2"
-                                )
-                              },
-                              attrs: {
-                                type: "text",
-                                id: "billing_address2",
-                                name: "billing_address2",
-                                placeholder: _vm.trans(
-                                  "Apartment, suite, unit, building, floor, etc"
-                                ),
-                                required: "",
-                                disabled: _vm.sameAddress,
-                                readonly: _vm.isProcessing
-                              },
-                              domProps: {
-                                value: _vm.checkout.billing_address2
-                              },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.checkout,
-                                    "billing_address2",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors.hasOwnProperty("billing_address2")
-                              ? _c("div", { staticClass: "invalid-feedback" }, [
-                                  _vm._v(_vm._s(_vm.errors.billing_address2[0]))
                                 ])
                               : _vm._e()
                           ])
@@ -67834,6 +67835,103 @@ var render = function() {
                     ])
                   ]),
                   _vm._v(" "),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "company_address1" } }, [
+                        _vm._v(_vm._s(_vm.trans("Address")) + " 1")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.company_address1,
+                            expression: "user.company_address1"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.hasOwnProperty(
+                            "company_address1"
+                          )
+                        },
+                        attrs: {
+                          type: "text",
+                          id: "company_address1",
+                          name: "company_address1",
+                          required: "",
+                          placeholder: _vm.trans(
+                            "Street address, P.O. box, company name, c/o"
+                          )
+                        },
+                        domProps: { value: _vm.user.company_address1 },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "company_address1",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm.errors.hasOwnProperty("company_address1")
+                        ? _c("div", { staticClass: "invalid-feedback" }, [
+                            _vm._v(
+                              _vm._s(_vm.errors.company_address1[0]) +
+                                "\n                                    "
+                            )
+                          ])
+                        : _vm._e()
+                    ])
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-12" }, [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("label", { attrs: { for: "company_address2" } }, [
+                        _vm._v(_vm._s(_vm.trans("Address")) + " 2")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.user.company_address2,
+                            expression: "user.company_address2"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          id: "company_address2",
+                          name: "company_address2",
+                          placeholder: _vm.trans(
+                            "Apartment, suite, unit, building, floor, etc"
+                          )
+                        },
+                        domProps: { value: _vm.user.company_address2 },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.user,
+                              "company_address2",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
                   _c("div", { staticClass: "col-md-6" }, [
                     _c(
                       "div",
@@ -68033,103 +68131,6 @@ var render = function() {
                           ])
                         : _vm._e()
                     ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-12" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "company_address1" } }, [
-                        _vm._v(_vm._s(_vm.trans("Address")) + " 1")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.user.company_address1,
-                            expression: "user.company_address1"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        class: {
-                          "is-invalid": _vm.errors.hasOwnProperty(
-                            "company_address1"
-                          )
-                        },
-                        attrs: {
-                          type: "text",
-                          id: "company_address1",
-                          name: "company_address1",
-                          required: "",
-                          placeholder: _vm.trans(
-                            "Street address, P.O. box, company name, c/o"
-                          )
-                        },
-                        domProps: { value: _vm.user.company_address1 },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.user,
-                              "company_address1",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.hasOwnProperty("company_address1")
-                        ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(
-                              _vm._s(_vm.errors.company_address1[0]) +
-                                "\n                                    "
-                            )
-                          ])
-                        : _vm._e()
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-12" }, [
-                    _c("div", { staticClass: "form-group" }, [
-                      _c("label", { attrs: { for: "company_address2" } }, [
-                        _vm._v(_vm._s(_vm.trans("Address")) + " 2")
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.user.company_address2,
-                            expression: "user.company_address2"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: {
-                          type: "text",
-                          id: "company_address2",
-                          name: "company_address2",
-                          placeholder: _vm.trans(
-                            "Apartment, suite, unit, building, floor, etc"
-                          )
-                        },
-                        domProps: { value: _vm.user.company_address2 },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.user,
-                              "company_address2",
-                              $event.target.value
-                            )
-                          }
-                        }
-                      })
-                    ])
                   ])
                 ])
               ])
@@ -68221,6 +68222,105 @@ var render = function() {
                 _vm._v(" "),
                 !_vm.sameAddress
                   ? _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "billing_address1" } }, [
+                            _vm._v(_vm._s(_vm.trans("Address")) + " 1")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.user.billing_address1,
+                                expression: "user.billing_address1"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            class: {
+                              "is-invalid": _vm.errors.hasOwnProperty(
+                                "billing_address1"
+                              )
+                            },
+                            attrs: {
+                              type: "text",
+                              id: "billing_address1",
+                              name: "billing_address1",
+                              required: "",
+                              disabled: _vm.sameAddress,
+                              placeholder: _vm.trans(
+                                "Street address, P.O. box, company name, c/o"
+                              )
+                            },
+                            domProps: { value: _vm.user.billing_address1 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.user,
+                                  "billing_address1",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.hasOwnProperty("billing_address1")
+                            ? _c("div", { staticClass: "invalid-feedback" }, [
+                                _vm._v(
+                                  _vm._s(_vm.errors.billing_address1[0]) +
+                                    "\n                                    "
+                                )
+                              ])
+                            : _vm._e()
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-12" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "billing_address2" } }, [
+                            _vm._v(_vm._s(_vm.trans("Address")) + " 2")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.user.billing_address2,
+                                expression: "user.billing_address2"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "billing_address2",
+                              name: "billing_address2",
+                              disabled: _vm.sameAddress,
+                              placeholder: _vm.trans(
+                                "Apartment, suite, unit, building, floor, etc"
+                              )
+                            },
+                            domProps: { value: _vm.user.billing_address2 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.user,
+                                  "billing_address2",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ]),
+                      _vm._v(" "),
                       _c("div", { staticClass: "col-md-6" }, [
                         _c(
                           "div",
@@ -68425,105 +68525,6 @@ var render = function() {
                                 )
                               ])
                             : _vm._e()
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-12" }, [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("label", { attrs: { for: "billing_address1" } }, [
-                            _vm._v(_vm._s(_vm.trans("Address")) + " 1")
-                          ]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.user.billing_address1,
-                                expression: "user.billing_address1"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            class: {
-                              "is-invalid": _vm.errors.hasOwnProperty(
-                                "billing_address1"
-                              )
-                            },
-                            attrs: {
-                              type: "text",
-                              id: "billing_address1",
-                              name: "billing_address1",
-                              required: "",
-                              disabled: _vm.sameAddress,
-                              placeholder: _vm.trans(
-                                "Street address, P.O. box, company name, c/o"
-                              )
-                            },
-                            domProps: { value: _vm.user.billing_address1 },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.user,
-                                  "billing_address1",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          }),
-                          _vm._v(" "),
-                          _vm.errors.hasOwnProperty("billing_address1")
-                            ? _c("div", { staticClass: "invalid-feedback" }, [
-                                _vm._v(
-                                  _vm._s(_vm.errors.billing_address1[0]) +
-                                    "\n                                    "
-                                )
-                              ])
-                            : _vm._e()
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "col-12" }, [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("label", { attrs: { for: "billing_address2" } }, [
-                            _vm._v(_vm._s(_vm.trans("Address")) + " 2")
-                          ]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.user.billing_address2,
-                                expression: "user.billing_address2"
-                              }
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "text",
-                              id: "billing_address2",
-                              name: "billing_address2",
-                              disabled: _vm.sameAddress,
-                              placeholder: _vm.trans(
-                                "Apartment, suite, unit, building, floor, etc"
-                              )
-                            },
-                            domProps: { value: _vm.user.billing_address2 },
-                            on: {
-                              input: function($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.user,
-                                  "billing_address2",
-                                  $event.target.value
-                                )
-                              }
-                            }
-                          })
                         ])
                       ])
                     ])
@@ -69495,9 +69496,7 @@ var render = function() {
                     _c("div", [
                       _c("fieldset", { staticClass: "mb-4" }, [
                         _c("legend", { staticClass: "pl-4" }, [
-                          _vm._v(
-                            _vm._s(_vm.trans("Message for business hours"))
-                          )
+                          _vm._v(_vm._s(_vm.trans("Message")))
                         ]),
                         _vm._v(" "),
                         _c(
