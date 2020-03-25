@@ -137,7 +137,6 @@ class UserService
             return ['message' => 'Your Fancy Number is processing'];
         }
 
-        // '50640000229'
         $carbon = new Carbon();
         $calls = $this->getCalls($user->fancy_number->did_number, $carbon->year, $carbon->month);
 

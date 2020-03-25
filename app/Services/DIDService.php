@@ -240,7 +240,7 @@ class DIDService
                 $cdr_export_document = DIDWWCDRExport::find($id);
                 $find_cdr = $cdr_export_document->getData();
                 $times += 1;
-            } while ($find_cdr->status !== DIDCDRStatus::COMPLETED && $times <= self::CDR_MAX_TIMES);
+            } while (optional($find_cdr)->status !== DIDCDRStatus::COMPLETED && $times <= self::CDR_MAX_TIMES);
         } catch (Exception $e) {
             Log::error($e->getMessage());
             return [];
