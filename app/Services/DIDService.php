@@ -47,7 +47,7 @@ class DIDService
     /**
      * Amount of attemps to get CDR report
      */
-    private const CDR_MAX_TIMES = 200;
+    private const CDR_MAX_TIMES = 2000;
 
 
     /**
@@ -248,7 +248,7 @@ class DIDService
             Log::error($e->getMessage());
             return [];
         }
-        
+
         \Log::info('cdr is object: ' . is_object($find_cdr));
 
 
