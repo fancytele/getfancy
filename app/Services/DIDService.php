@@ -231,9 +231,6 @@ class DIDService
         $data = $cdr_export_document->getData();
         $id = $data->getId();
 
-        \Log::info('did env: ' . $this->getEnv());
-        \Log::info('cdr id: ' . $id);
-
         // Get CSV file URL
         $find_cdr = null;
         $times = 0;
@@ -248,9 +245,6 @@ class DIDService
             Log::error($e->getMessage());
             return [];
         }
-
-        \Log::info('cdr is object: ' . is_object($find_cdr));
-
 
         $file_name = $id . '.csv';
 
