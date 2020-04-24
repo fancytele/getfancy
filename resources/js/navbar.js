@@ -1,7 +1,9 @@
+const offsetSection = 118;
+
 const animateScrollSpy = function (event) {
   if (this.hash !== "" && this.hash !== window.location.hash) {
     event.preventDefault();
-    $('html, body').animate({ scrollTop: $(this.hash).offset().top - 120 }, 800);
+    $('html, body').animate({ scrollTop: $(this.hash).offset().top - offsetSection }, 800);
   }
 }
 
@@ -18,7 +20,7 @@ const changeNavbarBg = function () {
 }
 
 const init = () => {
-  $('body').scrollspy({ target: "#fancy-navbar", offset: 95 });
+  $('body').scrollspy({ target: "#fancy-navbar", offset: offsetSection + 2 });
 
   $("#fancy-menu .nav-link").on('click', animateScrollSpy);
 

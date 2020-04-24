@@ -95,11 +95,13 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+var offsetSection = 118;
+
 var animateScrollSpy = function animateScrollSpy(event) {
   if (this.hash !== "" && this.hash !== window.location.hash) {
     event.preventDefault();
     $('html, body').animate({
-      scrollTop: $(this.hash).offset().top - 120
+      scrollTop: $(this.hash).offset().top - offsetSection
     }, 800);
   }
 };
@@ -119,7 +121,7 @@ var changeNavbarBg = function changeNavbarBg() {
 var init = function init() {
   $('body').scrollspy({
     target: "#fancy-navbar",
-    offset: 95
+    offset: offsetSection + 2
   });
   $("#fancy-menu .nav-link").on('click', animateScrollSpy);
   $(window).on('scroll', changeNavbarBg);
