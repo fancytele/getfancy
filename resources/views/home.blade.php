@@ -84,7 +84,9 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="font-weight-bold nav-link text-body" href="#plans">@lang('Our plans')</a>
+                                <a class="font-weight-bold nav-link text-body" href="#plans">
+                                    @lang('Plans and Features')
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <a class="font-weight-bold nav-link text-body"
@@ -399,10 +401,10 @@
                 <div class="container" data-aos="fade-up">
                     <div class="text-center" data-aos="fade-up">
                         <h2 class="display-4 font-heading text-primary">
-                            @lang('Our plans')
+                            @lang('Plans and Features')
                         </h2>
                         <p class="mx-auto w-lg-75">
-                            @lang('Our plans Message')
+                            @lang('Plans and Features Message')
                         </p>
                     </div>
                     <div class="row">
