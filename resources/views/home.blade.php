@@ -74,7 +74,7 @@
                         <ul class="align-items-center d-flex ml-auto navbar-nav text-lowercase">
                             <li class="nav-item">
                                 <a class="font-weight-bold nav-link text-body" href="#features">
-                                    @lang('Solutions')
+                                    @lang('Why Fancy?')
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
@@ -228,7 +228,7 @@
                     <div class="container">
                         <div class="text-center" data-aos="fade-up">
                             <h2 class="display-4 font-heading">
-                                @lang('Solutions')
+                                @lang('Why Fancy?')
                             </h2>
                         </div>
                         <div class="mt-7 row">
@@ -239,10 +239,10 @@
                                     </span>
                                 </div>
                                 <h4 class="font-weight-bold">
-                                    @lang('Work anywhere')
+                                    @lang('Powerful')
                                 </h4>
                                 <p>
-                                    @lang('Work anywhere Message')
+                                    @lang('Powerful Message')
                                 </p>
                             </div>
                             <div class="col-md-4 mb-3" data-aos="fade-up">
@@ -252,10 +252,10 @@
                                     </span>
                                 </div>
                                 <h4 class="font-weight-bold">
-                                    @lang('Convenience')
+                                    @lang('Credible')
                                 </h4>
                                 <p>
-                                    @lang('Convenience Message')
+                                    @lang('Credible Message')
                                 </p>
                             </div>
                             <div class="col-md-4 mb-3" data-aos="fade-up">
@@ -265,10 +265,10 @@
                                     </span>
                                 </div>
                                 <h4 class="font-weight-bold">
-                                    @lang('Affordable prices')
+                                    @lang('Easy')
                                 </h4>
                                 <p>
-                                    @lang('Affordable prices Message')
+                                    @lang('Easy Message')
                                 </p>
                             </div>
 
@@ -279,10 +279,10 @@
                                     </span>
                                 </div>
                                 <h4 class="font-weight-bold">
-                                    @lang('Management tools')
+                                    @lang('Smart')
                                 </h4>
                                 <p>
-                                    @lang('Management tools Message')
+                                    @lang('Smart Message')
                                 </p>
                             </div>
                             <div class="col-md-4 mb3" data-aos="fade-up">
@@ -292,10 +292,10 @@
                                     </span>
                                 </div>
                                 <h4 class="font-weight-bold">
-                                    @lang('Ease')
+                                    @lang('Data Driven')
                                 </h4>
                                 <p>
-                                    @lang('Ease Message')
+                                    @lang('Data Driven Message')
                                 </p>
                             </div>
                             <div class="col-md-4 mb3" data-aos="fade-up">
@@ -305,10 +305,10 @@
                                     </span>
                                 </div>
                                 <h4 class="font-weight-bold">
-                                    @lang('Smart data')
+                                    @lang('Affordable')
                                 </h4>
                                 <p>
-                                    @lang('Smart data Message')
+                                    @lang('Affordable Message')
                                 </p>
                             </div>
                         </div>
