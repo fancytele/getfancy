@@ -78,6 +78,10 @@
   fill: $primary;
 }
 
+.fill-white {
+  fill: $white;
+}
+
 .font-heading {
   font-family: $font-family-headng;
 }
@@ -170,4 +174,8 @@
   @include media-breakpoint-up(lg) {
     width: 75%;
   }
+}
+
+.z-index {
+  z-index: 1 !important;
 }

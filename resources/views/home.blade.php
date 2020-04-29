@@ -221,6 +221,9 @@
 
             <!-- Features Section -->
             <section id="features" class="bg-primary text-white">
+                <svg class="h-60 w-100" preserveAspectRatio="none" viewBox="0 0 100 100">
+                    <polygon class="fill-body" points="0,0 100,0 0,100 0,100"></polygon>
+                </svg>
                 <div class="fancy-section">
                     <div class="container">
                         <div class="text-center" data-aos="fade-up">
@@ -318,7 +321,7 @@
             <!-- / Features Section -->
 
             <!-- How It Works Section -->
-            <section id="how-it-works" class="border-bottom fancy-section">
+            <section id="how-it-works" class="fancy-section">
                 <div class="container pb-5" data-aos="fade-up">
                     <div class="mb-6">
                         <h2 class="display-4 font-heading mb-1 text-primary">
@@ -397,7 +400,10 @@
             <!-- / How It Works Section -->
 
             <!-- Plans Section -->
-            <section id="plans" class="bg-white fancy-section pb-6 text-center">
+            <section id="plans" class="bg-white fancy-section pt-0 text-center">
+                <svg class="h-60 mb-6 w-100" preserveAspectRatio="none" viewBox="0 0 100 100">
+                    <polygon class="fill-body" points="0,0 100,0 0,100 0,100"></polygon>
+                </svg>
                 <div class="container" data-aos="fade-up">
                     <div class="text-center" data-aos="fade-up">
                         <h2 class="display-4 font-heading text-primary">
@@ -488,32 +494,35 @@
             <!-- / Plans Section -->
 
             <!-- Testimonials Section -->
-        <section id="about" class="fancy-section position-relative">
-            <svg class="h-20 h-sm-100 position-absolute pull-left pull-top w-100 w-sm-50"
-                 preserveAspectRatio="none" viewBox="0 0 100 100">
-                <polygon class="fill-primary d-md-none"
-                         points="0,0 100,0 100,80 0,100" />
-                <polygon class="fill-primary d-none d-md-block"
-                         points="0,0 100,0 90,100 0,100" />
-            </svg>
-            <div class="container py-md-4" data-aos="fade-up">
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="pt-md-0 px-4 px-sm-0 py-4">
-                            <h2 class="display-3 d-md-inline-block font-heading mr-3 text-white">
-                                @lang('About')
-                            </h2>
-                            <img src="{{ asset('/img/logo-light.png') }}"
-                                 alt="Logo Secondary">
+            <section id="about" class="fancy-section position-relative pt-0">
+                <svg class="h-60 mb-6 position-relative w-100 z-index" preserveAspectRatio="none" viewBox="0 0 100 100">
+                    <polygon class="fill-white" points="0,0 100,0 0,100 0,100"></polygon>
+                </svg>
+                <svg class="h-20 h-sm-100 position-absolute pull-left pull-top w-100 w-sm-50"
+                     preserveAspectRatio="none" viewBox="0 0 100 100">
+                    <polygon class="fill-primary d-md-none"
+                             points="0,0 100,0 100,80 0,100" />
+                    <polygon class="fill-primary d-none d-md-block"
+                             points="0,0 100,0 90,100 0,100" />
+                </svg>
+                <div class="container py-md-4" data-aos="fade-up">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="pt-md-0 px-4 px-sm-0 py-4">
+                                <h2 class="display-3 d-md-inline-block font-heading mr-3 text-white">
+                                    @lang('About')
+                                </h2>
+                                <img src="{{ asset('/img/logo-light.png') }}"
+                                     alt="Logo Secondary">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mt-7 mt-md-0">@lang('About us message')</p>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <p class="mt-7 mt-md-0">@lang('About us message')</p>
-                    </div>
                 </div>
-            </div>
-        </section>
-        <!-- / Testimonials Section -->
+            </section>
+            <!-- / Testimonials Section -->
         </main>
 
         <footer class="footer overflow-hidden text-white">

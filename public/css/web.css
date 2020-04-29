@@ -12654,6 +12654,10 @@ a.text-white:focus {
   fill: #704895;
 }
 
+.fill-white {
+  fill: #FFFFFF;
+}
+
 .font-heading {
   font-family: "Oxygen", sans-serif;
 }
@@ -12746,6 +12750,10 @@ a.text-white:focus {
   .w-lg-75 {
     width: 75%;
   }
+}
+
+.z-index {
+  z-index: 1 !important;
 }
 
 .navbar {
