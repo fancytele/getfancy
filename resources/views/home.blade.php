@@ -56,19 +56,19 @@
                         </button>
                         <div class="d-md-flex d-none mb-4 small">
                             @if(App::isLocale('en'))
-                            <span class="text-body">English</span>
+                                <span class="text-muted">English</span>
                             @else
-                            <a href="{{ route('web.locale', 'en') }}" class="text-muted">
-                                English
-                            </a>
+                                <a href="{{ route('web.locale', 'en') }}" class="text-body">
+                                    English
+                                </a>
                             @endif
                             <span class="px-3">|</span>
                             @if(App::isLocale('es'))
-                            <span class="text-body">Español</span>
+                                <span class="text-muted">Español</span>
                             @else
-                            <a href="{{ route('web.locale', 'es') }}" class="text-muted">
-                                Español
-                            </a>
+                                <a href="{{ route('web.locale', 'es') }}" class="text-body">
+                                    Español
+                                </a>
                             @endif
                         </div>
                         <ul class="align-items-center d-flex ml-auto navbar-nav text-lowercase">
@@ -339,10 +339,10 @@
                                     </div>
                                     <div class="media-body">
                                         <h4 class="mt-0">
-                                            @lang('Pick a number of your choice')
+                                            1. @lang('Get Started')
                                         </h4>
                                         <small>
-                                            @lang('Pick a number Message')
+                                            @lang('Get Started Message')
                                         </small>
                                     </div>
                                 </div>
@@ -353,10 +353,10 @@
                                     </div>
                                     <div class="media-body">
                                         <h4 class="mt-0">
-                                            @lang('Record greetings or use recording service')
+                                            2. @lang('Customize')
                                         </h4>
                                         <small>
-                                            @lang('Record greetings Message')
+                                            @lang('Customize Message')
                                         </small>
                                     </div>
                                 </div>
@@ -371,10 +371,10 @@
                                     </div>
                                     <div class="media-body">
                                         <h4 class="mt-0">
-                                            @lang('Add as many extensions as you want')
+                                            3. @lang('Smarten up with your data & reports.')
                                         </h4>
                                         <small>
-                                            @lang('Add extensions Message')
+                                            @lang('Smarten Message')
                                         </small>
                                     </div>
                                 </div>
@@ -385,10 +385,10 @@
                                     </div>
                                     <div class="media-body">
                                         <h4 class="mt-0">
-                                            @lang('Receive reports')
+                                            4. @lang('Take Action!')
                                         </h4>
                                         <small>
-                                            @lang('Receive reports Message')
+                                            @lang('Take Action Message')
                                         </small>
                                     </div>
                                 </div>
