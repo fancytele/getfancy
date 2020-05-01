@@ -2,7 +2,7 @@
 
 @section('page-subtitle', __('Edit User'))
 
-@section('page-title', __('Fancy number'))
+@section('page-title', __('Configure Your Fancy Number'))
 
 @push('head-scripts')
     <script src="{{ asset('js/lang.js') }}" defer></script>

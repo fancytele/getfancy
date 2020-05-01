@@ -1,20 +1,28 @@
 <template>
   <div>
     <div>
-      <h2 class="mb-2">Fancy number</h2>
+      <h2 class="mb-2">{{ trans('Configure Your Fancy Number') }}</h2>
       <p class="text-muted mb-4">Get the Perfect Phone Number for Your Business</p>
     </div>
 
     <div>
       <button
         class="btn btn-lg btn-light d-block d-md-inline-block w-100 w-md-auto"
-        @click="setNumberType('custom')"
-      >Use my existing number</button>
-      <span class="d-block d-md-inline h1 mx-4 my-3 my-md-0 text-center">or</span>
-      <button
-        class="btn btn-lg btn-info d-block d-md-inline-block w-100 w-md-auto"
         @click="setNumberType('fancy')"
       >Create New number</button>
+      <p>
+        <small>You can choose a brand new Fancy number to publish and share any way you like</small>
+      </p>
+      <span class="d-block h1 pb-5">or</span>
+      <button
+        class="btn btn-lg btn-primary d-block d-md-inline-block w-100 w-md-auto"
+        @click="setNumberType('custom')"
+      >Use my existing number</button>
+      <p>
+        <small>
+          You will get all of Fancy's features by forwarding your existing calls to a secret Fancy number. This lets you keep your published number and decide when to play the greeting.
+        </small>
+      </p>
     </div>
 
     <div v-if="numberType">
@@ -24,7 +32,7 @@
         <div class="card">
           <div class="card-body">
             <div class="form-group mb-0">
-              <label for="phone_number">Current number</label>
+              <label for="phone_number">Current Number</label>
               <input
                 type="phone_number"
                 class="form-control"
@@ -38,7 +46,7 @@
               <p
                 id="phoneHelp"
                 class="form-text mb-0 text-muted"
-              >An agent will contact you for intructions to transferring your number.</p>
+              >We will email you instructions on how to forward your calls to your secret Fancy number.</p>
             </div>
           </div>
         </div>
@@ -154,7 +162,7 @@
           </div>
         </transition>
 
-        <div class="text-right">
+        <div>
           <button
             class="btn btn-primary ladda-button px-4"
             type="submit"
@@ -164,7 +172,7 @@
             @click.prevent="submit()"
           >
             <i class="fe fe-settings"></i>
-            Continue to settings
+            Next
           </button>
         </div>
       </form>
