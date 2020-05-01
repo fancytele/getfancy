@@ -2,10 +2,7 @@
 
 namespace App\Http\Requests;
 
-use App\Enums\FancyNotificationPeriod;
-use App\Enums\Permission;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
 class FancySettingRequest extends FormRequest
 {
@@ -28,7 +25,7 @@ class FancySettingRequest extends FormRequest
     {
         return [
             'notification_email' => 'required|email',
-            'notification_period' => ['required', Rule::in(FancyNotificationPeriod::getValues())],
+            'notification_period' => ['required'],
             'reason' => 'required_if:ticket_in_progress,true'
         ];
     }

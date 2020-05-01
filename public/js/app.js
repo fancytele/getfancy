@@ -4910,16 +4910,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -4928,6 +4918,10 @@ __webpack_require__.r(__webpack_exports__);
       "default": function _default() {
         return false;
       }
+    },
+    professionalRecordingPrice: {
+      type: Number,
+      required: true
     },
     settings: {
       type: Object,
@@ -69503,65 +69497,31 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-md-8 col-lg-6" }, [
-                        _c("div", { staticClass: "form-group" }, [
-                          _c("label", { attrs: { for: "period" } }, [
-                            _vm._v(_vm._s(_vm.trans("Period")))
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "select",
-                            {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.notification.period,
-                                  expression: "notification.period"
-                                }
-                              ],
-                              staticClass: "form-control text-capitalize",
+                        _c(
+                          "div",
+                          { staticClass: "form-group" },
+                          [
+                            _c("label", { attrs: { for: "period" } }, [
+                              _vm._v(_vm._s(_vm.trans("Period")))
+                            ]),
+                            _vm._v(" "),
+                            _c("v-select", {
+                              staticClass: "text-capitalize",
                               attrs: {
-                                name: "period",
-                                id: "period",
-                                required: ""
+                                multiple: "",
+                                options: _vm.notificationPeriods
                               },
-                              on: {
-                                change: function($event) {
-                                  var $$selectedVal = Array.prototype.filter
-                                    .call($event.target.options, function(o) {
-                                      return o.selected
-                                    })
-                                    .map(function(o) {
-                                      var val =
-                                        "_value" in o ? o._value : o.value
-                                      return val
-                                    })
-                                  _vm.$set(
-                                    _vm.notification,
-                                    "period",
-                                    $event.target.multiple
-                                      ? $$selectedVal
-                                      : $$selectedVal[0]
-                                  )
-                                }
+                              model: {
+                                value: _vm.notification.period,
+                                callback: function($$v) {
+                                  _vm.$set(_vm.notification, "period", $$v)
+                                },
+                                expression: "notification.period"
                               }
-                            },
-                            _vm._l(_vm.notificationPeriods, function(period) {
-                              return _c(
-                                "option",
-                                { key: period, domProps: { value: period } },
-                                [
-                                  _vm._v(
-                                    "\n                                            " +
-                                      _vm._s(_vm.trans(period)) +
-                                      "\n                                        "
-                                  )
-                                ]
-                              )
-                            }),
-                            0
-                          )
-                        ])
+                            })
+                          ],
+                          1
+                        )
                       ])
                     ])
                   ]
@@ -69582,7 +69542,7 @@ var render = function() {
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-xl-4" }, [
                   _c("h2", { staticClass: "mb-1" }, [
-                    _vm._v(_vm._s(_vm.trans("PBX Message")))
+                    _vm._v(_vm._s(_vm.trans("Call Flow Configuration")))
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "text-black-50" }, [
@@ -69600,7 +69560,7 @@ var render = function() {
                     _c("div", [
                       _c("fieldset", { staticClass: "mb-4" }, [
                         _c("legend", { staticClass: "pl-4" }, [
-                          _vm._v(_vm._s(_vm.trans("Message")))
+                          _vm._v(_vm._s(_vm.trans("Voice Menu Options")))
                         ]),
                         _vm._v(" "),
                         _c(
@@ -69778,7 +69738,7 @@ var render = function() {
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-xl-4" }, [
                   _c("h2", { staticClass: "mb-1" }, [
-                    _vm._v(_vm._s(_vm.trans("Custom extensions")))
+                    _vm._v(_vm._s(_vm.trans("Extension Settings")))
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "text-black-50" }, [
@@ -70049,7 +70009,11 @@ var render = function() {
                                     staticClass: "custom-control-label",
                                     attrs: { for: "predefined_audio" }
                                   },
-                                  [_vm._v(_vm._s(_vm.trans("Predefined")))]
+                                  [
+                                    _vm._v(
+                                      _vm._s(_vm.trans("Default Recording"))
+                                    )
+                                  ]
                                 )
                               ]
                             ),
@@ -70285,7 +70249,13 @@ var render = function() {
                                       { staticClass: "form-text text-muted" },
                                       [
                                         _vm._v(
-                                          "$ 8.00 (will be charge immediately)"
+                                          "$ " +
+                                            _vm._s(
+                                              _vm.professionalRecordingPrice.toFixed(
+                                                2
+                                              )
+                                            ) +
+                                            " (will be charge immediately)"
                                         )
                                       ]
                                     )
@@ -70315,9 +70285,7 @@ var render = function() {
           },
           [
             _vm._v(
-              "\n            " +
-                _vm._s(_vm.trans("Save settings")) +
-                "\n        "
+              "\n            " + _vm._s(_vm.trans("Submit")) + "\n        "
             )
           ]
         )

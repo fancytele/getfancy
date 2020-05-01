@@ -42,7 +42,7 @@ class FancySettingService
         $this->UpdateExistingTicket();
 
         $setting->email_notification = (string) $request->input('notification_email');
-        $setting->period_notification = (string) $request->input('notification_period');
+        $setting->period_notification = $request->input('notification_period');
 
         $setting->business_message_id = $request->input('business_id');
 
@@ -88,7 +88,7 @@ class FancySettingService
             'downtime_hours' => optional($this->user->fancy_setting)->downtime_hours,
             'notification' => [
                 'email' => optional($this->user->fancy_setting)->email_notification,
-                'period' => optional($this->user->fancy_setting)->period_notification
+                'period' => explode(',', optional($this->user->fancy_setting)->period_notification)
             ],
             'pbx' => [
                 'business' => optional($this->user->fancy_setting)->business_message_id,

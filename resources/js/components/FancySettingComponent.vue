@@ -29,17 +29,7 @@
                                 <div class="col-md-8 col-lg-6">
                                     <div class="form-group">
                                         <label for="period">{{ trans('Period') }}</label>
-                                        <select name="period"
-                                                id="period"
-                                                class="form-control text-capitalize"
-                                                required
-                                                v-model="notification.period">
-                                            <option :value="period"
-                                                    v-for="period in notificationPeriods"
-                                                    :key="period">
-                                                {{ trans(period) }}
-                                            </option>
-                                        </select>
+                                        <v-select class="text-capitalize" multiple v-model="notification.period" :options="notificationPeriods" />
                                     </div>
                                 </div>
                             </div>
@@ -53,13 +43,13 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-xl-4">
-                            <h2 class="mb-1">{{ trans('PBX Message') }}</h2>
+                            <h2 class="mb-1">{{ trans('Call Flow Configuration') }}</h2>
                             <p class="text-black-50">{{ trans('Choose your PBX message') }}.</p>
                         </div>
                         <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
                             <div>
                                 <fieldset class="mb-4">
-                                    <legend class="pl-4">{{ trans('Message') }}</legend>
+                                    <legend class="pl-4">{{ trans('Voice Menu Options') }}</legend>
                                     <div>
                                         <div class="custom-control custom-radio mb-3"
                                              v-for="item in messages.business"
@@ -108,7 +98,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-xl-4">
-                            <h2 class="mb-1">{{ trans('Custom extensions') }}</h2>
+                            <h2 class="mb-1">{{ trans('Extension Settings') }}</h2>
                             <p class="text-black-50">{{ trans('Custom extensions description') }}.</p>
                         </div>
                         <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
@@ -184,7 +174,7 @@
                                                 class="custom-control-input"
                                                 value="predefined"
                                                 v-model="audioType"/>
-                                          <label for="predefined_audio" class="custom-control-label">{{ trans('Predefined') }}</label>
+                                          <label for="predefined_audio" class="custom-control-label">{{ trans('Default Recording') }}</label>
                                       </div>
                                       <div class="custom-control custom-control-md custom-radio d-xl-inline-block mb-4 mr-6">
                                           <input type="radio"
@@ -233,7 +223,7 @@
                                         <label class="align-items-start custom-control-label text-body"
                                               for="buy_professional_greeting">
                                             {{ trans('Buy Professional Greeting/Custom Recordings') }}
-                                            <span class="form-text text-muted">$ 8.00 (will be charge immediately)</span>
+                                            <span class="form-text text-muted">$ {{ professionalRecordingPrice.toFixed(2) }} (will be charge immediately)</span>
                                         </label>
                                     </div>
                                 </div>
@@ -247,7 +237,7 @@
                     id="submit-fancy-setting"
                     class="btn btn-primary btn btn-primary ladda-button"
                     data-style="zoom-out">
-                {{ trans('Save settings') }}
+                {{ trans('Submit') }}
             </button>
         </form>
 
@@ -292,6 +282,10 @@ export default {
       default() {
         return false;
       }
+    },
+    professionalRecordingPrice: {
+      type: Number,
+      required: true,
     },
     settings: {
       type: Object,

@@ -229,6 +229,7 @@ class UserController extends Controller
         $data = [
             'user' => $user,
             'has_professional_recording' => $user->hasBoughtAddon($addon->id),
+            'professional_recording_price' => $addon->cost,
             'settings' => (new FancySettingService($user))->getSettingsToEdit(),
             'notification_periods' => FancyNotificationPeriod::getValues(),
             'messages' => PBXMessage::get(['id', 'message', 'type'])->groupBy('type')->toArray(),
