@@ -6,5 +6,5 @@ abstract class ProductRenews extends Enum
 {
     const MONTHLY = "month";
     const ANNUALLY = "year";
-    const BIENNIALLY = "two year";
+    const BIANNUAL = "two year";
 }

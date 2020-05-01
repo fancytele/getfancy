@@ -4117,9 +4117,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -4188,7 +4185,7 @@ __webpack_require__.r(__webpack_exports__);
         required: ['billing_country', 'billing_city', 'billing_state', 'billing_zip_code', 'billing_address1']
       }, {
         id: 'fancy-number',
-        title: 'Fancy Number',
+        title: 'Fancy Number on Hold',
         description: 'Virtual number reservation',
         isActive: false,
         isCompleted: false,
@@ -4422,6 +4419,10 @@ __webpack_require__.r(__webpack_exports__);
           _this9.$set(_this9.errors, el, ['This field is required']);
         }
 
+        if (el === 'email_confirmation' && _this9.user.email !== _this9.user.email_confirmation) {
+          _this9.$set(_this9.errors, el, ['This field must match']);
+        }
+
         if (_this9.user[el] instanceof Object && Object.keys(_this9.user[el]).length === 0) {
           _this9.$set(_this9.errors, el, ['This field is required']);
         }
@@ -4599,6 +4600,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return this.urls.fancy_settings.replace('_user_', this.userCreated);
+    },
+    emailMatched: function emailMatched() {
+      return this.user.email === this.user.email_confirmation;
     }
   },
   watch: {
@@ -67229,7 +67233,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("span", {
                           domProps: {
-                            innerHTML: _vm._s(_vm.trans("Unlimited extensions"))
+                            innerHTML: _vm._s(_vm.trans("Feature Phone Calls"))
                           }
                         })
                       ]),
@@ -67239,57 +67243,7 @@ var render = function() {
                         _vm._v(" "),
                         _c("span", {
                           domProps: {
-                            innerHTML: _vm._s(_vm.trans("Customer support"))
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("li", { staticClass: "pb-3" }, [
-                        _c("i", { staticClass: "fe fe-check-circle" }),
-                        _vm._v(" "),
-                        _c("span", {
-                          domProps: {
-                            innerHTML: _vm._s(_vm.trans("All minutes = fixed"))
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("li", { staticClass: "pb-3" }, [
-                        _c("i", { staticClass: "fe fe-check-circle" }),
-                        _vm._v(" "),
-                        _c("span", {
-                          domProps: {
-                            innerHTML: _vm._s(_vm.trans("Choose your number"))
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("li", { staticClass: "pb-3" }, [
-                        _c("i", { staticClass: "fe fe-check-circle" }),
-                        _vm._v(" "),
-                        _c("span", {
-                          domProps: {
-                            innerHTML: _vm._s(_vm.trans("Conference call"))
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("li", { staticClass: "pb-3" }, [
-                        _c("i", { staticClass: "fe fe-check-circle" }),
-                        _vm._v(" "),
-                        _c("span", {
-                          domProps: {
-                            innerHTML: _vm._s(_vm.trans("Custom voice"))
-                          }
-                        })
-                      ]),
-                      _vm._v(" "),
-                      _c("li", { staticClass: "pb-3" }, [
-                        _c("i", { staticClass: "fe fe-check-circle" }),
-                        _vm._v(" "),
-                        _c("span", {
-                          domProps: {
-                            innerHTML: _vm._s(_vm.trans("Recording voice"))
+                            innerHTML: _vm._s(_vm.trans("Feature Text-able"))
                           }
                         })
                       ]),
@@ -67300,7 +67254,71 @@ var render = function() {
                         _c("span", {
                           domProps: {
                             innerHTML: _vm._s(
-                              _vm.trans("Recording voicemail to Email")
+                              _vm.trans("Feature Auto-Reply SMS")
+                            )
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "pb-3" }, [
+                        _c("i", { staticClass: "fe fe-check-circle" }),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.trans("Feature Data Driven"))
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "pb-3" }, [
+                        _c("i", { staticClass: "fe fe-check-circle" }),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.trans("Feature Call Queues"))
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "pb-3" }, [
+                        _c("i", { staticClass: "fe fe-check-circle" }),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.trans("Feature Auto-Play"))
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "pb-3" }, [
+                        _c("i", { staticClass: "fe fe-check-circle" }),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(
+                              _vm.trans("Feature Conference Call Room")
+                            )
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "pb-3" }, [
+                        _c("i", { staticClass: "fe fe-check-circle" }),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(_vm.trans("Feature E-Fax"))
+                          }
+                        })
+                      ]),
+                      _vm._v(" "),
+                      _c("li", { staticClass: "pb-3" }, [
+                        _c("i", { staticClass: "fe fe-check-circle" }),
+                        _vm._v(" "),
+                        _c("span", {
+                          domProps: {
+                            innerHTML: _vm._s(
+                              _vm.trans("Feature Spam Filtering Queues")
                             )
                           }
                         })
@@ -67329,7 +67347,7 @@ var render = function() {
                 _c("div", { staticClass: "col-md-4" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", { attrs: { for: "number_type" } }, [
-                      _vm._v(_vm._s(_vm.trans("Phone number type")))
+                      _vm._v(_vm._s(_vm.trans("Phone Number Type")))
                     ]),
                     _vm._v(" "),
                     _c(
@@ -67397,7 +67415,7 @@ var render = function() {
                 _c("div", { staticClass: "col-md-4" }, [
                   _c("div", { staticClass: "form-group" }, [
                     _c("label", { attrs: { for: "number_type" } }, [
-                      _vm._v(_vm._s(_vm.trans("Current number")))
+                      _vm._v(_vm._s(_vm.trans("Existing Number")))
                     ]),
                     _vm._v(" "),
                     _c("input", {
@@ -67447,38 +67465,23 @@ var render = function() {
               ]),
               _vm._v(" "),
               _c("fieldset", { staticClass: "mt-4" }, [
-                _c("legend", [_vm._v(_vm._s(_vm.trans("Reserve DID")))]),
+                _c("legend", [
+                  _vm._v(_vm._s(_vm.trans("Reserve Fancy Number")))
+                ]),
                 _vm._v(" "),
                 _vm.userHasReservation
                   ? _c("div", [
                       _c("div", { staticClass: "mt-2" }, [
                         _c("p", { staticClass: "mb-0" }, [
-                          _c("b", [_vm._v("DID:")]),
+                          _c("b", [
+                            _vm._v(_vm._s(_vm.trans("Fancy Number")) + ":")
+                          ]),
                           _vm._v(
                             "\n                                    " +
                               _vm._s(_vm._f("phone")(_vm.user.did.number)) +
                               "\n                                "
                           )
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "p",
-                          [
-                            _c("b", [
-                              _vm._v(_vm._s(_vm.trans("Expires in")) + ":")
-                            ]),
-                            _vm._v(" "),
-                            _c("countdown-timer", {
-                              attrs: { "end-date": _vm.user.did.expire_at },
-                              on: {
-                                "countdown-over": function($event) {
-                                  return _vm.reservationOver()
-                                }
-                              }
-                            })
-                          ],
-                          1
-                        )
+                        ])
                       ]),
                       _vm._v(" "),
                       _c(
@@ -67501,7 +67504,7 @@ var render = function() {
                           _c("i", { staticClass: "fe fe-phone-off mr-2" }),
                           _vm._v(
                             "\n                                " +
-                              _vm._s(_vm.trans("Cancel reservation")) +
+                              _vm._s(_vm.trans("Cancel Reservation")) +
                               "\n                            "
                           )
                         ]
@@ -67527,7 +67530,7 @@ var render = function() {
                         _c("i", { staticClass: "fe fe-search mr-2" }),
                         _vm._v(
                           "\n                            " +
-                            _vm._s(_vm.trans("Search DIDs")) +
+                            _vm._s(_vm.trans("Search Fancy Numbers")) +
                             "\n                        "
                         )
                       ]
@@ -67541,7 +67544,7 @@ var render = function() {
                       { staticClass: "d-block invalid-feedback mt-3" },
                       [
                         _vm._v(
-                          _vm._s(_vm.trans("The DID is required")) +
+                          _vm._s(_vm.trans("The Fancy Number is required")) +
                             "\n                        "
                         )
                       ]
@@ -67565,9 +67568,7 @@ var render = function() {
             },
             [
               _c("fieldset", [
-                _c("legend", [
-                  _vm._v(_vm._s(_vm.trans("Personal information")))
-                ]),
+                _c("legend", [_vm._v(_vm._s(_vm.trans("User Information")))]),
                 _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-6" }, [
@@ -67685,7 +67686,15 @@ var render = function() {
                         ],
                         staticClass: "form-control",
                         class: {
-                          "is-invalid": _vm.errors.hasOwnProperty("email")
+                          "border-success":
+                            _vm.user.email &&
+                            _vm.user.email_confirmation &&
+                            _vm.emailMatched,
+                          "is-invalid":
+                            _vm.errors.hasOwnProperty("email") ||
+                            (_vm.user.email &&
+                              _vm.user.email_confirmation &&
+                              !_vm.emailMatched)
                         },
                         attrs: {
                           type: "email",
@@ -67732,9 +67741,15 @@ var render = function() {
                         ],
                         staticClass: "form-control",
                         class: {
-                          "is-invalid": _vm.errors.hasOwnProperty(
-                            "email_confirmation"
-                          )
+                          "border-success":
+                            _vm.user.email &&
+                            _vm.user.email_confirmation &&
+                            _vm.emailMatched,
+                          "is-invalid":
+                            _vm.errors.hasOwnProperty("email_confirmation") ||
+                            (_vm.user.email &&
+                              _vm.user.email_confirmation &&
+                              !_vm.emailMatched)
                         },
                         attrs: {
                           type: "email",
@@ -67772,14 +67787,14 @@ var render = function() {
               _vm._v(" "),
               _c("fieldset", { staticClass: "mt-4" }, [
                 _c("legend", [
-                  _vm._v(_vm._s(_vm.trans("Business information")))
+                  _vm._v(_vm._s(_vm.trans("Business Information")))
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-md-4" }, [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "company_name" } }, [
-                        _vm._v(_vm._s(_vm.trans("Company name")))
+                        _vm._v(_vm._s(_vm.trans("Company Name")))
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -67832,7 +67847,7 @@ var render = function() {
                   _c("div", { staticClass: "col-md-4" }, [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "company_phone" } }, [
-                        _vm._v(_vm._s(_vm.trans("Company phone")))
+                        _vm._v(_vm._s(_vm.trans("Company Phone")))
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -67885,7 +67900,7 @@ var render = function() {
                   _c("div", { staticClass: "col-md-4" }, [
                     _c("div", { staticClass: "form-group" }, [
                       _c("label", { attrs: { for: "company_contact_name" } }, [
-                        _vm._v(_vm._s(_vm.trans("Company contact name")))
+                        _vm._v(_vm._s(_vm.trans("Contact Name")))
                       ]),
                       _vm._v(" "),
                       _c("input", {
@@ -68703,7 +68718,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          _vm._s(_vm.trans("Previous")) +
+                          _vm._s(_vm.trans("Back")) +
                             "\n                            "
                         )
                       ]
@@ -68757,7 +68772,7 @@ var render = function() {
                   },
                   [
                     _vm._v(
-                      _vm._s(_vm.trans("Create")) +
+                      _vm._s(_vm.trans("Submit")) +
                         "\n                            "
                     )
                   ]
@@ -68794,7 +68809,7 @@ var render = function() {
                   : _vm._e()
               ]),
               _vm._v(" "),
-              _vm.userHasReservation
+              _vm.userHasReservation && _vm.userCreated !== null
                 ? _c("div", { staticClass: "col-auto" }, [
                     _c(
                       "div",
@@ -68807,7 +68822,12 @@ var render = function() {
                             _c(
                               "strong",
                               { staticClass: "text-decoration-underline" },
-                              [_vm._v("DID reservation expires in:")]
+                              [
+                                _vm._v(
+                                  _vm._s(_vm.trans("Fancy Number")) +
+                                    " reservation expires in:"
+                                )
+                              ]
                             ),
                             _vm._v(" "),
                             _c("countdown-timer", {
@@ -68827,7 +68847,33 @@ var render = function() {
                 : _vm._e(),
               _vm._v(" "),
               _vm.reservationHasExpired
-                ? _c("div", { staticClass: "col-auto" }, [_vm._m(0)])
+                ? _c("div", { staticClass: "col-auto" }, [
+                    _c(
+                      "div",
+                      { staticClass: "mt-2 mt-md-0 text-warning text-right" },
+                      [
+                        _c("p", { staticClass: "mb-0" }, [
+                          _c("i", { staticClass: "fe fe-alert-triangle" }),
+                          _vm._v(" "),
+                          _c(
+                            "strong",
+                            { staticClass: "text-decoration-underline" },
+                            [
+                              _vm._v(
+                                _vm._s(_vm.trans("Fancy Number")) +
+                                  " has expired"
+                              )
+                            ]
+                          ),
+                          _vm._v(
+                            ", please select a new " +
+                              _vm._s(_vm.trans("Fancy Number")) +
+                              "\n                                "
+                          )
+                        ])
+                      ]
+                    )
+                  ])
                 : _vm._e()
             ])
           ])
@@ -68864,10 +68910,10 @@ var render = function() {
                         staticClass: "modal-title",
                         attrs: { id: "search-did-title" }
                       },
-                      [_vm._v(_vm._s(_vm.trans("Reserve DID")))]
+                      [_vm._v(_vm._s(_vm.trans("Reserve Fancy Number")))]
                     ),
                     _vm._v(" "),
-                    _vm._m(1)
+                    _vm._m(0)
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "modal-body" }, [
@@ -68905,7 +68951,7 @@ var render = function() {
                           { staticClass: "form-group" },
                           [
                             _c("label", { attrs: { for: "did_region" } }, [
-                              _vm._v(_vm._s(_vm.trans("Region")))
+                              _vm._v(_vm._s(_vm.trans("State or Region")))
                             ]),
                             _vm._v(" "),
                             _c("v-select", {
@@ -69051,7 +69097,7 @@ var render = function() {
                           ]),
                           _vm._v(
                             "\n                            " +
-                              _vm._s(_vm.trans("Availables DIDs")) +
+                              _vm._s(_vm.trans("Available Fancy Numbers")) +
                               "\n                        "
                           )
                         ]),
@@ -69358,21 +69404,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "mt-2 mt-md-0 text-warning text-right" }, [
-      _c("p", { staticClass: "mb-0" }, [
-        _c("i", { staticClass: "fe fe-alert-triangle" }),
-        _vm._v(" "),
-        _c("strong", { staticClass: "text-decoration-underline" }, [
-          _vm._v("DID has expired")
-        ]),
-        _vm._v(", please select a new DID\n                                ")
-      ])
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

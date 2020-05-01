@@ -75,35 +75,39 @@
                                 <ul class="list-unstyled">
                                     <li class="pb-3">
                                         <i class="fe fe-check-circle"></i>
-                                        <span v-html="trans('Unlimited extensions')"></span>
+                                        <span v-html="trans('Feature Phone Calls')"></span>
                                     </li>
                                     <li class="pb-3">
                                         <i class="fe fe-check-circle"></i>
-                                        <span v-html="trans('Customer support')"></span>
+                                        <span v-html="trans('Feature Text-able')"></span>
                                     </li>
                                     <li class="pb-3">
                                         <i class="fe fe-check-circle"></i>
-                                        <span v-html="trans('All minutes = fixed')"></span>
+                                        <span v-html="trans('Feature Auto-Reply SMS')"></span>
                                     </li>
                                     <li class="pb-3">
                                         <i class="fe fe-check-circle"></i>
-                                        <span v-html="trans('Choose your number')"></span>
+                                        <span v-html="trans('Feature Data Driven')"></span>
                                     </li>
                                     <li class="pb-3">
                                         <i class="fe fe-check-circle"></i>
-                                        <span v-html="trans('Conference call')"></span>
+                                        <span v-html="trans('Feature Call Queues')"></span>
                                     </li>
                                     <li class="pb-3">
                                         <i class="fe fe-check-circle"></i>
-                                        <span v-html="trans('Custom voice')"></span>
+                                        <span v-html="trans('Feature Auto-Play')"></span>
                                     </li>
                                     <li class="pb-3">
                                         <i class="fe fe-check-circle"></i>
-                                        <span v-html="trans('Recording voice')"></span>
+                                        <span v-html="trans('Feature Conference Call Room')"></span>
                                     </li>
                                     <li class="pb-3">
                                         <i class="fe fe-check-circle"></i>
-                                        <span v-html="trans('Recording voicemail to Email')"></span>
+                                        <span v-html="trans('Feature E-Fax')"></span>
+                                    </li>
+                                    <li class="pb-3">
+                                        <i class="fe fe-check-circle"></i>
+                                        <span v-html="trans('Feature Spam Filtering Queues')"></span>
                                     </li>
                                 </ul>
                             </div>
@@ -114,7 +118,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="number_type">{{ trans('Phone number type') }}</label>
+                                    <label for="number_type">{{ trans('Phone Number Type') }}</label>
                                     <select
                                             class="form-control"
                                             name="number_type"
@@ -136,7 +140,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="number_type">{{ trans('Current number') }}</label>
+                                    <label for="number_type">{{ trans('Existing Number') }}</label>
                                     <input
                                             type="tel"
                                             class="form-control"
@@ -156,19 +160,12 @@
                         </div>
 
                         <fieldset class="mt-4">
-                            <legend>{{ trans('Reserve DID') }}</legend>
+                            <legend>{{ trans('Reserve Fancy Number') }}</legend>
                             <div v-if="userHasReservation">
                                 <div class="mt-2">
                                     <p class="mb-0">
-                                        <b>DID:</b>
+                                        <b>{{ trans('Fancy Number') }}:</b>
                                         {{ user.did.number | phone }}
-                                    </p>
-                                    <p>
-                                        <b>{{ trans('Expires in') }}:</b>
-                                        <countdown-timer
-                                                :end-date="user.did.expire_at"
-                                                @countdown-over="reservationOver()"
-                                        ></countdown-timer>
                                     </p>
                                 </div>
 
@@ -180,7 +177,7 @@
                                         @click="cancelReservationDID()"
                                 >
                                     <i class="fe fe-phone-off mr-2"></i>
-                                    {{ trans('Cancel reservation') }}
+                                    {{ trans('Cancel Reservation') }}
                                 </button>
                             </div>
 
@@ -194,20 +191,20 @@
                                     @click="resetSearchDIDs()"
                             >
                                 <i class="fe fe-search mr-2"></i>
-                                {{ trans('Search DIDs') }}
+                                {{ trans('Search Fancy Numbers') }}
                             </button>
 
                             <div
                                     class="d-block invalid-feedback mt-3"
                                     v-if="errors.hasOwnProperty('did') || errors.hasOwnProperty('did.number') || errors.hasOwnProperty('did.reservation')"
-                            >{{ trans('The DID is required') }}
+                            >{{ trans('The Fancy Number is required') }}
                             </div>
                         </fieldset>
                     </div>
 
                     <div v-show="currentStep.id === 'personal-information'">
                         <fieldset>
-                            <legend>{{ trans('Personal information') }}</legend>
+                            <legend>{{ trans('User Information') }}</legend>
 
                             <div class="row">
                                 <div class="col-md-6">
@@ -257,7 +254,7 @@
                                                 id="email"
                                                 name="email"
                                                 required
-                                                :class="{'is-invalid': errors.hasOwnProperty('email')}"
+                                                :class="{'border-success': user.email && user.email_confirmation && emailMatched, 'is-invalid': errors.hasOwnProperty('email') || user.email && user.email_confirmation && !emailMatched}"
                                                 v-model="user.email"
                                         />
                                         <div
@@ -276,7 +273,7 @@
                                                 id="email_confirmation"
                                                 name="email_confirmation"
                                                 required
-                                                :class="{'is-invalid': errors.hasOwnProperty('email_confirmation')}"
+                                                :class="{'border-success': user.email && user.email_confirmation && emailMatched, 'is-invalid': errors.hasOwnProperty('email_confirmation') || user.email && user.email_confirmation && !emailMatched}"
                                                 v-model="user.email_confirmation"
                                         />
                                         <div
@@ -290,11 +287,11 @@
                         </fieldset>
 
                         <fieldset class="mt-4">
-                            <legend>{{ trans('Business information') }}</legend>
+                            <legend>{{ trans('Business Information') }}</legend>
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="company_name">{{ trans('Company name') }}</label>
+                                        <label for="company_name">{{ trans('Company Name') }}</label>
                                         <input
                                                 type="text"
                                                 class="form-control"
@@ -313,7 +310,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="company_phone">{{ trans('Company phone') }}</label>
+                                        <label for="company_phone">{{ trans('Company Phone') }}</label>
                                         <input
                                                 type="tel"
                                                 class="form-control"
@@ -332,7 +329,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="company_contact_name">{{ trans('Company contact name') }}</label>
+                                        <label for="company_contact_name">{{ trans('Contact Name') }}</label>
                                         <input
                                                 type="text"
                                                 class="form-control"
@@ -633,7 +630,7 @@
                                         class="btn btn-light mr-3 px-4"
                                         v-if="hasPreviousStep"
                                         @click="goToPreviousStep()"
-                                >{{ trans('Previous') }}
+                                >{{ trans('Back') }}
                                 </button>
                                 <button
                                         type="button"
@@ -649,7 +646,7 @@
                                         data-style="zoom-out"
                                         v-show="isLastStep"
                                         @click.prevent="submit()"
-                                >{{ trans('Create') }}
+                                >{{ trans('Submit') }}
                                 </button>
                                 <p
                                         class="d-inline-block mb-0 ml-lg-3 mt-3 mt-lg-0 text-danger"
@@ -660,10 +657,10 @@
                                         v-if="errorMessage"
                                 >{{ trans('errorMessage') }}</p>
                             </div>
-                            <div class="col-auto" v-if="userHasReservation">
+                            <div class="col-auto" v-if="userHasReservation && userCreated !== null">
                                 <div class="mt-2 mt-md-0 text-danger text-right">
                                     <p class="mb-0">
-                                        <strong class="text-decoration-underline">DID reservation expires in:</strong>
+                                        <strong class="text-decoration-underline">{{ trans('Fancy Number') }} reservation expires in:</strong>
                                         <countdown-timer
                                                 :end-date="user.did.expire_at"
                                                 @countdown-over="reservationOver()"
@@ -675,7 +672,7 @@
                                 <div class="mt-2 mt-md-0 text-warning text-right">
                                     <p class="mb-0">
                                       <i class="fe fe-alert-triangle"></i>
-                                      <strong class="text-decoration-underline">DID has expired</strong>, please select a new DID
+                                      <strong class="text-decoration-underline">{{ trans('Fancy Number') }} has expired</strong>, please select a new {{ trans('Fancy Number') }}
                                     </p>
                                 </div>
                             </div>
@@ -696,7 +693,7 @@
             <div role="document" class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 id="search-did-title" class="modal-title">{{ trans('Reserve DID') }}</h3>
+                        <h3 id="search-did-title" class="modal-title">{{ trans('Reserve Fancy Number') }}</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -714,7 +711,7 @@
 
                             <div class="col-md-4">
                                 <div class="form-group">
-                                    <label for="did_region">{{ trans('Region') }}</label>
+                                    <label for="did_region">{{ trans('State or Region') }}</label>
                                     <v-select name="did_region"
                                       id="did_region"
                                       label="text"
@@ -764,7 +761,7 @@
                         <fieldset class="mb-5" v-show="availablesDIDs.length > 0">
                             <legend>
                                 <span>{{ availablesDIDs.length }}</span>
-                                {{ trans('Availables DIDs') }}
+                                {{ trans('Available Fancy Numbers') }}
                             </legend>
                             <div class="overflow-auto row vh-max-35">
                                 <div
@@ -946,7 +943,7 @@ export default {
             'company_address1'
           ]
         },
-        
+
         {
           id: 'payment-information',
           title: 'Payment Information',
@@ -963,7 +960,7 @@ export default {
         },
         {
           id: 'fancy-number',
-          title: 'Fancy Number',
+          title: 'Fancy Number on Hold',
           description: 'Virtual number reservation',
           isActive: false,
           isCompleted: false,
@@ -976,7 +973,7 @@ export default {
           isActive: false,
           isCompleted: false,
           required: ['product']
-        },
+        }
       ],
       currentStep: {},
       countries: [],
@@ -1204,6 +1201,13 @@ export default {
         }
 
         if (
+          el === 'email_confirmation' &&
+          this.user.email !== this.user.email_confirmation
+        ) {
+          this.$set(this.errors, el, ['This field must match']);
+        }
+
+        if (
           this.user[el] instanceof Object &&
           Object.keys(this.user[el]).length === 0
         ) {
@@ -1382,6 +1386,9 @@ export default {
       }
 
       return this.urls.fancy_settings.replace('_user_', this.userCreated);
+    },
+    emailMatched() {
+      return this.user.email === this.user.email_confirmation;
     }
   },
   watch: {
