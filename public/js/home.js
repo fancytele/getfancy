@@ -41899,11 +41899,13 @@ __webpack_require__.r(__webpack_exports__);
       return;
     }
 
-    var id = e.target.dataset.type; // Remove active Button and Plan Item the 'active' class
+    var id = e.target.dataset.type;
+    var description = e.target.dataset.description; // Remove active Button and Plan Item the 'active' class
 
     $('#plans .active').removeClass(activeClass); // Add selected Button and Plan Item class 'active'
 
     $("#plans .btn-group button[data-type=\"".concat(id, "\"], #plans .plan-wrapper #").concat(id)).addClass(activeClass);
+    $('#plans .plan-item-description').text(description);
   };
 
   var redirectToCheckout = function redirectToCheckout(e) {

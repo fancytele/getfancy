@@ -18,13 +18,15 @@ import navbarCollapse from '../navbarCollapse';
     }
 
     const id = e.target.dataset.type;
+    const description = e.target.dataset.description;
 
     // Remove active Button and Plan Item the 'active' class
     $('#plans .active').removeClass(activeClass);
 
     // Add selected Button and Plan Item class 'active'
-    $(`#plans .btn-group button[data-type="${id}"], #plans .plan-wrapper #${id}`)
-      .addClass(activeClass);
+    $(`#plans .btn-group button[data-type="${id}"], #plans .plan-wrapper #${id}`).addClass(activeClass);
+
+    $('#plans .plan-item-description').text(description);
   };
 
   const redirectToCheckout = function (e) {

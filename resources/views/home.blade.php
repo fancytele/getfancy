@@ -415,6 +415,56 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8 offset-md-2">
+
+                            <div class="my-5 row">
+                                <div class="col-md-6">
+                                    <ul
+                                        class="border-bottom border-top d-md-inline-block list-group list-group-flush text-left">
+                                        <li class="list-group-item px-lg-4">
+                                            <span class="font-weight-bold">@lang('Feature Phone Calls')</span>
+                                            <p class="mb-0"><small>@lang('Feature Phone Calls Message')</small></p>
+                                        </li>
+                                        <li class="list-group-item px-lg-4">
+                                            <span class="font-weight-bold">@lang('Feature Text-able')</span>
+                                            <p class="mb-0"><small>@lang('Feature Text-able Message')</small></p>
+                                        </li>
+                                        <li class="list-group-item px-lg-4">
+                                            <span class="font-weight-bold">@lang('Feature Auto-Reply SMS')</span>
+                                            <p class="mb-0"><small>@lang('Feature Auto-Reply SMS Message')</small></p>
+                                        </li>
+                                        <li class="list-group-item px-lg-4">
+                                            <span class="font-weight-bold">@lang('Feature Data Driven')</span>
+                                            <p class="mb-0"><small>@lang('Feature Data Driven Message')</small></p>
+                                        </li>
+                                        <li class="list-group-item px-lg-4">
+                                            <span class="font-weight-bold">@lang('Feature Call Queues')</span>
+                                            <p class="mb-0"><small>@lang('Feature Call Queues Message')</small></p>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col-md-6">
+                                    <ul
+                                        class="border-bottom border-top d-md-inline-block list-group list-group-flush text-left">
+                                        <li class="list-group-item px-lg-4">
+                                            <span class="font-weight-bold">@lang('Feature Auto-Play')</span>
+                                            <p class="mb-0"><small>@lang('Feature Auto-Play Message')</small></p>
+                                        </li>
+                                        <li class="list-group-item px-lg-4">
+                                            <span class="font-weight-bold">@lang('Feature Conference Call Room')</span>
+                                            <p class="mb-0"><small>@lang('Feature Conference Call Room Message')</small></p>
+                                        </li>
+                                        <li class="list-group-item px-lg-4">
+                                            <span class="font-weight-bold">@lang('Feature E-Fax')</span>
+                                            <p class="mb-0"><small>@lang('Feature E-Fax Message')</small></p>
+                                        </li>
+                                        <li class="list-group-item px-lg-4">
+                                            <span class="font-weight-bold">@lang('Feature Spam Filtering Queues')</span>
+                                            <p class="mb-0"><small>@lang('Feature Spam Filtering Queues Message')</small></p>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
                             <div>
                                 <h2 class="display-1 text-primary plan-wrapper">
                                     @foreach ($products as $product)
@@ -436,55 +486,19 @@
                                     @foreach ($products as $product)
                                     <button type="button"
                                             class="btn btn-outline-light{{ $product->is_primary ? ' active' : '' }}"
-                                            data-type="{{ $product->slug }}">@lang($product->name)</button>
+                                            data-type="{{ $product->slug }}"
+                                            data-description="{{ $product->description }}">@lang($product->name)</button>
                                     @endforeach
                                 </div>
 
                                 <p>
-                                    <small class="font-italic text-muted">
-                                        @lang('Different payment plans, same features')
+                                    <small class="plan-item-description font-italic text-muted">
+                                        {{ $products->where('is_primary', 1)->first()->description }}!
                                     </small>
                                 </p>
                             </div>
 
-                            <div class="my-5 row">
-                                <div class="col-md-6">
-                                    <ul
-                                        class="border-bottom border-top d-md-inline-block list-group list-group-flush text-left">
-                                        <li class="list-group-item px-lg-4">
-                                            @lang('Unlimited extensions')
-                                        </li>
-                                        <li class="list-group-item px-lg-4">
-                                            @lang('Customer support')
-                                        </li>
-                                        <li class="list-group-item px-lg-4">
-                                            @lang('All minutes = fixed')
-                                        </li>
-                                        <li class="list-group-item px-lg-4">
-                                            @lang('Choose your number')
-                                        </li>
-                                    </ul>
-                                </div>
-                                <div class="col-md-6">
-                                    <ul
-                                        class="border-bottom border-top d-md-inline-block list-group list-group-flush text-left">
-                                        <li class="list-group-item px-lg-4">
-                                            @lang('Conference call')
-                                        </li>
-                                        <li class="list-group-item px-lg-4">
-                                            @lang('Custom voice')
-                                        </li>
-                                        <li class="list-group-item px-lg-4">
-                                            @lang('Recording voice')
-                                        </li>
-                                        <li class="list-group-item px-lg-4">
-                                            @lang('Recording voicemail to Email')
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-
-                            <a id="plan-buy" href="#" class="btn btn-primary px-7 rounded-pill">
+                            <a id="plan-buy" href="#" class="btn btn-primary px-7">
                                 @lang('Buy now')
                             </a>
                         </div>
