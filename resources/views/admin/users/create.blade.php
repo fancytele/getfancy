@@ -12,7 +12,7 @@
 <div class="container-fluid">
     <a href="{{ route('admin.users.index') }}" class="btn btn-link mb-3">
         <i class="fe fe-arrow-left mr-2"></i>
-        @lang('Return to list')
+        @lang('Back')
     </a>
 
     <create-user-component :locale="'{{ app()->getLocale() }}'"

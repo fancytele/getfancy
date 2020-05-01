@@ -927,26 +927,10 @@ export default {
       },
       steps: [
         {
-          id: 'plans',
-          title: 'Plan & features',
-          description: 'Select plan and one or more features',
-          isActive: true,
-          isCompleted: false,
-          required: ['product']
-        },
-        {
-          id: 'fancy-number',
-          title: 'Fancy Number',
-          description: 'Virtual number reservation',
-          isActive: false,
-          isCompleted: false,
-          required: ['number_type', 'phone_number', 'did']
-        },
-        {
           id: 'personal-information',
-          title: 'Personal information',
+          title: 'Personal Information',
           description: 'User and Company information',
-          isActive: false,
+          isActive: true,
           isCompleted: false,
           required: [
             'first_name',
@@ -962,9 +946,10 @@ export default {
             'company_address1'
           ]
         },
+        
         {
           id: 'payment-information',
-          title: 'Payment information',
+          title: 'Payment Information',
           description: 'Billing address and credic card',
           isActive: false,
           isCompleted: false,
@@ -975,7 +960,23 @@ export default {
             'billing_zip_code',
             'billing_address1'
           ]
-        }
+        },
+        {
+          id: 'fancy-number',
+          title: 'Fancy Number',
+          description: 'Virtual number reservation',
+          isActive: false,
+          isCompleted: false,
+          required: ['number_type', 'phone_number', 'did']
+        },
+        {
+          id: 'plans',
+          title: 'Plan & Features',
+          description: 'Select plan and one or more features',
+          isActive: false,
+          isCompleted: false,
+          required: ['product']
+        },
       ],
       currentStep: {},
       countries: [],
@@ -1264,6 +1265,7 @@ export default {
 
       if (!this.isLastStep) {
         this.changeToStep(this.steps[currentStepIndex + 1]);
+        this.toggleSameAddress();
       }
     },
     toggleSameAddress() {

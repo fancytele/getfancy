@@ -4173,12 +4173,19 @@ __webpack_require__.r(__webpack_exports__);
         cities: []
       },
       steps: [{
-        id: 'plans',
-        title: 'Plan & features',
-        description: 'Select plan and one or more features',
+        id: 'personal-information',
+        title: 'Personal Information',
+        description: 'User and Company information',
         isActive: true,
         isCompleted: false,
-        required: ['product']
+        required: ['first_name', 'last_name', 'email', 'email_confirmation', 'company_name', 'company_phone', 'company_country', 'company_city', 'company_state', 'company_zip_code', 'company_address1']
+      }, {
+        id: 'payment-information',
+        title: 'Payment Information',
+        description: 'Billing address and credic card',
+        isActive: false,
+        isCompleted: false,
+        required: ['billing_country', 'billing_city', 'billing_state', 'billing_zip_code', 'billing_address1']
       }, {
         id: 'fancy-number',
         title: 'Fancy Number',
@@ -4187,19 +4194,12 @@ __webpack_require__.r(__webpack_exports__);
         isCompleted: false,
         required: ['number_type', 'phone_number', 'did']
       }, {
-        id: 'personal-information',
-        title: 'Personal information',
-        description: 'User and Company information',
+        id: 'plans',
+        title: 'Plan & Features',
+        description: 'Select plan and one or more features',
         isActive: false,
         isCompleted: false,
-        required: ['first_name', 'last_name', 'email', 'email_confirmation', 'company_name', 'company_phone', 'company_country', 'company_city', 'company_state', 'company_zip_code', 'company_address1']
-      }, {
-        id: 'payment-information',
-        title: 'Payment information',
-        description: 'Billing address and credic card',
-        isActive: false,
-        isCompleted: false,
-        required: ['billing_country', 'billing_city', 'billing_state', 'billing_zip_code', 'billing_address1']
+        required: ['product']
       }],
       currentStep: {},
       countries: [],
@@ -4488,6 +4488,7 @@ __webpack_require__.r(__webpack_exports__);
 
       if (!this.isLastStep) {
         this.changeToStep(this.steps[currentStepIndex + 1]);
+        this.toggleSameAddress();
       }
     },
     toggleSameAddress: function toggleSameAddress() {
