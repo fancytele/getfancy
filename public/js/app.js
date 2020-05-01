@@ -70431,7 +70431,7 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "form-group mt-5" }, [
                 _c("label", { attrs: { for: "role" } }, [
-                  _vm._v("Select role")
+                  _vm._v("Select Role")
                 ]),
                 _vm._v(" "),
                 _c(

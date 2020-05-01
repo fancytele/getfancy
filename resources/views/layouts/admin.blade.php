@@ -175,7 +175,7 @@
                                     @role('admin')
                                         <a href="#" class="dropdown-item"
                                             data-toggle="modal" data-target="#modal-vertical-right">
-                                            @lang('Login as')...
+                                            @lang('View As')...
                                         </a>
                                         <div class="dropdown-divider m-0"></div>
                                     @endrole

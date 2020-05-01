@@ -13,7 +13,7 @@
             <span aria-hidden="true">×</span>
           </button>
           <div class="form-group mt-5">
-            <label for="role">Select role</label>
+            <label for="role">Select Role</label>
             <select id="role" name="role" class="form-control" v-model="role" @change="initSearch()">
                 <option value="user">User</option>
                 <option value="agent">Agent</option>
