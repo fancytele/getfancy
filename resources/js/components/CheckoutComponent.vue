@@ -121,7 +121,7 @@
                         placeholder="********"
                         required
                         v-model="checkout.password"
-                        :class="{'is-invalid': errors.hasOwnProperty('password')}"
+                        :class="{ 'border-success': checkout.password && checkout.password_confirmation && passwordsMatch, 'is-invalid': errors.hasOwnProperty('password')  || (checkout.password && checkout.password_confirmation && !passwordsMatch)}"
                         :readonly="isProcessing"
                       />
                       <div
@@ -141,7 +141,7 @@
                         placeholder="********"
                         required
                         v-model="checkout.password_confirmation"
-                        :class="{'is-invalid': errors.hasOwnProperty('password_confirmation')}"
+                        :class="{ 'border-success': checkout.password && checkout.password_confirmation && passwordsMatch, 'is-invalid': errors.hasOwnProperty('password_confirmation') || (checkout.password && checkout.password_confirmation && !passwordsMatch) }"
                         :readonly="isProcessing"
                       />
                       <div
@@ -164,7 +164,7 @@
                 <div class="row">
                   <div class="col-md-4">
                       <div class="form-group">
-                        <label for="company_name">{{ trans('Company name') }}</label>
+                        <label for="company_name">{{ trans('Company Name') }}</label>
                           <input
                             type="text"
                             class="form-control"
@@ -183,7 +183,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label for="company_phone">{{ trans('Company phone') }}</label>
+                      <label for="company_phone">{{ trans('Company Phone') }}</label>
                       <input
                         type="tel"
                         class="form-control"
@@ -202,7 +202,7 @@
                   </div>
                   <div class="col-md-4">
                     <div class="form-group">
-                      <label class="text-nowrap" for="company_contact_name">{{ trans('Company contact name') }}</label>
+                      <label class="text-nowrap" for="company_contact_name">{{ trans('Company Contact Name') }}</label>
                       <input
                         type="text"
                         class="form-control"
@@ -582,13 +582,17 @@
                   {{ trans(generalError) }}
                   {{ trans('Please review your information') }}
                 </p>
+
+                <p class="mb-0 text-center">
+                  <small>{{ trans('By clicking below you accept our Terms and Conditions') }}</small>
+                </p>
                 <button
                   id="submit-payment"
                   type="submit"
                   class="btn btn-block btn-lg btn-primary font-weight-bold ladda-button py-3"
                   data-style="zoom-out"
                   :disabled="!complete || !checkout.recaptcha"
-                >{{ trans('Submit Checkout') }}</button>
+                >{{ trans('Submit') }}</button>
                 <p class="mt-4 text-center">
                   <span class="align-middle h2 mb-0 text-primary">
                     <i class="fa-question-circle far"></i>
@@ -598,7 +602,7 @@
                   <a
                     :href="`mailto:${supportEmail}`"
                     class="text-body text-decoration-underline"
-                  >{{ trans('contact support') }}!</a>
+                  >{{ trans('contact support') }}</a>.
                 </p>
               </div>
               <!-- /Submit -->
@@ -630,40 +634,40 @@
 
             <ul class="list-unstyled">
               <li class="mb-2">
-                <span class="mr-2">
-                  <i class="far fa-check-circle"></i>
-                </span>
-                <span v-html="trans('Unlimited extensions')"></span>
+                <span class="font-weight-bold" v-html="trans('Feature Phone Calls')"></span>
+                <p><small>{{ trans('Feature Phone Calls Message') }}</small></p>
               </li>
               <li class="mb-2">
-                <span class="mr-2">
-                  <i class="far fa-check-circle"></i>
-                </span>
-                <span v-html="trans('Customer support')"></span>
+                <span class="font-weight-bold" v-html="trans('Feature Text-able')"></span>
+                <p><small>{{ trans('Feature Text-able Message') }}</small></p>
               </li>
               <li class="mb-2">
-                <span class="mr-2">
-                  <i class="far fa-check-circle"></i>
-                </span>
-                <span v-html="trans('All minutes = fixed')"></span>
+                <span class="font-weight-bold" v-html="trans('Feature Auto-Reply SMS')"></span>
+                <p><small>{{ trans('Feature Auto-Reply SMS Message') }}</small></p>
               </li>
               <li class="mb-2">
-                <span class="mr-2">
-                  <i class="far fa-check-circle"></i>
-                </span>
-                <span v-html="trans('Choose your number')"></span>
+                <span class="font-weight-bold" v-html="trans('Feature Data Driven')"></span>
+                <p><small>{{ trans('Feature Data Driven Message') }}</small></p>
               </li>
               <li class="mb-2">
-                <span class="mr-2">
-                  <i class="far fa-check-circle"></i>
-                </span>
-                <span v-html="trans('Conference call')"></span>
+                <span class="font-weight-bold" v-html="trans('Feature Call Queues')"></span>
+                <p><small>{{ trans('Feature Call Queues Message') }}</small></p>
               </li>
               <li class="mb-2">
-                <span class="mr-2">
-                  <i class="far fa-check-circle"></i>
-                </span>
-                {{ trans('More') }}...
+                <span class="font-weight-bold" v-html="trans('Feature Auto-Play')"></span>
+                <p><small>{{ trans('Feature Auto-Play Message') }}</small></p>
+              </li>
+              <li class="mb-2">
+                <span class="font-weight-bold" v-html="trans('Feature Conference Call Room')"></span>
+                <p><small>{{ trans('Feature Conference Call Room Message') }}</small></p>
+              </li>
+              <li class="mb-2">
+                <span class="font-weight-bold" v-html="trans('Feature E-Fax')"></span>
+                <p><small>{{ trans('Feature E-Fax Message') }}</small></p>
+              </li>
+              <li class="mb-2">
+                <span class="font-weight-bold" v-html="trans('Feature Spam Filtering Queues')"></span>
+                <p><small>{{ trans('Feature Spam Filtering Queues Message') }}</small></p>
               </li>
             </ul>
           </div>
@@ -898,6 +902,9 @@ export default {
       return this.summaryDetail
         .reduce((prev, el) => prev + el.cost, 0)
         .toFixed(2);
+    },
+    passwordsMatch() {
+      return this.checkout.password === this.checkout.password_confirmation;
     }
   }
 };

@@ -2544,6 +2544,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2745,6 +2749,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return this.summaryDetail.reduce(function (prev, el) {
         return prev + el.cost;
       }, 0).toFixed(2);
+    },
+    passwordsMatch: function passwordsMatch() {
+      return this.checkout.password === this.checkout.password_confirmation;
     }
   }
 });
@@ -64758,7 +64765,15 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           class: {
-                            "is-invalid": _vm.errors.hasOwnProperty("password")
+                            "border-success":
+                              _vm.checkout.password &&
+                              _vm.checkout.password_confirmation &&
+                              _vm.passwordsMatch,
+                            "is-invalid":
+                              _vm.errors.hasOwnProperty("password") ||
+                              (_vm.checkout.password &&
+                                _vm.checkout.password_confirmation &&
+                                !_vm.passwordsMatch)
                           },
                           attrs: {
                             type: "password",
@@ -64810,9 +64825,17 @@ var render = function() {
                           ],
                           staticClass: "form-control",
                           class: {
-                            "is-invalid": _vm.errors.hasOwnProperty(
-                              "password_confirmation"
-                            )
+                            "border-success":
+                              _vm.checkout.password &&
+                              _vm.checkout.password_confirmation &&
+                              _vm.passwordsMatch,
+                            "is-invalid":
+                              _vm.errors.hasOwnProperty(
+                                "password_confirmation"
+                              ) ||
+                              (_vm.checkout.password &&
+                                _vm.checkout.password_confirmation &&
+                                !_vm.passwordsMatch)
                           },
                           attrs: {
                             type: "password",
@@ -64874,7 +64897,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "company_name" } }, [
-                          _vm._v(_vm._s(_vm.trans("Company name")))
+                          _vm._v(_vm._s(_vm.trans("Company Name")))
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -64927,7 +64950,7 @@ var render = function() {
                     _c("div", { staticClass: "col-md-4" }, [
                       _c("div", { staticClass: "form-group" }, [
                         _c("label", { attrs: { for: "company_phone" } }, [
-                          _vm._v(_vm._s(_vm.trans("Company phone")))
+                          _vm._v(_vm._s(_vm.trans("Company Phone")))
                         ]),
                         _vm._v(" "),
                         _c("input", {
@@ -64985,7 +65008,7 @@ var render = function() {
                             staticClass: "text-nowrap",
                             attrs: { for: "company_contact_name" }
                           },
-                          [_vm._v(_vm._s(_vm.trans("Company contact name")))]
+                          [_vm._v(_vm._s(_vm.trans("Company Contact Name")))]
                         ),
                         _vm._v(" "),
                         _c("input", {
@@ -66037,6 +66060,18 @@ var render = function() {
                       )
                     : _vm._e(),
                   _vm._v(" "),
+                  _c("p", { staticClass: "mb-0 text-center" }, [
+                    _c("small", [
+                      _vm._v(
+                        _vm._s(
+                          _vm.trans(
+                            "By clicking below you accept our Terms and Conditions"
+                          )
+                        )
+                      )
+                    ])
+                  ]),
+                  _vm._v(" "),
                   _c(
                     "button",
                     {
@@ -66049,7 +66084,7 @@ var render = function() {
                         disabled: !_vm.complete || !_vm.checkout.recaptcha
                       }
                     },
-                    [_vm._v(_vm._s(_vm.trans("Submit Checkout")))]
+                    [_vm._v(_vm._s(_vm.trans("Submit")))]
                   ),
                   _vm._v(" "),
                   _c("p", { staticClass: "mt-4 text-center" }, [
@@ -66069,8 +66104,9 @@ var render = function() {
                         staticClass: "text-body text-decoration-underline",
                         attrs: { href: "mailto:" + _vm.supportEmail }
                       },
-                      [_vm._v(_vm._s(_vm.trans("contact support")) + "!")]
-                    )
+                      [_vm._v(_vm._s(_vm.trans("contact support")))]
+                    ),
+                    _vm._v(".\n              ")
                   ])
                 ])
               ])
@@ -66127,62 +66163,150 @@ var render = function() {
               _vm._v(" "),
               _c("ul", { staticClass: "list-unstyled" }, [
                 _c("li", { staticClass: "mb-2" }, [
-                  _vm._m(1),
-                  _vm._v(" "),
                   _c("span", {
+                    staticClass: "font-weight-bold",
                     domProps: {
-                      innerHTML: _vm._s(_vm.trans("Unlimited extensions"))
+                      innerHTML: _vm._s(_vm.trans("Feature Phone Calls"))
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("p", [
+                    _c("small", [
+                      _vm._v(_vm._s(_vm.trans("Feature Phone Calls Message")))
+                    ])
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("li", { staticClass: "mb-2" }, [
-                  _vm._m(2),
-                  _vm._v(" "),
                   _c("span", {
+                    staticClass: "font-weight-bold",
                     domProps: {
-                      innerHTML: _vm._s(_vm.trans("Customer support"))
+                      innerHTML: _vm._s(_vm.trans("Feature Text-able"))
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("p", [
+                    _c("small", [
+                      _vm._v(_vm._s(_vm.trans("Feature Text-able Message")))
+                    ])
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("li", { staticClass: "mb-2" }, [
-                  _vm._m(3),
-                  _vm._v(" "),
                   _c("span", {
+                    staticClass: "font-weight-bold",
                     domProps: {
-                      innerHTML: _vm._s(_vm.trans("All minutes = fixed"))
+                      innerHTML: _vm._s(_vm.trans("Feature Auto-Reply SMS"))
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("p", [
+                    _c("small", [
+                      _vm._v(
+                        _vm._s(_vm.trans("Feature Auto-Reply SMS Message"))
+                      )
+                    ])
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("li", { staticClass: "mb-2" }, [
-                  _vm._m(4),
-                  _vm._v(" "),
                   _c("span", {
+                    staticClass: "font-weight-bold",
                     domProps: {
-                      innerHTML: _vm._s(_vm.trans("Choose your number"))
+                      innerHTML: _vm._s(_vm.trans("Feature Data Driven"))
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("p", [
+                    _c("small", [
+                      _vm._v(_vm._s(_vm.trans("Feature Data Driven Message")))
+                    ])
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("li", { staticClass: "mb-2" }, [
-                  _vm._m(5),
-                  _vm._v(" "),
                   _c("span", {
+                    staticClass: "font-weight-bold",
                     domProps: {
-                      innerHTML: _vm._s(_vm.trans("Conference call"))
+                      innerHTML: _vm._s(_vm.trans("Feature Call Queues"))
                     }
-                  })
+                  }),
+                  _vm._v(" "),
+                  _c("p", [
+                    _c("small", [
+                      _vm._v(_vm._s(_vm.trans("Feature Call Queues Message")))
+                    ])
+                  ])
                 ]),
                 _vm._v(" "),
                 _c("li", { staticClass: "mb-2" }, [
-                  _vm._m(6),
-                  _vm._v(
-                    "\n              " +
-                      _vm._s(_vm.trans("More")) +
-                      "...\n            "
-                  )
+                  _c("span", {
+                    staticClass: "font-weight-bold",
+                    domProps: {
+                      innerHTML: _vm._s(_vm.trans("Feature Auto-Play"))
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("p", [
+                    _c("small", [
+                      _vm._v(_vm._s(_vm.trans("Feature Auto-Play Message")))
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "mb-2" }, [
+                  _c("span", {
+                    staticClass: "font-weight-bold",
+                    domProps: {
+                      innerHTML: _vm._s(
+                        _vm.trans("Feature Conference Call Room")
+                      )
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("p", [
+                    _c("small", [
+                      _vm._v(
+                        _vm._s(
+                          _vm.trans("Feature Conference Call Room Message")
+                        )
+                      )
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "mb-2" }, [
+                  _c("span", {
+                    staticClass: "font-weight-bold",
+                    domProps: { innerHTML: _vm._s(_vm.trans("Feature E-Fax")) }
+                  }),
+                  _vm._v(" "),
+                  _c("p", [
+                    _c("small", [
+                      _vm._v(_vm._s(_vm.trans("Feature E-Fax Message")))
+                    ])
+                  ])
+                ]),
+                _vm._v(" "),
+                _c("li", { staticClass: "mb-2" }, [
+                  _c("span", {
+                    staticClass: "font-weight-bold",
+                    domProps: {
+                      innerHTML: _vm._s(
+                        _vm.trans("Feature Spam Filtering Queues")
+                      )
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("p", [
+                    _c("small", [
+                      _vm._v(
+                        _vm._s(
+                          _vm.trans("Feature Spam Filtering Queues Message")
+                        )
+                      )
+                    ])
+                  ])
                 ])
               ])
             ]),
@@ -66258,54 +66382,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("span", { staticClass: "align-middle h2 mb-0 text-primary" }, [
       _c("i", { staticClass: "fa-question-circle far" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "mr-2" }, [
-      _c("i", { staticClass: "far fa-check-circle" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "mr-2" }, [
-      _c("i", { staticClass: "far fa-check-circle" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "mr-2" }, [
-      _c("i", { staticClass: "far fa-check-circle" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "mr-2" }, [
-      _c("i", { staticClass: "far fa-check-circle" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "mr-2" }, [
-      _c("i", { staticClass: "far fa-check-circle" })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "mr-2" }, [
-      _c("i", { staticClass: "far fa-check-circle" })
     ])
   }
 ]
