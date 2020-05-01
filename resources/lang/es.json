@@ -139,7 +139,7 @@
     "Welcome": "Bienvenido",
     "Search": "Buscar",
     "Access to your dashboard": "Accede a tu dashboard",
-    "User management": "Administración de usuarios",
+    "User Management": "Administración de usuarios",
     "No Agents yet": "No hay Agentes",
     "Create Agent": "Crear Agente",
     "View": "Ver",
@@ -252,5 +252,6 @@
     "Audio description": "El audio predefinido es audio generado automáticamente por Fancy. También puede cargar grabaciones personales o comprar una grabación profesional",
     "Upload personal Recording": "Subir grabación personal",
     "By clicking below you accept our Terms and Conditions": "Al hacer clic a continuación, está aceptando nuestros Términos y condiciones",
-    "Sign Up Here": "Registrate aquí"
+    "Sign Up Here": "Registrate aquí",
+    "Agent Name": "Agente"
 }

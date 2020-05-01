@@ -79,7 +79,7 @@
                                     aria-expanded="{{ (request()->is('admin/users*', 'admin/agents*', 'admin/operators*')) ? 'true' : 'false'}}"
                                     aria-controls="sidebarUsers">
                                         <i class="fe fe-users"></i>
-                                        @lang('User management')
+                                        @lang('User Management')
                                     </a>
                                     <div id="sidebarUsers"
                                         class="collapse {{ (request()->is('admin/users*', 'admin/agents*', 'admin/operators*')) ? ' show' : ''}}">

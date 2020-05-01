@@ -123,6 +123,11 @@ class User extends Authenticatable
         return $this->hasMany(Invoice::class);
     }
 
+    public function agent()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
+
     /**
      * Generate random encrypted password.
      *

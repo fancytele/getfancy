@@ -2,7 +2,7 @@
 
 @section('page-subtitle', __('User management'))
 
-@section('page-title', __('User list'))
+@section('page-title', __('User'))
 
 @if($users->isNotEmpty ())
     @section('header-action')
@@ -37,7 +37,7 @@
 
         @if($users->isNotEmpty ())
         <div class="card" data-toggle="lists"
-            data-options='{"valueNames": ["orders-name", "orders-email", "orders-last-login", "orders-status"]}'>
+            data-options='{"valueNames": ["orders-name", "orders-did", "orders-email", "orders-agent", "orders-status"]}'>
             <div class="card-header">
                 <div class="row align-items-center">
                     <div class="col">
@@ -71,14 +71,20 @@
                             </th>
                             <th scope="col">
                                 <a href="#" class="text-muted sort"
+                                data-sort="orders-did">
+                                    @lang('DID Number')
+                                </a>
+                            </th>
+                            <th scope="col">
+                                <a href="#" class="text-muted sort"
                                 data-sort="orders-email">
                                     @lang('E-mail')
                                 </a>
                             </th>
                             <th scope="col">
                                 <a href="#" class="text-muted sort"
-                                data-sort="orders-last-login">
-                                    @lang('Last login')
+                                data-sort="orders-agent">
+                                    @lang('Agent Name')
                                 </a>
                             </th>
                             <th scope="col">
@@ -101,14 +107,14 @@
                             </td>
                             <td class="align-middle orders-name">
                                 {{ $user->full_name }}
-                                @if($user->fancy_number)
-                                    <p class="mb-0 text-black-50">{{ $user->fancy_number->us_did_number }}</p>
-                                @endif
+                            </td>
+                            <td class="align-middle orders-name">
+                                {{ optional($user->fancy_number)->us_did_number }}
                             </td>
                             <td class="align-middle orders-email">{{ $user->email }}
                             </td>
-                            <td class="align-middle orders-last-login">
-                                {{ optional($user->last_login)->diffForHumans() }}
+                            <td class="align-middle orders-agent">
+                                {{ optional($user->agent)->full_name }}
                             </td>
                             <td class="align-middle orders-status">
                                 @if($user->is_active)
@@ -126,8 +132,10 @@
                             <td class="align-middle">
                                 @if($user->fancy_number)
                                 <a href="{{ route('admin.users.edit_fancy', $user->id) }}"
-                                class="font-weight-normal h5 px-2">
-                                    @lang('Fancy Settings')
+                                   title="{{ __('Fancy Settings') }}"
+                                   class="font-weight-normal h5 px-2">
+                                    <span class="sr-only">@lang('Fancy Settings')</span>
+                                    <i class="fe fe-settings"></i>
                                 </a>
                                 @endif
                             </td>

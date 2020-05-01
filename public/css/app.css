@@ -17861,6 +17861,10 @@ button:focus {
   box-shadow: inset -8px 0 10px -6px rgba(0, 0, 0, 0.3);
 }
 
+.navbar-vertical.navbar-expand-md .navbar-nav .nav .nav-link {
+  padding-left: 4.25rem;
+}
+
 #did-settings .input-group-time {
   width: 7.5rem;
 }
