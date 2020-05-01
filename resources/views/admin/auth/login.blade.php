@@ -25,8 +25,8 @@
                 <div class="text-center">
                     <a href="{{ route('web.homepage') }}">
                         <img class="w-50"
-                             src="{{ asset('img/logo-light-big.png') }}"
-                             alt="Fancy Logo Light">
+                             src="{{ asset('img/logo-primary.png') }}"
+                             alt="Fancy Logo">
                     </a>
                 </div>
 
@@ -35,7 +35,7 @@
                 </p>
 
                 <!-- Form -->
-                <form method="POST" action="{{ route('admin.login') }}">
+                <form class="bg-primary px-5 py-4 rounded-sm shadow text-white" method="POST" action="{{ route('admin.login') }}">
                     @csrf
 
                     <!-- Email address -->
@@ -94,20 +94,19 @@
 
                     <!-- Submit -->
                     <button type="submit"
-                            class="btn btn-lg btn-block btn-primary ladda-button js-ladda-submit mb-3"
+                            class="btn btn-lg btn-block btn-info ladda-button js-ladda-submit mb-3"
                             data-style="zoom-out">
                         <span class="ladda-label">@lang('Login')</span>
                     </button>
 
                     <!-- Link -->
                     <p class="text-center">
-                        <small class="text-muted text-center">
-                            @lang('Don\'t have an account yet?') <a
-                               href="{{ route('web.checkout', 'annually') }}">
-                                @lang('Checkout here')</a>.
+                        <small>
+                            @lang('Don\'t have an account yet?') 
+                            <a class="text-decoration-underline text-white" href="{{ route('web.checkout', 'annually') }}">
+                                @lang('Sign Up Here')</a>.
                         </small>
                     </p>
-
                 </form>
             </div>
         </div> <!-- / .row -->
