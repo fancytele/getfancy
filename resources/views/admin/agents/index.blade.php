@@ -2,7 +2,7 @@
 
 @section('page-subtitle', __('User management'))
 
-@section('page-title', __('Agent list'))
+@section('page-title', __('Agent List'))
 
 @if($agents->isNotEmpty ())
     @section('header-action')
@@ -131,8 +131,9 @@
                                     <td class="align-middle">
                                         @if($agent->is_active)
                                             <a href="{{ route('admin.agents.edit', $agent->id) }}"
+                                                title="{{ __('Edit') }}"
                                                class="font-weight-normal h5 px-2">
-                                                @lang('Edit')
+                                                <i class="fe fe-settings"></i>
                                             </a>
                                             |
                                             <a href="{{ route('admin.agents.destroy', $agent->id) }}"

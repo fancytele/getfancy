@@ -16,9 +16,9 @@
                            class="display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "></i>
                         <div>
                             <h3 class="mb-0">
-                                @lang('Delete')
+                                @lang('Delete Message')
                                 <span
-                                      class="element-name text-lowercase"></span>?
+                                      class="element-name text-capitalize"></span>?
                             </h3>
                             <p class="element-detail text-black-50"></p>
                         </div>

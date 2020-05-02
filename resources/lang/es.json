@@ -157,7 +157,7 @@
     "Status": "Estado",
     "Active": "Activo",
     "Inactive": "Inactivo",
-    "Delete": "Eliminar",
+    "Delete Message": "¿Seguro que quieres eliminar este",
     "Restore": "Activar",
     "User list": "Lista de usuarios",
     "Create User": "Crear Usuario",
