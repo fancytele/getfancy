@@ -160,8 +160,13 @@
                                 <!-- Toggle -->
                                 <a href="#" class="dropdown-toggle" role="button" data-toggle="dropdown"
                                    aria-haspopup="true" aria-expanded="false">
-                                    <span class="align-middle mr-2">
+                                    <span class="d-inline-block align-middle mr-2 text-right">
                                         {{ Auth::user()->display_name }}
+                                        @if(!Auth::user()->hasRole('user'))
+                                        <small class="d-block text-capitalize">
+                                            {{ Auth::user()->roles->first()->name }}
+                                        </small>
+                                        @endif
                                     </span>
                                     <span class="avatar avatar-sm d-inline-block">
                                         <img src="{{ Auth::user()->avatar }}"
