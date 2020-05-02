@@ -12,7 +12,7 @@
 
         <!-- Scripts -->
         <script src="/js/lang.js" defer></script>
-        <script src="{{ asset('js/home.js') }}" defer></script>
+        <script src="{{ asset(mix('js/home.js')) }}" defer></script>
 
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
@@ -21,7 +21,7 @@
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
         <!-- Styles -->
-        <link href="{{ asset('css/web.css') }}" rel="stylesheet">
+        <link href="{{ asset(mix('css/web.css')) }}" rel="stylesheet">
 
         @env('production')
         <!-- Global site tag (gtag.js) - Google Analytics -->

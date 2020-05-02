@@ -27,3 +27,7 @@ mix.js('resources/js/app/login.js', 'public/js')
   .js(['resources/js/app/admin.js'], 'public/js/admin.js')
   .sass('resources/sass/app/main.scss', 'public/css/app.css')
   .sourceMaps(productionSourceMaps, 'source-map');
+
+if (mix.inProduction()) {
+    mix.version();
+}

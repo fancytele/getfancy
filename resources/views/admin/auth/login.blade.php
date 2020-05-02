@@ -11,10 +11,10 @@
     <title>{{ config('app.name') }} - @lang('Login')</title>
 
     <!-- Links -->
-    <script src="{{ asset('js/login.js') }}"></script>
+    <script src="{{ asset(mix('js/login.js')) }}"></script>
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset(mix('css/app.css')) }}" rel="stylesheet">
 </head>
 
 <body
