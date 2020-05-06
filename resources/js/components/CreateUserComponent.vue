@@ -657,7 +657,7 @@
                                         v-if="errorMessage"
                                 >{{ trans('errorMessage') }}</p>
                             </div>
-                            <div class="col-auto" v-if="userHasReservation && userCreated !== null">
+                            <div class="col-auto" v-if="userHasReservation && userCreated === null">
                                 <div class="mt-2 mt-md-0 text-danger text-right">
                                     <p class="mb-0">
                                         <strong class="text-decoration-underline">{{ trans('Fancy Number') }} reservation expires in:</strong>
@@ -812,7 +812,7 @@
 
                     <div class="align-items-center modal-footer">
                         <div class="col" v-if="reservationDID.item.hasOwnProperty('id')">
-                            {{ trans('Selected DID') }}:
+                            {{ trans('Selected Fancy Number') }}:
                             <div class="font-weight-bold">{{ reservationDID.item.attributes.number | phone }}</div>
                         </div>
                         <div class="col-auto">

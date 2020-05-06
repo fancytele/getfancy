@@ -39,7 +39,7 @@
                             style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 25px 0; text-align: center;">
                             <a href="{{ config('app.url') }}"
                                style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #ffffff; font-size: 19px; font-weight: bold; text-decoration: none;">
-                               {{ config('app.name') }}
+                               <img class="fancy-logo" src="{{ URL::asset('img/logo-light.png') }}" alt="Fancy Logo">
                             </a>
                         </td>
                     </tr>
@@ -57,11 +57,11 @@
                                         style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 35px;">
                                         <h1
                                             style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #1d2c3c; font-size: 19px; font-weight: bold; margin-top: 0; text-align: left;">
-                                            Welcome {{ $user->display_name }}
+                                            Welcome {{ $user->display_name }}!
                                         </h1>
                                         <p
                                            style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #1d2c3c; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
-                                            You are receiving this email because a new account has been created
+                                           Give your phone system the power and intelligence it deserves! Set up your account in minutes!
                                         </p>
 
                                         <table class="action" align="center"
@@ -90,7 +90,7 @@
                                                                                class="button button-blue"
                                                                                target="_blank"
                                                                                style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; border-radius: 3px; box-shadow: 0 2px 3px rgba(0, 0, 0, 0.16); color: #ffffff; display: inline-block; text-decoration: none; -webkit-text-size-adjust: none; background-color: #704895; border-top: 10px solid #704895; border-right: 18px solid #704895; border-bottom: 10px solid #704895; border-left: 18px solid #704895;">
-                                                                                Click here to start your account
+                                                                                Get Started
                                                                             </a>
                                                                         </td>
                                                                     </tr>
@@ -104,18 +104,13 @@
 
                                         <p
                                            style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #1d2c3c; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
-                                           This link will expire in 60 minutes
+                                           You are receiving this email because you signed up for Fancy. <br><small>If you did not, then no further action is required.</small>
                                         </p>
 
                                         <p
-                                            style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #1d2c3c; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
-                                            If you did not request this account, no further action is required.
-                                        </p>
-                                        
-                                        <p
                                            style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #1d2c3c; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
                                             Regards,<br>
-                                            {{ config('app.name') }}
+                                            The Fancy Team.
                                         </p>
                                         <table class="subcopy" width="100%"
                                                cellpadding="0" cellspacing="0"

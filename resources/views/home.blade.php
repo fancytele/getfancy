@@ -551,10 +551,10 @@
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name" class="sr-only">
+                                        <label for="full_name" class="sr-only">
                                             @lang('Full Name')
                                         </label>
-                                        <input type="text" class="form-control w-100" name="name" id="name"
+                                        <input type="text" class="form-control w-100" name="full_name" id="full_name"
                                                placeholder="@lang('Full Name')" required>
                                     </div>
                                 </div>
