@@ -23,9 +23,15 @@
         <div class="row justify-content-center">
             <div class="col-12 col-md-5 col-xl-4 my-5">
 
+                <div class="mb-5 text-center">
+                    <img class="w-50"
+                            src="{{ asset('img/logo-primary.png') }}"
+                            alt="Fancy Logo">
+                </div>
+
                 <!-- Heading -->
-                <h1 class="display-4 text-center mb-3">
-                    @lang('Reset Password')
+                <h1 class="display-4 text-center mb-5">
+                    @lang('Set a Password')
                 </h1>
 
                 <!-- Form -->
@@ -33,17 +39,21 @@
                     @csrf
 
                     <input type="hidden" name="token" value="{{ $token }}">
-
+                    {{ $errors }}
                     <!-- Email address -->
                     <div class="form-group">
                         <label for="email">@lang('E-mail')</label>
                         <input type="email" id="email" name="email"
                                class="form-control @error('email') is-invalid @enderror"
                                value="{{ $email ?? old('email') }}"
-                               autocomplete="email" required autofocus>
+                               autocomplete="email" required disabled>
                         @error('email')
                         <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
+                            <strong>
+                            This email is not in our database. Please 
+                            <a class="text-danger text-decoration-underline" href="mailto:{{ config('fancy.email') }}">contact support</a> 
+                            if you think this is an error.
+                            </strong>
                         </span>
                         @enderror
                     </div>
@@ -52,7 +62,8 @@
                         <label for="password">@lang('Password')</label>
                         <input type="password" id="password" name="password"
                                class="form-control @error('password') is-invalid @enderror"
-                               required>
+                               required
+                               autofocus>
                         @error('password')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -71,7 +82,7 @@
                     <!-- Submit -->
                     <button type="submit" class="btn btn-lg btn-block btn-primary ladda-button js-ladda-submit mb-3"
                             data-style="zoom-out">
-                        @lang('Reset Password')
+                        @lang('Submit')
                     </button>
                 </form>
             </div>

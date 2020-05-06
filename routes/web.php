@@ -26,11 +26,6 @@ Route::post('subscription', 'SubscriptionController@create')->name('subscription
 |
 */
 Route::prefix('admin')->group(function () {
-    Route::get('demo', function () {
-        $user = \App\User::find(1);
-        return new \App\Mail\WelcomeMail($user);
-    });
-    
     // Auth
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('admin.login.show')->middleware('guest');
     Route::post('login', 'Auth\LoginController@login')->name('admin.login');
