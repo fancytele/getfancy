@@ -39,14 +39,14 @@
                     @csrf
 
                     <input type="hidden" name="token" value="{{ $token }}">
-                    {{ $errors }}
+
                     <!-- Email address -->
                     <div class="form-group">
                         <label for="email">@lang('E-mail')</label>
                         <input type="email" id="email" name="email"
                                class="form-control @error('email') is-invalid @enderror"
                                value="{{ $email ?? old('email') }}"
-                               autocomplete="email" required disabled>
+                               autocomplete="email" required readonly>
                         @error('email')
                         <span class="invalid-feedback" role="alert">
                             <strong>
