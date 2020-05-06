@@ -16,7 +16,7 @@
 
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-        <link rel="stylesheet" href="https://maxcdn.icons8.com/fonts/line-awesome/1.1/css/line-awesome.min.css">
+        <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -235,7 +235,7 @@
                             <div class="col-md-4 mb-3" data-aos="fade-up">
                                 <div class="mb-4">
                                     <span class="bg-info h1 px-2 py-1 rounded-circle">
-                                        <i class="la la-globe position-relative top-1"></i>
+                                        <i class="las la-bolt position-relative top-1"></i>
                                     </span>
                                 </div>
                                 <h4 class="font-weight-bold">
@@ -248,7 +248,7 @@
                             <div class="col-md-4 mb-3" data-aos="fade-up">
                                 <div class="mb-4">
                                     <span class="bg-info h1 px-2 py-1 rounded-circle">
-                                        <i class="la la-globe position-relative top-1"></i>
+                                        <i class="las la-handshake position-relative top-1"></i>
                                     </span>
                                 </div>
                                 <h4 class="font-weight-bold">
@@ -261,7 +261,7 @@
                             <div class="col-md-4 mb-3" data-aos="fade-up">
                                 <div class="mb-4">
                                     <span class="bg-info h1 px-2 py-1 rounded-circle">
-                                        <i class="la la-globe position-relative top-1"></i>
+                                        <i class="lar la-check-square position-relative top-1"></i>
                                     </span>
                                 </div>
                                 <h4 class="font-weight-bold">
@@ -275,7 +275,7 @@
                             <div class="col-md-4 mb-3" data-aos="fade-up">
                                 <div class="mb-4">
                                     <span class="bg-info h1 px-2 py-1 rounded-circle">
-                                        <i class="la la-globe position-relative top-1"></i>
+                                        <i class="lar la-lightbulb position-relative top-1"></i>
                                     </span>
                                 </div>
                                 <h4 class="font-weight-bold">
@@ -288,7 +288,7 @@
                             <div class="col-md-4 mb3" data-aos="fade-up">
                                 <div class="mb-4">
                                     <span class="bg-info h1 px-2 py-1 rounded-circle">
-                                        <i class="la la-globe position-relative top-1"></i>
+                                        <i class="las la-chart-pie position-relative top-1"></i>
                                     </span>
                                 </div>
                                 <h4 class="font-weight-bold">
@@ -301,7 +301,7 @@
                             <div class="col-md-4 mb3" data-aos="fade-up">
                                 <div class="mb-4">
                                     <span class="bg-info h1 px-2 py-1 rounded-circle">
-                                        <i class="la la-globe position-relative top-1"></i>
+                                        <i class="las la-money-bill-alt position-relative top-1"></i>
                                     </span>
                                 </div>
                                 <h4 class="font-weight-bold">
