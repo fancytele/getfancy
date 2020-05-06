@@ -60,17 +60,17 @@
                         </button>
                         <div class="d-md-flex d-none mb-3 small locale">
                             @if(App::isLocale('en'))
-                            <span>English</span>
+                            <span class="text-body">English</span>
                             @else
-                            <a href="{{ route('web.locale', 'en') }}">
+                            <a class="text-muted" href="{{ route('web.locale', 'en') }}">
                                 English
                             </a>
                             @endif
                             <span class="px-3">|</span>
                             @if(App::isLocale('es'))
-                            <span>Español</span>
+                            <span class="text-body">Español</span>
                             @else
-                            <a href="{{ route('web.locale', 'es') }}">
+                            <a class="text-muted" href="{{ route('web.locale', 'es') }}">
                                 Español
                             </a>
                             @endif

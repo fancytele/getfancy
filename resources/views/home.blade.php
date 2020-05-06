@@ -56,22 +56,22 @@
                         </button>
                         <div class="d-md-flex d-none mb-4 small">
                             @if(App::isLocale('en'))
-                                <span class="text-muted">English</span>
+                                <span class="text-body">English</span>
                             @else
-                                <a href="{{ route('web.locale', 'en') }}" class="text-body">
+                                <a href="{{ route('web.locale', 'en') }}" class="text-muted">
                                     English
                                 </a>
                             @endif
                             <span class="px-3">|</span>
                             @if(App::isLocale('es'))
-                                <span class="text-muted">Español</span>
+                                <span class="text-body">Español</span>
                             @else
-                                <a href="{{ route('web.locale', 'es') }}" class="text-body">
+                                <a href="{{ route('web.locale', 'es') }}" class="text-muted">
                                     Español
                                 </a>
                             @endif
                         </div>
-                        <ul class="align-items-center d-flex ml-auto navbar-nav text-lowercase">
+                        <ul class="align-items-center d-flex ml-auto navbar-nav">
                             <li class="nav-item">
                                 <a class="font-weight-bold nav-link text-body" href="#features">
                                     @lang('Why Fancy?')
