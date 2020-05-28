@@ -44,7 +44,7 @@
                 <div class="align-items-end container d-flex">
                     <a href="{{ url('/') }}">
                         {{-- TODO: Change to SVG --}}
-                        <img class="fancy-logo" src="{{ URL::asset('img/logo-primary.png') }}" alt="Fancy Logo">
+                        <img class="fancy-logo" src="{{ URL::asset('img/logo-primary.jpeg') }}" alt="Fancyy Logo">
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#fancy-menu"
                             aria-controls="fancy-menu" aria-expanded="false" aria-label="Toggle navigation">
@@ -74,7 +74,7 @@
                         <ul class="align-items-center d-flex ml-auto navbar-nav">
                             <li class="nav-item">
                                 <a class="font-weight-bold nav-link text-body" href="#features">
-                                    @lang('Why Fancy?')
+                                    @lang('Why Fancyy?')
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li>
@@ -201,7 +201,7 @@
                             <div class="d-inline-block">
                                 <a href="#plans" id="get-started"
                                    class="btn btn-block btn-lg btn-primary px-6 rounded text-uppercase">
-                                    @lang('Get Fancy')
+                                    @lang('Get Fancyy')
                                 </a>
                                 <p class="mb-0">
                                     <small class="text-muted">
@@ -211,7 +211,7 @@
                             </div>
                         </div>
                         <div class="col-md-5">
-                            <img src="{{ asset('/img/web/hero-draw.svg') }}" alt="Business man"
+                            <img src="{{ asset('/img/fancyy_home.png') }}" alt="Business man"
                                  class="d-flex hero-img img-fluid ml-auto">
                         </div>
                     </div>
@@ -228,7 +228,7 @@
                     <div class="container">
                         <div class="text-center" data-aos="fade-up">
                             <h2 class="display-4 font-heading">
-                                @lang('Why Fancy?')
+                                @lang('Why Fancyy?')
                             </h2>
                         </div>
                         <div class="mt-7 row">
@@ -524,10 +524,8 @@
                         <div class="col-md-6">
                             <div class="pt-md-0 px-4 px-sm-0 py-4">
                                 <h2 class="display-3 d-md-inline-block font-heading mr-3 text-white">
-                                    @lang('About')
+                                    @lang('About') Fancyy
                                 </h2>
-                                <img src="{{ asset('/img/logo-light.png') }}"
-                                     alt="Logo Secondary">
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -590,7 +588,7 @@
                 </form>
 
                 <p class="border-top pt-2 text-center">
-                    <small>&copy; Fancy {{ date('Y') }}</small>
+                    <small>&copy; Fancyy {{ date('Y') }}</small>
                 </p>
             </div>
         </footer>
