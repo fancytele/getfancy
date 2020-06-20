@@ -52,11 +52,8 @@ class FancySettingService
             $setting->business_custom_message = null;
         }
 
-        $extensions = $request->input('extensions');
-
-        if (!is_null($extensions)) {
-            $setting->extensions = json_decode($extensions);
-        }
+        $setting->languages = json_decode($request->input('languages'));
+        $setting->voice_menu = json_decode($request->input('voice_menus'));
 
         $setting->audio_type = $request->input('audio_type');
 
@@ -98,7 +95,8 @@ class FancySettingService
                 'onhold' => optional($this->user->fancy_setting)->onhold_message_id,
                 'onhold_text' => optional($this->user->fancy_setting)->onhold_custom_message
             ],
-            'extensions' => optional($this->user->fancy_setting)->extensions ?? [],
+            'languages' => optional($this->user->fancy_setting)->languages ?? [],
+            'voice_menus' => optional($this->user->fancy_setting)->voice_menu ?? [],
             'audio_type' => optional($this->user->fancy_setting)->audio_type ?? FancyAudioType::PREDEFINED
         ]);
     }

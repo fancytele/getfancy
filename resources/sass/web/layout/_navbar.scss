@@ -1,5 +1,5 @@
 .navbar {
-  transition: background-color 0.3s;
+  transition: background-color .3s;
 
   .fancy-logo {
     max-height: 3.5rem;
@@ -11,6 +11,16 @@
   }
 }
 
+.navbar.navbar-light {
+  .fancy-logo {
+    display: none;
+  }
+
+  .fancy-dark-logo {
+    display: block;
+  }
+}
+
 .nav-link {
   font-size: $h5-font-size;
   overflow: hidden;
@@ -19,17 +29,17 @@
   &:after {
     content: "";
     background-color: $primary;
-    bottom: -0.125em;
-    height: 0.125em;
+    bottom: -.125em;
+    height: .125em;
     position: absolute;
-    right: 0.625em;
-    left: 0.625em;
-    transition: bottom 0.3s;
+    right: .625em;
+    left: .625em;
+    transition: bottom .3s;
   }
 
   &.active::after,
   &:hover:after {
     content: "";
-    bottom: 0.3125em;
+    bottom: .3125em;
   }
 }

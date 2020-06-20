@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 
-@section('page-subtitle', __('Edit User'))
-
 @section('page-title', __('Fancy Settings'))
 
 @push('head-scripts')
@@ -15,8 +13,7 @@
         @lang('Back')
     </a>
 
-    <fancy-setting-component
-                             :ticket-in-progress="{{ json_encode($user->hasTicketInProgress()) }}"
+    <fancy-setting-component :ticket-in-progress="{{ json_encode($user->hasTicketInProgress()) }}"
                              :has-professional-recording='@json($has_professional_recording)'
                              :professional-recording-price="{{ $professional_recording_price }}"
                              :settings='@json($settings)'

@@ -14,7 +14,8 @@ class FancySetting extends Model
     protected $casts = [
         'business_hours' => 'array',
         'downtime_hours' => 'array',
-        'extensions' => 'array',
+        'languages' => 'array',
+        'voice_menu' => 'array',
     ];
 
     /**
