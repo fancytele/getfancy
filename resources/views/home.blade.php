@@ -45,6 +45,7 @@
                     <a href="{{ url('/') }}">
                         {{-- TODO: Change to SVG --}}
                         <img class="fancy-logo" src="{{ URL::asset('img/Fancyy_Logo-01.png') }}" alt="Fancyy Logo">
+                        <img class="fancy-logo fancy-dark-logo" src="{{ URL::asset('img/Fancyy_Logo-01.png') }}" alt="Fancyy Logo">
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#fancy-menu"
                             aria-controls="fancy-menu" aria-expanded="false" aria-label="Toggle navigation">
