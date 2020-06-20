@@ -104,11 +104,11 @@
                   <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
                     <div class="row">
                       <div class="col-lg-7">
-                        <table class="border-bottom mb-2 table table-hover table-sm">
+                        <table class="border-bottom mb-2 table table-hover table-sm" ref="languages-table">
                           <thead>
                             <tr>
-                              <th scope="col" class="w-25">{{ trans('Key') }}</th>
                               <th scope="col">{{ trans('Language') }}</th>
+                              <th scope="col" class="w-25">{{ trans('Key') }}</th>
                               <th><span class="sr-only">Action</span></th>
                             </tr>
                           </thead>
@@ -117,14 +117,6 @@
                                 v-for="item in languages"
                                 :key="item.id">
                               <td>
-                                <label :for="'language_key'+ item.id"
-                                        class="sr-only">Language Key</label>
-                                <input type="number"
-                                       :id="'language_key'+ item.id"
-                                       class="form-control form-control-sm"
-                                       v-model="item.key"/>
-                              </td>
-                              <td>
                                 <label :for="'language_'+ item.id"
                                         class="sr-only">Language</label>
                                 <input type="text"
@@ -132,6 +124,14 @@
                                        class="form-control form-control-sm"
                                        min="1"
                                        v-model="item.language"/>
+                              </td>
+                              <td>
+                                <label :for="'language_key'+ item.id"
+                                        class="sr-only">Language Key</label>
+                                <input type="number"
+                                       :id="'language_key'+ item.id"
+                                       class="form-control form-control-sm"
+                                       v-model="item.key"/>
                               </td>
                               <td>
                                 <button class="action btn btn-link btn-sm mt-n1 py-0 text-danger"
@@ -154,6 +154,67 @@
               </div>
             </div>
 
+            <!-- Voice Menu Options -->
+            <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xl-4">
+                    <h2 class="mb-1">{{ trans('Voice Menu Options') }}</h2>
+                    <p class="text-black-50">{{ trans('Voice Menu Option Message') }}</p>
+                  </div>
+                  <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
+                    <div class="row">
+                      <div class="col-lg-7">
+                        <table class="border-bottom mb-2 table table-hover table-sm" ref="voice-menus-table">
+                          <thead>
+                            <tr>
+                              <th scope="col">{{ trans('Voice Menu') }}</th>
+                              <th scope="col" class="w-25">{{ trans('Option') }}</th>
+                              <th><span class="sr-only">Action</span></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="content-action-hover"
+                                v-for="item in voiceMenus"
+                                :key="item.id">
+                              <td>
+                                <label :for="'voice_menu_'+ item.id"
+                                        class="sr-only">Voice Menu</label>
+                                <input type="text"
+                                       :id="'voice_menu_'+ item.id"
+                                       class="form-control form-control-sm"
+                                       min="1"
+                                       v-model="item.menu"/>
+                              </td>
+                              <td>
+                                <label :for="'voice_menu_option'+ item.id"
+                                        class="sr-only">Option</label>
+                                <input type="number"
+                                       :id="'voice_menu_option'+ item.id"
+                                       class="form-control form-control-sm"
+                                       v-model="item.option"/>
+                              </td>
+                              <td>
+                                <button class="action btn btn-link btn-sm mt-n1 py-0 text-danger"
+                                        title="Remove"
+                                        @click="deleteVoiceMenu(item.id)">
+                                    <i class="fe fe-minus-circle h2"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <button type="button" class="btn btn-link" @click="addVoiceMenu()">
+                            <i class="fe fe-plus"></i>
+                            {{ trans('Add a new Voice Option') }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- Extensions -->
             <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
                 <div class="card-body">
@@ -165,50 +226,52 @@
                         <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
                             <div class="row">
                                 <div class="col-lg-10">
-                                    <table class="border-bottom mb-2 table table-hover table-sm" ref="extensions-table">
+                                    <table class="border-bottom mb-2 table table-hover table-sm">
                                         <thead>
                                         <tr>
-                                            <th scope="col">{{ trans('Number') }}</th>
-                                            <th scope="col">{{ trans('Name') }}</th>
-                                            <th>
-                                                <span class="sr-only">Action</span>
-                                            </th>
+                                            <th scope="col">{{ trans('Voice Menu') }}</th>
+                                            <th scope="col" class="w-25">{{ trans('Option') }}</th>
+                                            <th scope="col">{{ trans('Phone Numbers') }}</th>
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr class="content-action-hover"
-                                            v-for="item in extensions"
+                                        <tr v-for="item in voiceMenus"
+                                            v-show="item.menu && item.option"
                                             :key="item.id">
-                                            <td>
-                                                <label :for="'extension_number_'+ item.id"
-                                                       class="sr-only">Extension number</label>
-                                                <input type="number"
-                                                       :id="'extension_number_'+ item.id"
-                                                       class="form-control form-control-sm w-75"
-                                                       min="0"
-                                                       v-model="item.number"/>
-                                            </td>
-                                            <td>
-                                                <label :for="'extension_name_'+ item.id"
-                                                       class="sr-only">Extension name</label>
-                                                <input type="text"
-                                                       :id="'extension_name_'+ item.id"
-                                                       class="form-control form-control-sm"
-                                                       v-model="item.name"/>
-                                            </td>
-                                            <td>
-                                                <button class="action btn btn-link btn-sm mt-n1 py-0 text-danger"
-                                                        @click="deleteExtension(item.id)">
-                                                    <i class="fe fe-minus-circle h2"></i>
-                                                </button>
-                                            </td>
+                                          <td>
+                                            {{ item.menu }}
+                                          </td>
+                                          <td>
+                                            {{ item.option }}
+                                          </td>
+                                          <td>
+                                            <ul v-show="item.phones.length > 0"
+                                                class="list-unstyled mb-0">
+                                              <li v-for="(phone, index) in item.phones"
+                                                  :key="`${item.id}_phone_${index}`"
+                                                  class="d-flex">
+                                                  <input type="number"
+                                                         :id="'voice_menu_option'+ item.id"
+                                                         class="form-control form-control-sm"
+                                                         v-model="item.phones[index]"/>
+                                                  <button class="btn btn-link btn-sm mt-n1 py-0 text-danger"
+                                                          title="Remove"
+                                                          type="button"
+                                                          @click.prevent="item.phones.splice(index, 1)">
+                                                      <i class="fe fe-minus-circle h2"></i>
+                                                  </button>
+                                              </li>
+                                            </ul>
+                                            <button class="btn btn-link btn-sm pl-0" 
+                                                    type="button"
+                                                    @click="item.phones.push('')">
+                                                <i class="fe fe-plus"></i>
+                                                <small>{{ trans('Add Phone Number') }}</small>
+                                            </button>
+                                          </td>
                                         </tr>
                                         </tbody>
                                     </table>
-                                    <button type="button" class="btn btn-link" @click="addExtension()">
-                                        <i class="fe fe-plus"></i>
-                                        {{ trans('Add a new extension') }}
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -375,6 +438,9 @@ export default {
       required: true
     }
   },
+  components: {
+    VueTimepicker
+  },
   data() {
     return {
       buyProfessionalRecording: false,
@@ -389,8 +455,8 @@ export default {
         business: null,
         business_text: ''
       },
-      extensions: [],
       languages: [],
+      voiceMenus: [],
       audioType: 'predefined',
       audioFile: null,
       successModal: {
@@ -399,8 +465,31 @@ export default {
       }
     };
   },
-  components: {
-    VueTimepicker
+  created() {
+    if (this.settings.notification) {
+      this.notification = this.settings.notification;
+    }
+
+    if (this.settings.pbx) {
+      this.pbx = this.settings.pbx;
+    }
+
+    if (this.settings.languages) {
+      this.languages = this.settings.languages;
+    }
+
+    if (this.settings.voice_menus) {
+      this.voiceMenus = this.settings.voice_menus;
+    }
+
+    if (this.settings.audio_type) {
+      this.audioType = this.settings.audio_type;
+    }
+  },
+  mounted() {
+    this.laddaButton = Ladda.create(
+      document.querySelector('#submit-fancy-setting')
+    );
   },
   methods: {
     toggleHour(item) {
@@ -426,37 +515,40 @@ export default {
         el.end = item.end;
       });
     },
-    addExtension() {
-      const extension = {
-        id: new Date().valueOf(),
-        number: null,
-        name: ''
-      };
-
-      this.extensions.push(extension);
-
-      this.$nextTick(() => {
-        this.$refs['extensions-table']
-          .querySelector('tbody tr:last-child td:first-child input')
-          .focus();
-      });
-    },
-    deleteExtension(id) {
-      const index = this.extensions.findIndex(el => el.id === id);
-      this.extensions.splice(index, 1);
-    },
     addLanguage() {
-      const extension = {
+      const language = {
         id: new Date().valueOf(),
         language: '',
         key: this.languages.length + 1
       };
 
-      this.languages.push(extension);
+      this.languages.push(language);
+
+      this.$nextTick(() => {
+        this.$refs['languages-table'].querySelector('tbody tr:last-child td:first-child input').focus();
+      });
     },
     deleteLanguage(id) {
       const index = this.languages.findIndex(el => el.id === id);
       this.languages.splice(index, 1);
+    },
+    addVoiceMenu() {
+      const voiceMenu = {
+        id: new Date().valueOf(),
+        menu: '',
+        option: this.voiceMenus.length + 1,
+        phones: []
+      };
+
+      this.voiceMenus.push(voiceMenu);
+
+      this.$nextTick(() => {
+        this.$refs['voice-menus-table'].querySelector('tbody tr:last-child td:first-child input').focus();
+      });
+    },
+    deleteVoiceMenu(id) {
+      const index = this.voiceMenus.findIndex(el => el.id === id);
+      this.voiceMenus.splice(index, 1);
     },
     getSettingPayload() {
       const formData = new FormData();
@@ -483,11 +575,11 @@ export default {
         );
       }
 
-      // Extensions
-      if (this.extensions.length > 0) {
+      // Voice Menus
+      if (this.voiceMenus.length > 0) {
         formData.append(
-          'extensions',
-          JSON.stringify(this.extensions.filter(el => el.number && el.name))
+          'voice_menus',
+          JSON.stringify(this.voiceMenus.filter(el => el.menu && el.option))
         );
       }
 
@@ -538,32 +630,6 @@ export default {
           this.laddaButton.stop();
         });
     }
-  },
-  created() {
-    if (this.settings.notification) {
-      this.notification = this.settings.notification;
-    }
-
-    if (this.settings.pbx) {
-      this.pbx = this.settings.pbx;
-    }
-
-    if (this.settings.languages) {
-      this.languages = this.settings.languages;
-    }
-
-    if (this.settings.extensions) {
-      this.extensions = this.settings.extensions;
-    }
-
-    if (this.settings.audio_type) {
-      this.audioType = this.settings.audio_type;
-    }
-  },
-  mounted() {
-    this.laddaButton = Ladda.create(
-      document.querySelector('#submit-fancy-setting')
-    );
   }
 };
 </script>

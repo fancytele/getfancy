@@ -15,7 +15,7 @@ class FancySetting extends Model
         'business_hours' => 'array',
         'downtime_hours' => 'array',
         'languages' => 'array',
-        'extensions' => 'array',
+        'voice_menu' => 'array',
     ];
 
     /**

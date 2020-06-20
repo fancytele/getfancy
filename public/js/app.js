@@ -4978,6 +4978,69 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -5016,6 +5079,9 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     }
   },
+  components: {
+    VueTimepicker: vue2_timepicker__WEBPACK_IMPORTED_MODULE_0___default.a
+  },
   data: function data() {
     return {
       buyProfessionalRecording: false,
@@ -5030,8 +5096,8 @@ __webpack_require__.r(__webpack_exports__);
         business: null,
         business_text: ''
       },
-      extensions: [],
       languages: [],
+      voiceMenus: [],
       audioType: 'predefined',
       audioFile: null,
       successModal: {
@@ -5040,8 +5106,29 @@ __webpack_require__.r(__webpack_exports__);
       }
     };
   },
-  components: {
-    VueTimepicker: vue2_timepicker__WEBPACK_IMPORTED_MODULE_0___default.a
+  created: function created() {
+    if (this.settings.notification) {
+      this.notification = this.settings.notification;
+    }
+
+    if (this.settings.pbx) {
+      this.pbx = this.settings.pbx;
+    }
+
+    if (this.settings.languages) {
+      this.languages = this.settings.languages;
+    }
+
+    if (this.settings.voice_menus) {
+      this.voiceMenus = this.settings.voice_menus;
+    }
+
+    if (this.settings.audio_type) {
+      this.audioType = this.settings.audio_type;
+    }
+  },
+  mounted: function mounted() {
+    this.laddaButton = Ladda.create(document.querySelector('#submit-fancy-setting'));
   },
   methods: {
     toggleHour: function toggleHour(item) {
@@ -5073,38 +5160,44 @@ __webpack_require__.r(__webpack_exports__);
         el.end = item.end;
       });
     },
-    addExtension: function addExtension() {
+    addLanguage: function addLanguage() {
       var _this = this;
 
-      var extension = {
-        id: new Date().valueOf(),
-        number: null,
-        name: ''
-      };
-      this.extensions.push(extension);
-      this.$nextTick(function () {
-        _this.$refs['extensions-table'].querySelector('tbody tr:last-child td:first-child input').focus();
-      });
-    },
-    deleteExtension: function deleteExtension(id) {
-      var index = this.extensions.findIndex(function (el) {
-        return el.id === id;
-      });
-      this.extensions.splice(index, 1);
-    },
-    addLanguage: function addLanguage() {
-      var extension = {
+      var language = {
         id: new Date().valueOf(),
         language: '',
         key: this.languages.length + 1
       };
-      this.languages.push(extension);
+      this.languages.push(language);
+      this.$nextTick(function () {
+        _this.$refs['languages-table'].querySelector('tbody tr:last-child td:first-child input').focus();
+      });
     },
     deleteLanguage: function deleteLanguage(id) {
       var index = this.languages.findIndex(function (el) {
         return el.id === id;
       });
       this.languages.splice(index, 1);
+    },
+    addVoiceMenu: function addVoiceMenu() {
+      var _this2 = this;
+
+      var voiceMenu = {
+        id: new Date().valueOf(),
+        menu: '',
+        option: this.voiceMenus.length + 1,
+        phones: []
+      };
+      this.voiceMenus.push(voiceMenu);
+      this.$nextTick(function () {
+        _this2.$refs['voice-menus-table'].querySelector('tbody tr:last-child td:first-child input').focus();
+      });
+    },
+    deleteVoiceMenu: function deleteVoiceMenu(id) {
+      var index = this.voiceMenus.findIndex(function (el) {
+        return el.id === id;
+      });
+      this.voiceMenus.splice(index, 1);
     },
     getSettingPayload: function getSettingPayload() {
       var formData = new FormData();
@@ -5126,12 +5219,12 @@ __webpack_require__.r(__webpack_exports__);
         formData.append('languages', JSON.stringify(this.languages.filter(function (el) {
           return el.language && el.key;
         })));
-      } // Extensions
+      } // Voice Menus
 
 
-      if (this.extensions.length > 0) {
-        formData.append('extensions', JSON.stringify(this.extensions.filter(function (el) {
-          return el.number && el.name;
+      if (this.voiceMenus.length > 0) {
+        formData.append('voice_menus', JSON.stringify(this.voiceMenus.filter(function (el) {
+          return el.menu && el.option;
         })));
       } // Audio
 
@@ -5148,7 +5241,7 @@ __webpack_require__.r(__webpack_exports__);
       this.audioFile = event.target.files[0];
     },
     saveSetting: function saveSetting() {
-      var _this2 = this;
+      var _this3 = this;
 
       if (this.isProcessing) {
         return false;
@@ -5163,49 +5256,25 @@ __webpack_require__.r(__webpack_exports__);
           'Content-Type': 'multipart/form-data'
         }
       }).then(function (response) {
-        _this2.settingsSaved = true;
+        _this3.settingsSaved = true;
 
-        _this2.laddaButton.stop();
+        _this3.laddaButton.stop();
 
-        _this2.successModal = response.data;
+        _this3.successModal = response.data;
 
-        _this2.$nextTick(function () {
-          $(_this2.$refs['success-modal']).modal({
+        _this3.$nextTick(function () {
+          $(_this3.$refs['success-modal']).modal({
             backdrop: 'static',
             keyboard: false
           });
         });
       })["catch"](function (error) {
         console.error(error);
-        _this2.isProcessing = false;
+        _this3.isProcessing = false;
 
-        _this2.laddaButton.stop();
+        _this3.laddaButton.stop();
       });
     }
-  },
-  created: function created() {
-    if (this.settings.notification) {
-      this.notification = this.settings.notification;
-    }
-
-    if (this.settings.pbx) {
-      this.pbx = this.settings.pbx;
-    }
-
-    if (this.settings.languages) {
-      this.languages = this.settings.languages;
-    }
-
-    if (this.settings.extensions) {
-      this.extensions = this.settings.extensions;
-    }
-
-    if (this.settings.audio_type) {
-      this.audioType = this.settings.audio_type;
-    }
-  },
-  mounted: function mounted() {
-    this.laddaButton = Ladda.create(document.querySelector('#submit-fancy-setting'));
   }
 });
 
@@ -69879,12 +69948,17 @@ var render = function() {
                         _c(
                           "table",
                           {
+                            ref: "languages-table",
                             staticClass:
                               "border-bottom mb-2 table table-hover table-sm"
                           },
                           [
                             _c("thead", [
                               _c("tr", [
+                                _c("th", { attrs: { scope: "col" } }, [
+                                  _vm._v(_vm._s(_vm.trans("Language")))
+                                ]),
+                                _vm._v(" "),
                                 _c(
                                   "th",
                                   {
@@ -69893,10 +69967,6 @@ var render = function() {
                                   },
                                   [_vm._v(_vm._s(_vm.trans("Key")))]
                                 ),
-                                _vm._v(" "),
-                                _c("th", { attrs: { scope: "col" } }, [
-                                  _vm._v(_vm._s(_vm.trans("Language")))
-                                ]),
                                 _vm._v(" "),
                                 _vm._m(0)
                               ])
@@ -69912,6 +69982,48 @@ var render = function() {
                                     staticClass: "content-action-hover"
                                   },
                                   [
+                                    _c("td", [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "sr-only",
+                                          attrs: { for: "language_" + item.id }
+                                        },
+                                        [_vm._v("Language")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: item.language,
+                                            expression: "item.language"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "form-control form-control-sm",
+                                        attrs: {
+                                          type: "text",
+                                          id: "language_" + item.id,
+                                          min: "1"
+                                        },
+                                        domProps: { value: item.language },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              item,
+                                              "language",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
                                     _c("td", [
                                       _c(
                                         "label",
@@ -69948,48 +70060,6 @@ var render = function() {
                                             _vm.$set(
                                               item,
                                               "key",
-                                              $event.target.value
-                                            )
-                                          }
-                                        }
-                                      })
-                                    ]),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c(
-                                        "label",
-                                        {
-                                          staticClass: "sr-only",
-                                          attrs: { for: "language_" + item.id }
-                                        },
-                                        [_vm._v("Language")]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("input", {
-                                        directives: [
-                                          {
-                                            name: "model",
-                                            rawName: "v-model",
-                                            value: item.language,
-                                            expression: "item.language"
-                                          }
-                                        ],
-                                        staticClass:
-                                          "form-control form-control-sm",
-                                        attrs: {
-                                          type: "text",
-                                          id: "language_" + item.id,
-                                          min: "1"
-                                        },
-                                        domProps: { value: item.language },
-                                        on: {
-                                          input: function($event) {
-                                            if ($event.target.composing) {
-                                              return
-                                            }
-                                            _vm.$set(
-                                              item,
-                                              "language",
                                               $event.target.value
                                             )
                                           }
@@ -70065,13 +70135,11 @@ var render = function() {
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-xl-4" }, [
                   _c("h2", { staticClass: "mb-1" }, [
-                    _vm._v(_vm._s(_vm.trans("Extension Settings")))
+                    _vm._v(_vm._s(_vm.trans("Voice Menu Options")))
                   ]),
                   _vm._v(" "),
                   _c("p", { staticClass: "text-black-50" }, [
-                    _vm._v(
-                      _vm._s(_vm.trans("Custom extensions description")) + "."
-                    )
+                    _vm._v(_vm._s(_vm.trans("Voice Menu Option Message")))
                   ])
                 ]),
                 _vm._v(" "),
@@ -70083,11 +70151,11 @@ var render = function() {
                   },
                   [
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-lg-10" }, [
+                      _c("div", { staticClass: "col-lg-7" }, [
                         _c(
                           "table",
                           {
-                            ref: "extensions-table",
+                            ref: "voice-menus-table",
                             staticClass:
                               "border-bottom mb-2 table table-hover table-sm"
                           },
@@ -70095,12 +70163,17 @@ var render = function() {
                             _c("thead", [
                               _c("tr", [
                                 _c("th", { attrs: { scope: "col" } }, [
-                                  _vm._v(_vm._s(_vm.trans("Number")))
+                                  _vm._v(_vm._s(_vm.trans("Voice Menu")))
                                 ]),
                                 _vm._v(" "),
-                                _c("th", { attrs: { scope: "col" } }, [
-                                  _vm._v(_vm._s(_vm.trans("Name")))
-                                ]),
+                                _c(
+                                  "th",
+                                  {
+                                    staticClass: "w-25",
+                                    attrs: { scope: "col" }
+                                  },
+                                  [_vm._v(_vm._s(_vm.trans("Option")))]
+                                ),
                                 _vm._v(" "),
                                 _vm._m(1)
                               ])
@@ -70108,7 +70181,7 @@ var render = function() {
                             _vm._v(" "),
                             _c(
                               "tbody",
-                              _vm._l(_vm.extensions, function(item) {
+                              _vm._l(_vm.voiceMenus, function(item) {
                                 return _c(
                                   "tr",
                                   {
@@ -70122,10 +70195,10 @@ var render = function() {
                                         {
                                           staticClass: "sr-only",
                                           attrs: {
-                                            for: "extension_number_" + item.id
+                                            for: "voice_menu_" + item.id
                                           }
                                         },
-                                        [_vm._v("Extension number")]
+                                        [_vm._v("Voice Menu")]
                                       ),
                                       _vm._v(" "),
                                       _c("input", {
@@ -70133,18 +70206,18 @@ var render = function() {
                                           {
                                             name: "model",
                                             rawName: "v-model",
-                                            value: item.number,
-                                            expression: "item.number"
+                                            value: item.menu,
+                                            expression: "item.menu"
                                           }
                                         ],
                                         staticClass:
-                                          "form-control form-control-sm w-75",
+                                          "form-control form-control-sm",
                                         attrs: {
-                                          type: "number",
-                                          id: "extension_number_" + item.id,
-                                          min: "0"
+                                          type: "text",
+                                          id: "voice_menu_" + item.id,
+                                          min: "1"
                                         },
-                                        domProps: { value: item.number },
+                                        domProps: { value: item.menu },
                                         on: {
                                           input: function($event) {
                                             if ($event.target.composing) {
@@ -70152,7 +70225,7 @@ var render = function() {
                                             }
                                             _vm.$set(
                                               item,
-                                              "number",
+                                              "menu",
                                               $event.target.value
                                             )
                                           }
@@ -70166,10 +70239,10 @@ var render = function() {
                                         {
                                           staticClass: "sr-only",
                                           attrs: {
-                                            for: "extension_name_" + item.id
+                                            for: "voice_menu_option" + item.id
                                           }
                                         },
-                                        [_vm._v("Extension name")]
+                                        [_vm._v("Option")]
                                       ),
                                       _vm._v(" "),
                                       _c("input", {
@@ -70177,17 +70250,17 @@ var render = function() {
                                           {
                                             name: "model",
                                             rawName: "v-model",
-                                            value: item.name,
-                                            expression: "item.name"
+                                            value: item.option,
+                                            expression: "item.option"
                                           }
                                         ],
                                         staticClass:
                                           "form-control form-control-sm",
                                         attrs: {
-                                          type: "text",
-                                          id: "extension_name_" + item.id
+                                          type: "number",
+                                          id: "voice_menu_option" + item.id
                                         },
-                                        domProps: { value: item.name },
+                                        domProps: { value: item.option },
                                         on: {
                                           input: function($event) {
                                             if ($event.target.composing) {
@@ -70195,7 +70268,7 @@ var render = function() {
                                             }
                                             _vm.$set(
                                               item,
-                                              "name",
+                                              "option",
                                               $event.target.value
                                             )
                                           }
@@ -70209,9 +70282,10 @@ var render = function() {
                                         {
                                           staticClass:
                                             "action btn btn-link btn-sm mt-n1 py-0 text-danger",
+                                          attrs: { title: "Remove" },
                                           on: {
                                             click: function($event) {
-                                              return _vm.deleteExtension(
+                                              return _vm.deleteVoiceMenu(
                                                 item.id
                                               )
                                             }
@@ -70239,16 +70313,245 @@ var render = function() {
                             attrs: { type: "button" },
                             on: {
                               click: function($event) {
-                                return _vm.addExtension()
+                                return _vm.addVoiceMenu()
                               }
                             }
                           },
                           [
                             _c("i", { staticClass: "fe fe-plus" }),
                             _vm._v(
-                              "\n                                    " +
-                                _vm._s(_vm.trans("Add a new extension")) +
-                                "\n                                "
+                              "\n                        " +
+                                _vm._s(_vm.trans("Add a new Voice Option")) +
+                                "\n                    "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xl-4" }, [
+                  _c("h2", { staticClass: "mb-1" }, [
+                    _vm._v(_vm._s(_vm.trans("Extension Settings")))
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-black-50" }, [
+                    _vm._v(
+                      _vm._s(_vm.trans("Custom extensions description")) + "."
+                    )
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-lg-10" }, [
+                        _c(
+                          "table",
+                          {
+                            staticClass:
+                              "border-bottom mb-2 table table-hover table-sm"
+                          },
+                          [
+                            _c("thead", [
+                              _c("tr", [
+                                _c("th", { attrs: { scope: "col" } }, [
+                                  _vm._v(_vm._s(_vm.trans("Voice Menu")))
+                                ]),
+                                _vm._v(" "),
+                                _c(
+                                  "th",
+                                  {
+                                    staticClass: "w-25",
+                                    attrs: { scope: "col" }
+                                  },
+                                  [_vm._v(_vm._s(_vm.trans("Option")))]
+                                ),
+                                _vm._v(" "),
+                                _c("th", { attrs: { scope: "col" } }, [
+                                  _vm._v(_vm._s(_vm.trans("Phone Numbers")))
+                                ])
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              _vm._l(_vm.voiceMenus, function(item) {
+                                return _c(
+                                  "tr",
+                                  {
+                                    directives: [
+                                      {
+                                        name: "show",
+                                        rawName: "v-show",
+                                        value: item.menu && item.option,
+                                        expression: "item.menu && item.option"
+                                      }
+                                    ],
+                                    key: item.id
+                                  },
+                                  [
+                                    _c("td", [
+                                      _vm._v(
+                                        "\n                                        " +
+                                          _vm._s(item.menu) +
+                                          "\n                                      "
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _vm._v(
+                                        "\n                                        " +
+                                          _vm._s(item.option) +
+                                          "\n                                      "
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _c(
+                                        "ul",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "show",
+                                              rawName: "v-show",
+                                              value: item.phones.length > 0,
+                                              expression:
+                                                "item.phones.length > 0"
+                                            }
+                                          ],
+                                          staticClass: "list-unstyled mb-0"
+                                        },
+                                        _vm._l(item.phones, function(
+                                          phone,
+                                          index
+                                        ) {
+                                          return _c(
+                                            "li",
+                                            {
+                                              key: item.id + "_phone_" + index,
+                                              staticClass: "d-flex"
+                                            },
+                                            [
+                                              _c("input", {
+                                                directives: [
+                                                  {
+                                                    name: "model",
+                                                    rawName: "v-model",
+                                                    value: item.phones[index],
+                                                    expression:
+                                                      "item.phones[index]"
+                                                  }
+                                                ],
+                                                staticClass:
+                                                  "form-control form-control-sm",
+                                                attrs: {
+                                                  type: "number",
+                                                  id:
+                                                    "voice_menu_option" +
+                                                    item.id
+                                                },
+                                                domProps: {
+                                                  value: item.phones[index]
+                                                },
+                                                on: {
+                                                  input: function($event) {
+                                                    if (
+                                                      $event.target.composing
+                                                    ) {
+                                                      return
+                                                    }
+                                                    _vm.$set(
+                                                      item.phones,
+                                                      index,
+                                                      $event.target.value
+                                                    )
+                                                  }
+                                                }
+                                              }),
+                                              _vm._v(" "),
+                                              _c(
+                                                "button",
+                                                {
+                                                  staticClass:
+                                                    "btn btn-link btn-sm mt-n1 py-0 text-danger",
+                                                  attrs: {
+                                                    title: "Remove",
+                                                    type: "button"
+                                                  },
+                                                  on: {
+                                                    click: function($event) {
+                                                      $event.preventDefault()
+                                                      return item.phones.splice(
+                                                        index,
+                                                        1
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c("i", {
+                                                    staticClass:
+                                                      "fe fe-minus-circle h2"
+                                                  })
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        }),
+                                        0
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "btn btn-link btn-sm pl-0",
+                                          attrs: { type: "button" },
+                                          on: {
+                                            click: function($event) {
+                                              return item.phones.push("")
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fe fe-plus"
+                                          }),
+                                          _vm._v(" "),
+                                          _c("small", [
+                                            _vm._v(
+                                              _vm._s(
+                                                _vm.trans("Add Phone Number")
+                                              )
+                                            )
+                                          ])
+                                        ]
+                                      )
+                                    ])
+                                  ]
+                                )
+                              }),
+                              0
                             )
                           ]
                         )

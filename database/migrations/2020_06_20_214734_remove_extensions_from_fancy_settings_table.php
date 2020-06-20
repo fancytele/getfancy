@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddLanguagesToFancySettingsTable extends Migration
+class RemoveExtensionsFromFancySettingsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,7 +14,7 @@ class AddLanguagesToFancySettingsTable extends Migration
     public function up()
     {
         Schema::table('fancy_settings', function (Blueprint $table) {
-            $table->json('languages')->nullable()->after('downtime_hours');
+            $table->dropColumn('extensions');
         });
     }
 
@@ -26,7 +26,7 @@ class AddLanguagesToFancySettingsTable extends Migration
     public function down()
     {
         Schema::table('fancy_settings', function (Blueprint $table) {
-            $table->dropColumn('languages');
+            $table->json('extensions')->nullable();
         });
     }
 }
