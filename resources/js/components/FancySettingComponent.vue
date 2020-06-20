@@ -107,8 +107,8 @@
                         <table class="border-bottom mb-2 table table-hover table-sm">
                           <thead>
                             <tr>
+                              <th scope="col" class="w-25">{{ trans('Key') }}</th>
                               <th scope="col">{{ trans('Language') }}</th>
-                              <th scope="col">{{ trans('Key') }}</th>
                               <th><span class="sr-only">Action</span></th>
                             </tr>
                           </thead>
@@ -117,25 +117,25 @@
                                 v-for="item in languages"
                                 :key="item.id">
                               <td>
-                                <label :for="'language_'+ item.id"
-                                        class="sr-only">Extension number</label>
-                                <select :id="'language_'+ item.id"
-                                        class="form-control form-control-sm"
-                                        v-model="item.language">
-                                  <option value="english">{{ trans('English') }}</option>
-                                  <option value="spanish">{{ trans('Spanish') }}</option>
-                                </select>
-                              </td>
-                              <td>
                                 <label :for="'language_key'+ item.id"
                                         class="sr-only">Language Key</label>
+                                <input type="number"
+                                       :id="'language_key'+ item.id"
+                                       class="form-control form-control-sm"
+                                       v-model="item.key"/>
+                              </td>
+                              <td>
+                                <label :for="'language_'+ item.id"
+                                        class="sr-only">Language</label>
                                 <input type="text"
-                                        :id="'language_key'+ item.id"
-                                        class="form-control form-control-sm"
-                                        v-model="item.key"/>
+                                       :id="'language_'+ item.id"
+                                       class="form-control form-control-sm"
+                                       min="1"
+                                       v-model="item.language"/>
                               </td>
                               <td>
                                 <button class="action btn btn-link btn-sm mt-n1 py-0 text-danger"
+                                        title="Remove"
                                         @click="deleteLanguage(item.id)">
                                     <i class="fe fe-minus-circle h2"></i>
                                 </button>
@@ -448,8 +448,8 @@ export default {
     addLanguage() {
       const extension = {
         id: new Date().valueOf(),
-        language: 'english',
-        key: ''
+        language: '',
+        key: this.languages.length + 1
       };
 
       this.languages.push(extension);
