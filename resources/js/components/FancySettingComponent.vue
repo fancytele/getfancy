@@ -93,6 +93,67 @@
                 </div>
             </div>
 
+            <!-- Language Options -->
+            <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-xl-4">
+                    <h2 class="mb-1">{{ trans('Language Options') }}</h2>
+                    <p class="text-black-50">{{ trans('Language Options Message') }}</p>
+                  </div>
+                  <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
+                    <div class="row">
+                      <div class="col-lg-7">
+                        <table class="border-bottom mb-2 table table-hover table-sm">
+                          <thead>
+                            <tr>
+                              <th scope="col">{{ trans('Language') }}</th>
+                              <th scope="col">{{ trans('Key') }}</th>
+                              <th><span class="sr-only">Action</span></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr class="content-action-hover"
+                                v-for="item in languages"
+                                :key="item.id">
+                              <td>
+                                <label :for="'language_'+ item.id"
+                                        class="sr-only">Extension number</label>
+                                <select :id="'language_'+ item.id"
+                                        class="form-control form-control-sm"
+                                        v-model="item.language">
+                                  <option value="english">{{ trans('English') }}</option>
+                                  <option value="spanish">{{ trans('Spanish') }}</option>
+                                </select>
+                              </td>
+                              <td>
+                                <label :for="'language_key'+ item.id"
+                                        class="sr-only">Language Key</label>
+                                <input type="text"
+                                        :id="'language_key'+ item.id"
+                                        class="form-control form-control-sm"
+                                        v-model="item.key"/>
+                              </td>
+                              <td>
+                                <button class="action btn btn-link btn-sm mt-n1 py-0 text-danger"
+                                        @click="deleteLanguage(item.id)">
+                                    <i class="fe fe-minus-circle h2"></i>
+                                </button>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                        <button type="button" class="btn btn-link" @click="addLanguage()">
+                            <i class="fe fe-plus"></i>
+                            {{ trans('Add a new Language') }}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- Extensions -->
             <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
                 <div class="card-body">
@@ -287,7 +348,7 @@ export default {
     },
     professionalRecordingPrice: {
       type: Number,
-      required: true,
+      required: true
     },
     settings: {
       type: Object,
@@ -329,6 +390,7 @@ export default {
         business_text: ''
       },
       extensions: [],
+      languages: [],
       audioType: 'predefined',
       audioFile: null,
       successModal: {
@@ -383,6 +445,19 @@ export default {
       const index = this.extensions.findIndex(el => el.id === id);
       this.extensions.splice(index, 1);
     },
+    addLanguage() {
+      const extension = {
+        id: new Date().valueOf(),
+        language: 'english',
+        key: ''
+      };
+
+      this.languages.push(extension);
+    },
+    deleteLanguage(id) {
+      const index = this.languages.findIndex(el => el.id === id);
+      this.languages.splice(index, 1);
+    },
     getSettingPayload() {
       const formData = new FormData();
 
@@ -398,6 +473,14 @@ export default {
 
       if (this.pbx.business > 0 && this.pbx.business_text) {
         formData.append('business_text', this.pbx.business_text);
+      }
+
+      // Languages
+      if (this.languages.length > 0) {
+        formData.append(
+          'languages',
+          JSON.stringify(this.languages.filter(el => el.language && el.key))
+        );
       }
 
       // Extensions
@@ -427,10 +510,10 @@ export default {
 
       this.isProcessing = true;
       this.laddaButton.start();
-    
+
       const data = this.getSettingPayload();
       console.log(data);
-      
+
       axios
         .post(this.urlAction, data, {
           headers: { 'Content-Type': 'multipart/form-data' }
@@ -463,6 +546,10 @@ export default {
 
     if (this.settings.pbx) {
       this.pbx = this.settings.pbx;
+    }
+
+    if (this.settings.languages) {
+      this.languages = this.settings.languages;
     }
 
     if (this.settings.extensions) {

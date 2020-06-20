@@ -4917,6 +4917,67 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -4970,6 +5031,7 @@ __webpack_require__.r(__webpack_exports__);
         business_text: ''
       },
       extensions: [],
+      languages: [],
       audioType: 'predefined',
       audioFile: null,
       successModal: {
@@ -5030,6 +5092,20 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.extensions.splice(index, 1);
     },
+    addLanguage: function addLanguage() {
+      var extension = {
+        id: new Date().valueOf(),
+        language: 'english',
+        key: ''
+      };
+      this.languages.push(extension);
+    },
+    deleteLanguage: function deleteLanguage(id) {
+      var index = this.languages.findIndex(function (el) {
+        return el.id === id;
+      });
+      this.languages.splice(index, 1);
+    },
     getSettingPayload: function getSettingPayload() {
       var formData = new FormData();
       formData.append('notification_email', this.notification.email);
@@ -5043,6 +5119,13 @@ __webpack_require__.r(__webpack_exports__);
 
       if (this.pbx.business > 0 && this.pbx.business_text) {
         formData.append('business_text', this.pbx.business_text);
+      } // Languages
+
+
+      if (this.languages.length > 0) {
+        formData.append('languages', JSON.stringify(this.languages.filter(function (el) {
+          return el.language && el.key;
+        })));
       } // Extensions
 
 
@@ -5107,6 +5190,10 @@ __webpack_require__.r(__webpack_exports__);
 
     if (this.settings.pbx) {
       this.pbx = this.settings.pbx;
+    }
+
+    if (this.settings.languages) {
+      this.languages = this.settings.languages;
     }
 
     if (this.settings.extensions) {
@@ -69772,6 +69859,238 @@ var render = function() {
               _c("div", { staticClass: "row" }, [
                 _c("div", { staticClass: "col-xl-4" }, [
                   _c("h2", { staticClass: "mb-1" }, [
+                    _vm._v(_vm._s(_vm.trans("Language Options")))
+                  ]),
+                  _vm._v(" "),
+                  _c("p", { staticClass: "text-black-50" }, [
+                    _vm._v(_vm._s(_vm.trans("Language Options Message")))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-lg-7" }, [
+                        _c(
+                          "table",
+                          {
+                            staticClass:
+                              "border-bottom mb-2 table table-hover table-sm"
+                          },
+                          [
+                            _c("thead", [
+                              _c("tr", [
+                                _c("th", { attrs: { scope: "col" } }, [
+                                  _vm._v(_vm._s(_vm.trans("Language")))
+                                ]),
+                                _vm._v(" "),
+                                _c("th", { attrs: { scope: "col" } }, [
+                                  _vm._v(_vm._s(_vm.trans("Key")))
+                                ]),
+                                _vm._v(" "),
+                                _vm._m(0)
+                              ])
+                            ]),
+                            _vm._v(" "),
+                            _c(
+                              "tbody",
+                              _vm._l(_vm.languages, function(item) {
+                                return _c(
+                                  "tr",
+                                  {
+                                    key: item.id,
+                                    staticClass: "content-action-hover"
+                                  },
+                                  [
+                                    _c("td", [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "sr-only",
+                                          attrs: { for: "language_" + item.id }
+                                        },
+                                        [_vm._v("Extension number")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c(
+                                        "select",
+                                        {
+                                          directives: [
+                                            {
+                                              name: "model",
+                                              rawName: "v-model",
+                                              value: item.language,
+                                              expression: "item.language"
+                                            }
+                                          ],
+                                          staticClass:
+                                            "form-control form-control-sm",
+                                          attrs: { id: "language_" + item.id },
+                                          on: {
+                                            change: function($event) {
+                                              var $$selectedVal = Array.prototype.filter
+                                                .call(
+                                                  $event.target.options,
+                                                  function(o) {
+                                                    return o.selected
+                                                  }
+                                                )
+                                                .map(function(o) {
+                                                  var val =
+                                                    "_value" in o
+                                                      ? o._value
+                                                      : o.value
+                                                  return val
+                                                })
+                                              _vm.$set(
+                                                item,
+                                                "language",
+                                                $event.target.multiple
+                                                  ? $$selectedVal
+                                                  : $$selectedVal[0]
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "english" } },
+                                            [
+                                              _vm._v(
+                                                _vm._s(_vm.trans("English"))
+                                              )
+                                            ]
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "option",
+                                            { attrs: { value: "spanish" } },
+                                            [
+                                              _vm._v(
+                                                _vm._s(_vm.trans("Spanish"))
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _c(
+                                        "label",
+                                        {
+                                          staticClass: "sr-only",
+                                          attrs: {
+                                            for: "language_key" + item.id
+                                          }
+                                        },
+                                        [_vm._v("Language Key")]
+                                      ),
+                                      _vm._v(" "),
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: item.key,
+                                            expression: "item.key"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "form-control form-control-sm",
+                                        attrs: {
+                                          type: "text",
+                                          id: "language_key" + item.id
+                                        },
+                                        domProps: { value: item.key },
+                                        on: {
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
+                                            }
+                                            _vm.$set(
+                                              item,
+                                              "key",
+                                              $event.target.value
+                                            )
+                                          }
+                                        }
+                                      })
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _c(
+                                        "button",
+                                        {
+                                          staticClass:
+                                            "action btn btn-link btn-sm mt-n1 py-0 text-danger",
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.deleteLanguage(item.id)
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "fe fe-minus-circle h2"
+                                          })
+                                        ]
+                                      )
+                                    ])
+                                  ]
+                                )
+                              }),
+                              0
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "btn btn-link",
+                            attrs: { type: "button" },
+                            on: {
+                              click: function($event) {
+                                return _vm.addLanguage()
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "fe fe-plus" }),
+                            _vm._v(
+                              "\n                        " +
+                                _vm._s(_vm.trans("Add a new Language")) +
+                                "\n                    "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xl-4" }, [
+                  _c("h2", { staticClass: "mb-1" }, [
                     _vm._v(_vm._s(_vm.trans("Extension Settings")))
                   ]),
                   _vm._v(" "),
@@ -69809,7 +70128,7 @@ var render = function() {
                                   _vm._v(_vm._s(_vm.trans("Name")))
                                 ]),
                                 _vm._v(" "),
-                                _vm._m(0)
+                                _vm._m(1)
                               ])
                             ]),
                             _vm._v(" "),
@@ -70413,6 +70732,14 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("th", [
+      _c("span", { staticClass: "sr-only" }, [_vm._v("Action")])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
