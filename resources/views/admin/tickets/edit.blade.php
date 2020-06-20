@@ -12,13 +12,17 @@
         </a>
 
         @if($ticket->hasBeenUpdated())
-        <div class="alert alert-warning align-items-center d-flex" role="alert">
-            <i class="display-4 fe fe-alert-triangle mr-4"></i>
-            <div>
-                <strong>The Ticket has been updated</strong>.
-                Please review all the settings once again.
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="alert alert-warning align-items-center d-flex" role="alert">
+                        <i class="display-4 fe fe-alert-triangle mr-4"></i>
+                        <div>
+                            <strong>The Ticket has been updated</strong>.
+                            Please review all the settings once again.
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
         @endif
 
         <div class="row">
@@ -104,7 +108,7 @@
                                     </div>
                                     <div>
                                         <span class="font-weight-bold mr-1">Period: </span>
-                                        <span>{{ $settings->period_notification_label }}</span>
+                                        <span class="text-capitalize">{{ $settings->period_notification_label }}</span>
                                     </div>
                                 </dd>
 
@@ -150,16 +154,51 @@
                                     </dd>
                                 @endif
 
-                                @if($settings->extensions)
+                                @if($settings->languages)
+                                    <dt class="text-decoration-underline">Language Options</dt>
+                                    <dd>
+                                        <table class="table table-borderless table-sm table-striped w-auto">
+                                            <tbody>
+                                                @foreach ($settings->languages as $language)
+                                                    <tr>
+                                                        <td class="font-weight-bold pl-0 py-2">{{ $language['language'] }}</td>
+                                                        <td class="py-2">{{ $language['key'] }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                @endif
+
+                                @if($settings->voice_menu)
+                                    <dt class="text-decoration-underline">Voice Menu</dt>
+                                    <dd>
+                                        <table class="table table-borderless table-sm table-striped w-auto">
+                                            <tbody>
+                                                @foreach ($settings->voice_menu as $voice_menu)
+                                                    <tr>
+                                                        <td class="font-weight-bold pl-0 py-2">{{ $voice_menu['menu'] }}</td>
+                                                        <td class="py-2">{{ $voice_menu['option'] }}</td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </dd>
+                                @endif
+
+                                @if($settings->voice_menu)
                                     <dt class="text-decoration-underline">Extensions</dt>
                                     <dd>
                                         <table class="table table-borderless table-sm table-striped w-auto">
                                             <tbody>
-                                                @foreach ($settings->extensions as $extension)
-                                                <tr>
-                                                    <td class="font-weight-bold pl-0 py-2">{{ $extension['name'] }}</td>
-                                                    <td class="py-2">{{ $extension['number'] }}</td>
-                                                </tr>
+                                                @foreach ($settings->voice_menu as $voice_menu)
+                                                    @continue(count($voice_menu['phones']) === 0)
+                                                    <tr>
+                                                        <td class="font-weight-bold pl-0 py-2">{{ $voice_menu['menu'] }}</td>
+                                                        <td class="py-2">
+                                                            {{ join(' / ', $voice_menu['phones']) }}
+                                                        </td>
+                                                    </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
@@ -170,10 +209,10 @@
                                 <dd class="mb-4">
                                     {{ $settings->audio_label }}
                                     @if($settings->audio_type === 'custom' && $settings->audio_url)
-                                    <a class="btn btn-link"
-                                        href="{{ $settings->audio_download_url }}"
-                                        download target="_blank" rel="noreferrer noopener">
-                                            (<small><i class="fe fe-download-cloud"></i> Download audio</small>)
+                                        <a class="btn btn-link"
+                                            href="{{ $settings->audio_download_url }}"
+                                            download target="_blank" rel="noreferrer noopener">
+                                                (<small><i class="fe fe-download-cloud"></i> Download audio</small>)
                                         </a>
                                     @endif
                                 </dd>
@@ -183,9 +222,9 @@
                         @endisset
 
                         <a href="{{ route('admin.tickets.update', $ticket->id) }}" class="btn btn-primary"
-                        data-toggle="modal"
-                        data-backdrop="static" data-target="#ticket-complete">
-                            <i class="fe fe-archive"></i> @lang('Complete ticket')
+                            data-toggle="modal"
+                            data-backdrop="static" data-target="#ticket-complete">
+                                <i class="fe fe-archive"></i> @lang('Complete ticket')
                         </a>
                     </div>
                 </div>
