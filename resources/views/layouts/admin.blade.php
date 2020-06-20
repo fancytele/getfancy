@@ -34,7 +34,7 @@
 
                     <!-- Brand -->
                     <a class="navbar-brand" href="{{ route('admin.dashboard') }}">
-                        <img src="{{ asset('img/logo-light.png') }}" class="navbar-brand-img 
+                        <img src="{{ asset('img/Fancyy_Logo-06.png') }}" class="navbar-brand-img 
                       mx-auto" alt="Fancy Logo Light">
                     </a>
 
