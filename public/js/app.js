@@ -4915,6 +4915,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -70305,22 +70307,26 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary btn btn-primary ladda-button",
-            attrs: {
-              type: "submit",
-              id: "submit-fancy-setting",
-              "data-style": "zoom-out"
-            }
-          },
-          [
-            _vm._v(
-              "\n            " + _vm._s(_vm.trans("Submit")) + "\n        "
-            )
-          ]
-        )
+        _c("div", { staticClass: "text-right" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary btn btn-primary ladda-button",
+              attrs: {
+                type: "submit",
+                id: "submit-fancy-setting",
+                "data-style": "zoom-out"
+              }
+            },
+            [
+              _vm._v(
+                "\n              " +
+                  _vm._s(_vm.trans("Submit")) +
+                  "\n          "
+              )
+            ]
+          )
+        ])
       ]
     ),
     _vm._v(" "),

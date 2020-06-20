@@ -233,12 +233,14 @@
                 </div>
             </div>
 
-            <button type="submit"
-                    id="submit-fancy-setting"
-                    class="btn btn-primary btn btn-primary ladda-button"
-                    data-style="zoom-out">
-                {{ trans('Submit') }}
-            </button>
+            <div class="text-right">
+              <button type="submit"
+                      id="submit-fancy-setting"
+                      class="btn btn-primary btn btn-primary ladda-button"
+                      data-style="zoom-out">
+                  {{ trans('Submit') }}
+              </button>
+            </div>
         </form>
 
         <div id="success-modal"
