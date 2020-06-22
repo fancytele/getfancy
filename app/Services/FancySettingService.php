@@ -44,14 +44,6 @@ class FancySettingService
         $setting->email_notification = (string) $request->input('notification_email');
         $setting->period_notification = $request->input('notification_period');
 
-        $setting->business_message_id = $request->input('business_id');
-
-        if (is_null($setting->business_message_id) && $request->has('business_text')) {
-            $setting->business_custom_message = $request->input('business_text');
-        } else {
-            $setting->business_custom_message = null;
-        }
-
         $setting->languages = json_decode($request->input('languages'));
         $setting->voice_menu = json_decode($request->input('voice_menus'));
 
@@ -81,19 +73,9 @@ class FancySettingService
         }
 
         return collect([
-            'business_hours' => optional($this->user->fancy_setting)->business_hours,
-            'downtime_hours' => optional($this->user->fancy_setting)->downtime_hours,
             'notification' => [
                 'email' => optional($this->user->fancy_setting)->email_notification,
                 'period' => explode(',', optional($this->user->fancy_setting)->period_notification)
-            ],
-            'pbx' => [
-                'business' => optional($this->user->fancy_setting)->business_message_id,
-                'business_text' => optional($this->user->fancy_setting)->business_custom_message,
-                'downtime' => optional($this->user->fancy_setting)->downtime_message_id,
-                'downtime_text' => optional($this->user->fancy_setting)->downtime_custom_message,
-                'onhold' => optional($this->user->fancy_setting)->onhold_message_id,
-                'onhold_text' => optional($this->user->fancy_setting)->onhold_custom_message
             ],
             'languages' => optional($this->user->fancy_setting)->languages ?? [],
             'voice_menus' => optional($this->user->fancy_setting)->voice_menu ?? [],

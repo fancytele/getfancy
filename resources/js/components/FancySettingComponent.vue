@@ -38,61 +38,6 @@
                 </div>
             </div>
 
-            <!-- PBX -->
-            <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-xl-4">
-                            <h2 class="mb-1">{{ trans('Call Flow Configuration') }}</h2>
-                            <p class="text-black-50">{{ trans('Choose your PBX message') }}.</p>
-                        </div>
-                        <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
-                            <div>
-                                <fieldset class="mb-4">
-                                    <legend class="pl-4">{{ trans('Voice Menu Options') }}</legend>
-                                    <div>
-                                        <div class="custom-control custom-radio mb-3"
-                                             v-for="item in messages.business"
-                                             :key="item.id">
-                                            <input type="radio"
-                                                   :id="`${item.type}_message_${item.id}`"
-                                                   name="business-message"
-                                                   class="custom-control-input"
-                                                   :value="item.id"
-                                                   v-model="pbx.business"/>
-                                            <label class="custom-control-label"
-                                                   :for="`${item.type}_message_${item.id}`">
-                                                {{ trans(item.message) }}
-                                            </label>
-                                        </div>
-                                        <div class="custom-control custom-radio mb-3">
-                                            <input type="radio"
-                                                   id="business_message_0"
-                                                   name="business-message"
-                                                   class="custom-control-input"
-                                                   value="0"
-                                                   v-model="pbx.business"/>
-                                            <label class="custom-control-label" for="business_message_0">
-                                              {{ trans('Custom message') }}
-                                            </label>
-                                        </div>
-                                        <div class="form-group pl-4"
-                                             :class="{'disabled-setting': pbx.business != 0}">
-                                            <textarea name="business_message_custom"
-                                                      id="business_message_custom"
-                                                      class="form-control resize-none"
-                                                      rows="3"
-                                                      :disabled="pbx.business != 0"
-                                                      v-model="pbx.business_text"></textarea>
-                                        </div>
-                                    </div>
-                                </fieldset>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Language Options -->
             <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
               <div class="card-body">
@@ -451,10 +396,6 @@ export default {
         email: '',
         period: 'daily'
       },
-      pbx: {
-        business: null,
-        business_text: ''
-      },
       languages: [],
       voiceMenus: [],
       audioType: 'predefined',
@@ -468,10 +409,6 @@ export default {
   created() {
     if (this.settings.notification) {
       this.notification = this.settings.notification;
-    }
-
-    if (this.settings.pbx) {
-      this.pbx = this.settings.pbx;
     }
 
     if (this.settings.languages) {
@@ -492,29 +429,6 @@ export default {
     );
   },
   methods: {
-    toggleHour(item) {
-      if (item.enable) {
-        return;
-      }
-
-      item.start = { HH: '', mm: '' };
-      item.end = { HH: '', mm: '' };
-    },
-    copyHours(list, item) {
-      if (item.enable === false || !item.start || !item.end) {
-        return;
-      }
-
-      list.days.forEach(el => {
-        if (el.id === item.id) {
-          return false;
-        }
-
-        el.enable = true;
-        el.start = item.start;
-        el.end = item.end;
-      });
-    },
     addLanguage() {
       const language = {
         id: new Date().valueOf(),
@@ -558,15 +472,6 @@ export default {
       formData.append('audio_type', this.audioType);
       formData.append('audio_file', this.audioFile);
 
-      // PBX
-      if (this.pbx.business && this.pbx.business > 0) {
-        formData.append('business_id', this.pbx.business);
-      }
-
-      if (this.pbx.business > 0 && this.pbx.business_text) {
-        formData.append('business_text', this.pbx.business_text);
-      }
-
       // Languages
       if (this.languages.length > 0) {
         formData.append(
@@ -592,7 +497,6 @@ export default {
     },
     setAudioFile(event) {
       // process your files, read as DataUrl or upload...
-      console.log(event.target.files[0]);
       this.audioFile = event.target.files[0];
     },
     saveSetting() {

@@ -4986,61 +4986,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -5092,10 +5037,6 @@ __webpack_require__.r(__webpack_exports__);
         email: '',
         period: 'daily'
       },
-      pbx: {
-        business: null,
-        business_text: ''
-      },
       languages: [],
       voiceMenus: [],
       audioType: 'predefined',
@@ -5109,10 +5050,6 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     if (this.settings.notification) {
       this.notification = this.settings.notification;
-    }
-
-    if (this.settings.pbx) {
-      this.pbx = this.settings.pbx;
     }
 
     if (this.settings.languages) {
@@ -5131,35 +5068,6 @@ __webpack_require__.r(__webpack_exports__);
     this.laddaButton = Ladda.create(document.querySelector('#submit-fancy-setting'));
   },
   methods: {
-    toggleHour: function toggleHour(item) {
-      if (item.enable) {
-        return;
-      }
-
-      item.start = {
-        HH: '',
-        mm: ''
-      };
-      item.end = {
-        HH: '',
-        mm: ''
-      };
-    },
-    copyHours: function copyHours(list, item) {
-      if (item.enable === false || !item.start || !item.end) {
-        return;
-      }
-
-      list.days.forEach(function (el) {
-        if (el.id === item.id) {
-          return false;
-        }
-
-        el.enable = true;
-        el.start = item.start;
-        el.end = item.end;
-      });
-    },
     addLanguage: function addLanguage() {
       var _this = this;
 
@@ -5204,16 +5112,7 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('notification_email', this.notification.email);
       formData.append('notification_period', this.notification.period);
       formData.append('audio_type', this.audioType);
-      formData.append('audio_file', this.audioFile); // PBX
-
-      if (this.pbx.business && this.pbx.business > 0) {
-        formData.append('business_id', this.pbx.business);
-      }
-
-      if (this.pbx.business > 0 && this.pbx.business_text) {
-        formData.append('business_text', this.pbx.business_text);
-      } // Languages
-
+      formData.append('audio_file', this.audioFile); // Languages
 
       if (this.languages.length > 0) {
         formData.append('languages', JSON.stringify(this.languages.filter(function (el) {
@@ -5237,7 +5136,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     setAudioFile: function setAudioFile(event) {
       // process your files, read as DataUrl or upload...
-      console.log(event.target.files[0]);
       this.audioFile = event.target.files[0];
     },
     saveSetting: function saveSetting() {
@@ -69711,202 +69609,6 @@ var render = function() {
                             })
                           ],
                           1
-                        )
-                      ])
-                    ])
-                  ]
-                )
-              ])
-            ])
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
-          },
-          [
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-xl-4" }, [
-                  _c("h2", { staticClass: "mb-1" }, [
-                    _vm._v(_vm._s(_vm.trans("Call Flow Configuration")))
-                  ]),
-                  _vm._v(" "),
-                  _c("p", { staticClass: "text-black-50" }, [
-                    _vm._v(_vm._s(_vm.trans("Choose your PBX message")) + ".")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c(
-                  "div",
-                  {
-                    staticClass:
-                      "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
-                  },
-                  [
-                    _c("div", [
-                      _c("fieldset", { staticClass: "mb-4" }, [
-                        _c("legend", { staticClass: "pl-4" }, [
-                          _vm._v(_vm._s(_vm.trans("Voice Menu Options")))
-                        ]),
-                        _vm._v(" "),
-                        _c(
-                          "div",
-                          [
-                            _vm._l(_vm.messages.business, function(item) {
-                              return _c(
-                                "div",
-                                {
-                                  key: item.id,
-                                  staticClass:
-                                    "custom-control custom-radio mb-3"
-                                },
-                                [
-                                  _c("input", {
-                                    directives: [
-                                      {
-                                        name: "model",
-                                        rawName: "v-model",
-                                        value: _vm.pbx.business,
-                                        expression: "pbx.business"
-                                      }
-                                    ],
-                                    staticClass: "custom-control-input",
-                                    attrs: {
-                                      type: "radio",
-                                      id: item.type + "_message_" + item.id,
-                                      name: "business-message"
-                                    },
-                                    domProps: {
-                                      value: item.id,
-                                      checked: _vm._q(_vm.pbx.business, item.id)
-                                    },
-                                    on: {
-                                      change: function($event) {
-                                        return _vm.$set(
-                                          _vm.pbx,
-                                          "business",
-                                          item.id
-                                        )
-                                      }
-                                    }
-                                  }),
-                                  _vm._v(" "),
-                                  _c(
-                                    "label",
-                                    {
-                                      staticClass: "custom-control-label",
-                                      attrs: {
-                                        for: item.type + "_message_" + item.id
-                                      }
-                                    },
-                                    [
-                                      _vm._v(
-                                        "\n                                            " +
-                                          _vm._s(_vm.trans(item.message)) +
-                                          "\n                                        "
-                                      )
-                                    ]
-                                  )
-                                ]
-                              )
-                            }),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "custom-control custom-radio mb-3"
-                              },
-                              [
-                                _c("input", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.pbx.business,
-                                      expression: "pbx.business"
-                                    }
-                                  ],
-                                  staticClass: "custom-control-input",
-                                  attrs: {
-                                    type: "radio",
-                                    id: "business_message_0",
-                                    name: "business-message",
-                                    value: "0"
-                                  },
-                                  domProps: {
-                                    checked: _vm._q(_vm.pbx.business, "0")
-                                  },
-                                  on: {
-                                    change: function($event) {
-                                      return _vm.$set(_vm.pbx, "business", "0")
-                                    }
-                                  }
-                                }),
-                                _vm._v(" "),
-                                _c(
-                                  "label",
-                                  {
-                                    staticClass: "custom-control-label",
-                                    attrs: { for: "business_message_0" }
-                                  },
-                                  [
-                                    _vm._v(
-                                      "\n                                          " +
-                                        _vm._s(_vm.trans("Custom message")) +
-                                        "\n                                        "
-                                    )
-                                  ]
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "div",
-                              {
-                                staticClass: "form-group pl-4",
-                                class: {
-                                  "disabled-setting": _vm.pbx.business != 0
-                                }
-                              },
-                              [
-                                _c("textarea", {
-                                  directives: [
-                                    {
-                                      name: "model",
-                                      rawName: "v-model",
-                                      value: _vm.pbx.business_text,
-                                      expression: "pbx.business_text"
-                                    }
-                                  ],
-                                  staticClass: "form-control resize-none",
-                                  attrs: {
-                                    name: "business_message_custom",
-                                    id: "business_message_custom",
-                                    rows: "3",
-                                    disabled: _vm.pbx.business != 0
-                                  },
-                                  domProps: { value: _vm.pbx.business_text },
-                                  on: {
-                                    input: function($event) {
-                                      if ($event.target.composing) {
-                                        return
-                                      }
-                                      _vm.$set(
-                                        _vm.pbx,
-                                        "business_text",
-                                        $event.target.value
-                                      )
-                                    }
-                                  }
-                                })
-                              ]
-                            )
-                          ],
-                          2
                         )
                       ])
                     ])
