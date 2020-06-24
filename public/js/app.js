@@ -3000,6 +3000,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -66494,50 +66497,48 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", [
-      _c("h2", { staticClass: "mb-2" }, [
-        _vm._v(_vm._s(_vm.trans("Configure Your Fancy Number")))
-      ]),
-      _vm._v(" "),
-      _c("p", { staticClass: "text-muted mb-4" }, [
-        _vm._v("Get the Perfect Phone Number for Your Business")
-      ])
+    _c("h2", { staticClass: "mb-5" }, [
+      _vm._v(_vm._s(_vm.trans("What do you want to do?")))
     ]),
     _vm._v(" "),
-    _c("div", [
-      _c(
-        "button",
-        {
-          staticClass:
-            "btn btn-lg btn-light d-block d-md-inline-block w-100 w-md-auto",
-          on: {
-            click: function($event) {
-              return _vm.setNumberType("fancy")
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-lg-5" }, [
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-lg btn-light d-block d-md-inline-block w-100 w-md-auto mb-2",
+            on: {
+              click: function($event) {
+                return _vm.setNumberType("fancy")
+              }
             }
-          }
-        },
-        [_vm._v("Create New number")]
-      ),
+          },
+          [_vm._v("Create New number")]
+        ),
+        _vm._v(" "),
+        _vm._m(0)
+      ]),
       _vm._v(" "),
-      _vm._m(0),
+      _c("div", { staticClass: "col-lg-2 h1 py-5 py-lg-0" }, [_vm._v("or")]),
       _vm._v(" "),
-      _c("span", { staticClass: "d-block h1 pb-5" }, [_vm._v("or")]),
-      _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass:
-            "btn btn-lg btn-primary d-block d-md-inline-block w-100 w-md-auto",
-          on: {
-            click: function($event) {
-              return _vm.setNumberType("custom")
+      _c("div", { staticClass: "col-lg" }, [
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-lg btn-primary d-block d-md-inline-block w-100 w-md-auto mb-2",
+            on: {
+              click: function($event) {
+                return _vm.setNumberType("custom")
+              }
             }
-          }
-        },
-        [_vm._v("Use my existing number")]
-      ),
-      _vm._v(" "),
-      _vm._m(1)
+          },
+          [_vm._v("Use my existing number")]
+        ),
+        _vm._v(" "),
+        _vm._m(1)
+      ])
     ]),
     _vm._v(" "),
     _vm.numberType
@@ -66737,7 +66738,7 @@ var render = function() {
                             _c(
                               "button",
                               {
-                                staticClass: "btn btn-block btn-info",
+                                staticClass: "btn btn-block btn-primary",
                                 attrs: { type: "button", disabled: !_vm.city },
                                 on: {
                                   click: function($event) {
@@ -66946,7 +66947,7 @@ var render = function() {
                   : _vm._e()
               ]),
               _vm._v(" "),
-              _c("div", [
+              _c("div", { staticClass: "text-right" }, [
                 _c(
                   "button",
                   {
@@ -67004,7 +67005,7 @@ var staticRenderFns = [
     return _c("p", [
       _c("small", [
         _vm._v(
-          "\n        You will get all of Fancy's features by forwarding your existing calls to a secret Fancy number. This lets you keep your published number and decide when to play the greeting.\n      "
+          "\n          You will get all of Fancy's features by forwarding your existing calls to a secret Fancy number. This lets you keep your published number and decide when to play the greeting.\n        "
         )
       ])
     ])

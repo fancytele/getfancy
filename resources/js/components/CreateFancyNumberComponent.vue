@@ -1,28 +1,31 @@
 <template>
   <div>
-    <div>
-      <h2 class="mb-2">{{ trans('Configure Your Fancy Number') }}</h2>
-      <p class="text-muted mb-4">Get the Perfect Phone Number for Your Business</p>
-    </div>
+    <h2 class="mb-5">{{ trans('What do you want to do?') }}</h2>
+  
+    <div class="row">
+      <div class="col-lg-5">
+        <button
+          class="btn btn-lg btn-light d-block d-md-inline-block w-100 w-md-auto mb-2"
+          @click="setNumberType('fancy')"
+        >Create New number</button>
+        <p>
+          <small>You can choose a brand new Fancy number to publish and share any way you like</small>
+        </p>
+      </div>
+      
+      <div class="col-lg-2 h1 py-5 py-lg-0">or</div>
 
-    <div>
-      <button
-        class="btn btn-lg btn-light d-block d-md-inline-block w-100 w-md-auto"
-        @click="setNumberType('fancy')"
-      >Create New number</button>
-      <p>
-        <small>You can choose a brand new Fancy number to publish and share any way you like</small>
-      </p>
-      <span class="d-block h1 pb-5">or</span>
-      <button
-        class="btn btn-lg btn-primary d-block d-md-inline-block w-100 w-md-auto"
-        @click="setNumberType('custom')"
-      >Use my existing number</button>
-      <p>
-        <small>
-          You will get all of Fancy's features by forwarding your existing calls to a secret Fancy number. This lets you keep your published number and decide when to play the greeting.
-        </small>
-      </p>
+      <div class="col-lg">
+        <button
+          class="btn btn-lg btn-primary d-block d-md-inline-block w-100 w-md-auto mb-2"
+          @click="setNumberType('custom')"
+        >Use my existing number</button>
+        <p>
+          <small>
+            You will get all of Fancy's features by forwarding your existing calls to a secret Fancy number. This lets you keep your published number and decide when to play the greeting.
+          </small>
+        </p>
+      </div>
     </div>
 
     <div v-if="numberType">
@@ -99,7 +102,7 @@
                 <div class="col">
                   <button
                     type="button"
-                    class="btn btn-block btn-info"
+                    class="btn btn-block btn-primary"
                     @click="searchAvailablesDIDs()"
                     :disabled="!city"
                   >
@@ -162,7 +165,7 @@
           </div>
         </transition>
 
-        <div>
+        <div class="text-right">
           <button
             class="btn btn-primary ladda-button px-4"
             type="submit"

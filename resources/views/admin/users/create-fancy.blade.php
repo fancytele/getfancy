@@ -1,8 +1,9 @@
 @extends('layouts.admin', ['hide_menu' => true])
 
-@section('page-subtitle', __('Edit User'))
-
-@section('page-title', __('Configure Your Fancy Number'))
+@section('page-title')
+    @lang('Configure Your Fancy Number')
+    <p class="mb-0 mt-1 small text-muted">@lang('Get the Perfect Phone Number for Your Business')</p>
+@endsection
 
 @push('head-scripts')
     <script src="{{ asset('js/lang.js') }}" defer></script>
@@ -10,12 +11,10 @@
 
 @section('content')
 <div class="container">
-    <div class="justify-content-center mb-3 mt-6 row">
-        <div class="col-md-10 col-lg-8">
-            <create-fancy-number-component 
-                :urls='@json($urls)'
-                :did-country='@json($did_country)'
-                :did-regions='@json($did_regions)'></create-fancy-number-component>
-        </div>
+    <div class="justify-content-center mb-3 mt-6">
+        <create-fancy-number-component 
+            :urls='@json($urls)'
+            :did-country='@json($did_country)'
+            :did-regions='@json($did_regions)'></create-fancy-number-component>
     </div>
 @endsection
