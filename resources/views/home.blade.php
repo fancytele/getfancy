@@ -16,7 +16,8 @@
 
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 
-        <link rel="stylesheet" href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+        <link rel="stylesheet"
+              href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -45,7 +46,8 @@
                     <a href="{{ url('/') }}">
                         {{-- TODO: Change to SVG --}}
                         <img class="fancy-logo" src="{{ URL::asset('img/Fancyy_Logo-01.png') }}" alt="Fancyy Logo">
-                        <img class="fancy-logo fancy-dark-logo" src="{{ URL::asset('img/Fancyy_Logo-01.png') }}" alt="Fancyy Logo">
+                        <img class="fancy-logo fancy-dark-logo" src="{{ URL::asset('img/Fancyy_Logo-01.png') }}"
+                             alt="Fancyy Logo">
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#fancy-menu"
                             aria-controls="fancy-menu" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,19 +59,19 @@
                         </button>
                         <div class="d-md-flex d-none mb-4 small">
                             @if(App::isLocale('en'))
-                                <span class="text-body">English</span>
+                            <span class="text-body">English</span>
                             @else
-                                <a href="{{ route('web.locale', 'en') }}" class="text-muted">
-                                    English
-                                </a>
+                            <a href="{{ route('web.locale', 'en') }}" class="text-muted">
+                                English
+                            </a>
                             @endif
                             <span class="px-3">|</span>
                             @if(App::isLocale('es'))
-                                <span class="text-body">Español</span>
+                            <span class="text-body">Español</span>
                             @else
-                                <a href="{{ route('web.locale', 'es') }}" class="text-muted">
-                                    Español
-                                </a>
+                            <a href="{{ route('web.locale', 'es') }}" class="text-muted">
+                                Español
+                            </a>
                             @endif
                         </div>
                         <ul class="align-items-center d-flex ml-auto navbar-nav">
@@ -416,53 +418,76 @@
                     </div>
                     <div class="row">
                         <div class="col-md-8 offset-md-2">
-
-                            <div class="my-5 row">
-                                <div class="col-md-6">
-                                    <ul
-                                        class="border-bottom border-top d-md-inline-block list-group list-group-flush text-left">
-                                        <li class="list-group-item px-lg-4">
-                                            <span class="font-weight-bold">@lang('Feature Phone Calls')</span>
-                                            <p class="mb-0"><small>@lang('Feature Phone Calls Message')</small></p>
-                                        </li>
-                                        <li class="list-group-item px-lg-4">
-                                            <span class="font-weight-bold">@lang('Feature Text-able')</span>
-                                            <p class="mb-0"><small>@lang('Feature Text-able Message')</small></p>
-                                        </li>
-                                        <li class="list-group-item px-lg-4">
-                                            <span class="font-weight-bold">@lang('Feature Auto-Reply SMS')</span>
-                                            <p class="mb-0"><small>@lang('Feature Auto-Reply SMS Message')</small></p>
-                                        </li>
-                                        <li class="list-group-item px-lg-4">
-                                            <span class="font-weight-bold">@lang('Feature Data Driven')</span>
-                                            <p class="mb-0"><small>@lang('Feature Data Driven Message')</small></p>
-                                        </li>
-                                        <li class="list-group-item px-lg-4">
-                                            <span class="font-weight-bold">@lang('Feature Call Queues')</span>
-                                            <p class="mb-0"><small>@lang('Feature Call Queues Message')</small></p>
-                                        </li>
-                                    </ul>
+                            <div class="my-5 text-left">
+                                <div class="row my-2">
+                                    <div class="col-md-6">
+                                        <dl class="border-bottom h-100 mb-0 px-lg-4 pt-3 pb-2">
+                                            <dt>@lang('Feature Phone Calls')</dt>
+                                            <dd><small>@lang('Feature Phone Calls Message')</small></dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <dl class="border-bottom h-100 mb-0 px-lg-4 pt-3 pb-2">
+                                            <dt>@lang('Feature Auto-Play')</dt>
+                                            <dd><small>@lang('Feature Auto-Play Message')</small></dd>
+                                        </dl>
+                                    </div>
                                 </div>
-                                <div class="col-md-6">
-                                    <ul
-                                        class="border-bottom border-top d-md-inline-block list-group list-group-flush text-left">
-                                        <li class="list-group-item px-lg-4">
-                                            <span class="font-weight-bold">@lang('Feature Auto-Play')</span>
-                                            <p class="mb-0"><small>@lang('Feature Auto-Play Message')</small></p>
-                                        </li>
-                                        <li class="list-group-item px-lg-4">
-                                            <span class="font-weight-bold">@lang('Feature Conference Call Room')</span>
-                                            <p class="mb-0"><small>@lang('Feature Conference Call Room Message')</small></p>
-                                        </li>
-                                        <li class="list-group-item px-lg-4">
-                                            <span class="font-weight-bold">@lang('Feature E-Fax')</span>
-                                            <p class="mb-0"><small>@lang('Feature E-Fax Message')</small></p>
-                                        </li>
-                                        <li class="list-group-item px-lg-4">
-                                            <span class="font-weight-bold">@lang('Feature Spam Filtering Queues')</span>
-                                            <p class="mb-0"><small>@lang('Feature Spam Filtering Queues Message')</small></p>
-                                        </li>
-                                    </ul>
+                                <div class="row my-2">
+                                    <div class="col-md-6">
+                                        <dl class="border-bottom h-100 mb-0 px-lg-4 pt-3 pb-2">
+                                            <dt>@lang('Feature Text-able')</dt>
+                                            <dd><small>@lang('Feature Text-able Message')</small></dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <dl class="border-bottom h-100 mb-0 px-lg-4 pt-3 pb-2">
+                                            <dt>@lang('Feature Conference Call Room')</dt>
+                                            <dd><small>@lang('Feature Conference Call Room Message')</small></dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <div class="row my-2">
+                                    <div class="col-md-6">
+                                        <dl class="border-bottom h-100 mb-0 px-lg-4 pt-3 pb-2">
+                                            <dt>@lang('Feature Auto-Reply SMS')</dt>
+                                            <dd><small>@lang('Feature Auto-Reply SMS')</small></dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <dl class="border-bottom h-100 mb-0 px-lg-4 pt-3 pb-2">
+                                            <dt>@lang('Feature E-Fax')</dt>
+                                            <dd><small>@lang('Feature E-Fax Message')</small></dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <div class="row my-2">
+                                    <div class="col-md-6">
+                                        <dl class="border-bottom h-100 mb-0 px-lg-4 pt-3 pb-2">
+                                            <dt>@lang('Feature Data Driven')</dt>
+                                            <dd><small>@lang('Feature Data Driven SMS')</small></dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <dl class="border-bottom h-100 mb-0 px-lg-4 pt-3 pb-2">
+                                            <dt>@lang('Feature Spam Filtering Queues')</dt>
+                                            <dd><small>@lang('Feature Spam Filtering Queues Message')</small></dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                                <div class="row my-2">
+                                    <div class="col-md-6">
+                                        <dl class="border-bottom h-100 mb-0 px-lg-4 pt-3 pb-2">
+                                            <dt>@lang('Feature Call Queues')</dt>
+                                            <dd><small>@lang('Feature Call Queues SMS')</small></dd>
+                                        </dl>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <dl class="border-bottom h-100 mb-0 px-lg-4 pt-3 pb-2">
+                                            <dt>@lang('Feature Better Call Management')</dt>
+                                            <dd><small>@lang('Feature Better Call Management Message')</small></dd>
+                                        </dl>
+                                    </div>
                                 </div>
                             </div>
 
