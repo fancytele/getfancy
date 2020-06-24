@@ -25,7 +25,7 @@
                 <div class="text-center">
                     <a href="{{ route('web.homepage') }}">
                         <img class="w-50"
-                             src="{{ asset('img/logo-primary.png') }}"
+                             src="{{ asset('img/Fancyy_Logo-02.png') }}"
                              alt="Fancy Logo">
                     </a>
                 </div>
