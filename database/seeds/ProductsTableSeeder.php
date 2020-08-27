@@ -28,8 +28,8 @@ class ProductsTableSeeder extends Seeder
                 'is_primary' => true
             ],
             [
-                'name' => 'Biennially',
-                'slug' => 'biennially',
+                'name' => 'Biannually',
+                'slug' => 'biannually',
                 'cost' => '159',
                 'discount' => 26,
                 'is_primary' => false
