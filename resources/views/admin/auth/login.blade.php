@@ -90,14 +90,47 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
+
                     </div>
 
+
+                        <!-- OTP -->
+                        <div id="otp" class="form-group">
+
+                            <div class="row">
+                                <div class="col">
+
+                                    <!-- Label -->
+                                    <label for="otp">@lang('OTP')</label>
+
+                                </div>
+                            </div> <!-- / .row -->
+
+                            <!-- Input -->
+                            <input type="number" name="otp"
+                                   class="form-control form-control-appended @error('otp') is-invalid @enderror"
+                                   placeholder="@lang('Enter your OTP')" required>
+
+                            @error('otp')
+                            <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                            @enderror
+
+                        </div>
+
                     <!-- Submit -->
-                    <button type="submit"
+                    <button type="submit" id="submit-button"
                             class="btn btn-lg btn-block btn-info ladda-button js-ladda-submit mb-3"
                             data-style="zoom-out">
                         <span class="ladda-label">@lang('Login')</span>
                     </button>
+                        <a href="#" id="login-otp-button" onclick="return getOtp()"
+                                class="btn btn-lg btn-block btn-info mb-3"
+                                data-style="zoom-out">
+                            <span class="ladda-label">@lang('Login')</span>
+                        </a>
+
 
                     <!-- Link -->
                     <p class="text-center">
@@ -111,6 +144,44 @@
             </div>
         </div> <!-- / .row -->
     </div>
+
+<script>
+    function getOtp()
+    {
+      var x = new XMLHttpRequest();
+      x.open("POST", "{{ route('admin.login.sendOtp') }}", true);
+      x.setRequestHeader("Content-type", "application/json");
+      var sendData = { email: document.getElementById('email').value , password: document.getElementById('password').value};
+      x.send(JSON.stringify(sendData));
+
+      //---- changed the onreadystatechange with onloadend
+      //---- since i dont have anything to do on of the previous states then 4th one
+      x.onloadend = function() {
+        if (x.readyState === 4 && x.status === 200) {
+          document.getElementById('otp').style.display ="block";
+          document.getElementById('submit-button').style.display ="block";
+          document.getElementById('login-otp-button').style.display ="none";
+        }else {
+          document.getElementById('otp').style.display ="none";
+          document.getElementById('submit-button').style.display ="none";
+        }
+      }
+      return false;
+    }
+</script>
+<style>
+    #otp{
+        display: none;
+    }
+
+    #submit-button{
+        display: none;
+    }
+
+    #login-otp-button{
+        display: block;
+    }
+</style>
 </body>
 
 </html>
