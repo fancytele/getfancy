@@ -21,7 +21,7 @@
       class="d-flex align-items-center bg-auth border-top border-top-2 border-primary">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-12 col-md-5 col-xl-4 my-5">
+            <span class="col-12 col-md-5 col-xl-4 my-5">
                 <div class="text-center">
                     <a href="{{ route('web.homepage') }}">
                         <img class="w-50"
@@ -50,8 +50,20 @@
                                placeholder="john@doe.com" autocomplete="email"
                                value="{{ old('email') }}" required autofocus>
 
+                         <span id="emailError" class="invalid-feedback" style="display: block" role="alert"></span>
+
+                         @if(session()->has('otpExpiredErrorMessage'))
+                            <span class="invalid-feedback" style="display: block" role="alert"><strong>{{ session()->get('otpExpiredErrorMessage') }}</strong></span>
+                        @endif
+
+
+                        @if(session()->has('credentialErrorMessage'))
+                            <span class="invalid-feedback" style="display: block" role="alert"><strong>{{ session()->get('credentialErrorMessage') }}</strong></span>
+                        @endif
+
+
                         @error('email')
-                        <span class="invalid-feedback" role="alert">
+                        <span id="error" class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
@@ -86,11 +98,12 @@
                                required autocomplete="current-password">
 
                         @error('password')
-                        <span class="invalid-feedback" role="alert">
+                        <span id= "error" class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
 
+                         <span id="passwordError" class="invalid-feedback" style="display: block" role="alert"></span>
                     </div>
 
 
@@ -101,7 +114,7 @@
                                 <div class="col">
 
                                     <!-- Label -->
-                                    <label for="otp">@lang('OTP')</label>
+                                    <label for="otp">@lang('OTP')</label> <?php //TODO: ADD TO LANGUAGE FILE ?>
 
                                 </div>
                             </div> <!-- / .row -->
@@ -112,26 +125,32 @@
                                    placeholder="@lang('Enter your OTP')" required>
 
                             @error('otp')
-                            <span class="invalid-feedback" role="alert">
+                            <span id="error" class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                             @enderror
 
+                            @if(session()->has('otpErrorMessage'))
+                                <span class="invalid-feedback" style="display: block" role="alert"><strong>{{ session()->get('otpErrorMessage') }}</strong></span>
+                            @endif
+
                         </div>
 
+                        <div id="otpSuccessMessage">
+                            <span style="display: block"></span>
+                        </div>
                     <!-- Submit -->
                     <button type="submit" id="submit-button"
                             class="btn btn-lg btn-block btn-info ladda-button js-ladda-submit mb-3"
                             data-style="zoom-out">
                         <span class="ladda-label">@lang('Login')</span>
                     </button>
-                        <a href="#" id="login-otp-button" onclick="return getOtp()"
-                                class="btn btn-lg btn-block btn-info mb-3"
+
+                        <button id="login-otp-button" onclick="return getOtp()"
+                                class="btn btn-lg btn-block btn-info ladda-button mb-3"
                                 data-style="zoom-out">
                             <span class="ladda-label">@lang('Login')</span>
-                        </a>
-
-
+                        </button>
                     <!-- Link -->
                     <p class="text-center">
                         <small>
@@ -148,40 +167,100 @@
 <script>
     function getOtp()
     {
+      var l = Ladda.create(document.getElementById('login-otp-button'));
+      l.start();
       var x = new XMLHttpRequest();
       x.open("POST", "{{ route('admin.login.sendOtp') }}", true);
       x.setRequestHeader("Content-type", "application/json");
       var sendData = { email: document.getElementById('email').value , password: document.getElementById('password').value};
-      x.send(JSON.stringify(sendData));
-
-      //---- changed the onreadystatechange with onloadend
-      //---- since i dont have anything to do on of the previous states then 4th one
-      x.onloadend = function() {
-        if (x.readyState === 4 && x.status === 200) {
-          document.getElementById('otp').style.display ="block";
-          document.getElementById('submit-button').style.display ="block";
-          document.getElementById('login-otp-button').style.display ="none";
-        }else {
-          document.getElementById('otp').style.display ="none";
-          document.getElementById('submit-button').style.display ="none";
-        }
+      if(!sendData.email)
+      {
+        document.getElementById('emailError').innerHTML = '<strong>Please provide some input</strong>';
       }
-      return false;
+
+      if(!sendData.password)
+      {
+        document.getElementById('passwordError').innerHTML = '<strong>Please provide some input</strong>';
+      }
+
+        x.send(JSON.stringify(sendData));
+
+        //---- changed the onreadystatechange with onloadend
+        //---- since i dont have anything to do on of the previous states then 4th one
+        x.onloadend = function() {
+          if (x.readyState === 4 && x.status === 200) {
+            l.stop();
+            document.getElementById('emailError').innerHTML = '';
+            document.getElementById('passwordError').innerHTML = '';
+            document.getElementById('otpSuccessMessage').innerHTML= '<strong>@lang('OTP has been sent to your email')</strong>';
+            document.getElementById('otp').style.display = "block";
+            document.getElementById('submit-button').style.display = "block";
+            document.getElementById('login-otp-button').style.display = "none";
+          }
+          else if(x.status === 401)
+          {
+            l.stop();
+            document.getElementById('emailError').innerHTML = '<strong>These credentials do not match our records.</strong>';
+            document.getElementById('otp').style.display ="none";
+            document.getElementById('submit-button').style.display ="none";
+          }
+          else
+          {
+            l.stop();
+            document.getElementById('otp').style.display ="none";
+            document.getElementById('submit-button').style.display ="none";
+          }
+        }
+        return false;
+
+
     }
 </script>
-<style>
-    #otp{
-        display: none;
-    }
 
-    #submit-button{
-        display: none;
-    }
+    <style>
+        @if(session()->has('credentialErrorMessage') OR session()->has('otpErrorMessage'))
+            #otp{
+                display: block;
+            }
 
-    #login-otp-button{
-        display: block;
-    }
-</style>
+            #submit-button{
+                display: block;
+            }
+
+            #login-otp-button{
+                display: none;
+            }
+
+        @elseif(session()->has('otpExpiredErrorMessage'))
+                #otp{
+                    display: none;
+                }
+
+                #submit-button{
+                    display: none;
+                }
+
+                #login-otp-button{
+                    display: block;
+                }
+
+            @else
+                #otp{
+                    display: none;
+                }
+
+                #submit-button{
+                    display: none;
+                }
+
+                #login-otp-button{
+                    display: block;
+                }
+
+        @endif
+
+    </style>
+
 </body>
 
 </html>

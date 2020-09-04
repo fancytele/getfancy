@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Validator;
 
 class LoginController extends Controller
 {
@@ -56,36 +57,57 @@ class LoginController extends Controller
         $user->update(['last_login' => Carbon::now()->toDateTimeString()]);
     } */
 
-    public function authenticated(Request $request)
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Validation\ValidationException
+     * First, it checks the otp is not expired and not null then,
+     * authenticate the user with email, password and OTP if authenticated redirect the user to dashboard
+     * else return back with input and error message on the login page itself.
+     * if the otp is expired is send it back to login page where getOTP() generates the otp.
+     */
+    public function authenticated(Request $request)  //TODO: error messages, description, language translation
     {
 
         $this->validate($request, [
-            'email' => 'required|email|exists:users,email',
+            'email' => 'required|email',
             'password' => 'required',
             'otp'=>'required'
         ]);
 
-        $expire_time = User::select('otp_expire_time')->where('email' , $request->email)->first();
+        $otpDetails = User::select('otp_expire_time' , 'otp')->where('email' , $request->email)->first();
 
-        $expire_time = \DateTime::createFromFormat("Y-m-d H:i:s" , $expire_time->otp_expire_time);
+        $expire_time = \DateTime::createFromFormat("Y-m-d H:i:s" , $otpDetails->otp_expire_time);
 
-        if(!empty($expire_time) && $expire_time > Carbon::now()){
-            if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'otp' => $request->otp])) {
+        if(!empty($expire_time) && $expire_time > Carbon::now())
+        {
+            if($otpDetails->otp == $request->otp)
+            {
+                if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
 
-                $user = Auth::user();
-
-                return redirect(route('admin.dashboard'));
+                    return redirect(route('admin.dashboard'));
+                }
+                else{
+                    return back()->withInput()->with('credentialErrorMessage','These credentials do not match our records.');
+                }
             }
+
             else{
-                return response()->json(['message' => 'Invalid data']);
+                return back()->withInput()->with('otpErrorMessage','Otp is invalid');
             }
         }
         else{
-            return redirect(route('admin.login.show'));
+            return back()->withInput()->with('otpExpiredErrorMessage','OTP is expired.');
         }
 
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     * checks the user credentials if the user is a valid user then it generates OTP
+     * else throws an error message
+     */
     public function sendOtp(Request $request)
     {
         $otp = mt_rand(1000,9999);
@@ -94,18 +116,19 @@ class LoginController extends Controller
 
         $user= User::where('email' ,'=', $request->email)->first();
 
-        if(Hash::check($request->password , $user->password))
-        {
-            $user->otp = $otp;
+            if(Hash::check($request->password , $user->password))
+            {
+                $user->otp = $otp;
 
-            $user->otp_expire_time = $expire_time;
+                $user->otp_expire_time = $expire_time;
 
-            $user->save();
+                $user->save();
 
-            Mail::to($user->email)->send(new OtpVerificationEmail($user, $otp));
-        }
-        else{
-            return response()->json(['message' => 'Invalid Credentials'], 401);
-        }
+                Mail::to($user->email)->send(new OtpVerificationEmail($user, $otp));
+            }
+            else{
+                return response()->json('These credentials do not match our records.',401);
+            }
+
     }
 }

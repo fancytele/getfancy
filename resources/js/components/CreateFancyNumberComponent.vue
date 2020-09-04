@@ -130,6 +130,7 @@
                         class="custom-control-input"
                         :value="item"
                         v-model="selectedDID"
+                        v-on:change="selectedNumber()"
                       />
                       <label
                         class="btn btn-block btn-lg btn-white custom-control-label cursor-pointer"
@@ -270,6 +271,12 @@ export default {
     }
   },
   methods: {
+    selectedNumber()
+    {
+      var selectedNumber = this.selectedDID.attributes.number;
+      this.phoneNumber = selectedNumber.slice(1);
+    },
+
     setNumberType(type) {
       this.numberType = type;
 
