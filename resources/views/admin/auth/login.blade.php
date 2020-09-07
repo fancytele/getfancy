@@ -200,7 +200,14 @@
           else if(x.status === 401)
           {
             l.stop();
-            document.getElementById('emailError').innerHTML = '<strong>These credentials do not match our records.</strong>';
+           if(!document.getElementById('password').value){
+             document.getElementById('passwordError').innerHTML = '<strong>Please provide some input</strong>';
+             document.getElementById('emailError').innerHTML = '';
+           }
+           else{
+             document.getElementById('passwordError').innerHTML = '';
+             document.getElementById('emailError').innerHTML = '<strong>These credentials do not match our records.</strong>';
+           }
             document.getElementById('otp').style.display ="none";
             document.getElementById('submit-button').style.display ="none";
           }
