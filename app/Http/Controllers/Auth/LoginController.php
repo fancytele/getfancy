@@ -62,7 +62,9 @@ class LoginController extends Controller
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Illuminate\Validation\ValidationException
      * First, it checks the otp is not expired and not null then,
-     * authenticate the user with email, password and OTP if authenticated redirect the user to dashboard
+     * It check whether the OTP coming from request matches with the OTP inside database,
+     * if not it throws an error message,
+     * if matched authenticate the user with email, password if authenticated redirect the user to dashboard
      * else return back with input and error message on the login page itself.
      * if the otp is expired is send it back to login page where getOTP() generates the otp.
      */

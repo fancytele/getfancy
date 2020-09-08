@@ -315,4 +315,41 @@ class UserController extends Controller
 
         return redirect()->back();
     }
+
+    public function show(User $user)
+    {
+        return view ('admin.users.edit-user', array('user' => $user));
+    }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function edit(Request $request , User $user)
+    {
+        $data = $request->all();
+
+        $user_service = new UserService();
+
+        $user = $user_service->edit($data, $user);
+
+        return \response()->json($user);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updatePassword(Request $request)
+    {
+        $data = $request->all();
+
+        $user_service = new UserService();
+
+        $user = $user_service->updatePassword($data);
+
+        return \response()->json($user);
+    }
+
 }

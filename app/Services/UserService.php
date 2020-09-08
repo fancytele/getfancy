@@ -7,11 +7,13 @@ use App\Enums\AddressType;
 use App\Enums\DIDOrderStatus;
 use App\Enums\Role;
 use App\FancyNumber;
+use App\Rules\MatchOldPassword;
 use App\User;
 use App\Subscription;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Stripe\Customer as StripeCustomer;
 use Stripe\Subscription as StripeSubscription;
 
@@ -264,5 +266,49 @@ class UserService
         $duration = gmdate("i:s",  number_format($calls->avg('Duration (secs)')));
 
         return compact('total', 'successful', 'successful_average', 'unsuccessful', 'unsuccessful_average', 'duration');
+    }
+
+    /**
+     * @param array $data
+     * @param $user
+     * @return mixed
+     */
+    public function edit(array $data, $user)
+    {
+        $validator = Validator::make($data,[
+            'first_name'=> 'sometimes|required|string|min:2',
+            'last_name'=> 'sometimes|required|string|min:2',
+            'email'=> 'sometimes|required|email',
+            'phone_number'=> 'sometimes|required|integer',
+        ]);
+
+        $user->update([
+            'first_name'=> $data['first_name'],
+            'last_name'=> $data['last_name'],
+            'email'=> $data['email'],
+            'phone_number'=> $data['phone_number']
+        ]);
+
+        return $user;
+    }
+
+    /**
+     * @param array $data
+     * @return \Illuminate\Contracts\Auth\Authenticatable|null
+     */
+    public function updatePassword(array $data)
+    {
+        $validator = Validator::make($data, [
+            'current_password' =>['required_with:new_password', new MatchOldPassword],
+            'new_password' =>'required_with:current_password|min:8|confirmed',
+        ]);
+
+        $user = auth()->user();
+
+        $user->update([
+            'password'=> Hash::make($data['new_password'])
+        ]);
+
+        return $user;
     }
 }

@@ -123,6 +123,12 @@
                                         <i class="fe fe-settings"></i> Fancy Settings
                                     </a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link"
+                                       href="{{ route('user.users.show', Auth::id()) }}">
+                                        <i class="fe fe-user"></i>User Settings
+                                    </a>
+                                </li>
                                 @endhasanyrole
                             </ul>
 
