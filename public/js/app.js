@@ -88445,9 +88445,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/work/getfancy/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /var/www/work/getfancy/resources/sass/web/main.scss */"./resources/sass/web/main.scss");
-module.exports = __webpack_require__(/*! /var/www/work/getfancy/resources/sass/app/main.scss */"./resources/sass/app/main.scss");
+__webpack_require__(/*! /media/carl/Storage/PS2019/Fancytele/getfancy/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /media/carl/Storage/PS2019/Fancytele/getfancy/resources/sass/web/main.scss */"./resources/sass/web/main.scss");
+module.exports = __webpack_require__(/*! /media/carl/Storage/PS2019/Fancytele/getfancy/resources/sass/app/main.scss */"./resources/sass/app/main.scss");
 
 
 /***/ })

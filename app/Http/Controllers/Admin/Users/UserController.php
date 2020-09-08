@@ -39,8 +39,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy']);
-        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy']);
+        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile']);
+        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile']);
     }
 
     /**
@@ -350,6 +350,33 @@ class UserController extends Controller
         $user = $user_service->updatePassword($data);
 
         return \response()->json($user);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param \App\User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function editProfile(Request $request, User $user)
+    {
+       dd('Edit Profile Settings - UserController@editProfile');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \App\Http\Requests\FancySettingRequest $request
+     * @param \App\User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function updateProfile(FancySettingRequest $request, User $user)
+    {
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+        dd('Update Profile Settings - UserController@updateProfile');
+
     }
 
 }
