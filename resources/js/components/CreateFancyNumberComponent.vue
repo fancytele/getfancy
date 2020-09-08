@@ -285,7 +285,8 @@ export default {
       this.toggleProcessing();
 
       axios
-        .get('https://datahub.io/core/country-list/r/data.json')
+        // .get('https://datahub.io/core/country-list/r/data.json')
+        .get('/data/countries.json')
         .then(response => (this.countries = response.data))
         .then(() => this.toggleProcessing);
     },

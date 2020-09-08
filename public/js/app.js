@@ -2646,7 +2646,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     setCountryList: function setCountryList() {
       var _this = this;
 
-      axios.get('https://datahub.io/core/country-list/r/data.json').then(function (response) {
+      axios.get('/data/countries.json').then(function (response) {
         return _this.countries = response.data;
       }).then(function () {
         return _this.toggleProcessing();
@@ -3101,7 +3101,8 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.toggleProcessing();
-      axios.get('https://datahub.io/core/country-list/r/data.json').then(function (response) {
+      axios // .get('https://datahub.io/core/country-list/r/data.json')
+      .get('/data/countries.json').then(function (response) {
         return _this2.countries = response.data;
       }).then(function () {
         return _this2.toggleProcessing;
@@ -4264,7 +4265,8 @@ __webpack_require__.r(__webpack_exports__);
     setCountryList: function setCountryList() {
       var _this = this;
 
-      axios.get('https://datahub.io/core/country-list/r/data.json').then(function (response) {
+      axios // .get('https://datahub.io/core/country-list/r/data.json')
+      .get('/data/countries.json').then(function (response) {
         return _this.countries = response.data;
       }).then(function () {
         return _this.toggleProcessing();
@@ -9763,7 +9765,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.fade-enter-active,\r\n.fade-leave-active {\r\n  -webkit-transition: opacity 0.5s;\r\n  transition: opacity 0.5s;\n}\n.fade-enter,\r\n.fade-leave-to {\r\n  opacity: 0;\n}\r\n", ""]);
+exports.push([module.i, "\n.fade-enter-active,\n.fade-leave-active {\n  -webkit-transition: opacity 0.5s;\n  transition: opacity 0.5s;\n}\n.fade-enter,\n.fade-leave-to {\n  opacity: 0;\n}\n", ""]);
 
 // exports
 
@@ -88321,9 +88323,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /var/www/resources/sass/web/main.scss */"./resources/sass/web/main.scss");
-module.exports = __webpack_require__(/*! /var/www/resources/sass/app/main.scss */"./resources/sass/app/main.scss");
+__webpack_require__(/*! /media/carl/Storage/PS2019/Fancytele/getfancy/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /media/carl/Storage/PS2019/Fancytele/getfancy/resources/sass/web/main.scss */"./resources/sass/web/main.scss");
+module.exports = __webpack_require__(/*! /media/carl/Storage/PS2019/Fancytele/getfancy/resources/sass/app/main.scss */"./resources/sass/app/main.scss");
 
 
 /***/ })

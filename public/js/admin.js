@@ -37534,7 +37534,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /var/www/resources/js/app/admin.js */"./resources/js/app/admin.js");
+module.exports = __webpack_require__(/*! /media/carl/Storage/PS2019/Fancytele/getfancy/resources/js/app/admin.js */"./resources/js/app/admin.js");
 
 
 /***/ })
