@@ -3003,6 +3003,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -3086,6 +3087,10 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
+    selectedNumber: function selectedNumber() {
+      var selectedNumber = this.selectedDID.attributes.number;
+      this.phoneNumber = selectedNumber.slice(1);
+    },
     setNumberType: function setNumberType(type) {
       var _this = this;
 
@@ -64818,7 +64823,9 @@ var render = function() {
                               "\n                      "
                           ),
                           _c("small", { staticClass: "text-muted" }, [
-                            _vm._v("(min: 8)")
+                            _vm._v(
+                              "(must be at least 8 characters, and include a number, a special character, a lower and a upper case letter)"
+                            )
                           ])
                         ]),
                         _vm._v(" "),
@@ -66830,9 +66837,14 @@ var render = function() {
                                             )
                                           },
                                           on: {
-                                            change: function($event) {
-                                              _vm.selectedDID = item
-                                            }
+                                            change: [
+                                              function($event) {
+                                                _vm.selectedDID = item
+                                              },
+                                              function($event) {
+                                                return _vm.selectedNumber()
+                                              }
+                                            ]
                                           }
                                         }),
                                         _vm._v(" "),
@@ -88323,9 +88335,9 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /media/carl/Storage/PS2019/Fancytele/getfancy/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /media/carl/Storage/PS2019/Fancytele/getfancy/resources/sass/web/main.scss */"./resources/sass/web/main.scss");
-module.exports = __webpack_require__(/*! /media/carl/Storage/PS2019/Fancytele/getfancy/resources/sass/app/main.scss */"./resources/sass/app/main.scss");
+__webpack_require__(/*! /var/www/work/getfancy/resources/js/app.js */"./resources/js/app.js");
+__webpack_require__(/*! /var/www/work/getfancy/resources/sass/web/main.scss */"./resources/sass/web/main.scss");
+module.exports = __webpack_require__(/*! /var/www/work/getfancy/resources/sass/app/main.scss */"./resources/sass/app/main.scss");
 
 
 /***/ })
