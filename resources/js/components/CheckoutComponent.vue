@@ -805,8 +805,8 @@ export default {
   methods: {
     setCountryList() {
       axios
-        .get('https://datahub.io/core/country-list/r/data.json')
-        .then(response => (this.countries = response.data))
+        .get('/data/countries.json')
+        .then(response => (this.countries = (response.data)))
         .then(() => this.toggleProcessing());
     },
     toggleProcessing() {
