@@ -290,7 +290,8 @@ class UserService
             return response($validator->errors() , 422);
         }
 
-        if(in_array('new_password' , $data)){
+        if(array_key_exists('new_password' , $data)){
+
             $user->update([
                 'first_name'=> $data['first_name'],
                 'last_name'=> $data['last_name'],
