@@ -316,51 +316,23 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function show(User $user)
-    {
-        return view ('admin.users.edit-user', array('user' => $user));
-    }
-
-    /**
-     * @param Request $request
-     * @param User $user
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function edit(Request $request , User $user)
-    {
-        $data = $request->all();
-
-        $user_service = new UserService();
-
-        $user = $user_service->edit($data, $user);
-
-        return \response()->json($user);
-    }
-
-    /**
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function updatePassword(Request $request)
-    {
-        $data = $request->all();
-
-        $user_service = new UserService();
-
-        $user = $user_service->updatePassword($data);
-
-        return \response()->json($user);
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
+     * @param Request $request
      * @param \App\User $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function editProfile(Request $request, User $user)
     {
-       dd('Edit Profile Settings - UserController@editProfile');
+        if($request->wantsJson())
+        {
+            return response()->json($user , 200);
+        }
+        else{
+            return view ('admin.users.edit-user', array('user' => $user));
+        }
+
     }
 
     /**
@@ -368,15 +340,29 @@ class UserController extends Controller
      *
      * @param \App\Http\Requests\FancySettingRequest $request
      * @param \App\User $user
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function updateProfile(FancySettingRequest $request, User $user)
+    public function updateProfile(Request $request, User $user)
     {
         if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
             return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
         }
-        dd('Update Profile Settings - UserController@updateProfile');
 
+        $data = $request->all();
+
+        $user_service = new UserService();
+
+        $user = $user_service->updateProfile($data, $user);
+
+
+        if($user->status() == 422)
+        {
+            return response()->json($user , 422);
+        }
+        else{
+
+            return response()->json($user , 200);
+        }
     }
 
 }

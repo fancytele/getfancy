@@ -8,6 +8,7 @@ use App\Enums\DIDOrderStatus;
 use App\Enums\Role;
 use App\FancyNumber;
 use App\Rules\MatchOldPassword;
+use App\Rules\StrongPassword;
 use App\User;
 use App\Subscription;
 use Carbon\Carbon;
@@ -269,46 +270,46 @@ class UserService
     }
 
     /**
-     * @param array $data
+     * @param $data
      * @param $user
      * @return mixed
      */
-    public function edit(array $data, $user)
+    public function updateProfile($data, $user)
     {
         $validator = Validator::make($data,[
             'first_name'=> 'sometimes|required|string|min:2',
             'last_name'=> 'sometimes|required|string|min:2',
             'email'=> 'sometimes|required|email',
             'phone_number'=> 'sometimes|required|integer',
-        ]);
-
-        $user->update([
-            'first_name'=> $data['first_name'],
-            'last_name'=> $data['last_name'],
-            'email'=> $data['email'],
-            'phone_number'=> $data['phone_number']
-        ]);
-
-        return $user;
-    }
-
-    /**
-     * @param array $data
-     * @return \Illuminate\Contracts\Auth\Authenticatable|null
-     */
-    public function updatePassword(array $data)
-    {
-        $validator = Validator::make($data, [
             'current_password' =>['required_with:new_password', new MatchOldPassword],
-            'new_password' =>'required_with:current_password|min:8|confirmed',
+            'new_password' =>['required_with:current_password','min:8','confirmed' , new StrongPassword],
         ]);
 
-        $user = auth()->user();
+        if($validator->fails())
+        {
+            return response($validator->errors() , 422);
+        }
 
-        $user->update([
-            'password'=> Hash::make($data['new_password'])
-        ]);
+        if(in_array('new_password' , $data)){
+            $user->update([
+                'first_name'=> $data['first_name'],
+                'last_name'=> $data['last_name'],
+                'email'=> $data['email'],
+                'phone_number'=> $data['phone_number'],
+                'password'=> Hash::make($data['new_password'])
+            ]);
+        }
 
-        return $user;
+        else{
+            $user->update([
+                'first_name'=> $data['first_name'],
+                'last_name'=> $data['last_name'],
+                'email'=> $data['email'],
+                'phone_number'=> $data['phone_number']
+            ]);
+        }
+
+        return response($user , 200);
     }
+
 }

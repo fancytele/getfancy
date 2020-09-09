@@ -13,13 +13,9 @@
 
 @section('content')
     <div class="container-fluid">
-        <a href="{{ route('admin.users.index') }}" class="btn btn-link mb-3">
-            <i class="fe fe-arrow-left mr-2"></i>
-            @lang('Back')
-        </a>
 
-        <user-setting-component>
-            :url-action="'{{ route('admin.users.edit', $user->id) }}'"
-        </user-setting-component>
+        <user-setting-component :url-action="'{{ route('admin.users.update_profile', $user->id) }}'"
+                                :route="'{{ route('admin.users.edit_profile', $user->id) }}'"
+        ></user-setting-component>
     </div>
 @endsection
