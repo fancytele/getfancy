@@ -275,6 +275,7 @@ class UserController extends Controller
      */
     public function usersByRole(string $role)
     {
+
         $users = SpatieRole::findByName($role)
             ->users()
             ->select(['id', 'first_name', 'last_name'])
