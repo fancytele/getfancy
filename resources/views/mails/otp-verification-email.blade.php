@@ -39,7 +39,7 @@
                         style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 25px 0; text-align: center;">
                         <a href="{{ config('app.url') }}"
                            style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #ffffff; font-size: 19px; font-weight: bold; text-decoration: none;">
-                            <img class="fancy-logo" src="{{ URL::asset('img/logo-light.png') }}" alt="Fancy Logo">
+                            <img class="fancy-logo" src="{{ URL::asset('img/logo-light.png') }}" alt="Fancyy Logo">
                         </a>
                     </td>
                 </tr>
@@ -61,7 +61,7 @@
                                     </h1>
                                     <p
                                             style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #1d2c3c; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
-                                        You are receiving this email because you signed up for Fancy. <br>
+                                        You are receiving this email because you signed up for Fancyy. <br>
                                         Enter the below mentioned one time password to complete your login process. <br>
                                         <strong> OTP: {{ $otp }}</strong><br>
                                         It will be expired in <strong>10 minutes</strong><br>
@@ -71,7 +71,7 @@
                                     <p
                                             style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #1d2c3c; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
                                         Regards,<br>
-                                        The Fancy Team.
+                                        The Fancyy Team.
                                     </p>
                                     <table class="subcopy" width="100%"
                                            cellpadding="0" cellspacing="0"
