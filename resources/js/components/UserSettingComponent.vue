@@ -73,7 +73,9 @@
                     <input type="phoneNumber"
                            class="form-control"
                            required
+                           v-imask="phoneNumberMask"
                            v-model="user.phone_number"
+                           @complete="onComplete"
                     />
                     <div v-if ="errors.phone_number" class = "validation-error">
                       <div v-for="error in errors.phone_number" v-bind:key="error.id">
@@ -160,6 +162,8 @@
 </template>
 
 <script>
+import {IMaskDirective} from "vue-imask";
+
 export default {
 name: "UserSettingComponent",
 
@@ -176,9 +180,11 @@ name: "UserSettingComponent",
     route: {
       type: String,
       required: true
-    }
+    },
   },
-
+  directives: {
+    imask: IMaskDirective
+  },
   mounted() {
     this.getUserDetails();
   },
@@ -201,25 +207,32 @@ name: "UserSettingComponent",
         current_password: null,
         new_password: null,
         new_password_confirmation: null
+      },
+      unmasKedPhoneNumber: '',
+      phoneNumberMask: {
+        mask: '(000) 000-0000'
       }
-    }
+    };
   },
 
   methods:{
-
     getUserDetails()
     {
       axios.get(this.route)
             .then(response=>{
           console.log(response);
           this.user = response.data;
-
         })
             .catch(error => {
               console.log(error);
             });
 
     },
+
+    onComplete: function(e) {
+      this.unmasKedPhoneNumber = e.detail.unmaskedValue;
+    },
+
     updateUser(){
 
       this.errors.first_name = null;
@@ -233,7 +246,7 @@ name: "UserSettingComponent",
         first_name: this.user.first_name,
         last_name: this.user.last_name,
         email: this.user.email,
-        phone_number: this.user.phone_number,
+        phone_number: this.unmasKedPhoneNumber,
         current_password: this.user.current_password,
         new_password: this.user.new_password,
         new_password_confirmation: this.user.new_password_confirmation,
