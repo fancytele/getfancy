@@ -14,8 +14,8 @@ class AlterUserAddOtpExpireTime extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->unsignedInteger('otp')->nullable();
-            $table->dateTimeTz('otp_expire_time')->nullable();
+            $table->unsignedInteger('two_factor_code')->nullable();
+            $table->dateTimeTz('two_factor_code_expire_time')->nullable();
         });
     }
 
@@ -27,8 +27,8 @@ class AlterUserAddOtpExpireTime extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('otp');
-            $table->dropColumn('otp_expire_time');
+            $table->dropColumn('two_factor_code');
+            $table->dropColumn('two_factor_code_expire_time');
         });
     }
 

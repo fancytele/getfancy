@@ -7,7 +7,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Queue\ShouldQueue;
 
-class OtpVerificationEmail extends Mailable
+class TwoFactorCodeVerificationEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -33,6 +33,6 @@ class OtpVerificationEmail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.otp-verification-email');
+        return $this->view('mails.two-factor-code-verification-email');
     }
 }

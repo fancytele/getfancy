@@ -55,17 +55,12 @@
                             <tr>
                                 <td class="content-cell"
                                     style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 35px;">
-                                    <h1
-                                            style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #1d2c3c; font-size: 19px; font-weight: bold; margin-top: 0; text-align: left;">
-                                        Welcome {{ $user['first_name']}}!
-                                    </h1>
                                     <p
                                             style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #1d2c3c; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
-                                        You are receiving this email because you signed up for Fancyy. <br>
-                                        Enter the below mentioned one time password to complete your login process. <br>
-                                        <strong> OTP: {{ $otp }}</strong><br>
-                                        It will be expired in <strong>10 minutes</strong><br>
-                                        <small>If you did not request for it, simple ignore this email.</small>
+                                        Please, enter the two factor code below to complete your login process. <br>
+                                        <strong>Two Factor Code: {{ $otp }}</strong><br>
+                                        Please know that the two factor code will expire in <strong>10 minutes</strong><br>
+                                        <small>If you did not request for it, simply ignore this email.</small>
                                     </p>
 
                                     <p

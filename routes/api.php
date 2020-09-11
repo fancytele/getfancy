@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::post('otp','Auth\LoginController@sendOtp')->name('admin.login.sendOtp');
+Route::post('two-factor-code','Auth\LoginController@generateTwoFactorCode')->name('admin.login.send_two_factor_code');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
