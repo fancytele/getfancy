@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\Users;
 
 use App\Addon;
+use App\Address;
 use App\Enums\AddonCode;
 use App\Enums\FancyNotificationPeriod;
 use App\Enums\Role;
@@ -19,6 +20,7 @@ use App\Services\DIDService;
 use App\Services\FancySettingService;
 use App\Services\StripeService;
 use App\Services\UserService;
+use App\Subscription;
 use App\Ticket;
 use App\User;
 use Exception;
@@ -39,8 +41,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile']);
-        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile']);
+        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription']);
+        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription']);
     }
 
     /**
@@ -327,7 +329,10 @@ class UserController extends Controller
     {
         if($request->wantsJson())
         {
-            return response()->json($user , 200);
+            $billing_information = Address::where('user_id' , '=' , $user->id)
+                ->where('type' , '=' , 'billing')->first();
+
+            return response()->json(["user" =>$user, "billing_information" => $billing_information] , 200);
         }
         else{
             return view ('admin.users.edit-user', array('user' => $user));
@@ -354,7 +359,6 @@ class UserController extends Controller
 
         $user = $user_service->updateProfile($data, $user);
 
-
         if($user->status() == 422)
         {
             return response()->json($user , 422);
@@ -365,4 +369,36 @@ class UserController extends Controller
         }
     }
 
+    public function cancelSubscription(Request $request, User $user){
+
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+
+        $subscription_id = Subscription::where('user_id' , '=' , auth()->user()->id)->pluck('stripe_id')->first();
+
+        if(!$subscription_id)
+        {
+            return response()->json(['data'=>['errors' => ['message' => 'No Subscription']]],404);
+        }
+
+        $stripe_service = new StripeService();
+
+        $cancel_subscription= $stripe_service->cancelSubscription($subscription_id);
+
+        return response()->json($cancel_subscription);
+    }
+
+    /*public function updatePaymentMethod(Request $request, User $user){
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+
+        $stripe_service = new StripeService();
+
+        $update_payment_method= $stripe_service->updatePaymentMethod();
+
+        return response()->json($update_payment_method);
+    }
+    */
 }

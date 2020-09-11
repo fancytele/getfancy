@@ -5323,6 +5323,193 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_imask__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-imask */ "./node_modules/vue-imask/esm/index.js");
+/* harmony import */ var vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-stripe-elements-plus */ "./node_modules/vue-stripe-elements-plus/dist/index.js");
+/* harmony import */ var vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -5487,6 +5674,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+ //import { Card, createToken } from 'vue-stripe-elements-plus';
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "UserSettingComponent",
   props: {
@@ -5499,6 +5688,10 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     },
     route: {
+      type: String,
+      required: true
+    },
+    url: {
       type: String,
       required: true
     }
@@ -5520,6 +5713,14 @@ __webpack_require__.r(__webpack_exports__);
         new_password: null,
         new_password_confirmation: ''
       },
+      billing_address: {
+        address1: '',
+        address2: '',
+        city: '',
+        country: '',
+        state: '',
+        zip_code: ''
+      },
       errors: {
         first_name: null,
         last_name: null,
@@ -5527,21 +5728,101 @@ __webpack_require__.r(__webpack_exports__);
         phone_number: null,
         current_password: null,
         new_password: null,
-        new_password_confirmation: null
+        new_password_confirmation: null,
+        subscription_id: null
       },
       unmasKedPhoneNumber: '',
       phoneNumberMask: {
         mask: '(000) 000-0000'
+      },
+      showCancelSubscriptionModal: false,
+      tokenGlobal: "",
+      tag: "",
+      picked: "",
+      userTags: [{
+        text: "User Experience",
+        tiClasses: ["valid"]
+      }, {
+        text: "UI Design",
+        tiClasses: ["valid"]
+      }, {
+        text: "React JS",
+        tiClasses: ["valid"]
+      }, {
+        text: "HTML & CSS",
+        tiClasses: ["valid"]
+      }, {
+        text: "JavaScript",
+        tiClasses: ["valid"]
+      }, {
+        text: "Bootstrap 4",
+        tiClasses: ["valid"]
+      }],
+      stripetoken: {
+        value: "",
+        error: ""
       }
     };
   },
   methods: {
+    stripeToken: function stripeToken() {
+      var that = this;
+      var stripe = Object(vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_1__["Stripe"])('pk_TMBfEj9GXcGCePpgJAFLIb8tHWpEA');
+      var elements = stripe.elements();
+      var style = {
+        base: {
+          color: "#32325d",
+          fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
+          fontSmoothing: "antialiased",
+          fontSize: "16px",
+          "::placeholder": {
+            color: "#aab7c4"
+          }
+        },
+        invalid: {
+          color: "#fa755a",
+          iconColor: "#fa755a"
+        }
+      };
+      var card = elements.create("card", {
+        style: style
+      });
+      card.mount("#card-element");
+      card.on('change', function (event) {
+        var displayError = document.getElementById('card-errors');
+
+        if (event.error) {
+          displayError.textContent = event.error.message;
+        } else {
+          displayError.textContent = '';
+        }
+      });
+      var form = document.getElementById('payment-form');
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        stripe.createToken(card).then(function (result) {
+          if (result.error) {
+            // Inform the user if there was an error.
+            var errorElement = document.getElementById('card-errors');
+            errorElement.textContent = result.error.message;
+          } else {
+            // Send the token to your server.
+            that.stripeTokenHandler(result.token);
+          }
+        });
+      });
+    },
+    stripeTokenHandler: function stripeTokenHandler(token) {
+      this.tokenGlobal = token.id;
+      console.log("Stripe Token", this.tokenGlobal);
+    },
     getUserDetails: function getUserDetails() {
       var _this = this;
 
       axios.get(this.route).then(function (response) {
         console.log(response);
-        _this.user = response.data;
+        _this.user = response.data.user;
+        _this.billing_address = response.data.billing_information;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -5565,7 +5846,13 @@ __webpack_require__.r(__webpack_exports__);
         phone_number: this.unmasKedPhoneNumber,
         current_password: this.user.current_password,
         new_password: this.user.new_password,
-        new_password_confirmation: this.user.new_password_confirmation
+        new_password_confirmation: this.user.new_password_confirmation,
+        address_1: this.billing_address.address1,
+        address_2: this.billing_address.address2,
+        country: this.billing_address.country,
+        city: this.billing_address.city,
+        state: this.billing_address.state,
+        zip_code: this.billing_address.zip_code
       }).then(function (response) {
         console.log(response);
       })["catch"](function (error) {
@@ -5576,6 +5863,17 @@ __webpack_require__.r(__webpack_exports__);
         _this2.errors.phone_number = error.response.data.original.phone_number;
         _this2.errors.current_password = error.response.data.original.current_password;
         _this2.errors.new_password = error.response.data.original.new_password;
+      });
+    },
+    cancelSubscriptionModal: function cancelSubscriptionModal() {
+      var _this3 = this;
+
+      axios.get(this.url).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error.response);
+        _this3.errors.subscription_id = error.response.data.data.errors.message;
+        _this3.showCancelSubscriptionModal = false;
       });
     }
   }
@@ -10059,7 +10357,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.validation-error[data-v-1bf9f763]{\n  color: red;\n}\n", ""]);
+exports.push([module.i, "\n.validation-error[data-v-1bf9f763]{\n  color: red;\n}\n.relative[data-v-1bf9f763]{\n  position: relative;\n}\n.absolute[data-v-1bf9f763]{\n  position: absolute;\n  left: 50%;\n  top: 50%;\n}\n.StripeElement[data-v-1bf9f763] {\n  box-sizing: border-box;\n\n  height: 40px;\n\n  padding: 10px 12px;\n\n  border: 1px solid transparent;\n  border-radius: 4px;\n  background-color: white;\n\n  box-shadow: 0 1px 3px 0 #e6ebf1;\n  -webkit-transition: box-shadow 150ms ease;\n  transition: box-shadow 150ms ease;\n}\n.StripeElement--focus[data-v-1bf9f763] {\n  box-shadow: 0 1px 3px 0 #cfd7df;\n}\n.StripeElement--invalid[data-v-1bf9f763] {\n  border-color: #fa755a;\n}\n.StripeElement--webkit-autofill[data-v-1bf9f763] {\n  background-color: #fefde5 !important;\n}\n\n", ""]);
 
 // exports
 
@@ -71797,6 +72095,337 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xl-4" }, [
+                  _c("h2", { staticClass: "mb-1" }, [
+                    _vm._v(_vm._s(_vm.trans("Billing Information")))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "billing_address1" } }, [
+                            _vm._v(_vm._s(_vm.trans("Address")) + " 1")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.billing_address.address1,
+                                expression: "billing_address.address1"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "billing_address1",
+                              name: "billing_address1",
+                              required: ""
+                            },
+                            domProps: { value: _vm.billing_address.address1 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.billing_address,
+                                  "address1",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "billing_address2" } }, [
+                            _vm._v(_vm._s(_vm.trans("Address")) + " 2")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.billing_address.address2,
+                                expression: "billing_address.address2"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "billing_address2",
+                              name: "billing_address2",
+                              required: ""
+                            },
+                            domProps: { value: _vm.billing_address.address2 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.billing_address,
+                                  "address2",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "country" } }, [
+                            _vm._v(_vm._s(_vm.trans("Country")))
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.billing_address.country,
+                                expression: "billing_address.country"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "country",
+                              id: "country",
+                              required: ""
+                            },
+                            domProps: { value: _vm.billing_address.country },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.billing_address,
+                                  "country",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "city" } }, [
+                            _vm._v(_vm._s(_vm.trans("City")))
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.billing_address.city,
+                                expression: "billing_address.city"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "city",
+                              name: "city",
+                              required: ""
+                            },
+                            domProps: { value: _vm.billing_address.city },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.billing_address,
+                                  "city",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "state" } }, [
+                            _vm._v(
+                              _vm._s(_vm.trans("State, Providence, Region"))
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.billing_address.state,
+                                expression: "billing_address.state"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "state",
+                              name: "state",
+                              required: ""
+                            },
+                            domProps: { value: _vm.billing_address.state },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.billing_address,
+                                  "state",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "zip_code" } }, [
+                            _vm._v(_vm._s(_vm.trans("Zip Code")))
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.billing_address.zip_code,
+                                expression: "billing_address.zip_code"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "zip_code",
+                              name: "zip_code",
+                              required: ""
+                            },
+                            domProps: { value: _vm.billing_address.zip_code },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.billing_address,
+                                  "zip_code",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        ])
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xl-4" }, [
+                  _c("h2", { staticClass: "mb-1" }, [
+                    _vm._v(_vm._s(_vm.trans("Subscription")))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+                  },
+                  [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-danger btn btn-danger ladda-button",
+                            attrs: { "data-style": "zoom-out" },
+                            on: {
+                              click: function($event) {
+                                _vm.showCancelSubscriptionModal = true
+                              }
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                    " +
+                                _vm._s(_vm.trans("Cancel Subscription")) +
+                                "\n                  "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
         _c("div", { staticClass: "text-right" }, [
           _c(
             "button",
@@ -71808,10 +72437,161 @@ var render = function() {
           )
         ])
       ]
-    )
+    ),
+    _vm._v(" "),
+    _c(
+      "form",
+      { attrs: { action: "/charge", method: "post", id: "payment-form" } },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xl-4" }, [
+                  _c("h2", { staticClass: "mb-1" }, [
+                    _vm._v(_vm._s(_vm.trans("Update Payment Method")))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c(
+                          "label",
+                          {
+                            staticStyle: { "margin-left": "38px" },
+                            attrs: { for: "card-element" }
+                          },
+                          [_vm._v(_vm._s(_vm.trans("Credit Card")))]
+                        ),
+                        _vm._v(" "),
+                        _c("div", {
+                          staticStyle: { margin: "40px" },
+                          attrs: { id: "card-element" }
+                        }),
+                        _vm._v(" "),
+                        _c("div", {
+                          staticStyle: { "margin-left": "35px" },
+                          attrs: { id: "card-errors", role: "alert" }
+                        })
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _vm._m(1)
+                  ]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "relative" }, [
+      _vm.showCancelSubscriptionModal
+        ? _c("div", { staticClass: "absolute" }, [
+            _c("div", { staticClass: "modal-mask" }, [
+              _c("div", { staticClass: "modal-wrapper" }, [
+                _c("div", { staticClass: "modal-dialog" }, [
+                  _c("div", { staticClass: "modal-content" }, [
+                    _c("div", { staticClass: "modal-body" }, [
+                      _c("h2", { staticClass: "text-center" }, [
+                        _c("strong", [
+                          _vm._v(_vm._s(_vm.trans("Are you Sure?")))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "text-center" }, [
+                        _vm._v(
+                          _vm._s(
+                            _vm.trans(
+                              "If you cancel your subscription you will loss all your data."
+                            )
+                          )
+                        )
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "d-flex justify-content-center" },
+                      [
+                        _c("div", [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-secondary btn btn-secondary ladda-button",
+                              attrs: { "data-style": "zoom-out" },
+                              on: {
+                                click: function($event) {
+                                  _vm.showCancelSubscriptionModal = false
+                                }
+                              }
+                            },
+                            [_vm._v(_vm._s(_vm.trans("No! Go Back")))]
+                          )
+                        ]),
+                        _vm._v("\n                    \n                "),
+                        _c("div", [
+                          _c(
+                            "button",
+                            {
+                              staticClass:
+                                "btn btn-primary btn btn-primary ladda-button",
+                              attrs: { "data-style": "zoom-out" },
+                              on: { click: _vm.cancelSubscriptionModal }
+                            },
+                            [_vm._v(_vm._s(_vm.trans("Yes, Sure")))]
+                          )
+                        ])
+                      ]
+                    ),
+                    _vm._v("\n                  \n            ")
+                  ])
+                ])
+              ])
+            ])
+          ])
+        : _vm._e()
+    ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+        _c("h5", [_vm._v("Need to cancel your subcription?")]),
+        _vm._v(" "),
+        _c("p", [_vm._v("we're sad to see you go.")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+        _c("button", [_vm._v("Submit Payment")])
+      ])
+    ])
+  }
+]
 render._withStripped = true
 
 

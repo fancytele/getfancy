@@ -16,6 +16,7 @@
 
         <user-setting-component :url-action="'{{ route('admin.users.update_profile', $user->id) }}'"
                                 :route="'{{ route('admin.users.edit_profile', $user->id) }}'"
+                                :url="'{{ route('admin.users.cancel_subscription', $user->id) }}'"
         ></user-setting-component>
     </div>
 @endsection

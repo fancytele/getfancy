@@ -276,19 +276,29 @@ class UserService
      */
     public function updateProfile($data, $user)
     {
+
         $validator = Validator::make($data,[
-            'first_name'=> 'sometimes|required|string|min:2',
-            'last_name'=> 'sometimes|required|string|min:2',
-            'email'=> 'sometimes|required|email',
-            'phone_number'=> 'sometimes|required|integer',
+            'first_name'=> 'required|string|min:2',
+            'last_name'=> 'required|string|min:2',
+            'email'=> 'required|email',
+            'phone_number'=> 'required|integer',
             'current_password' =>['required_with:new_password', new MatchOldPassword],
             'new_password' =>['required_with:current_password','min:8','confirmed' , new StrongPassword],
+            'address_1' =>'required|string',
+            'address_2' =>'required|string',
+            'country' =>'required|string',
+            'state' =>'required|string',
+            'city'=>'required|string',
+            'zip_code' => 'required|integer',
         ]);
 
         if($validator->fails())
         {
             return response($validator->errors() , 422);
         }
+
+        $address = Address::where('user_id' , '=' , $user->id)
+            ->where('type' , '=', 'billing')->first();
 
         if(array_key_exists('new_password' , $data)){
 
@@ -299,6 +309,15 @@ class UserService
                 'phone_number'=> $data['phone_number'],
                 'password'=> Hash::make($data['new_password'])
             ]);
+
+            $address->update([
+                'address1' => $data['address_1'],
+                'address2' =>$data['address_2'],
+                'country' => $data['country'],
+                'city' => $data['city'],
+                'state'=> $data['state'],
+                'zip_code' => $data['zip_code']
+            ]);
         }
 
         else{
@@ -308,9 +327,19 @@ class UserService
                 'email'=> $data['email'],
                 'phone_number'=> $data['phone_number']
             ]);
+            $address->update([
+                'address1' => $data['address_1'],
+                'address2' =>$data['address_2'],
+                'country' => $data['country'],
+                'city' => $data['city'],
+                'state'=> $data['state'],
+                'zip_code' => $data['zip_code']
+            ]);
         }
+        $stripe_service = new StripeService();
+        $stripe_service->updateBillingAddress($data);
 
-        return response($user , 200);
+        return response([$user , $address] , 200);
     }
 
 }

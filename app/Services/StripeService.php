@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Stripe\Customer as StripeCustomer;
+use Stripe\Exception\ApiErrorException;
 use Stripe\Invoice as StripeInvoice;
 use Stripe\InvoiceItem as StripeInvoiceItem;
 use Stripe\Plan as StripePlan;
@@ -203,5 +204,47 @@ class StripeService
             'customer' => $customerId,
             'description' => $description,
         ], $this->getStripeKey());
+    }
+
+    public function cancelSubscription($subscription_id)
+    {
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+        try {
+            $subscription = StripeSubscription::retrieve($subscription_id);
+            return $subscription->cancel();
+        } catch (ApiErrorException $e) {
+           return $e->getMessage();
+        }
+    }
+
+    public function updatePaymentMethod()
+    {
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+        try{
+            $customer= \Stripe\Customer::retrieve(auth()->user()->stripe_id);
+            dd($customer);
+            \Stripe\PaymentMethod::retrieve(($customer->sources['data'][0]['id']));
+            return \Stripe\PaymentMethod::update($customer->sources['data'][0]['id'], ['metadata' =>[]]);
+        } catch (ApiErrorException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function updateBillingAddress(array $data){
+
+        try {
+            return StripeCustomer::update(auth()->user()->stripe_id, [
+                'address' => [
+                    'city' => $data['address_1'],
+                    'country' => $data['country'],
+                    'line1' => $data['address_1'],
+                    'line2' => $data['address_2'],
+                    'postal_code' => $data['zip_code'],
+                    'state' => $data['state']
+                ],
+            ], $this->getStripeKey());
+        } catch (ApiErrorException $e) {
+            return $e->getMessage();
+        }
     }
 }

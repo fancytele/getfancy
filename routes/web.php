@@ -53,7 +53,7 @@ Route::prefix('admin')->group(function () {
         // Milestone 2 - user profile settings
         Route::get('users/{user}/edit/profile', 'Admin\Users\UserController@editProfile')->name('admin.users.edit_profile');
         Route::post('users/{user}/update/profile', 'Admin\Users\UserController@updateProfile')->name('admin.users.update_profile');
-
+        Route::get('users/{user}/cancel/subscription' , 'Admin\Users\UserController@cancelSubscription')->name('admin.users.cancel_subscription');
 
 
         // Agents Management
