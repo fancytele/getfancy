@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\StrongPassword;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SubscriptionRequest extends FormRequest
@@ -28,7 +29,7 @@ class SubscriptionRequest extends FormRequest
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'email_confirmation' => ['same:email'],
-            'password' => ['required', 'string', 'min:8'],
+            'password' => ['required', 'string', 'min:8', new StrongPassword],
             'password_confirmation' => ['same:password'],
             'company_name' => ['required'],
             'company_phone' => ['required'],

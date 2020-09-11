@@ -111,7 +111,7 @@
                     <div class="form-group">
                       <label for="password">
                         {{ trans('Password') }}
-                        <small class="text-muted">(min: 8)</small>
+                        <small class="text-muted">(must be at least 8 characters, and include a number, a special character, a lower and a upper case letter)</small>
                       </label>
                       <input
                         type="password"
@@ -805,8 +805,8 @@ export default {
   methods: {
     setCountryList() {
       axios
-        .get('https://datahub.io/core/country-list/r/data.json')
-        .then(response => (this.countries = response.data))
+        .get('/data/countries.json')
+        .then(response => (this.countries = (response.data)))
         .then(() => this.toggleProcessing());
     },
     toggleProcessing() {

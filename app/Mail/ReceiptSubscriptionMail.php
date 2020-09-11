@@ -35,6 +35,6 @@ class ReceiptSubscriptionMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.receipt')->subject("Fancy Payment Receipt");
+        return $this->view('mails.receipt')->subject("Fancyy Payment Receipt");
     }
 }
