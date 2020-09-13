@@ -17,13 +17,13 @@ class TwoFactorCodeVerificationEmail extends Mailable
      * @return void
      */
 
-    public $user, $otp;
+    public $user, $two_factor_code;
 
 
-    public function __construct($user, $otp)
+    public function __construct($user, $two_factor_code)
     {
         $this->user = $user;
-        $this->otp = $otp;
+        $this->two_factor_code = $two_factor_code;
     }
 
     /**
