@@ -272,7 +272,9 @@
     "Set a Password": "Establece una Contraseña",
     "Get the Perfect Phone Number for Your Business": "Obtenga el número de teléfono perfecto para su negocio",
     "What do you want to do?": "¿Qué quieres hacer?",
-    "OTP": "OTP",
-    "Enter your OTP": "ingrese su OTP",
-    "OTP has been sent to your email":"OTP ha sido enviado a su correo electrónico"
+    "Two Factor Code": "código de dos factores",
+    "Enter your two factor code": "Ingrese su código de dos factores",
+    "Two factor code has been sent to your email":"Se ha enviado un código de dos factores a su correo electrónico.",
+    "Please provide some input":"Proporcione alguna entrada",
+    "These credentials do not match our records.":"Estas credenciales no coinciden con nuestros registros."
 }

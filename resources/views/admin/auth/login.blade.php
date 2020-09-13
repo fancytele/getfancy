@@ -39,7 +39,7 @@
                     @csrf
 
                     <!-- Email address -->
-                    <div class="form-group">
+                    <div id="email_display" class="form-group">
 
                         <!-- Label -->
                         <label for="email">@lang('E-mail')</label>
@@ -52,8 +52,8 @@
 
                          <span id="emailError" class="invalid-feedback" style="display: block" role="alert"></span>
 
-                         @if(session()->has('otpExpiredErrorMessage'))
-                            <span class="invalid-feedback" style="display: block" role="alert"><strong>{{ session()->get('otpExpiredErrorMessage') }}</strong></span>
+                         @if(session()->has('twoFactorCodeExpiredErrorMessage'))
+                            <span class="invalid-feedback" style="display: block" role="alert"><strong>{{ session()->get('twoFactorCodeExpiredErrorMessage') }}</strong></span>
                         @endif
 
 
@@ -70,7 +70,7 @@
                     </div>
 
                     <!-- Password -->
-                    <div class="form-group">
+                    <div id="password_display" class="form-group">
 
                         <div class="row">
                             <div class="col">
@@ -108,35 +108,35 @@
 
 
                         <!-- OTP -->
-                        <div id="otp" class="form-group">
+                        <div id="two_factor_code" class="form-group">
 
                             <div class="row">
                                 <div class="col">
 
                                     <!-- Label -->
-                                    <label for="otp">@lang('OTP')</label> <?php //TODO: ADD TO LANGUAGE FILE ?>
+                                    <label for="two_factor_code">@lang('Two Factor Code')</label>
 
                                 </div>
                             </div> <!-- / .row -->
 
                             <!-- Input -->
-                            <input type="number" name="otp"
-                                   class="form-control form-control-appended @error('otp') is-invalid @enderror"
-                                   placeholder="@lang('Enter your OTP')" required>
+                            <input type="number" name="two_factor_code"
+                                   class="form-control form-control-appended @error('two_factor_code') is-invalid @enderror"
+                                   placeholder="@lang('Enter your two factor code')" required>
 
-                            @error('otp')
+                            @error('two_factor_code')
                             <span id="error" class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
                             @enderror
 
-                            @if(session()->has('otpErrorMessage'))
-                                <span class="invalid-feedback" style="display: block" role="alert"><strong>{{ session()->get('otpErrorMessage') }}</strong></span>
+                            @if(session()->has('twoFactorCodeErrorMessage'))
+                                <span class="invalid-feedback" style="display: block" role="alert"><strong>{{ session()->get('twoFactorCodeErrorMessage') }}</strong></span>
                             @endif
 
                         </div>
 
-                        <div id="otpSuccessMessage">
+                        <div id="twoFactoCodeSuccessMessage">
                             <span style="display: block"></span>
                         </div>
                     <!-- Submit -->
@@ -146,7 +146,7 @@
                         <span class="ladda-label">@lang('Login')</span>
                     </button>
 
-                        <button id="login-otp-button" onclick="return getOtp()"
+                        <button id="login-two-factor-code-button" onclick="return getOtp()"
                                 class="btn btn-lg btn-block btn-info ladda-button mb-3"
                                 data-style="zoom-out">
                             <span class="ladda-label">@lang('Login')</span>
@@ -167,20 +167,20 @@
 <script>
     function getOtp()
     {
-      var l = Ladda.create(document.getElementById('login-otp-button'));
+      var l = Ladda.create(document.getElementById('login-two-factor-code-button'));
       l.start();
       var x = new XMLHttpRequest();
-      x.open("POST", "{{ route('admin.login.sendOtp') }}", true);
+      x.open("POST", "{{ route('admin.login.send_two_factor_code') }}", true);
       x.setRequestHeader("Content-type", "application/json");
       var sendData = { email: document.getElementById('email').value , password: document.getElementById('password').value};
       if(!sendData.email)
       {
-        document.getElementById('emailError').innerHTML = '<strong>Please provide some input</strong>';
+        document.getElementById('emailError').innerHTML = '<strong>@lang('Please provide some input')</strong>';
       }
 
       if(!sendData.password)
       {
-        document.getElementById('passwordError').innerHTML = '<strong>Please provide some input</strong>';
+        document.getElementById('passwordError').innerHTML = '<strong>@lang('Please provide some input')</strong>';
       }
 
         x.send(JSON.stringify(sendData));
@@ -192,29 +192,31 @@
             l.stop();
             document.getElementById('emailError').innerHTML = '';
             document.getElementById('passwordError').innerHTML = '';
-            document.getElementById('otpSuccessMessage').innerHTML= '<strong>@lang('OTP has been sent to your email')</strong>';
-            document.getElementById('otp').style.display = "block";
+            document.getElementById('twoFactoCodeSuccessMessage').innerHTML= '<strong>@lang('Two factor code has been sent to your email')</strong>';
+            document.getElementById('two_factor_code').style.display = "block";
             document.getElementById('submit-button').style.display = "block";
-            document.getElementById('login-otp-button').style.display = "none";
+            document.getElementById('login-two-factor-code-button').style.display = "none";
+            document.getElementById('email_display').style.display="none";
+            document.getElementById('password_display').style.display="none";
           }
           else if(x.status === 401)
           {
             l.stop();
            if(!document.getElementById('password').value){
-             document.getElementById('passwordError').innerHTML = '<strong>Please provide some input</strong>';
+             document.getElementById('passwordError').innerHTML = '<strong>@lang('Please provide some input')</strong>';
              document.getElementById('emailError').innerHTML = '';
            }
            else{
              document.getElementById('passwordError').innerHTML = '';
-             document.getElementById('emailError').innerHTML = '<strong>These credentials do not match our records.</strong>';
+             document.getElementById('emailError').innerHTML = '<strong>@lang('These credentials do not match our records.')</strong>';
            }
-            document.getElementById('otp').style.display ="none";
+            document.getElementById('two_factor_code').style.display ="none";
             document.getElementById('submit-button').style.display ="none";
           }
           else
           {
             l.stop();
-            document.getElementById('otp').style.display ="none";
+            document.getElementById('two_factor_code').style.display ="none";
             document.getElementById('submit-button').style.display ="none";
           }
         }
@@ -225,8 +227,14 @@
 </script>
 
     <style>
-        @if(session()->has('credentialErrorMessage') OR session()->has('otpErrorMessage'))
-            #otp{
+        @if(session()->has('credentialErrorMessage') OR session()->has('twoFactorCodeErrorMessage'))
+               #email_display{
+            display: block;
+            }
+            #password_display{
+                display: block;
+            }
+            #two_factor_code{
                 display: block;
             }
 
@@ -234,12 +242,13 @@
                 display: block;
             }
 
-            #login-otp-button{
+            #login-two-factor-code-button{
                 display: none;
             }
 
-        @elseif(session()->has('otpExpiredErrorMessage'))
-                #otp{
+
+        @elseif(session()->has('twoFactorCodeExpiredErrorMessage'))
+                #two_factor_code{
                     display: none;
                 }
 
@@ -247,12 +256,18 @@
                     display: none;
                 }
 
-                #login-otp-button{
+                #login-two-factor-code-button{
                     display: block;
                 }
 
             @else
-                #otp{
+                #email_display{
+                display: block;
+                }
+                #password_display{
+                    display: block;
+                }
+                #two_factor_code{
                     display: none;
                 }
 
@@ -260,7 +275,7 @@
                     display: none;
                 }
 
-                #login-otp-button{
+                #login-two-factor-code-button{
                     display: block;
                 }
 
