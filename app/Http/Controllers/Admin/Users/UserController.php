@@ -9,6 +9,7 @@ use App\Enums\FancyNotificationPeriod;
 use App\Enums\Role;
 use App\Enums\TicketStatus;
 use App\Events\RegisterInvoiceEvent;
+use App\FancyNumber;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FancyNumberRequest;
 use App\Http\Requests\FancySettingRequest;
@@ -41,14 +42,14 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription']);
-        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription']);
+        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod']);
+        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod']);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function index()
     {
@@ -60,7 +61,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function create()
     {
@@ -382,23 +383,50 @@ class UserController extends Controller
             return response()->json(['data'=>['errors' => ['message' => 'No Subscription']]],404);
         }
 
-        $stripe_service = new StripeService();
+        $user_service = new UserService();
 
+        //Cancel Subscription
+        $user_service->cancelSubscription();
+
+        $fancyNumber_id = FancyNumber::where('user_id' , auth()->user()->id)->pluck('id')->first();
+
+        // Update Ticket
+        $ticket = Ticket::where('fancy_number_id' ,'=' ,  $fancyNumber_id)->first();
+        $ticket->status = TicketStatus::CANCELED;
+        $ticket->save();
+
+        //Cancel Stripe Subscription
+        $stripe_service = new StripeService();
         $cancel_subscription= $stripe_service->cancelSubscription($subscription_id);
 
         return response()->json($cancel_subscription);
     }
 
-    /*public function updatePaymentMethod(Request $request, User $user){
+   public function getAllPaymentMethods(Request $request, User $user){
         if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
             return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
         }
 
         $stripe_service = new StripeService();
 
-        $update_payment_method= $stripe_service->updatePaymentMethod();
+        $all_payment_method= $stripe_service->getAllPaymentMethods();
 
-        return response()->json($update_payment_method);
+        return response()->json($all_payment_method);
     }
-    */
+
+    public function deletePaymentMethod(Request $request, User $user){
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+
+        $data = $request->all();
+
+        $stripe_service = new StripeService();
+
+        $delete_payment_method = $stripe_service->deletePaymentMethod($data);
+
+        return response()->json($delete_payment_method);
+    }
+
+
 }

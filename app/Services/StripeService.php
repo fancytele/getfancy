@@ -23,7 +23,7 @@ class StripeService
      * Create a Stripe customer for the given model.
      *
      * @param array $options
-     * @return \Stripe\Customer
+     * @return StripeCustomer
      */
     public function createCustomer(array $options = [])
     {
@@ -217,14 +217,22 @@ class StripeService
         }
     }
 
-    public function updatePaymentMethod()
+    public function updatePaymentMethod($data)
     {
         \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
         try{
-            $customer= \Stripe\Customer::retrieve(auth()->user()->stripe_id);
-            dd($customer);
-            \Stripe\PaymentMethod::retrieve(($customer->sources['data'][0]['id']));
-            return \Stripe\PaymentMethod::update($customer->sources['data'][0]['id'], ['metadata' =>[]]);
+
+            $customer = StripeCustomer::retrieve(auth()->user()->stripe_id);
+
+            $card = StripeCustomer::createSource(auth()->user()->stripe_id , [
+                'source' => $data['stripe_token']
+            ]);
+
+            $customer->default_source=$card['id'];
+            $customer->save();
+
+            return $card;
+
         } catch (ApiErrorException $e) {
             return $e->getMessage();
         }
@@ -243,6 +251,31 @@ class StripeService
                     'state' => $data['state']
                 ],
             ], $this->getStripeKey());
+        } catch (ApiErrorException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getAllPaymentMethods(){
+
+        try {
+            $customer = StripeCustomer::retrieve(auth()->user()->stripe_id, $this->getStripeKey());
+
+            $default_card = $customer->default_source;
+            $payment_method = \Stripe\PaymentMethod::all([
+                'customer' => auth()->user()->stripe_id,
+                'type' => 'card',
+            ], $this->getStripeKey());
+
+            return ([$default_card, $payment_method ]);
+        } catch (ApiErrorException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function deletePaymentMethod($data){
+        try {
+            return StripeCustomer::deleteSource(auth()->user()->stripe_id , $data['card_id'], [],$this->getStripeKey());
         } catch (ApiErrorException $e) {
             return $e->getMessage();
         }

@@ -70,7 +70,6 @@ class LoginController extends Controller
      */
     public function authenticated(Request $request)
     {
-
         $this->validate($request, [
             'email' => 'required|email',
             'password' => 'required',
@@ -107,16 +106,15 @@ class LoginController extends Controller
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
-     * checks the user credentials if the user is a valid user then it generates OTP
-     * else throws an error message
      */
     public function generateTwoFactorCode(Request $request)
     {
-        $two_factor_code = mt_rand(1000,9999);
-
-        $expire_time = Carbon::now()->addMinutes(10);
-
         $user= User::where('email' ,'=', $request->email)->first();
+
+        if($user->is_twoFactorAuthentication == 1){
+            $two_factor_code = mt_rand(1000,9999);
+
+            $expire_time = Carbon::now()->addMinutes(10);
 
             if(Hash::check($request->password , $user->password))
             {
@@ -132,5 +130,17 @@ class LoginController extends Controller
                 return response()->json('These credentials do not match our records.',401);
             }
 
+        }
+       else{
+         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+
+             Auth()->login($user);
+
+             return response()->json($user , 202);
+           }
+           else{
+               return response()->json('These credentials do not match our records.',401);
+           }
+       }
     }
 }

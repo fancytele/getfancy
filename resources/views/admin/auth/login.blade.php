@@ -199,6 +199,11 @@
             document.getElementById('email_display').style.display="none";
             document.getElementById('password_display').style.display="none";
           }
+          else if(x.status === 202)
+          {
+            l.stop();
+            window.location.href = "{{ route('admin.dashboard') }}";
+          }
           else if(x.status === 401)
           {
             l.stop();
@@ -245,6 +250,7 @@
             #login-two-factor-code-button{
                 display: none;
             }
+
 
 
         @elseif(session()->has('twoFactorCodeExpiredErrorMessage'))

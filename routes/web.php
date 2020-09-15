@@ -39,6 +39,7 @@ Route::prefix('admin')->group(function () {
     Route::get('users/{id}/impersonate', 'Admin\Users\UserController@impersonate')->name('admin.users.impersonate');
     Route::get('users/stop', 'Admin\Users\UserController@stopImpersonate')->name('admin.users.stop_impersonate');
 
+
     Route::middleware(['impersonate'])->group(function () {
         // Dashboard
         Route::get('dashboard', 'Admin\DashboardController@index')->name('admin.dashboard');
@@ -53,7 +54,9 @@ Route::prefix('admin')->group(function () {
         // Milestone 2 - user profile settings
         Route::get('users/{user}/edit/profile', 'Admin\Users\UserController@editProfile')->name('admin.users.edit_profile');
         Route::post('users/{user}/update/profile', 'Admin\Users\UserController@updateProfile')->name('admin.users.update_profile');
-        Route::get('users/{user}/cancel/subscription' , 'Admin\Users\UserController@cancelSubscription')->name('admin.users.cancel_subscription');
+        Route::post('users/{user}/cancel/subscription' , 'Admin\Users\UserController@cancelSubscription')->name('admin.users.cancel_subscription');
+        Route::get('users/{user}/payment_methods' , 'Admin\Users\UserController@getAllPaymentMethods')->name('admin.users.get_all_payment_methods');
+        Route::delete('users/{user}/delete/payment_methods' , 'Admin\Users\UserController@deletePaymentMethod')->name('admin.users.delete_payment_methods');
 
 
         // Agents Management

@@ -1,7 +1,8 @@
 <template>
   <div class="mb-5">
-    <form :action="urlAction" @submit.prevent="updateUser()">
+    <form :action="urlAction" @submit.prevent="onSubmit()">
       <input type="hidden" name="_method" value="PUT"/>
+      <!--User Profile -->
       <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
         <div class="card-body">
           <div class="row">
@@ -55,7 +56,7 @@
                            class="form-control"
                            required
                            v-model="user.email"
-                           />
+                    />
                     <div v-if ="errors.email" class = "validation-error">
                       <div v-for="error in errors.email" v-bind:key="error.id">
                                     <span class="small">
@@ -91,7 +92,9 @@
           </div>
         </div>
       </div>
+      <!--User Profile -->
 
+      <!--Update Password -->
       <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
         <div class="card-body">
           <div class="row">
@@ -150,7 +153,9 @@
           </div>
         </div>
       </div>
+      <!--Update Password -->
 
+      <!--Billing information -->
       <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
         <div class="card-body">
           <div class="row">
@@ -252,70 +257,143 @@
           </div>
         </div>
       </div>
+      <!--Billing information -->
 
+      <!--Update Payment Method -->
       <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
         <div class="card-body">
           <div class="row">
             <div class="col-xl-4">
-              <h2 class="mb-1">{{ trans('Subscription') }}</h2>
+              <h2 class="mb-1">{{ trans('Payment Method') }}</h2>
             </div>
             <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
               <div class="row">
                 <div class="col-md-8 col-lg-6">
-                 <h5>Need to cancel your subcription?</h5>
-                  <p>we're sad to see you go.</p>
+                  <label><strong>{{ trans('Available Cards') }}</strong></label>
+                  <div v-for = "payment_method in payment_methods">
+                    <div class="card" style="width: 22rem;">
+                      <div class="card-body">
+                        <div v-if="payment_method.id == default_card">
+                          <span class="badge badge-pill badge-primary float-right">{{ trans('Default Card') }}</span>
+                        </div>
+                        <p class="card-text">{{ trans('Card brand:') }} <strong>{{ payment_method.card.brand }}</strong></p>
+                        <p class="card-text">{{ trans('Card Number:') }} <strong>XXXX XXXX XXXX {{ payment_method.card.last4 }}</strong></p>
+                        <p class="card-text">{{ trans('Card expiry date:') }}<strong>{{ payment_method.card.exp_month }}/{{ payment_method.card.exp_year }}</strong></p>
+                        <div v-if="payment_method.id !== default_card">
+                          <button @click ="deleteCardDetail(payment_method.id)" class="btn btn-primary btn btn-primary ladda-button"
+                                  data-style="zoom-out">{{ trans('Delete') }}</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="row">
                 <div class="col-md-8 col-lg-6">
-                    <button @click="showCancelSubscriptionModal = true"
-                            class="btn btn-danger btn btn-danger ladda-button"
-                            data-style="zoom-out">
-                      {{ trans('Cancel Subscription') }}
-                    </button>
+                  <div class="form-group">
+                    <label for="credit-card"><strong>{{ trans('Add a new credit card') }}</strong></label>
+                    <card
+                        class="stripe-card"
+                        :stripe="stripe"
+                        :options="stripeOptions"
+                        @change="stripeChange"
+                    />
+                    <div
+                        id="card-errors"
+                        class="d-block invalid-feedback"
+                        role="alert"
+                        v-show="stripeError"
+                    >{{ stripeError }}</div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </div>
+      <!--Update Payment Method -->
 
+      <!--Two Factor Authentication -->
+      <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-xl-4">
+              <h2 class="mb-1">{{ trans('Two Factor Authentication') }}</h2>
+            </div>
+            <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
+              <div class="row">
+                <div class="col-md-8 col-lg-6">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8 col-lg-6">
+                  <div class="custom-control custom-switch my-4">
+                    <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        id="two-factor-authentication"
+                        name="two-factor-authentication"
+                        v-model="user.is_twoFactorAuthentication"
+                        @change="toggleTwoFactorAuthentication()"
+                    />
+                    <label
+                        class="custom-control-label"
+                        for="two-factor-authentication"
+                    >{{ trans('Do you want two factor authentication') }}?</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Two Factor Authentication -->
+
+      <!--Submit Button -->
       <div class="text-right">
         <button type="submit"
+                id="submit-user-setting"
                 class="btn btn-primary btn btn-primary ladda-button"
                 data-style="zoom-out">
           {{ trans('Submit') }}
         </button>
       </div>
+      <!--Submit Button -->
+      &nbsp;&nbsp;&nbsp;&nbsp;
     </form>
 
-    <form action="/charge" method="post" id="payment-form">
-      <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-xl-4">
-              <h2 class="mb-1">{{ trans('Update Payment Method') }}</h2>
-            </div>
-            <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
-              <div class="row">
-                <div class="col-md-8 col-lg-6">
-                  <label for="card-element" style="margin-left:38px">{{ trans('Credit Card') }}</label>
-                  <div id="card-element" style="margin:40px"></div>
-                  <div id="card-errors" role="alert" style="margin-left:35px"></div>
-                </div>
+    <!--Cancel Subscription -->
+    <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-4">
+            <h2 class="mb-1">{{ trans('Subscription') }}</h2>
+          </div>
+          <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
+            <div class="row">
+              <div class="col-md-8 col-lg-6">
+                <h5>Need to cancel your subscription?</h5>
+                <p>we're sad to see you go.</p>
               </div>
-              <div class="row">
-                <div class="col-md-8 col-lg-6">
-                  <button>Submit Payment</button>
-                </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8 col-lg-6">
+                <button @click="cancelSubscription(user.id)"
+                        class="btn btn-danger btn btn-danger ladda-button"
+                        data-style="zoom-out">
+                  {{ trans('Cancel Subscription') }}
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </form>
-    <div class="relative">
-      <div class="absolute" v-if="showCancelSubscriptionModal">
+    </div>
+    <!--Cancel Subscription -->
+
+    <!--Cancel Subscription Modal -->
+    <div class="modal-align">
+      <div class="modal-sm" v-if="showCancelSubscriptionModal">
         <div class="modal-mask">
           <div class="modal-wrapper">
             <div class="modal-dialog">
@@ -331,7 +409,7 @@
                   </div>
                   &nbsp;&nbsp;&nbsp;&nbsp;
                   <div>
-                    <button @click="cancelSubscriptionModal" class="btn btn-primary btn btn-primary ladda-button"
+                    <button @click="cancelSubscriptionModal(user_id)" class="btn btn-primary btn btn-primary ladda-button"
                             data-style="zoom-out">{{ trans('Yes, Sure') }}</button>
                   </div>
 
@@ -343,18 +421,22 @@
         </div>
       </div>
     </div>
+    <!--Cancel Subscription Modal -->
   </div>
 </template>
 
 <script>
 import {IMaskDirective} from "vue-imask";
-import {Stripe} from "vue-stripe-elements-plus";
-//import { Card, createToken } from 'vue-stripe-elements-plus';
+import { Card, createToken } from 'vue-stripe-elements-plus';
 
 export default {
-name: "UserSettingComponent",
+  name: "UserSettingComponent",
 
   props:{
+    locale: {
+      type: String,
+      required: true
+    },
     lang: {
       type: String,
       default: 'en'
@@ -373,16 +455,32 @@ name: "UserSettingComponent",
       type: String,
       required: true
     },
+    get_all_payment_methods:{
+      type:String,
+      required:true
+    },
+    delete_payment_method:{
+      type:String,
+      required:true
+    }
   },
   directives: {
     imask: IMaskDirective
   },
-
+  components: {
+    Card
+  },
   mounted() {
     this.getUserDetails();
+    this.getAllPaymentMethods();
+
+    this.laddaButton = Ladda.create(
+        document.querySelector('#submit-user-setting')
+    );
   },
   data(){
     return {
+      laddaButton: null,
       user: {
         first_name:'',
         last_name:'',
@@ -390,7 +488,9 @@ name: "UserSettingComponent",
         phone_number:'',
         current_password:'',
         new_password: null,
-        new_password_confirmation:''
+        new_password_confirmation:'',
+        twoFactorAuthentication:null,
+        is_twoFactorAuthentication:'',
       },
       billing_address:{
         address1: '',
@@ -411,128 +511,127 @@ name: "UserSettingComponent",
         new_password_confirmation: null,
         subscription_id: null
       },
+      payment_methods:{},
+      default_card:'',
       unmasKedPhoneNumber: '',
       phoneNumberMask: {
         mask: '(000) 000-0000'
       },
       showCancelSubscriptionModal: false,
 
-      tokenGlobal: "",
-      tag: "",
-      picked: "",
-      userTags: [
-        {
-          text: "User Experience",
-          tiClasses: ["valid"]
+      stripe: process.env.MIX_STRIPE_KEY,
+      stripeOptions: {
+        elements: {
+          locale: this.locale
         },
-        {
-          text: "UI Design",
-          tiClasses: ["valid"]
+        style: {
+          base: {
+            color: '#32325d',
+            fontFamily: '"Cerebri Sans", sans-serif',
+            fontSmoothing: 'antialiased',
+            fontSize: '16px',
+            '::placeholder': {
+              color: '#b1c2d9'
+            }
+          },
+          invalid: {
+            color: '#e63757',
+            iconColor: '#e63757'
+          }
         },
-        {
-          text: "React JS",
-          tiClasses: ["valid"]
-        },
-        {
-          text: "HTML & CSS",
-          tiClasses: ["valid"]
-        },
-        {
-          text: "JavaScript",
-          tiClasses: ["valid"]
-        },
-        {
-          text: "Bootstrap 4",
-          tiClasses: ["valid"]
-        }
-      ],
-      stripetoken: {
-        value: "",
-        error: ""
+        hidePostalCode: true,
       },
+      stripeError: '',
+      stripe_token: '',
+
+      user_id:'',
     };
   },
 
   methods:{
-    stripeToken() {
-      let that = this;
-      var stripe = Stripe('pk_TMBfEj9GXcGCePpgJAFLIb8tHWpEA');
-      var elements = stripe.elements();
-      var style = {
-        base: {
-          color: "#32325d",
-          fontFamily: '"Helvetica Neue", Helvetica, sans-serif',
-          fontSmoothing: "antialiased",
-          fontSize: "16px",
-          "::placeholder": {
-            color: "#aab7c4"
-          }
-        },
-        invalid: {
-          color: "#fa755a",
-          iconColor: "#fa755a"
-        }
-      };
-
-      var card = elements.create("card", { style: style });
-      card.mount("#card-element");
-
-      card.on('change', function(event) {
-        var displayError = document.getElementById('card-errors');
-        if (event.error) {
-          displayError.textContent = event.error.message;
-        } else {
-          displayError.textContent = '';
-        }
-      });
-
-      var form = document.getElementById('payment-form');
-      form.addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        stripe.createToken(card).then(function(result) {
-          if (result.error) {
-            // Inform the user if there was an error.
-            var errorElement = document.getElementById('card-errors');
-            errorElement.textContent = result.error.message;
-          } else {
-            // Send the token to your server.
-            that.stripeTokenHandler(result.token);
-          }
-        });
-      });
-
+    stripeChange($event) {
+        this.complete = $event.complete;
+        this.stripeError = $event.error ? $event.error.message : '';
     },
 
-    stripeTokenHandler(token) {
-      this.tokenGlobal = token.id;
-      console.log("Stripe Token" ,this.tokenGlobal);
+    cancelSubscription(id){
+      this.user_id = id;
+      this.showCancelSubscriptionModal = true;
     },
     getUserDetails() {
       axios.get(this.route)
-            .then(response=>{
-          console.log(response);
-          this.user = response.data.user;
-          this.billing_address = response.data.billing_information;
-        })
-            .catch(error => {
-              console.log(error);
-            });
+          .then(response=>{
+            console.log(response);
+            this.user = response.data.user;
+            this.billing_address = response.data.billing_information;
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    },
 
+    getAllPaymentMethods(){
+      axios.get(this.get_all_payment_methods)
+          .then(response=>{
+            console.log(response);
+            this.payment_methods = response.data[1].data;
+            this.default_card = response.data[0];
+            console.log(this.payment_methods);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    },
+
+    deleteCardDetail(id){
+      let card_id = id;
+
+       axios.post(this.delete_payment_method,{
+         _method: 'delete',
+          card_id :  card_id
+         })
+          .then(response=>{
+            console.log(response);
+            window.location.reload();
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    },
+    toggleTwoFactorAuthentication(){
+      this.user.twoFactorAuthentication = this.user.is_twoFactorAuthentication;
     },
 
     onComplete: function(e) {
       this.unmasKedPhoneNumber = e.detail.unmaskedValue;
     },
 
+    onSubmit(){
+      this.laddaButton.start();
+      if(this.complete){
+        createToken()
+            .then(data => {
+              this.stripe_token = data.token.id;
+              this.laddaButton.stop();
+              this.updateUser();
+            })
+            .catch(error => {
+            });
+      }
+      else{
+        this.laddaButton.stop();
+        this.updateUser();
+      }
+    },
     updateUser(){
-
+      this.laddaButton.start();
       this.errors.first_name = null;
       this.errors.last_name = null;
       this.errors.phone_number =  null;
       this.errors.email =  null;
       this.errors.current_password = null;
       this.errors.new_password = null;
+
 
       axios.post(this.urlAction, {
         first_name: this.user.first_name,
@@ -547,24 +646,31 @@ name: "UserSettingComponent",
         country: this.billing_address.country,
         city: this.billing_address.city,
         state: this.billing_address.state,
-        zip_code: this.billing_address.zip_code
+        zip_code: this.billing_address.zip_code,
+        stripe_token:this.stripe_token,
+        is_twoFactorAuthentication: this.user.twoFactorAuthentication,
       })
-      .then(response=>{
-        console.log(response);
-      })
-      .catch(error => {
-       console.log(error.response);
-        this.errors.first_name= error.response.data.original.first_name;
-        this.errors.last_name= error.response.data.original.last_name;
-        this.errors.email=error.response.data.original.last_name;
-        this.errors.phone_number=error.response.data.original.phone_number;
-        this.errors.current_password=error.response.data.original.current_password;
-        this.errors.new_password=error.response.data.original.new_password;
-      });
+          .then(response=>{
+            console.log(response);
+            this.laddaButton.stop();
+          })
+          .catch(error => {
+            console.log(error.response);
+            this.errors.first_name= error.response.data.original.first_name;
+            this.errors.last_name= error.response.data.original.last_name;
+            this.errors.email=error.response.data.original.last_name;
+            this.errors.phone_number=error.response.data.original.phone_number;
+            this.errors.current_password=error.response.data.original.current_password;
+            this.errors.new_password=error.response.data.original.new_password;
+            this.laddaButton.stop();
+          });
     },
 
-    cancelSubscriptionModal() {
-      axios.get(this.url)
+    cancelSubscriptionModal(id) {
+
+      axios.post(this.url ,{
+        user_id :  id
+      })
           .then(response=>{
             console.log(response);
           })
@@ -585,42 +691,10 @@ name: "UserSettingComponent",
 .validation-error{
   color: red;
 }
-
-.relative{
-  position: relative;
-}
-.absolute{
+.modal-align{
   position: absolute;
-  left: 50%;
-  top: 50%;
+  top: 40%;
+  left:50%;
+  margin-left: 200px;
 }
-
-.StripeElement {
-  box-sizing: border-box;
-
-  height: 40px;
-
-  padding: 10px 12px;
-
-  border: 1px solid transparent;
-  border-radius: 4px;
-  background-color: white;
-
-  box-shadow: 0 1px 3px 0 #e6ebf1;
-  -webkit-transition: box-shadow 150ms ease;
-  transition: box-shadow 150ms ease;
-}
-
-.StripeElement--focus {
-  box-shadow: 0 1px 3px 0 #cfd7df;
-}
-
-.StripeElement--invalid {
-  border-color: #fa755a;
-}
-
-.StripeElement--webkit-autofill {
-  background-color: #fefde5 !important;
-}
-
 </style>

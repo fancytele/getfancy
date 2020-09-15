@@ -276,7 +276,6 @@ class UserService
      */
     public function updateProfile($data, $user)
     {
-
         $validator = Validator::make($data,[
             'first_name'=> 'required|string|min:2',
             'last_name'=> 'required|string|min:2',
@@ -289,7 +288,7 @@ class UserService
             'country' =>'required|string',
             'state' =>'required|string',
             'city'=>'required|string',
-            'zip_code' => 'required|integer',
+            'zip_code' => 'required|integer'
         ]);
 
         if($validator->fails())
@@ -325,7 +324,7 @@ class UserService
                 'first_name'=> $data['first_name'],
                 'last_name'=> $data['last_name'],
                 'email'=> $data['email'],
-                'phone_number'=> $data['phone_number']
+                'phone_number'=> $data['phone_number'],
             ]);
             $address->update([
                 'address1' => $data['address_1'],
@@ -336,10 +335,46 @@ class UserService
                 'zip_code' => $data['zip_code']
             ]);
         }
+
+        if(array_key_exists('is_twoFactorAuthentication' , $data)){
+            if($data['is_twoFactorAuthentication'] == false){
+                $user->is_twoFactorAuthentication = 0;
+                $user->save();
+            }
+            if($data['is_twoFactorAuthentication'] == true){
+                $user->is_twoFactorAuthentication = 1;
+                $user->save();
+            }
+        }
+
+
         $stripe_service = new StripeService();
         $stripe_service->updateBillingAddress($data);
 
+     if($data['stripe_token'] != null){
+            $update_payment = $stripe_service->updatePaymentMethod($data);
+            $user->update([
+                'card_brand' =>$update_payment->brand,
+                'card_last_four' => $update_payment->last4
+            ]);
+
+        }
         return response([$user , $address] , 200);
     }
 
+    public function cancelSubscription(){
+
+        $user = Subscription::where('user_id' , '=' , auth()->user()->id)->first();
+        $user->delete();
+
+        return $user;
+    }
+
+    public function unassignedFancyNumber(){
+
+        $user = FancyNumber::where('user_id' , '=' , auth()->user()->id)->first();
+        $user->delete();
+
+        return $user;
+    }
 }
