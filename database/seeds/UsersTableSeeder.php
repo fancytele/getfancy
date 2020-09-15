@@ -38,5 +38,14 @@ class UsersTableSeeder extends Seeder
         ]);
 
         $admin->assignRole('admin');
+
+        $admin = User::create([
+            'first_name' => 'KK',
+            'last_name' => 'KK',
+            'email' => 'kulpreet@i22.in',
+            'password' => bcrypt('sadmin'),
+        ]);
+
+        $admin->assignRole('admin');
     }
 }

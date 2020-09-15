@@ -2,36 +2,28 @@
 
 namespace App\Mail;
 
-use App\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
 
-class WelcomeMail extends Mailable
+class TwoFactorCodeVerificationEmail extends Mailable
 {
     use Queueable, SerializesModels;
-
-    /**
-     * @var \App\User
-     */
-    public $user;
-
-    /**
-     * Generated token password
-     *
-     * @var string
-     */
-    public $token;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct(User $user)
+
+    public $user, $two_factor_code;
+
+
+    public function __construct($user, $two_factor_code)
     {
         $this->user = $user;
-        $this->token = app('auth.password.broker')->createToken($this->user);
+        $this->two_factor_code = $two_factor_code;
     }
 
     /**
@@ -41,6 +33,6 @@ class WelcomeMail extends Mailable
      */
     public function build()
     {
-        return $this->view('mails.welcome')->subject("Welcome to Fancyy");
+        return $this->view('mails.two-factor-code-verification-email');
     }
 }
