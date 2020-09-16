@@ -336,18 +336,6 @@ class UserService
             ]);
         }
 
-        if(array_key_exists('is_twoFactorAuthentication' , $data)){
-            if($data['is_twoFactorAuthentication'] == false){
-                $user->is_twoFactorAuthentication = 0;
-                $user->save();
-            }
-            if($data['is_twoFactorAuthentication'] == true){
-                $user->is_twoFactorAuthentication = 1;
-                $user->save();
-            }
-        }
-
-
         $stripe_service = new StripeService();
         $stripe_service->updateBillingAddress($data);
 

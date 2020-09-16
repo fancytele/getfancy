@@ -42,8 +42,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod']);
-        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod']);
+        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication']);
+        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication']);
     }
 
     /**
@@ -370,6 +370,30 @@ class UserController extends Controller
         }
     }
 
+    /**
+     * @param Request $request
+     * @param User $user
+     */
+    public function updateTwoFactorAuthentication(Request $request, User $user){
+
+        $data = $request->all();
+
+        if($data['is_twoFactorAuthentication'] == false){
+            $user->is_twoFactorAuthentication = 0;
+            $user->save();
+        }
+        if($data['is_twoFactorAuthentication'] == true){
+            $user->is_twoFactorAuthentication = 1;
+            $user->save();
+        }
+
+        return response()->json($user);
+    }
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function cancelSubscription(Request $request, User $user){
 
         if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
@@ -402,6 +426,11 @@ class UserController extends Controller
         return response()->json($cancel_subscription);
     }
 
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
    public function getAllPaymentMethods(Request $request, User $user){
         if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
             return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
@@ -414,6 +443,11 @@ class UserController extends Controller
         return response()->json($all_payment_method);
     }
 
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function deletePaymentMethod(Request $request, User $user){
         if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
             return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);

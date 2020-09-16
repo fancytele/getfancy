@@ -280,7 +280,7 @@
                         <p class="card-text">{{ trans('Card Number:') }} <strong>XXXX XXXX XXXX {{ payment_method.card.last4 }}</strong></p>
                         <p class="card-text">{{ trans('Card expiry date:') }}<strong>{{ payment_method.card.exp_month }}/{{ payment_method.card.exp_year }}</strong></p>
                         <div v-if="payment_method.id !== default_card">
-                          <button @click ="deleteCardDetail(payment_method.id)" class="btn btn-primary btn btn-primary ladda-button"
+                          <button @click ="deleteCardDetail(payment_method.id)" id="delete-card-details" class="btn btn-primary btn btn-primary ladda-button"
                                   data-style="zoom-out">{{ trans('Delete') }}</button>
                         </div>
                       </div>
@@ -313,42 +313,6 @@
       </div>
       <!--Update Payment Method -->
 
-      <!--Two Factor Authentication -->
-      <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-xl-4">
-              <h2 class="mb-1">{{ trans('Two Factor Authentication') }}</h2>
-            </div>
-            <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
-              <div class="row">
-                <div class="col-md-8 col-lg-6">
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8 col-lg-6">
-                  <div class="custom-control custom-switch my-4">
-                    <input
-                        type="checkbox"
-                        class="custom-control-input"
-                        id="two-factor-authentication"
-                        name="two-factor-authentication"
-                        v-model="user.is_twoFactorAuthentication"
-                        @change="toggleTwoFactorAuthentication()"
-                    />
-                    <label
-                        class="custom-control-label"
-                        for="two-factor-authentication"
-                    >{{ trans('Do you want two factor authentication') }}?</label>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!--Two Factor Authentication -->
-
       <!--Submit Button -->
       <div class="text-right">
         <button type="submit"
@@ -361,6 +325,42 @@
       <!--Submit Button -->
       &nbsp;&nbsp;&nbsp;&nbsp;
     </form>
+
+    <!--Two Factor Authentication -->
+    <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-4">
+            <h2 class="mb-1">{{ trans('Two Factor Authentication') }}</h2>
+          </div>
+          <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
+            <div class="row">
+              <div class="col-md-8 col-lg-6">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8 col-lg-6">
+                <div class="custom-control custom-switch my-4">
+                  <input
+                      type="checkbox"
+                      class="custom-control-input"
+                      id="two-factor-authentication"
+                      name="two-factor-authentication"
+                      v-model="user.is_twoFactorAuthentication"
+                      @change="toggleTwoFactorAuthentication()"
+                  />
+                  <label
+                      class="custom-control-label"
+                      for="two-factor-authentication"
+                  >{{ trans('Do you want two factor authentication') }}?</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--Two Factor Authentication -->
 
     <!--Cancel Subscription -->
     <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
@@ -478,6 +478,10 @@ export default {
     delete_payment_method:{
       type:String,
       required:true
+    },
+    update_two_factor_authentication:{
+      type:String,
+      required:true
     }
   },
   directives: {
@@ -493,9 +497,6 @@ export default {
     this.laddaButton = Ladda.create(
         document.querySelector('#submit-user-setting')
     );
-    this.laddaButton = Ladda.create(
-        document.querySelector('#cancel-subscription')
-    );
   },
   data(){
     return {
@@ -508,7 +509,6 @@ export default {
         current_password:'',
         new_password: null,
         new_password_confirmation:'',
-        twoFactorAuthentication:null,
         is_twoFactorAuthentication:'',
       },
       billing_address:{
@@ -596,6 +596,10 @@ export default {
     },
 
     deleteCardDetail(id){
+      this.laddaButton = Ladda.create(
+          document.querySelector('#delete-card-details')
+      );
+      this.laddaButton.start();
       let card_id = id;
 
        axios.post(this.delete_payment_method,{
@@ -604,14 +608,25 @@ export default {
          })
           .then(response=>{
             console.log(response);
+            this.laddaButton.stop();
             window.location.reload();
           })
           .catch(error => {
             console.log(error);
+            this.laddaButton.stop();
           });
     },
     toggleTwoFactorAuthentication(){
-      this.user.twoFactorAuthentication = this.user.is_twoFactorAuthentication;
+      axios.post(this.update_two_factor_authentication,{
+        is_twoFactorAuthentication: this.user.is_twoFactorAuthentication
+      })
+      .then(response=>{
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error.response);
+      });
+
     },
 
     onComplete: function(e) {
@@ -660,11 +675,11 @@ export default {
         state: this.billing_address.state,
         zip_code: this.billing_address.zip_code,
         stripe_token:this.stripe_token,
-        is_twoFactorAuthentication: this.user.twoFactorAuthentication,
       })
           .then(response=>{
             console.log(response);
             this.laddaButton.stop();
+            window.location.reload();
           })
           .catch(error => {
             console.log(error.response);
@@ -679,6 +694,10 @@ export default {
     },
 
     cancelSubscriptionModal(id) {
+      this.laddaButton = Ladda.create(
+          document.querySelector('#cancel-subscription')
+      );
+
       this.laddaButton.start();
       axios.post(this.url ,{
         'user_id': id
@@ -686,11 +705,13 @@ export default {
           .then(response=>{
             console.log(response);
             this.laddaButton.stop();
+            window.location.reload();
           })
           .catch(error => {
             console.log(error.response);
             this.errors.subscription_id = error.response.data.data.errors.message;
             this.laddaButton.stop();
+            window.location.reload();
           });
     }
   }
@@ -702,11 +723,5 @@ export default {
 <style scoped>
 .validation-error{
   color: red;
-}
-.modal-align{
-  position: absolute;
-  top: 40%;
-  left:50%;
-  margin-left: 200px;
 }
 </style>
