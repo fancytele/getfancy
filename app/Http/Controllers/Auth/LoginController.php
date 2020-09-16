@@ -123,8 +123,8 @@ class LoginController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      * if two factor authentication is on it will generate two factor authentication code
-     * else it will return user with status code 202 and in blade file it will automatically press the submit button,
-     * go to authenticated() and, authenticate the user and redirect the user.
+     * else it will authenticate the user and return user object with status code 202 and in blade file it will automatically press the submit button,
+     * go to authenticated() and, again authenticate the user and redirect the user to the dashboard.
      */
     public function generateTwoFactorCode(Request $request)
     {
@@ -151,7 +151,13 @@ class LoginController extends Controller
 
         }
        else{
-            return response()->json($user, 202);
+               if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+
+                   return response()->json($user , 202);
+               }
+               else{
+                   return response()->json('These credentials do not match our records.',401);
+               }
        }
     }
 }
