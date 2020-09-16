@@ -35,7 +35,7 @@
         <div class="card">
           <div class="card-body">
             <div class="form-group mb-0">
-              <label for="phone_number">Current Number</label>
+              <label for="phone_number">Current Number*</label>
               <input
                 type="phone_number"
                 class="form-control"
@@ -130,7 +130,6 @@
                         class="custom-control-input"
                         :value="item"
                         v-model="selectedDID"
-                        v-on:change="selectedNumber()"
                       />
                       <label
                         class="btn btn-block btn-lg btn-white custom-control-label cursor-pointer"
@@ -271,12 +270,6 @@ export default {
     }
   },
   methods: {
-    selectedNumber()
-    {
-      var selectedNumber = this.selectedDID.attributes.number;
-      this.phoneNumber = selectedNumber.slice(1);
-    },
-
     setNumberType(type) {
       this.numberType = type;
 
