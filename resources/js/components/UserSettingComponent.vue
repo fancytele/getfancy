@@ -443,7 +443,7 @@
 
 <script>
 import {IMaskDirective} from "vue-imask";
-import { Card, createToken } from 'vue-stripe-elements-plus';
+import {Card, createToken} from 'vue-stripe-elements-plus';
 
 export default {
   name: "UserSettingComponent",
@@ -600,11 +600,9 @@ export default {
           document.querySelector('#delete-card-details')
       );
       this.laddaButton.start();
-      let card_id = id;
-
-       axios.post(this.delete_payment_method,{
+      axios.post(this.delete_payment_method,{
          _method: 'delete',
-          card_id :  card_id
+          card_id :  id
          })
           .then(response=>{
             console.log(response);

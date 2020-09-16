@@ -5908,10 +5908,9 @@ __webpack_require__.r(__webpack_exports__);
 
       this.laddaButton = Ladda.create(document.querySelector('#delete-card-details'));
       this.laddaButton.start();
-      var card_id = id;
       axios.post(this.delete_payment_method, {
         _method: 'delete',
-        card_id: card_id
+        card_id: id
       }).then(function (response) {
         console.log(response);
 

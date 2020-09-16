@@ -122,7 +122,7 @@
                             <!-- Input -->
                             <input type="number" name="two_factor_code"
                                    class="form-control form-control-appended @error('two_factor_code') is-invalid @enderror"
-                                   placeholder="@lang('Enter your two factor code')" required>
+                                   placeholder="@lang('Enter your two factor code')">
 
                             @error('two_factor_code')
                             <span id="error" class="invalid-feedback" role="alert">
@@ -202,7 +202,7 @@
           else if(x.status === 202)
           {
             l.stop();
-            window.location.href = "{{ route('admin.dashboard') }}";
+            document.getElementById('submit-button').click();
           }
           else if(x.status === 401)
           {
