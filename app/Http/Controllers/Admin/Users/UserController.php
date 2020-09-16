@@ -438,11 +438,14 @@ class UserController extends Controller
             return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
         }
 
-        $stripe_service = new StripeService();
-
-        $all_payment_method= $stripe_service->getAllPaymentMethods();
-
-        return response()->json($all_payment_method);
+        if($user->stripe_id){
+            $stripe_service = new StripeService();
+            $all_payment_method= $stripe_service->getAllPaymentMethods();
+            return response()->json($all_payment_method);
+        }
+        else{
+            return response()->json('There is no payment method' , 422);
+        }
     }
 
     /**

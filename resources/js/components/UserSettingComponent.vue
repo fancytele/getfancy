@@ -156,144 +156,152 @@
       <!--Update Password -->
 
       <!--Billing information -->
+
       <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
         <div class="card-body">
           <div class="row">
             <div class="col-xl-4">
               <h2 class="mb-1">{{ trans('Billing Information') }}</h2>
             </div>
-            <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
-              <div class="row">
-                <div class="col-md-8 col-lg-6">
-                  <div class="form-group">
-                    <label for="billing_address1">{{ trans('Address') }} 1</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="billing_address1"
-                        name="billing_address1"
-                        v-model="billing_address.address1"
-                        required
-                    />
-                    <div v-if ="errors.address1" class = "validation-error">
-                      <div v-for="error in errors.address1" v-bind:key="error.id">
+            <div v-if="billing_address">
+              <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-5l-8 pt-4 pt-xl-0">
+                <div class="row">
+                  <div class="col-md-8 col-lg-6">
+                    <div class="form-group">
+                      <label for="billing_address1">{{ trans('Address') }} 1</label>
+                      <input
+                          type="text"
+                          class="form-control"
+                          id="billing_address1"
+                          name="billing_address1"
+                          v-model="billing_address.address1"
+                          required
+                      />
+                      <div v-if ="errors.address1" class = "validation-error">
+                        <div v-for="error in errors.address1" v-bind:key="error.id">
                                     <span class="small">
                                         {{error}}
                                     </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8 col-lg-6">
+                    <div class="form-group">
+                      <label for="billing_address2">{{ trans('Address') }} 2</label>
+                      <input
+                          type="text"
+                          class="form-control"
+                          id="billing_address2"
+                          name="billing_address2"
+                          v-model="billing_address.address2"
+                          required
+                      />
+                      <div v-if ="errors.address2" class = "validation-error">
+                        <div v-for="error in errors.address2" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8 col-lg-6">
+                    <div class="form-group">
+                      <label for="country">{{ trans('Country') }}</label>
+                      <input
+                          type="text"
+                          class="form-control"
+                          name="country"
+                          id="country"
+                          v-model="billing_address.country"
+                          required
+                      />
+                      <div v-if ="errors.country" class = "validation-error">
+                        <div v-for="error in errors.country" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8 col-lg-6">
+                    <div class="form-group">
+                      <label for="city">{{ trans('City') }}</label>
+                      <input
+                          type="text"
+                          class="form-control"
+                          id="city"
+                          name="city"
+                          v-model="billing_address.city"
+                          required
+                      />
+                      <div v-if ="errors.city" class = "validation-error">
+                        <div v-for="error in errors.city" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8 col-lg-6">
+                    <div class="form-group">
+                      <label for="state">{{ trans('State, Providence, Region') }}</label>
+                      <input
+                          type="text"
+                          class="form-control"
+                          id="state"
+                          name="state"
+                          v-model="billing_address.state"
+                          required
+                      />
+                      <div v-if ="errors.state" class = "validation-error">
+                        <div v-for="error in errors.state" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-8 col-lg-6">
+                    <div class="form-group">
+                      <label for="zip_code">{{ trans('Zip Code') }}</label>
+                      <input
+                          type="text"
+                          class="form-control"
+                          id="zip_code"
+                          name="zip_code"
+                          v-model="billing_address.zip_code"
+                          required
+                      />
+                      <div v-if ="errors.zip_code" class = "validation-error">
+                        <div v-for="error in errors.zip_code" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-md-8 col-lg-6">
-                  <div class="form-group">
-                    <label for="billing_address2">{{ trans('Address') }} 2</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="billing_address2"
-                        name="billing_address2"
-                        v-model="billing_address.address2"
-                        required
-                    />
-                    <div v-if ="errors.address2" class = "validation-error">
-                      <div v-for="error in errors.address2" v-bind:key="error.id">
-                                    <span class="small">
-                                        {{error}}
-                                    </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8 col-lg-6">
-                  <div class="form-group">
-                    <label for="country">{{ trans('Country') }}</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        name="country"
-                        id="country"
-                        v-model="billing_address.country"
-                        required
-                    />
-                    <div v-if ="errors.country" class = "validation-error">
-                      <div v-for="error in errors.country" v-bind:key="error.id">
-                                    <span class="small">
-                                        {{error}}
-                                    </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8 col-lg-6">
-                  <div class="form-group">
-                    <label for="city">{{ trans('City') }}</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="city"
-                        name="city"
-                        v-model="billing_address.city"
-                        required
-                    />
-                    <div v-if ="errors.city" class = "validation-error">
-                      <div v-for="error in errors.city" v-bind:key="error.id">
-                                    <span class="small">
-                                        {{error}}
-                                    </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8 col-lg-6">
-                  <div class="form-group">
-                    <label for="state">{{ trans('State, Providence, Region') }}</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="state"
-                        name="state"
-                        v-model="billing_address.state"
-                        required
-                    />
-                    <div v-if ="errors.state" class = "validation-error">
-                      <div v-for="error in errors.state" v-bind:key="error.id">
-                                    <span class="small">
-                                        {{error}}
-                                    </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8 col-lg-6">
-                  <div class="form-group">
-                    <label for="zip_code">{{ trans('Zip Code') }}</label>
-                    <input
-                        type="text"
-                        class="form-control"
-                        id="zip_code"
-                        name="zip_code"
-                        v-model="billing_address.zip_code"
-                        required
-                    />
-                    <div v-if ="errors.zip_code" class = "validation-error">
-                      <div v-for="error in errors.zip_code" v-bind:key="error.id">
-                                    <span class="small">
-                                        {{error}}
-                                    </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+            </div>
+            <div v-if="!billing_address">
+              <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-5l-8 pt-4 pt-xl-0">
+                <h5>There is no billing address</h5>
               </div>
             </div>
           </div>
@@ -767,7 +775,6 @@ export default {
             console.log(response);
             this.payment_methods = response.data[1].data;
             this.default_card = response.data[0];
-            console.log(this.payment_methods);
           })
           .catch(error => {
             console.log(error);

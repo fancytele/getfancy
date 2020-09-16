@@ -358,11 +358,4 @@ class UserService
         return $user;
     }
 
-    public function unassignedFancyNumber(){
-
-        $user = FancyNumber::where('user_id' , '=' , auth()->user()->id)->first();
-        $user->delete();
-
-        return $user;
-    }
 }
