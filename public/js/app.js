@@ -5763,6 +5763,49 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5823,7 +5866,8 @@ __webpack_require__.r(__webpack_exports__);
         current_password: '',
         new_password: null,
         new_password_confirmation: '',
-        is_twoFactorAuthentication: ''
+        is_twoFactorAuthentication: '',
+        subscription: ''
       },
       billing_address: {
         address1: '',
@@ -5841,7 +5885,12 @@ __webpack_require__.r(__webpack_exports__);
         current_password: null,
         new_password: null,
         new_password_confirmation: null,
-        subscription_id: null
+        address1: null,
+        address2: null,
+        city: null,
+        country: null,
+        state: null,
+        zip_code: null
       },
       payment_methods: {},
       default_card: '',
@@ -5880,73 +5929,21 @@ __webpack_require__.r(__webpack_exports__);
       this.complete = $event.complete;
       this.stripeError = $event.error ? $event.error.message : '';
     },
-    getUserDetails: function getUserDetails() {
-      var _this = this;
-
-      axios.get(this.route).then(function (response) {
-        console.log(response);
-        _this.user = response.data.user;
-        _this.billing_address = response.data.billing_information;
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    getAllPaymentMethods: function getAllPaymentMethods() {
-      var _this2 = this;
-
-      axios.get(this.get_all_payment_methods).then(function (response) {
-        console.log(response);
-        _this2.payment_methods = response.data[1].data;
-        _this2.default_card = response.data[0];
-        console.log(_this2.payment_methods);
-      })["catch"](function (error) {
-        console.log(error);
-      });
-    },
-    deleteCardDetail: function deleteCardDetail(id) {
-      var _this3 = this;
-
-      this.laddaButton = Ladda.create(document.querySelector('#delete-card-details'));
-      this.laddaButton.start();
-      axios.post(this.delete_payment_method, {
-        _method: 'delete',
-        card_id: id
-      }).then(function (response) {
-        console.log(response);
-
-        _this3.laddaButton.stop();
-
-        window.location.reload();
-      })["catch"](function (error) {
-        console.log(error);
-
-        _this3.laddaButton.stop();
-      });
-    },
-    toggleTwoFactorAuthentication: function toggleTwoFactorAuthentication() {
-      axios.post(this.update_two_factor_authentication, {
-        is_twoFactorAuthentication: this.user.is_twoFactorAuthentication
-      }).then(function (response) {
-        console.log(response);
-      })["catch"](function (error) {
-        console.log(error.response);
-      });
-    },
     onComplete: function onComplete(e) {
       this.unmasKedPhoneNumber = e.detail.unmaskedValue;
     },
     onSubmit: function onSubmit() {
-      var _this4 = this;
+      var _this = this;
 
       this.laddaButton.start();
 
       if (this.complete) {
         Object(vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_1__["createToken"])().then(function (data) {
-          _this4.stripe_token = data.token.id;
+          _this.stripe_token = data.token.id;
 
-          _this4.laddaButton.stop();
+          _this.laddaButton.stop();
 
-          _this4.updateUser();
+          _this.updateUser();
         })["catch"](function (error) {});
       } else {
         this.laddaButton.stop();
@@ -5954,7 +5951,7 @@ __webpack_require__.r(__webpack_exports__);
       }
     },
     updateUser: function updateUser() {
-      var _this5 = this;
+      var _this2 = this;
 
       this.laddaButton.start();
       this.errors.first_name = null;
@@ -5980,24 +5977,58 @@ __webpack_require__.r(__webpack_exports__);
         stripe_token: this.stripe_token
       }).then(function (response) {
         console.log(response);
+        window.location.reload();
 
-        _this5.laddaButton.stop();
+        _this2.laddaButton.stop();
+      })["catch"](function (error) {
+        console.log(error.response);
+        _this2.errors.first_name = error.response.data.original.first_name;
+        _this2.errors.last_name = error.response.data.original.last_name;
+        _this2.errors.email = error.response.data.original.last_name;
+        _this2.errors.phone_number = error.response.data.original.phone_number;
+        _this2.errors.current_password = error.response.data.original.current_password;
+        _this2.errors.new_password = error.response.data.original.new_password;
+        _this2.errors.address1 = error.response.data.original.address1;
+        _this2.errors.address2 = error.response.data.original.address2;
+        _this2.errors.city = error.response.data.original.city;
+        _this2.errors.country = error.response.data.original.country;
+        _this2.errors.state = error.response.data.original.state;
+        _this2.errors.zip_code = error.response.data.original.zip_code;
+
+        _this2.laddaButton.stop();
+      });
+    },
+    deleteCardDetail: function deleteCardDetail(id) {
+      var _this3 = this;
+
+      this.laddaButton = Ladda.create(document.querySelector('#delete-card-details'));
+      var card_id = id;
+      axios.post(this.delete_payment_method, {
+        _method: 'delete',
+        card_id: card_id
+      }).then(function (response) {
+        console.log(response);
+
+        _this3.laddaButton.stop();
 
         window.location.reload();
       })["catch"](function (error) {
-        console.log(error.response);
-        _this5.errors.first_name = error.response.data.original.first_name;
-        _this5.errors.last_name = error.response.data.original.last_name;
-        _this5.errors.email = error.response.data.original.last_name;
-        _this5.errors.phone_number = error.response.data.original.phone_number;
-        _this5.errors.current_password = error.response.data.original.current_password;
-        _this5.errors.new_password = error.response.data.original.new_password;
+        console.log(error);
 
-        _this5.laddaButton.stop();
+        _this3.laddaButton.stop();
+      });
+    },
+    toggleTwoFactorAuthentication: function toggleTwoFactorAuthentication() {
+      axios.post(this.update_two_factor_authentication, {
+        is_twoFactorAuthentication: this.user.is_twoFactorAuthentication
+      }).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error.response);
       });
     },
     cancelSubscriptionModal: function cancelSubscriptionModal(id) {
-      var _this6 = this;
+      var _this4 = this;
 
       this.laddaButton = Ladda.create(document.querySelector('#cancel-subscription'));
       this.laddaButton.start();
@@ -6006,17 +6037,49 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         console.log(response);
 
-        _this6.laddaButton.stop();
+        _this4.laddaButton.stop();
 
         window.location.reload();
       })["catch"](function (error) {
         console.log(error.response);
-        _this6.errors.subscription_id = error.response.data.data.errors.message;
 
-        _this6.laddaButton.stop();
+        _this4.laddaButton.stop();
 
         window.location.reload();
       });
+    },
+    getUserDetails: function getUserDetails() {
+      var _this5 = this;
+
+      axios.get(this.route).then(function (response) {
+        console.log(response);
+        _this5.user = response.data.user;
+        _this5.billing_address = response.data.billing_information;
+        _this5.user.subscription = response.data.subscription;
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
+    getAllPaymentMethods: function getAllPaymentMethods() {
+      var _this6 = this;
+
+      axios.get(this.get_all_payment_methods).then(function (response) {
+        console.log(response);
+        _this6.payment_methods = response.data[1].data;
+        _this6.default_card = response.data[0];
+        console.log(_this6.payment_methods);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  },
+  computed: {
+    isDisabled: function isDisabled() {
+      if (this.user.subscription == null) {
+        return true;
+      } else {
+        return false;
+      }
     }
   }
 });
@@ -72613,7 +72676,26 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.address1
+                            ? _c(
+                                "div",
+                                { staticClass: "validation-error" },
+                                _vm._l(_vm.errors.address1, function(error) {
+                                  return _c("div", { key: error.id }, [
+                                    _c("span", { staticClass: "small" }, [
+                                      _vm._v(
+                                        "\n                                      " +
+                                          _vm._s(error) +
+                                          "\n                                  "
+                                      )
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            : _vm._e()
                         ])
                       ])
                     ]),
@@ -72654,7 +72736,26 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.address2
+                            ? _c(
+                                "div",
+                                { staticClass: "validation-error" },
+                                _vm._l(_vm.errors.address2, function(error) {
+                                  return _c("div", { key: error.id }, [
+                                    _c("span", { staticClass: "small" }, [
+                                      _vm._v(
+                                        "\n                                      " +
+                                          _vm._s(error) +
+                                          "\n                                  "
+                                      )
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            : _vm._e()
                         ])
                       ])
                     ]),
@@ -72695,7 +72796,26 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.country
+                            ? _c(
+                                "div",
+                                { staticClass: "validation-error" },
+                                _vm._l(_vm.errors.country, function(error) {
+                                  return _c("div", { key: error.id }, [
+                                    _c("span", { staticClass: "small" }, [
+                                      _vm._v(
+                                        "\n                                      " +
+                                          _vm._s(error) +
+                                          "\n                                  "
+                                      )
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            : _vm._e()
                         ])
                       ])
                     ]),
@@ -72736,7 +72856,26 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.city
+                            ? _c(
+                                "div",
+                                { staticClass: "validation-error" },
+                                _vm._l(_vm.errors.city, function(error) {
+                                  return _c("div", { key: error.id }, [
+                                    _c("span", { staticClass: "small" }, [
+                                      _vm._v(
+                                        "\n                                      " +
+                                          _vm._s(error) +
+                                          "\n                                  "
+                                      )
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            : _vm._e()
                         ])
                       ])
                     ]),
@@ -72779,7 +72918,26 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.state
+                            ? _c(
+                                "div",
+                                { staticClass: "validation-error" },
+                                _vm._l(_vm.errors.state, function(error) {
+                                  return _c("div", { key: error.id }, [
+                                    _c("span", { staticClass: "small" }, [
+                                      _vm._v(
+                                        "\n                                      " +
+                                          _vm._s(error) +
+                                          "\n                                  "
+                                      )
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            : _vm._e()
                         ])
                       ])
                     ]),
@@ -72820,7 +72978,26 @@ var render = function() {
                                 )
                               }
                             }
-                          })
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.zip_code
+                            ? _c(
+                                "div",
+                                { staticClass: "validation-error" },
+                                _vm._l(_vm.errors.zip_code, function(error) {
+                                  return _c("div", { key: error.id }, [
+                                    _c("span", { staticClass: "small" }, [
+                                      _vm._v(
+                                        "\n                                      " +
+                                          _vm._s(error) +
+                                          "\n                                  "
+                                      )
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            : _vm._e()
                         ])
                       ])
                     ])
@@ -73195,7 +73372,8 @@ var render = function() {
                         attrs: {
                           "data-style": "zoom-out",
                           "data-toggle": "modal",
-                          "data-target": "#exampleModal"
+                          "data-target": "#exampleModal",
+                          disabled: _vm.isDisabled
                         }
                       },
                       [

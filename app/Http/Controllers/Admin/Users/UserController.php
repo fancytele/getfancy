@@ -333,7 +333,9 @@ class UserController extends Controller
             $billing_information = Address::where('user_id' , '=' , $user->id)
                 ->where('type' , '=' , 'billing')->first();
 
-            return response()->json(["user" =>$user, "billing_information" => $billing_information] , 200);
+            $subscription = Subscription::where('user_id', '=', $user->id)->pluck('id')->first();
+
+            return response()->json(["user" =>$user, "billing_information" => $billing_information, 'subscription' =>$subscription] , 200);
         }
         else{
             return view ('admin.users.edit-user', array('user' => $user));

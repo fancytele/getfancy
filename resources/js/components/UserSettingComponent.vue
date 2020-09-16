@@ -175,6 +175,13 @@
                         v-model="billing_address.address1"
                         required
                     />
+                    <div v-if ="errors.address1" class = "validation-error">
+                      <div v-for="error in errors.address1" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -190,6 +197,13 @@
                         v-model="billing_address.address2"
                         required
                     />
+                    <div v-if ="errors.address2" class = "validation-error">
+                      <div v-for="error in errors.address2" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -205,6 +219,13 @@
                         v-model="billing_address.country"
                         required
                     />
+                    <div v-if ="errors.country" class = "validation-error">
+                      <div v-for="error in errors.country" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -220,6 +241,13 @@
                         v-model="billing_address.city"
                         required
                     />
+                    <div v-if ="errors.city" class = "validation-error">
+                      <div v-for="error in errors.city" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -235,6 +263,13 @@
                         v-model="billing_address.state"
                         required
                     />
+                    <div v-if ="errors.state" class = "validation-error">
+                      <div v-for="error in errors.state" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -250,6 +285,13 @@
                         v-model="billing_address.zip_code"
                         required
                     />
+                    <div v-if ="errors.zip_code" class = "validation-error">
+                      <div v-for="error in errors.zip_code" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -383,6 +425,7 @@
                         data-style="zoom-out"
                         data-toggle="modal"
                         data-target="#exampleModal"
+                        :disabled='isDisabled'
                 >
                   {{ trans('Cancel Subscription') }}
                 </button>
@@ -443,7 +486,7 @@
 
 <script>
 import {IMaskDirective} from "vue-imask";
-import {Card, createToken} from 'vue-stripe-elements-plus';
+import { Card, createToken } from 'vue-stripe-elements-plus';
 
 export default {
   name: "UserSettingComponent",
@@ -484,12 +527,15 @@ export default {
       required:true
     }
   },
+
   directives: {
     imask: IMaskDirective
   },
+
   components: {
     Card
   },
+
   mounted() {
     this.getUserDetails();
     this.getAllPaymentMethods();
@@ -498,6 +544,7 @@ export default {
         document.querySelector('#submit-user-setting')
     );
   },
+
   data(){
     return {
       laddaButton: null,
@@ -510,6 +557,7 @@ export default {
         new_password: null,
         new_password_confirmation:'',
         is_twoFactorAuthentication:'',
+        subscription:''
       },
       billing_address:{
         address1: '',
@@ -528,7 +576,12 @@ export default {
         current_password: null,
         new_password: null,
         new_password_confirmation: null,
-        subscription_id: null
+        address1: null,
+        address2: null,
+        city: null,
+        country: null,
+        state: null,
+        zip_code: null,
       },
       payment_methods:{},
       default_card:'',
@@ -570,63 +623,6 @@ export default {
         this.stripeError = $event.error ? $event.error.message : '';
     },
 
-    getUserDetails() {
-      axios.get(this.route)
-          .then(response=>{
-            console.log(response);
-            this.user = response.data.user;
-            this.billing_address = response.data.billing_information;
-          })
-          .catch(error => {
-            console.log(error);
-          });
-    },
-
-    getAllPaymentMethods(){
-      axios.get(this.get_all_payment_methods)
-          .then(response=>{
-            console.log(response);
-            this.payment_methods = response.data[1].data;
-            this.default_card = response.data[0];
-            console.log(this.payment_methods);
-          })
-          .catch(error => {
-            console.log(error);
-          });
-    },
-
-    deleteCardDetail(id){
-      this.laddaButton = Ladda.create(
-          document.querySelector('#delete-card-details')
-      );
-      this.laddaButton.start();
-      axios.post(this.delete_payment_method,{
-         _method: 'delete',
-          card_id :  id
-         })
-          .then(response=>{
-            console.log(response);
-            this.laddaButton.stop();
-            window.location.reload();
-          })
-          .catch(error => {
-            console.log(error);
-            this.laddaButton.stop();
-          });
-    },
-    toggleTwoFactorAuthentication(){
-      axios.post(this.update_two_factor_authentication,{
-        is_twoFactorAuthentication: this.user.is_twoFactorAuthentication
-      })
-      .then(response=>{
-        console.log(response);
-      })
-      .catch(error => {
-        console.log(error.response);
-      });
-
-    },
-
     onComplete: function(e) {
       this.unmasKedPhoneNumber = e.detail.unmaskedValue;
     },
@@ -648,6 +644,7 @@ export default {
         this.updateUser();
       }
     },
+
     updateUser(){
       this.laddaButton.start();
       this.errors.first_name = null;
@@ -676,26 +673,65 @@ export default {
       })
           .then(response=>{
             console.log(response);
-            this.laddaButton.stop();
             window.location.reload();
+            this.laddaButton.stop();
           })
           .catch(error => {
             console.log(error.response);
             this.errors.first_name= error.response.data.original.first_name;
             this.errors.last_name= error.response.data.original.last_name;
-            this.errors.email=error.response.data.original.last_name;
-            this.errors.phone_number=error.response.data.original.phone_number;
-            this.errors.current_password=error.response.data.original.current_password;
-            this.errors.new_password=error.response.data.original.new_password;
+            this.errors.email= error.response.data.original.last_name;
+            this.errors.phone_number= error.response.data.original.phone_number;
+            this.errors.current_password= error.response.data.original.current_password;
+            this.errors.new_password= error.response.data.original.new_password;
+            this.errors.address1= error.response.data.original.address1;
+            this.errors.address2= error.response.data.original.address2;
+            this.errors.city= error.response.data.original.city;
+            this.errors.country= error.response.data.original.country;
+            this.errors.state= error.response.data.original.state;
+            this.errors.zip_code= error.response.data.original.zip_code;
             this.laddaButton.stop();
           });
+    },
+
+    deleteCardDetail(id){
+      this.laddaButton = Ladda.create(
+          document.querySelector('#delete-card-details')
+      );
+      let card_id = id;
+
+       axios.post(this.delete_payment_method,{
+         _method: 'delete',
+          card_id :  card_id
+         })
+          .then(response=>{
+            console.log(response);
+            this.laddaButton.stop();
+            window.location.reload();
+          })
+          .catch(error => {
+            console.log(error);
+            this.laddaButton.stop();
+          });
+    },
+
+    toggleTwoFactorAuthentication(){
+      axios.post(this.update_two_factor_authentication,{
+        is_twoFactorAuthentication: this.user.is_twoFactorAuthentication
+      })
+          .then(response=>{
+            console.log(response);
+          })
+          .catch(error => {
+            console.log(error.response);
+          });
+
     },
 
     cancelSubscriptionModal(id) {
       this.laddaButton = Ladda.create(
           document.querySelector('#cancel-subscription')
       );
-
       this.laddaButton.start();
       axios.post(this.url ,{
         'user_id': id
@@ -707,11 +743,48 @@ export default {
           })
           .catch(error => {
             console.log(error.response);
-            this.errors.subscription_id = error.response.data.data.errors.message;
             this.laddaButton.stop();
             window.location.reload();
           });
-    }
+    },
+
+    getUserDetails() {
+      axios.get(this.route)
+          .then(response=>{
+            console.log(response);
+            this.user = response.data.user;
+            this.billing_address = response.data.billing_information;
+            this.user.subscription = response.data.subscription;
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    },
+
+    getAllPaymentMethods(){
+      axios.get(this.get_all_payment_methods)
+          .then(response=>{
+            console.log(response);
+            this.payment_methods = response.data[1].data;
+            this.default_card = response.data[0];
+            console.log(this.payment_methods);
+          })
+          .catch(error => {
+            console.log(error);
+          });
+    },
+  },
+
+  computed: {
+    isDisabled() {
+      if(this.user.subscription == null)
+      {
+        return true;
+      }
+      else{
+        return false;
+      }
+    },
   }
 }
 
