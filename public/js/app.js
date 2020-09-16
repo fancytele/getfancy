@@ -3003,7 +3003,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
@@ -3087,10 +3086,6 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   methods: {
-    selectedNumber: function selectedNumber() {
-      var selectedNumber = this.selectedDID.attributes.number;
-      this.phoneNumber = selectedNumber.slice(1);
-    },
     setNumberType: function setNumberType(type) {
       var _this = this;
 
@@ -66885,7 +66880,7 @@ var render = function() {
                 _c("div", { staticClass: "card-body" }, [
                   _c("div", { staticClass: "form-group mb-0" }, [
                     _c("label", { attrs: { for: "phone_number" } }, [
-                      _vm._v("Current Number")
+                      _vm._v("Current Number*")
                     ]),
                     _vm._v(" "),
                     _c("input", {
@@ -67160,14 +67155,9 @@ var render = function() {
                                             )
                                           },
                                           on: {
-                                            change: [
-                                              function($event) {
-                                                _vm.selectedDID = item
-                                              },
-                                              function($event) {
-                                                return _vm.selectedNumber()
-                                              }
-                                            ]
+                                            change: function($event) {
+                                              _vm.selectedDID = item
+                                            }
                                           }
                                         }),
                                         _vm._v(" "),
