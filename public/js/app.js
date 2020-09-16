@@ -5752,6 +5752,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5796,6 +5812,7 @@ __webpack_require__.r(__webpack_exports__);
     this.getUserDetails();
     this.getAllPaymentMethods();
     this.laddaButton = Ladda.create(document.querySelector('#submit-user-setting'));
+    this.laddaButton = Ladda.create(document.querySelector('#cancel-subscription'));
   },
   data: function data() {
     return {
@@ -5835,7 +5852,6 @@ __webpack_require__.r(__webpack_exports__);
       phoneNumberMask: {
         mask: '(000) 000-0000'
       },
-      showCancelSubscriptionModal: false,
       stripe: "pk_TMBfEj9GXcGCePpgJAFLIb8tHWpEA",
       stripeOptions: {
         elements: {
@@ -5859,18 +5875,13 @@ __webpack_require__.r(__webpack_exports__);
         hidePostalCode: true
       },
       stripeError: '',
-      stripe_token: '',
-      user_id: ''
+      stripe_token: ''
     };
   },
   methods: {
     stripeChange: function stripeChange($event) {
       this.complete = $event.complete;
       this.stripeError = $event.error ? $event.error.message : '';
-    },
-    cancelSubscription: function cancelSubscription(id) {
-      this.user_id = id;
-      this.showCancelSubscriptionModal = true;
     },
     getUserDetails: function getUserDetails() {
       var _this = this;
@@ -5976,14 +5987,18 @@ __webpack_require__.r(__webpack_exports__);
     cancelSubscriptionModal: function cancelSubscriptionModal(id) {
       var _this5 = this;
 
+      this.laddaButton.start();
       axios.post(this.url, {
-        user_id: id
+        'user_id': id
       }).then(function (response) {
         console.log(response);
+
+        _this5.laddaButton.stop();
       })["catch"](function (error) {
         console.log(error.response);
         _this5.errors.subscription_id = error.response.data.data.errors.message;
-        _this5.showCancelSubscriptionModal = false;
+
+        _this5.laddaButton.stop();
       });
     }
   }
@@ -72842,11 +72857,10 @@ var render = function() {
                       {
                         staticClass:
                           "btn btn-danger btn btn-danger ladda-button",
-                        attrs: { "data-style": "zoom-out" },
-                        on: {
-                          click: function($event) {
-                            return _vm.cancelSubscription(_vm.user.id)
-                          }
+                        attrs: {
+                          "data-style": "zoom-out",
+                          "data-toggle": "modal",
+                          "data-target": "#exampleModal"
                         }
                       },
                       [
@@ -72866,80 +72880,123 @@ var render = function() {
       ]
     ),
     _vm._v(" "),
-    _c("div", { staticClass: "modal-align" }, [
-      _vm.showCancelSubscriptionModal
-        ? _c("div", { staticClass: "modal-sm" }, [
-            _c("div", { staticClass: "modal-mask" }, [
-              _c("div", { staticClass: "modal-wrapper" }, [
-                _c("div", { staticClass: "modal-dialog" }, [
-                  _c("div", { staticClass: "modal-content" }, [
-                    _c("div", { staticClass: "modal-body" }, [
-                      _c("h2", { staticClass: "text-center" }, [
-                        _c("strong", [
-                          _vm._v(_vm._s(_vm.trans("Are you Sure?")))
-                        ])
-                      ]),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "exampleModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "delete-element-label",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered modal-sm",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body p-0" }, [
+                _vm._m(2),
+                _vm._v(" "),
+                _c(
+                  "form",
+                  {
+                    staticClass: "mb-0",
+                    attrs: { action: _vm.url },
+                    on: {
+                      submit: function($event) {
+                        $event.preventDefault()
+                        return _vm.cancelSubscriptionModal(_vm.user.id)
+                      }
+                    }
+                  },
+                  [
+                    _c("div", { staticClass: "d-flex my-3 pl-4 pt-4" }, [
+                      _c("i", {
+                        staticClass:
+                          "display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "
+                      }),
                       _vm._v(" "),
-                      _c("p", { staticClass: "text-center" }, [
-                        _vm._v(
-                          _vm._s(
-                            _vm.trans(
-                              "If you cancel your subscription you will loss all your data."
-                            )
+                      _c("div", [
+                        _c("h3", { staticClass: "mb-0" }, [
+                          _vm._v(
+                            "\n                  " +
+                              _vm._s(_vm.trans("Are you Sure?")) +
+                              "\n                  "
+                          ),
+                          _c("br"),
+                          _vm._v(" "),
+                          _c("span", {
+                            staticClass: "element-name text-capitalize"
+                          }),
+                          _vm._v(
+                            _vm._s(
+                              _vm.trans(
+                                "If you cancel your subscription you will loss all your data."
+                              )
+                            ) + "\n                "
                           )
-                        )
+                        ]),
+                        _vm._v(" "),
+                        _c("p", { staticClass: "element-detail text-black-50" })
                       ])
                     ]),
                     _vm._v(" "),
                     _c(
                       "div",
-                      { staticClass: "d-flex justify-content-center" },
+                      { staticClass: "d-flex overflow-hidden rounded-bottom" },
                       [
-                        _c("div", [
-                          _c(
-                            "button",
-                            {
-                              staticClass:
-                                "btn btn-secondary btn btn-secondary ladda-button",
-                              attrs: { "data-style": "zoom-out" },
-                              on: {
-                                click: function($event) {
-                                  _vm.showCancelSubscriptionModal = false
-                                }
-                              }
-                            },
-                            [_vm._v(_vm._s(_vm.trans("No! Go Back")))]
-                          )
-                        ]),
-                        _vm._v("\n                    \n                "),
-                        _c("div", [
-                          _c(
-                            "button",
-                            {
-                              staticClass:
-                                "btn btn-primary btn btn-primary ladda-button",
-                              attrs: { "data-style": "zoom-out" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.cancelSubscriptionModal(
-                                    _vm.user_id
-                                  )
-                                }
-                              }
-                            },
-                            [_vm._v(_vm._s(_vm.trans("Yes, Sure")))]
-                          )
-                        ])
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-lg btn-outline-light rounded-0 text-body w-50",
+                            attrs: { type: "button", "data-dismiss": "modal" }
+                          },
+                          [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(_vm.trans("No! Go Back")) +
+                                "\n              "
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-lg btn-danger ladda-button rounded-0 w-50",
+                            attrs: {
+                              type: "submit",
+                              id: "cancel-subscription",
+                              "data-style": "zoom-out"
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                " +
+                                _vm._s(_vm.trans("Yes, Sure")) +
+                                "\n              "
+                            )
+                          ]
+                        )
                       ]
-                    ),
-                    _vm._v("\n                  \n            ")
-                  ])
-                ])
+                    )
+                  ]
+                )
               ])
             ])
-          ])
-        : _vm._e()
-    ])
+          ]
+        )
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -72962,6 +73019,23 @@ var staticRenderFns = [
         _c("p", [_vm._v("we're sad to see you go.")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close mr-3 mt-3",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("i", { staticClass: "fe fe-x-circle" })]
+    )
   }
 ]
 render._withStripped = true

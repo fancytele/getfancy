@@ -378,9 +378,12 @@
             </div>
             <div class="row">
               <div class="col-md-8 col-lg-6">
-                <button @click="cancelSubscription(user.id)"
+                <button
                         class="btn btn-danger btn btn-danger ladda-button"
-                        data-style="zoom-out">
+                        data-style="zoom-out"
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                >
                   {{ trans('Cancel Subscription') }}
                 </button>
               </div>
@@ -392,31 +395,44 @@
     <!--Cancel Subscription -->
 
     <!--Cancel Subscription Modal -->
-    <div class="modal-align">
-      <div class="modal-sm" v-if="showCancelSubscriptionModal">
-        <div class="modal-mask">
-          <div class="modal-wrapper">
-            <div class="modal-dialog">
-              <div class="modal-content">
-                <div class="modal-body">
-                  <h2 class="text-center"><strong>{{ trans('Are you Sure?') }}</strong></h2>
-                  <p class="text-center">{{ trans('If you cancel your subscription you will loss all your data.') }}</p>
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+         aria-labelledby="delete-element-label" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-body p-0">
+            <button type="button" class="close mr-3 mt-3"
+                    data-dismiss="modal" aria-label="Close">
+              <i class="fe fe-x-circle"></i>
+            </button>
+            <form :action="url" class="mb-0" @submit.prevent="cancelSubscriptionModal(user.id)">
+              <div class="d-flex my-3 pl-4 pt-4">
+                <i
+                    class="display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "></i>
+                <div>
+                  <h3 class="mb-0">
+                    {{ trans('Are you Sure?') }}
+                    <br>
+                    <span
+                        class="element-name text-capitalize"></span>{{ trans('If you cancel your subscription you will loss all your data.') }}
+                  </h3>
+                  <p class="element-detail text-black-50"></p>
                 </div>
-                <div class="d-flex justify-content-center">
-                  <div>
-                    <button class="btn btn-secondary btn btn-secondary ladda-button"
-                            data-style="zoom-out" @click="showCancelSubscriptionModal = false">{{ trans('No! Go Back') }}</button>
-                  </div>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <div>
-                    <button @click="cancelSubscriptionModal(user_id)" class="btn btn-primary btn btn-primary ladda-button"
-                            data-style="zoom-out">{{ trans('Yes, Sure') }}</button>
-                  </div>
-
-                </div>
-                &nbsp;&nbsp;&nbsp;&nbsp;
               </div>
-            </div>
+
+              <div class="d-flex overflow-hidden rounded-bottom">
+                <button type="button"
+                        class="btn btn-lg btn-outline-light rounded-0 text-body w-50"
+                        data-dismiss="modal">
+                  {{ trans('No! Go Back') }}
+                </button>
+                <button type="submit"
+                        id="cancel-subscription"
+                        class="btn btn-lg btn-danger ladda-button rounded-0 w-50"
+                        data-style="zoom-out">
+                  {{ trans('Yes, Sure') }}
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -477,6 +493,9 @@ export default {
     this.laddaButton = Ladda.create(
         document.querySelector('#submit-user-setting')
     );
+    this.laddaButton = Ladda.create(
+        document.querySelector('#cancel-subscription')
+    );
   },
   data(){
     return {
@@ -517,7 +536,6 @@ export default {
       phoneNumberMask: {
         mask: '(000) 000-0000'
       },
-      showCancelSubscriptionModal: false,
 
       stripe: process.env.MIX_STRIPE_KEY,
       stripeOptions: {
@@ -543,8 +561,6 @@ export default {
       },
       stripeError: '',
       stripe_token: '',
-
-      user_id:'',
     };
   },
 
@@ -554,10 +570,6 @@ export default {
         this.stripeError = $event.error ? $event.error.message : '';
     },
 
-    cancelSubscription(id){
-      this.user_id = id;
-      this.showCancelSubscriptionModal = true;
-    },
     getUserDetails() {
       axios.get(this.route)
           .then(response=>{
@@ -667,19 +679,19 @@ export default {
     },
 
     cancelSubscriptionModal(id) {
-
+      this.laddaButton.start();
       axios.post(this.url ,{
-        user_id :  id
+        'user_id': id
       })
           .then(response=>{
             console.log(response);
+            this.laddaButton.stop();
           })
           .catch(error => {
             console.log(error.response);
             this.errors.subscription_id = error.response.data.data.errors.message;
-            this.showCancelSubscriptionModal = false;
+            this.laddaButton.stop();
           });
-
     }
   }
 }
