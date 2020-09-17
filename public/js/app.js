@@ -5814,6 +5814,17 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -72625,28 +72636,28 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c(
-          "div",
-          {
-            staticClass:
-              "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
-          },
-          [
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-xl-4" }, [
-                  _c("h2", { staticClass: "mb-1" }, [
-                    _vm._v(_vm._s(_vm.trans("Billing Information")))
-                  ])
-                ]),
-                _vm._v(" "),
-                _vm.billing_address
-                  ? _c("div", [
+        _vm.billing_address
+          ? _c("div", [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+                },
+                [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-xl-4" }, [
+                        _c("h2", { staticClass: "mb-1" }, [
+                          _vm._v(_vm._s(_vm.trans("Billing Information")))
+                        ])
+                      ]),
+                      _vm._v(" "),
                       _c(
                         "div",
                         {
                           staticClass:
-                            "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-5l-8 pt-4 pt-xl-0"
+                            "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
                         },
                         [
                           _c("div", { staticClass: "row" }, [
@@ -73037,13 +73048,36 @@ var render = function() {
                         ]
                       )
                     ])
-                  : _vm._e(),
-                _vm._v(" "),
-                !_vm.billing_address ? _c("div", [_vm._m(0)]) : _vm._e()
-              ])
+                  ])
+                ]
+              )
             ])
-          ]
-        ),
+          : _vm._e(),
+        _vm._v(" "),
+        !_vm.billing_address
+          ? _c("div", [
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+                },
+                [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-xl-4" }, [
+                        _c("h2", { staticClass: "mb-1" }, [
+                          _vm._v(_vm._s(_vm.trans("Billing Information")))
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._m(0)
+                    ])
+                  ])
+                ]
+              )
+            ])
+          : _vm._e(),
         _vm._v(" "),
         _c(
           "div",
@@ -73558,7 +73592,7 @@ var staticRenderFns = [
       "div",
       {
         staticClass:
-          "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-5l-8 pt-4 pt-xl-0"
+          "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
       },
       [_c("h5", [_vm._v("There is no billing address")])]
     )
