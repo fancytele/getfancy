@@ -190,6 +190,13 @@
                             </a>
                             <div class="dropdown-divider m-0"></div>
                             @endrole
+                            @role('user')
+                            <a href="#" class="dropdown-item"
+                               data-toggle="modal" data-target="#modal-vertical-right">
+                                @lang('View As')...
+                            </a>
+                            <div class="dropdown-divider m-0"></div>
+                            @endrole
                             @if(Auth::user()->isImpersonating())
                                 <a href="{{ route('admin.users.stop_impersonate') }}" class="dropdown-item">
                                     @lang('Stop viewing as ') {{ Auth::user()->roles->first()->name }}
@@ -217,6 +224,9 @@
         @elseif (Auth::user()->hasRole('admin'))
             <impersonate-component :roles-url="'{{ route('admin.roles.users', '_role_') }}'"
                                    :impersonate-url="'{{ route('admin.users.impersonate', '_user_')}}'"></impersonate-component>
+        @elseif (Auth::user()->hasRole('user'))
+            <user-impersonate-component :roles-url="'{{ route('admin.roles.users', '_role_') }}'"
+                                   :impersonate-url="'{{ route('admin.users.impersonate', '_user_')}}'"></user-impersonate-component>
         @endif
 
     <!-- HEADER -->

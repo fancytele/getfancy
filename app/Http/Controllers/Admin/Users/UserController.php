@@ -42,8 +42,9 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication']);
+        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication','usersByRole','impersonate','stopImpersonate']);
         $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication']);
+        $this->middleware(['role:admin|user|agent'])->only(['usersByRole','impersonate','stopImpersonate']);
     }
 
     /**
@@ -278,15 +279,33 @@ class UserController extends Controller
      */
     public function usersByRole(string $role)
     {
-        $users = SpatieRole::findByName($role)
-            ->users()
-            ->select(['id', 'first_name', 'last_name'])
-            ->orderBy('first_name')
-            ->simplePaginate(5);
+        if(auth()->user()->hasRole(Role::USER))
+        {
+            $authorized_user = User::where('authorised_user_id_1' , '=' , auth()->user()->id)
+                ->orWhere('authorised_user_id_2' , '=' , auth()->user()->id)
+                ->orWhere('authorised_user_id_3' , '=' , auth()->user()->id)
+                ->simplePaginate(5);
 
-        $users->setPath('');
+            $authorized_user->setPath('');
 
-        return response()->json($users);
+            auth()->user()->assignRole(Role::AUTHORIZED_USER);
+
+            return response()->json($authorized_user);
+
+
+        }
+       else{
+           $users = SpatieRole::findByName($role)
+               ->users()
+               ->select(['id', 'first_name', 'last_name'])
+               ->orderBy('first_name')
+               ->simplePaginate(5);
+
+           $users->setPath('');
+
+           return response()->json($users);
+       }
+
     }
 
     /**
@@ -299,7 +318,7 @@ class UserController extends Controller
     {
         $user_to_personify = User::find($id);
 
-        if (Auth::user()->hasRole(Role::ADMIN) && $user_to_personify->hasRole(Role::ADMIN) === false) {
+        if (Auth::user()->hasRole(Role::ADMIN) OR Auth::user()->hasRole(Role::AUTHORIZED_USER) && $user_to_personify->hasRole(Role::ADMIN) === false) {
             Auth::user()->setImpersonating($user_to_personify->id);
         }
 
@@ -467,5 +486,9 @@ class UserController extends Controller
         return response()->json($delete_payment_method);
     }
 
+    public function assignRoleAuthorizedUser(){
+
+
+    }
 
 }

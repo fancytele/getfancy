@@ -35,7 +35,7 @@ Route::prefix('admin')->group(function () {
     Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
     // Impersonate user
-    Route::get('roles/{role}/users', 'Admin\Users\UserController@usersByRole')->middleware(['role:admin'])->name('admin.roles.users');
+    Route::get('roles/{role}/users', 'Admin\Users\UserController@usersByRole')->middleware(['role:admin|user'])->name('admin.roles.users');
     Route::get('users/{id}/impersonate', 'Admin\Users\UserController@impersonate')->name('admin.users.impersonate');
     Route::get('users/stop', 'Admin\Users\UserController@stopImpersonate')->name('admin.users.stop_impersonate');
 
