@@ -39,7 +39,7 @@
                         style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 25px 0; text-align: center;">
                         <a href="{{ config('app.url') }}"
                            style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #ffffff; font-size: 19px; font-weight: bold; text-decoration: none;">
-                            <img class="fancy-logo" src="{{ URL::asset('img/logo-light.png') }}" alt="Fancyy Logo" style="width: 159px;height:55px">
+                            <img class="fancy-logo" src="{{ URL::asset('img/logo-light.png') }}" alt="Fancyy Logo" style="width: 159px;">
                         </a>
                     </td>
                 </tr>
