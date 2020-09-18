@@ -62,6 +62,10 @@
                         @endif
 
 
+                            @if(session()->has('InvalidEmailErrorMessage'))
+                                <span class="invalid-feedback" style="display: block" role="alert"><strong>{{ session()->get('InvalidEmailErrorMessage') }}</strong></span>
+                            @endif
+
                         @error('email')
                         <span id="error" class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
@@ -129,6 +133,7 @@
                             <strong>{{ $message }}</strong>
                         </span>
                             @enderror
+
 
                             @if(session()->has('twoFactorCodeErrorMessage'))
                                 <span class="invalid-feedback" style="display: block" role="alert"><strong>{{ session()->get('twoFactorCodeErrorMessage') }}</strong></span>
@@ -248,7 +253,7 @@
             }
 
 
-        @elseif(session()->has('twoFactorCodeExpiredErrorMessage'))
+        @elseif(session()->has('twoFactorCodeExpiredErrorMessage') OR session()->has('InvalidEmailErrorMessage'))
                 #two_factor_code{
                     display: none;
                 }
