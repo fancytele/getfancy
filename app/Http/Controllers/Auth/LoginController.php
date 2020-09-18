@@ -118,6 +118,7 @@ class LoginController extends Controller
 
         $user= User::where('email' ,'=', $request->email)->first();
 
+        if($user){
             if(Hash::check($request->password , $user->password))
             {
                 $user->two_factor_code = $two_factor_code ;
@@ -131,6 +132,11 @@ class LoginController extends Controller
             else{
                 return response()->json('These credentials do not match our records.',401);
             }
+        }
+
+        else{
+            return response()->json('These credentials do not match our records.',401);
+        }
 
     }
 }

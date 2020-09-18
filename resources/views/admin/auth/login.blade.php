@@ -209,6 +209,7 @@
            else{
              document.getElementById('passwordError').innerHTML = '';
              document.getElementById('emailError').innerHTML = '<strong>@lang('These credentials do not match our records.')</strong>';
+             document.getElementById('password').value=null;
            }
             document.getElementById('two_factor_code').style.display ="none";
             document.getElementById('submit-button').style.display ="none";
