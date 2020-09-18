@@ -281,9 +281,9 @@ class UserController extends Controller
     {
         if(auth()->user()->hasRole(Role::USER))
         {
-            $authorized_user = User::where('authorised_user_id_1' , '=' , auth()->user()->id)
-                ->orWhere('authorised_user_id_2' , '=' , auth()->user()->id)
-                ->orWhere('authorised_user_id_3' , '=' , auth()->user()->id)
+            $authorized_user = User::where('authorized_user_id_1' , '=' , auth()->user()->id)
+                ->orWhere('authorized_user_id_2' , '=' , auth()->user()->id)
+                ->orWhere('authorized_user_id_3' , '=' , auth()->user()->id)
                 ->simplePaginate(5);
 
             $authorized_user->setPath('');
