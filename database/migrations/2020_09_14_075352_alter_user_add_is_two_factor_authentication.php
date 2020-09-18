@@ -15,9 +15,9 @@ class AlterUserAddIsTwoFactorAuthentication extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             $table->boolean('is_twoFactorAuthentication')->default(true);
-            $table->unsignedBigInteger('authorised_user_id_1')->nullable();
-            $table->unsignedBigInteger('authorised_user_id_2')->nullable();
-            $table->unsignedBigInteger('authorised_user_id_3')->nullable();
+            $table->unsignedBigInteger('authorized_user_id_1')->nullable();
+            $table->unsignedBigInteger('authorized_user_id_2')->nullable();
+            $table->unsignedBigInteger('authorized_user_id_3')->nullable();
         });
     }
 
