@@ -112,6 +112,10 @@
 
 
                         <!-- OTP -->
+                        <div id="twoFactoCodeSuccessMessage">
+                            <span style="display: block"></span>
+                        </div>
+                        &nbsp;&nbsp;&nbsp;
                         <div id="two_factor_code" class="form-group">
 
                             <div class="row">
@@ -141,9 +145,7 @@
 
                         </div>
 
-                        <div id="twoFactoCodeSuccessMessage">
-                            <span style="display: block"></span>
-                        </div>
+
                     <!-- Submit -->
                     <button type="submit" id="submit-button"
                             class="btn btn-lg btn-block btn-info ladda-button js-ladda-submit mb-3"
@@ -177,6 +179,7 @@
       var x = new XMLHttpRequest();
       x.open("POST", "{{ route('admin.login.send_two_factor_code') }}", true);
       x.setRequestHeader("Content-type", "application/json");
+
       var sendData = { email: document.getElementById('email').value , password: document.getElementById('password').value};
       if(!sendData.email)
       {
@@ -195,9 +198,43 @@
         x.onloadend = function() {
           if (x.readyState === 4 && x.status === 200) {
             l.stop();
+             var response = sendData.email;
+             var stringSplit = response.split('@');
+             var stringSplitFirstPart = stringSplit[0];
+             var newStringFrstPart =""
+
+             var stringSplitSecondPart = stringSplit[1].split('.');
+             var stringSplitSecond = stringSplitSecondPart[0];
+
+             var newStringSecondPart =""
+
+             for(var i in stringSplitFirstPart){
+                if(i>1){
+                    newStringFrstPart += "*";
+                  }
+                else {
+                  newStringFrstPart += stringSplitFirstPart[i];
+                }
+             }
+
+
+             for(var j in stringSplitSecond){
+
+                if(j>1){
+                    newStringSecondPart += "*";
+                  }
+                else {
+                  newStringSecondPart += stringSplitSecond[j];
+                }
+             }
+
+             slice_response_second_string = newStringSecondPart.slice(0,5);
+             slice_response_first_string = newStringFrstPart.slice(0,5);
+             modified_response = slice_response_first_string +"@"+ slice_response_second_string+"."+stringSplitSecondPart[1];
+
             document.getElementById('emailError').innerHTML = '';
             document.getElementById('passwordError').innerHTML = '';
-            document.getElementById('twoFactoCodeSuccessMessage').innerHTML= '<strong>@lang('Two factor code has been sent to your email')</strong>';
+            document.getElementById('twoFactoCodeSuccessMessage').innerHTML= '<strong>@lang('Please enter the code we have sent to ')</strong>' + modified_response;
             document.getElementById('two_factor_code').style.display = "block";
             document.getElementById('submit-button').style.display = "block";
             document.getElementById('login-two-factor-code-button').style.display = "none";
