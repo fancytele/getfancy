@@ -120,4 +120,14 @@ class WebSiteController extends Controller
         echo 'window.i18n = ' . json_encode($strings) . ';';
         exit();
     }
+
+    public function getPrivacyPolicy(){
+        return view('privacy-policy');
+    }
+    public function getTermsOfPolicy(){
+        return view('terms-of-service');
+    }
+    public function getCookiePolicy(){
+        return view('cookie-policy');
+    }
 }
