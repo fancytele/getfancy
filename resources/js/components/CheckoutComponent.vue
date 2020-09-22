@@ -111,8 +111,12 @@
                     <div class="form-group">
                       <label for="password">
                         {{ trans('Password') }}
-                        <small class="text-muted">(must be at least 8 characters, and include a number, a special character, a lower and a upper case letter)</small>
+                        <i @mouseover="hover = true"
+                           @mouseleave="hover = false"
+                           :class="{ active: hover }" class="fa fa-info-circle" aria-hidden="true"></i>
+                        <small class="text-muted">{{ trans('Show Password Requirements') }}</small>
                       </label>
+                      <small v-show="hover" class="text-muted">{{ trans('Password must be at least 8 characters, and include a number, a special character, a lower and a upper case letter') }}</small>
                       <input
                         type="password"
                         class="form-control"
@@ -121,7 +125,7 @@
                         placeholder="********"
                         required
                         v-model="checkout.password"
-                        :class="{ 'border-success': checkout.password && checkout.password_confirmation && passwordsMatch, 'is-invalid': errors.hasOwnProperty('password')  || (checkout.password && checkout.password_confirmation && !passwordsMatch)}"
+                        :class="{ 'border-success': checkout.password && checkout.password_confirmation && passwordsMatch , 'is-invalid': errors.hasOwnProperty('password')  || (checkout.password && checkout.password_confirmation && !passwordsMatch )}"
                         :readonly="isProcessing"
                       />
                       <div
@@ -141,7 +145,7 @@
                         placeholder="********"
                         required
                         v-model="checkout.password_confirmation"
-                        :class="{ 'border-success': checkout.password && checkout.password_confirmation && passwordsMatch, 'is-invalid': errors.hasOwnProperty('password_confirmation') || (checkout.password && checkout.password_confirmation && !passwordsMatch) }"
+                        :class="{ 'border-success': checkout.password && checkout.password_confirmation  && passwordsMatch, 'is-invalid': errors.hasOwnProperty('password_confirmation') || (checkout.password && checkout.password_confirmation && !passwordsMatch ) }"
                         :readonly="isProcessing"
                       />
                       <div
@@ -740,6 +744,7 @@ export default {
   },
   data() {
     return {
+      hover: false,
       sameAddress: true,
       laddaButton: null,
       complete: false,
@@ -873,6 +878,9 @@ export default {
     resetRecaptcha() {
       this.checkout.recaptcha = '';
       this.$refs.recaptcha.reset();
+    },
+    showPasswordInstructions(){
+      this.active = !this.active;
     }
   },
   mounted() {
@@ -904,7 +912,10 @@ export default {
         .toFixed(2);
     },
     passwordsMatch() {
-      return this.checkout.password === this.checkout.password_confirmation;
+      const regex = new RegExp("(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[#?!@()$%^&*=_{}:;~`±§+-\/|\"'[\])(?=.*?[0-9]).{8,}");
+      if(regex.test(this.checkout.password)){
+        return this.checkout.password === this.checkout.password_confirmation;
+      }
     }
   }
 };
