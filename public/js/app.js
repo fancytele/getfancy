@@ -2549,7 +2549,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -65192,17 +65191,9 @@ var render = function() {
                           _vm._v(
                             "\n                      " +
                               _vm._s(_vm.trans("Password")) +
-                              "\n                      "
+                              "\n                        "
                           ),
-                          _c("i", {
-                            staticClass: "fa fa-info-circle",
-                            attrs: {
-                              "data-toggle": "tooltip",
-                              title:
-                                "Password must be at least 8 characters, and include a number, a special character, a lower and a upper case letter",
-                              "aria-hidden": "true"
-                            }
-                          }),
+                          _vm._m(0),
                           _vm._v(" "),
                           _c("small", { staticClass: "text-muted" }, [
                             _vm._v(
@@ -66545,7 +66536,7 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("p", { staticClass: "mt-4 text-center" }, [
-                    _vm._m(0),
+                    _vm._m(1),
                     _vm._v(" "),
                     _c("span", { staticClass: "font-weight-bold" }, [
                       _vm._v(_vm._s(_vm.trans("Need any help?")))
@@ -66833,6 +66824,28 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        attrs: {
+          href: "#",
+          "data-toggle": "tooltip",
+          title:
+            "Password must be at least 8 characters, and include a number, a special character, a lower and a upper case letter"
+        }
+      },
+      [
+        _c("i", {
+          staticClass: "fa fa-info-circle",
+          attrs: { "aria-hidden": "true" }
+        })
+      ]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
