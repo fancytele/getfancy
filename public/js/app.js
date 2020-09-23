@@ -2587,7 +2587,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _checkout;
 
     return {
-      showInstructions: false,
       sameAddress: true,
       laddaButton: null,
       complete: false,
@@ -2721,9 +2720,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     resetRecaptcha: function resetRecaptcha() {
       this.checkout.recaptcha = '';
       this.$refs.recaptcha.reset();
-    },
-    showPasswordInstructions: function showPasswordInstructions() {
-      this.showInstructions = !this.showInstructions;
     }
   },
   mounted: function mounted() {

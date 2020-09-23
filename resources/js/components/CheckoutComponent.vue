@@ -742,7 +742,6 @@ export default {
   },
   data() {
     return {
-      showInstructions:false,
       sameAddress: true,
       laddaButton: null,
       complete: false,
@@ -877,9 +876,6 @@ export default {
       this.checkout.recaptcha = '';
       this.$refs.recaptcha.reset();
     },
-    showPasswordInstructions(){
-      this.showInstructions = !this.showInstructions;
-    }
   },
   mounted() {
     this.laddaButton = Ladda.create(document.querySelector('#submit-payment'));
