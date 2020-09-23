@@ -111,12 +111,10 @@
                     <div class="form-group">
                       <label for="password">
                         {{ trans('Password') }}
-                        <i @mouseover="hover = true"
-                           @mouseleave="hover = false"
-                           :class="{ active: hover }" class="fa fa-info-circle" aria-hidden="true"></i>
+                        <i data-toggle="tooltip" title="Password must be at least 8 characters, and include a number, a special character, a lower and a upper case letter"
+                            class="fa fa-info-circle" aria-hidden="true"></i>
                         <small class="text-muted">{{ trans('Show Password Requirements') }}</small>
                       </label>
-                      <small v-show="hover" class="text-muted">{{ trans('Password must be at least 8 characters, and include a number, a special character, a lower and a upper case letter') }}</small>
                       <input
                         type="password"
                         class="form-control"
@@ -744,7 +742,6 @@ export default {
   },
   data() {
     return {
-      hover: false,
       sameAddress: true,
       laddaButton: null,
       complete: false,
@@ -879,9 +876,6 @@ export default {
       this.checkout.recaptcha = '';
       this.$refs.recaptcha.reset();
     },
-    showPasswordInstructions(){
-      this.active = !this.active;
-    }
   },
   mounted() {
     this.laddaButton = Ladda.create(document.querySelector('#submit-payment'));

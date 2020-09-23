@@ -120,4 +120,5 @@ class WebSiteController extends Controller
         echo 'window.i18n = ' . json_encode($strings) . ';';
         exit();
     }
+
 }

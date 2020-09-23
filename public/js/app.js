@@ -2550,8 +2550,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2589,7 +2587,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _checkout;
 
     return {
-      hover: false,
       sameAddress: true,
       laddaButton: null,
       complete: false,
@@ -2723,9 +2720,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     resetRecaptcha: function resetRecaptcha() {
       this.checkout.recaptcha = '';
       this.$refs.recaptcha.reset();
-    },
-    showPasswordInstructions: function showPasswordInstructions() {
-      this.active = !this.active;
     }
   },
   mounted: function mounted() {
@@ -65202,15 +65196,11 @@ var render = function() {
                           ),
                           _c("i", {
                             staticClass: "fa fa-info-circle",
-                            class: { active: _vm.hover },
-                            attrs: { "aria-hidden": "true" },
-                            on: {
-                              mouseover: function($event) {
-                                _vm.hover = true
-                              },
-                              mouseleave: function($event) {
-                                _vm.hover = false
-                              }
+                            attrs: {
+                              "data-toggle": "tooltip",
+                              title:
+                                "Password must be at least 8 characters, and include a number, a special character, a lower and a upper case letter",
+                              "aria-hidden": "true"
                             }
                           }),
                           _vm._v(" "),
@@ -65220,30 +65210,6 @@ var render = function() {
                             )
                           ])
                         ]),
-                        _vm._v(" "),
-                        _c(
-                          "small",
-                          {
-                            directives: [
-                              {
-                                name: "show",
-                                rawName: "v-show",
-                                value: _vm.hover,
-                                expression: "hover"
-                              }
-                            ],
-                            staticClass: "text-muted"
-                          },
-                          [
-                            _vm._v(
-                              _vm._s(
-                                _vm.trans(
-                                  "Password must be at least 8 characters, and include a number, a special character, a lower and a upper case letter"
-                                )
-                              )
-                            )
-                          ]
-                        ),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
