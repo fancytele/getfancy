@@ -193,7 +193,7 @@
                             @role('user')
                             <a href="#" class="dropdown-item"
                                data-toggle="modal" data-target="#modal-vertical-right">
-                                @lang('View As')...
+                                @lang('Switch To')...
                             </a>
                             <div class="dropdown-divider m-0"></div>
                             @endrole

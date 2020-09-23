@@ -5367,6 +5367,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['rolesUrl', 'impersonateUrl'],
   data: function data() {
@@ -5379,11 +5380,6 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    initSearch: function initSearch() {
-      this.users = [];
-      this.nextPage = null;
-      this.getUsersByRole();
-    },
     getUsersByRole: function getUsersByRole() {
       var _this = this;
 
@@ -5411,10 +5407,12 @@ __webpack_require__.r(__webpack_exports__);
 
     $(this.$refs['impersonate-modal']).on('show.bs.modal', function (e) {
       _this2.isLoading = false;
-      _this2.role = null;
+      _this2.role = "user";
       _this2.nextPage = null;
       _this2.users = [];
       _this2.user = null;
+
+      _this2.getUsersByRole();
     });
   },
   computed: {
@@ -72339,50 +72337,7 @@ var render = function() {
           _c("div", { staticClass: "modal-content" }, [
             _c("div", { staticClass: "modal-body" }, [
               _vm._m(0),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group mt-5" }, [
-                _c("label", { attrs: { for: "role" } }, [
-                  _vm._v("Select Role")
-                ]),
-                _vm._v(" "),
-                _c(
-                  "select",
-                  {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.role,
-                        expression: "role"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: { id: "role", name: "role" },
-                    on: {
-                      change: [
-                        function($event) {
-                          var $$selectedVal = Array.prototype.filter
-                            .call($event.target.options, function(o) {
-                              return o.selected
-                            })
-                            .map(function(o) {
-                              var val = "_value" in o ? o._value : o.value
-                              return val
-                            })
-                          _vm.role = $event.target.multiple
-                            ? $$selectedVal
-                            : $$selectedVal[0]
-                        },
-                        function($event) {
-                          return _vm.initSearch()
-                        }
-                      ]
-                    }
-                  },
-                  [_c("option", { attrs: { value: "user" } }, [_vm._v("User")])]
-                )
-              ]),
-              _vm._v(" "),
+              _vm._v("\n          \n        "),
               _c(
                 "div",
                 {
@@ -72454,9 +72409,37 @@ var render = function() {
                 ]
               ),
               _vm._v(" "),
-              _vm.users.length === 0 && _vm.role
-                ? _c("div", [_c("h5", [_vm._v("No Authorized User")])])
-                : _vm._e(),
+              _c(
+                "div",
+                {
+                  directives: [
+                    {
+                      name: "show",
+                      rawName: "v-show",
+                      value: _vm.users.length <= 0,
+                      expression: "users.length <= 0"
+                    }
+                  ],
+                  staticClass: "form-group"
+                },
+                [
+                  _c("p", [_vm._v("Login as")]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "list-group list-group-flush mb-4" },
+                    [
+                      _c("a", { staticClass: "list-group-item px-0" }, [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(_vm.trans("No Authorised User")) +
+                            "\n            "
+                        )
+                      ])
+                    ]
+                  )
+                ]
+              ),
               _vm._v(" "),
               _c("div", { staticClass: "text-center" }, [
                 _c(

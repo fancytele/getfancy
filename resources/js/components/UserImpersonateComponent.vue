@@ -4,7 +4,8 @@
        tabindex="-1"
        role="dialog"
        aria-hidden="true"
-       ref="impersonate-modal">
+       ref="impersonate-modal"
+      >
     <div class="modal-dialog modal-dialog-vertical"
          role="document">
       <div class="modal-content">
@@ -12,12 +13,7 @@
           <button type="button" class="close h1" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">×</span>
           </button>
-          <div class="form-group mt-5">
-            <label for="role">Select Role</label>
-            <select id="role" name="role" class="form-control" v-model="role" @change="initSearch()">
-              <option value="user">User</option>
-            </select>
-          </div>
+          &nbsp;&nbsp;
           <div class="form-group" v-show="users.length > 0">
             <p>Login as</p>
             <div class="list-group list-group-flush mb-4">
@@ -32,8 +28,13 @@
               Load more...
             </button>
           </div>
-          <div v-if="users.length === 0 && role" >
-            <h5>No Authorized User</h5>
+          <div class="form-group" v-show="users.length <= 0">
+            <p>Login as</p>
+            <div class="list-group list-group-flush mb-4">
+              <a class="list-group-item px-0">
+                {{ trans("No Authorised User")}}
+              </a>
+            </div>
           </div>
           <div class="text-center">
             <div class="align-middle mb-3 spinner-border text-primary"
@@ -61,11 +62,6 @@ export default {
     };
   },
   methods: {
-    initSearch() {
-      this.users = [];
-      this.nextPage = null;
-      this.getUsersByRole();
-    },
     getUsersByRole() {
       if (this.isLoading) {
         return false;
@@ -92,10 +88,11 @@ export default {
   mounted() {
     $(this.$refs['impersonate-modal']).on('show.bs.modal', (e) => {
       this.isLoading = false;
-      this.role = null;
+      this.role = "user";
       this.nextPage = null;
       this.users = [];
       this.user = null;
+      this.getUsersByRole();
     });
   },
   computed: {
