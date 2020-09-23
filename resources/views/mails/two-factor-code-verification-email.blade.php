@@ -57,9 +57,10 @@
                                     style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 35px;">
                                     <p
                                             style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #1d2c3c; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
-                                        Please enter the two factor authentication code below to complete your login process. <br>
-                                        <strong>Two Factor Code: {{ $two_factor_code }}</strong><br>
-                                        The code will expire in <strong>10 minutes</strong><br>
+                                        Please enter the two factor authentication code below to complete your login process. <br><br><br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <strong>Two Factor Code: {{ $two_factor_code }}</strong><br><br>
+                                        The code will expire in <strong>10 minutes.</strong><br><br>
                                         <small>If you didn't try to log in recently, we recommend you change your password ASAP to protect your account.</small>
                                     </p>
 
