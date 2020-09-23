@@ -613,9 +613,17 @@
                     </div>
                 </form>
 
-                <p class="border-top pt-2 text-center">
-                    <small>&copy; Fancyy {{ date('Y') }}</small>
-                </p>
+                <div class="border-top pt-2" style="display: flex;flex-direction: row;justify-content: space-between;">
+                    <div>
+                        <small>&copy; Fancyy {{ date('Y') }}</small>
+                    </div>
+                    <div>
+                        <a href="{{ route('web.privacy_policy') }}"  class="text-white"><small>Privacy Policy</small></a>
+                        &nbsp;&nbsp;<a href="{{ route('web.terms_of_service') }}"  class="text-white"><small>Terms of Service</small></a>
+                        &nbsp;&nbsp;<a href="{{ route('web.cookie_policy') }}"  class="text-white"><small>Cookie Policy</small></a>
+                    </div>
+                </div>
+
             </div>
         </footer>
     </body>
