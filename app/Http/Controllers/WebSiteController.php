@@ -121,13 +121,4 @@ class WebSiteController extends Controller
         exit();
     }
 
-    public function getPrivacyPolicy(){
-        return view('privacy-policy');
-    }
-    public function getTermsOfPolicy(){
-        return view('terms-of-service');
-    }
-    public function getCookiePolicy(){
-        return view('cookie-policy');
-    }
 }

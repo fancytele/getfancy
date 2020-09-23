@@ -16,9 +16,7 @@ Route::post('callyou', 'WebSiteController@callYou')->name('web.callyou');
 Route::post('contactus', 'WebSiteController@contactUs')->name('web.contactus');
 Route::get('js/lang.js', 'WebSiteController@getJSONLocalization')->name('web.lang');
 Route::post('subscription', 'SubscriptionController@create')->name('subscription');
-Route::get('privacy-policy','WebSiteController@getPrivacyPolicy')->name('web.privacy_policy');
-Route::get('terms-of-service','WebSiteController@getTermsOfPolicy')->name('web.terms_of_service');
-Route::get('cookie-policy','WebSiteController@getCookiePolicy')->name('web.cookie_policy');
+
 /*
 |--------------------------------------------------------------------------
 | Admin Routes

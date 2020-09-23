@@ -2551,7 +2551,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2589,7 +2588,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _checkout;
 
     return {
-      hover: false,
+      showInstructions: false,
       sameAddress: true,
       laddaButton: null,
       complete: false,
@@ -2725,7 +2724,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.$refs.recaptcha.reset();
     },
     showPasswordInstructions: function showPasswordInstructions() {
-      this.active = !this.active;
+      this.showInstructions = !this.showInstructions;
     }
   },
   mounted: function mounted() {
@@ -65202,16 +65201,8 @@ var render = function() {
                           ),
                           _c("i", {
                             staticClass: "fa fa-info-circle",
-                            class: { active: _vm.hover },
                             attrs: { "aria-hidden": "true" },
-                            on: {
-                              mouseover: function($event) {
-                                _vm.hover = true
-                              },
-                              mouseleave: function($event) {
-                                _vm.hover = false
-                              }
-                            }
+                            on: { mouseover: _vm.showPasswordInstructions }
                           }),
                           _vm._v(" "),
                           _c("small", { staticClass: "text-muted" }, [
@@ -65228,8 +65219,8 @@ var render = function() {
                               {
                                 name: "show",
                                 rawName: "v-show",
-                                value: _vm.hover,
-                                expression: "hover"
+                                value: _vm.showInstructions,
+                                expression: "showInstructions"
                               }
                             ],
                             staticClass: "text-muted"
