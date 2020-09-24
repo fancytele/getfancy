@@ -31,7 +31,7 @@ const init = () => {
 
   $("#fancy-menu .nav-link").on('click', animateScrollSpy);
 
-  $("#fancy-menu").on('click' , pageSwitch);
+  $("#fancy-menu-bar .nav-link").on('click' , pageSwitch);
 
   $(window).on('scroll', changeNavbarBg);
 
