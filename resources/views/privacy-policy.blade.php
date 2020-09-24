@@ -50,11 +50,11 @@
                 <img class="fancy-logo fancy-dark-logo" src="{{ URL::asset('img/Fancyy_Logo-01.png') }}"
                      alt="Fancyy Logo">
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#fancy-menu"
-                    aria-controls="fancy-menu" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#fancy-menu-bar"
+                    aria-controls="fancy-menu-bar" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="font-weight-bold la la-2x la-bars text-primary"></i>
             </button>
-            <div class="collapse navbar-collapse flex-column align-items-end" id="fancy-menu">
+            <div class="collapse navbar-collapse flex-column align-items-end" id="fancy-menu-bar">
                 <button type="button" class="close" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -77,11 +77,26 @@
                 </div>
                 <ul class="align-items-center d-flex ml-auto navbar-nav">
                     <li class="nav-item">
-                        <a class="font-weight-bold text-body" href="{{ route('web.homepage') }}">
-                            @lang('Home')
+                        <a class="font-weight-bold nav-link text-body" href="{{ url('https://development.fancyy.co#features')}}">
+                            @lang('Why Fancyy?')
+                            <span class="sr-only">(current)</span>
                         </a>
                     </li>
-                    &nbsp;&nbsp;
+                    <li class="nav-item">
+                        <a class="font-weight-bold nav-link text-body" href="{{url('https://development.fancyy.co#how-it-works')}}">
+                            @lang('How It Works')
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="font-weight-bold nav-link text-body" href="{{url('https://development.fancyy.co#plans')}}">
+                            @lang('Plans and Features')
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="font-weight-bold nav-link text-body"
+                           href="{{ url('https://development.fancyy.co#about')}}">@lang('About us')</a>
+                    </li>
+
                     @guest
                         <li class="nav-item">
                             <a href="{{ route('admin.login') }}"

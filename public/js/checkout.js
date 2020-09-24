@@ -310,6 +310,12 @@ var animateScrollSpy = function animateScrollSpy(event) {
   }
 };
 
+var pageSwitch = function pageSwitch(event) {
+  if (this.href) {
+    window.location.replace(this.href);
+  }
+};
+
 var changeNavbarBg = function changeNavbarBg() {
   var scroll = $(window).scrollTop();
   var navbarDarkClass = 'border-0 bg-transparent navbar-dark';
@@ -328,6 +334,7 @@ var init = function init() {
     offset: offsetSection + 2
   });
   $("#fancy-menu .nav-link").on('click', animateScrollSpy);
+  $("#fancy-menu").on('click', pageSwitch);
   $(window).on('scroll', changeNavbarBg);
   changeNavbarBg();
 };
