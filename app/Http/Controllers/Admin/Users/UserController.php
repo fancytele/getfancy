@@ -288,7 +288,7 @@ class UserController extends Controller
 
             $authorized_user->setPath('');
 
-            auth()->user()->assignRole(Role::AUTHORIZED_USER);
+            //auth()->user()->assignRole(Role::AUTHORIZED_USER);
 
             return response()->json($authorized_user);
 
@@ -318,7 +318,7 @@ class UserController extends Controller
     {
         $user_to_personify = User::find($id);
 
-        if (Auth::user()->hasRole(Role::ADMIN) OR Auth::user()->hasRole(Role::AUTHORIZED_USER) && $user_to_personify->hasRole(Role::ADMIN) === false) {
+        if (Auth::user()->hasRole(Role::ADMIN) OR Auth::user()->hasRole(Role::USER) && $user_to_personify->hasRole(Role::ADMIN) === false) {
             Auth::user()->setImpersonating($user_to_personify->id);
         }
 
