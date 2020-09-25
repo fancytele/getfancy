@@ -2548,6 +2548,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2751,7 +2752,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }, 0).toFixed(2);
     },
     passwordsMatch: function passwordsMatch() {
-      return this.checkout.password === this.checkout.password_confirmation;
+      var regex = new RegExp("(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[#?!@()$%^&*=_{}:;~`±§+-\/|\"'[\])(?=.*?[0-9]).{8,}");
+
+      if (regex.test(this.checkout.password)) {
+        return this.checkout.password === this.checkout.password_confirmation;
+      }
     }
   }
 });
@@ -66017,11 +66022,13 @@ var render = function() {
                           _vm._v(
                             "\n                      " +
                               _vm._s(_vm.trans("Password")) +
-                              "\n                      "
+                              "\n                        "
                           ),
+                          _vm._m(0),
+                          _vm._v(" "),
                           _c("small", { staticClass: "text-muted" }, [
                             _vm._v(
-                              "(must be at least 8 characters, and include a number, a special character, a lower and a upper case letter)"
+                              _vm._s(_vm.trans("Show Password Requirements"))
                             )
                           ])
                         ]),
@@ -67360,7 +67367,7 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("p", { staticClass: "mt-4 text-center" }, [
-                    _vm._m(0),
+                    _vm._m(1),
                     _vm._v(" "),
                     _c("span", { staticClass: "font-weight-bold" }, [
                       _vm._v(_vm._s(_vm.trans("Need any help?")))
@@ -67648,6 +67655,28 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        attrs: {
+          href: "#",
+          "data-toggle": "tooltip",
+          title:
+            "Password must be at least 8 characters, and include a number, a special character, a lower and a upper case letter"
+        }
+      },
+      [
+        _c("i", {
+          staticClass: "fa fa-info-circle",
+          attrs: { "aria-hidden": "true" }
+        })
+      ]
+    )
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

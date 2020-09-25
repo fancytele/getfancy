@@ -130,7 +130,7 @@
                             <!-- Input -->
                             <input type="number" name="two_factor_code"
                                    class="form-control form-control-appended @error('two_factor_code') is-invalid @enderror"
-                                   placeholder="@lang('Enter your two factor code')" required>
+                                   placeholder="@lang('Enter your two factor code')" >
 
                             @error('two_factor_code')
                             <span id="error" class="invalid-feedback" role="alert">
@@ -255,6 +255,11 @@
            }
             document.getElementById('two_factor_code').style.display ="none";
             document.getElementById('submit-button').style.display ="none";
+          }
+          else if(x.status === 202)
+          {
+            l.stop();
+            document.getElementById('submit-button').click();
           }
           else
           {
