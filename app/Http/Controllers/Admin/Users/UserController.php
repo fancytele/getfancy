@@ -444,7 +444,7 @@ class UserController extends Controller
             return response()->json($all_payment_method);
         }
         else{
-            return response()->json('There is no payment method' , 422);
+            return response()->json('There is no payment method' , 204);
         }
     }
 
