@@ -5,6 +5,13 @@ const animateScrollSpy = function (event) {
     event.preventDefault();
     $('html, body').animate({ scrollTop: $(this.hash).offset().top - offsetSection }, 800);
   }
+
+}
+
+const pageSwitch = function (event){
+  if(this.href){
+    window.location.replace(this.href);
+  }
 }
 
 const changeNavbarBg = function () {
@@ -23,6 +30,8 @@ const init = () => {
   $('body').scrollspy({ target: "#fancy-navbar", offset: offsetSection + 2 });
 
   $("#fancy-menu .nav-link").on('click', animateScrollSpy);
+
+  $("#fancy-menu-bar .nav-link").on('click' , pageSwitch);
 
   $(window).on('scroll', changeNavbarBg);
 

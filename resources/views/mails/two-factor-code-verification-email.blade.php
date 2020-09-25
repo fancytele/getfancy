@@ -8,7 +8,7 @@
 </head>
 
 <body
-        style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; background-color: #704895; color: #1d2c3c; height: 100%; hyphens: auto; line-height: 1.4; margin: 0; -moz-hyphens: auto; -ms-word-break: break-all; width: 100% !important; -webkit-hyphens: auto; -webkit-text-size-adjust: none; word-break: break-word;">
+        style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; background-color: #EBE4F0; color: #1d2c3c; height: 100%; hyphens: auto; line-height: 1.4; margin: 0; -moz-hyphens: auto; -ms-word-break: break-all; width: 100% !important; -webkit-hyphens: auto; -webkit-text-size-adjust: none; word-break: break-word;">
 <style>
     @media only screen and (max-width: 600px) {
         .inner-body {
@@ -27,7 +27,7 @@
     }
 </style>
 <table class="wrapper" width="100%" cellpadding="0" cellspacing="0"
-       style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; background-color: #704895; margin: 0; padding: 0; width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%;">
+       style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; background-color: #EBE4F0; margin: 0; padding: 0; width: 100%; -premailer-cellpadding: 0; -premailer-cellspacing: 0; -premailer-width: 100%;">
     <tr>
         <td align="center"
             style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box;">
@@ -39,7 +39,7 @@
                         style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 25px 0; text-align: center;">
                         <a href="{{ config('app.url') }}"
                            style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #ffffff; font-size: 19px; font-weight: bold; text-decoration: none;">
-                            <img class="fancy-logo" src="{{ URL::asset('img/logo-light.png') }}" alt="Fancyy Logo">
+                            <img class="fancy-logo" src="{{ URL::asset('img/logo-light.png') }}" style="width: 200px" alt="Fancyy Logo">
                         </a>
                     </td>
                 </tr>
@@ -57,10 +57,11 @@
                                     style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 35px;">
                                     <p
                                             style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #1d2c3c; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
-                                        Please, enter the two factor code below to complete your login process. <br>
-                                        <strong>Two Factor Code: {{ $two_factor_code }}</strong><br>
-                                        Please know that the two factor code will expire in <strong>10 minutes</strong><br>
-                                        <small>If you did not request for it, simply ignore this email.</small>
+                                        Please enter the two factor authentication code below to complete your login process. <br><br><br>
+                                        &nbsp;&nbsp;&nbsp;&nbsp;
+                                        <strong>Two Factor Code: {{ $two_factor_code }}</strong><br><br>
+                                        The code will expire in <strong>10 minutes.</strong><br><br>
+                                        <small>If you didn't try to log in recently, we recommend you change your password ASAP to protect your account.</small>
                                     </p>
 
                                     <p
@@ -95,7 +96,7 @@
                                 <td class="content-cell" align="center"
                                     style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 35px;">
                                     <p
-                                            style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; line-height: 1.5em; margin-top: 0; color: #ffffff; font-size: 12px; text-align: center;">
+                                            style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; line-height: 1.5em; margin-top: 0; color: #7C2C9C; font-size: 12px; text-align: center;">
                                         © 2019 {{ config('app.name') }}. All rights reserved.
                                     </p>
                                 </td>
