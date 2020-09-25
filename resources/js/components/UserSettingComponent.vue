@@ -157,7 +157,7 @@
 
       <!--Billing information -->
 
-      <div v-if="billing_address">
+      <div>
         <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
           <div class="card-body">
             <div class="row">
@@ -303,20 +303,6 @@
         </div>
       </div>
 
-      <div v-if="!billing_address">
-        <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-xl-4">
-                <h2 class="mb-1">{{ trans('Billing Information') }}</h2>
-              </div>
-              <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
-                <h5>There is no billing address</h5>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
       <!--Billing information -->
 

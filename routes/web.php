@@ -16,7 +16,9 @@ Route::post('callyou', 'WebSiteController@callYou')->name('web.callyou');
 Route::post('contactus', 'WebSiteController@contactUs')->name('web.contactus');
 Route::get('js/lang.js', 'WebSiteController@getJSONLocalization')->name('web.lang');
 Route::post('subscription', 'SubscriptionController@create')->name('subscription');
-
+Route::get('pages/privacy-policy', 'WebSiteController@getPrivacyPolicy')->name('web.privacy_policy');
+Route::get('pages/terms-of-service', 'WebSiteController@getTermsOfService')->name('web.terms_of_service');
+Route::get('pages/cookie-policy', 'WebSiteController@getCookiePolicy')->name('web.cookie_policy');
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
@@ -25,7 +27,8 @@ Route::post('subscription', 'SubscriptionController@create')->name('subscription
 | Administration views and actions
 |
 */
-Route::prefix('admin')->group(function () {    
+Route::prefix('admin')->group(function () {
+
     // Auth
 
     Route::get('login', 'Auth\LoginController@showLoginForm')->name('admin.login.show')->middleware('guest');
