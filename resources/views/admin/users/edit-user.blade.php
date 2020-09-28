@@ -23,6 +23,8 @@
                                 :get_all_payment_methods="'{{route('admin.users.get_all_payment_methods' , $user->id)}}'"
                                 :delete_payment_method="'{{ route('admin.users.delete_payment_methods',$user->id) }}'"
                                 :update_two_factor_authentication="'{{ route('admin.users.update_two_factor_authentication', $user->id )}}'"
+                                :add_authorized_user="'{{ route('admin.users.add_authorized_user', $user->id) }}'"
+                                :delete_authorized_user="'{{ route('admin.users.delete_authorized_user', $user->id) }}'"
         ></user-setting-component>
     </div>
 @endsection

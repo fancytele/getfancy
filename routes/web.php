@@ -61,6 +61,10 @@ Route::prefix('admin')->group(function () {
         Route::get('users/{user}/payment_methods' , 'Admin\Users\UserController@getAllPaymentMethods')->name('admin.users.get_all_payment_methods');
         Route::delete('users/{user}/delete/payment_methods' , 'Admin\Users\UserController@deletePaymentMethod')->name('admin.users.delete_payment_methods');
         Route::post('users/{user}/update/two_factor_authentication' , 'Admin\Users\UserController@updateTwoFactorAuthentication')->name('admin.users.update_two_factor_authentication');
+        Route::post('users/{user}/add/authorized_user','Admin\Users\UserController@addAuthorizedUser')->name('admin.users.add_authorized_user');
+        Route::post('users/{user}/delete/authorized_user','Admin\Users\UserController@deleteAuthorizedUser')->name('admin.users.delete_authorized_user');
+        Route::get('users/{user}/authorized_user','Admin\Users\UserController@getAuthorizedUser')->name('admin.users.get_authorized_user');
+
 
         // Agents Management
         Route::post('agents/{agent}/reset_password', 'Admin\Users\AgentController@resetPassword')->name('admin.agents.reset_password');

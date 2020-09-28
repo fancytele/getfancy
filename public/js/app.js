@@ -5940,6 +5940,243 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -5976,6 +6213,14 @@ __webpack_require__.r(__webpack_exports__);
     update_two_factor_authentication: {
       type: String,
       required: true
+    },
+    add_authorized_user: {
+      type: String,
+      required: true
+    },
+    delete_authorized_user: {
+      type: String,
+      required: true
     }
   },
   directives: {
@@ -5992,6 +6237,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       laddaButton: null,
+      authorized_users: {},
       user: {
         first_name: '',
         last_name: '',
@@ -6001,7 +6247,13 @@ __webpack_require__.r(__webpack_exports__);
         new_password: null,
         new_password_confirmation: '',
         is_twoFactorAuthentication: '',
-        subscription: ''
+        subscription: '',
+        authorized_user_id_1: '',
+        authorized_user_id_2: '',
+        authorized_user_id_3: '',
+        authorized_user_1: '',
+        authorized_user_2: '',
+        authorized_user_3: ''
       },
       billing_address: {
         address1: '',
@@ -6024,7 +6276,10 @@ __webpack_require__.r(__webpack_exports__);
         city: null,
         country: null,
         state: null,
-        zip_code: null
+        zip_code: null,
+        authorized_user_1: null,
+        authorized_user_2: null,
+        authorized_user_3: null
       },
       payment_methods: {},
       default_card: '',
@@ -6161,13 +6416,18 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error.response);
       });
     },
-    cancelSubscriptionModal: function cancelSubscriptionModal(id) {
+    addAuthorizedUser: function addAuthorizedUser() {
       var _this4 = this;
 
-      this.laddaButton = Ladda.create(document.querySelector('#cancel-subscription'));
+      this.laddaButton = Ladda.create(document.querySelector('#add_authorized_user'));
       this.laddaButton.start();
-      axios.post(this.url, {
-        'user_id': id
+      this.errors.authorized_user_1 = null;
+      this.errors.authorized_user_2 = null;
+      this.errors.authorized_user_3 = null;
+      axios.post(this.add_authorized_user, {
+        'authorized_user_1': this.user.authorized_user_1,
+        'authorized_user_2': this.user.authorized_user_2,
+        'authorized_user_3': this.user.authorized_user_3
       }).then(function (response) {
         console.log(response);
 
@@ -6179,28 +6439,69 @@ __webpack_require__.r(__webpack_exports__);
 
         _this4.laddaButton.stop();
 
+        _this4.errors.authorized_user_1 = error.response.data.original.authorized_user_1;
+        _this4.errors.authorized_user_2 = error.response.data.original.authorized_user_2;
+        _this4.errors.authorized_user_3 = error.response.data.original.authorized_user_3;
+      });
+    },
+    deleteAuthorizedUser: function deleteAuthorizedUser(id) {
+      var _this5 = this;
+
+      axios.post(this.delete_authorized_user, {
+        'authorized_user_id': id
+      }).then(function (response) {
+        console.log(response);
+
+        _this5.laddaButton.stop();
+
+        window.location.reload();
+      })["catch"](function (error) {
+        console.log(error.response);
+
+        _this5.laddaButton.stop();
+      });
+    },
+    cancelSubscriptionModal: function cancelSubscriptionModal(id) {
+      var _this6 = this;
+
+      this.laddaButton = Ladda.create(document.querySelector('#cancel-subscription'));
+      this.laddaButton.start();
+      axios.post(this.url, {
+        'user_id': id
+      }).then(function (response) {
+        console.log(response);
+
+        _this6.laddaButton.stop();
+
+        window.location.reload();
+      })["catch"](function (error) {
+        console.log(error.response);
+
+        _this6.laddaButton.stop();
+
         window.location.reload();
       });
     },
     getUserDetails: function getUserDetails() {
-      var _this5 = this;
+      var _this7 = this;
 
       axios.get(this.route).then(function (response) {
         console.log(response);
-        _this5.user = response.data.user;
-        _this5.billing_address = response.data.billing_information;
-        _this5.user.subscription = response.data.subscription;
+        _this7.user = response.data.user;
+        _this7.billing_address = response.data.billing_information;
+        _this7.user.subscription = response.data.subscription;
+        _this7.authorized_users = response.data.authorized_users;
       })["catch"](function (error) {
         console.log(error);
       });
     },
     getAllPaymentMethods: function getAllPaymentMethods() {
-      var _this6 = this;
+      var _this8 = this;
 
       axios.get(this.get_all_payment_methods).then(function (response) {
         console.log(response);
-        _this6.payment_methods = response.data[1].data;
-        _this6.default_card = response.data[0];
+        _this8.payment_methods = response.data[1].data;
+        _this8.default_card = response.data[0];
       })["catch"](function (error) {
         console.log(error);
       });
@@ -73869,6 +74170,834 @@ var render = function() {
           ]
         )
       ]
+    ),
+    _vm._v(" "),
+    _c(
+      "form",
+      {
+        attrs: { action: _vm.add_authorized_user },
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.addAuthorizedUser()
+          }
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass:
+              "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xl-4" }, [
+                  _c("h2", { staticClass: "mb-1" }, [
+                    _vm._v(_vm._s(_vm.trans("Add Authorized User")))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+                  },
+                  [
+                    _vm._l(_vm.authorized_users, function(authorized_user) {
+                      return _c("div", [
+                        _vm.user.authorized_user_id_1 &&
+                        _vm.user.authorized_user_id_1 == authorized_user["id"]
+                          ? _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("label", [
+                                    _vm._v(
+                                      _vm._s(_vm.trans("Authorized User")) + " "
+                                    ),
+                                    _vm._m(3, true)
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("h5", [
+                                    _vm._v(
+                                      _vm._s(_vm.trans("Name: ")) +
+                                        " " +
+                                        _vm._s(
+                                          authorized_user["first_name"] +
+                                            " " +
+                                            authorized_user["last_name"]
+                                        )
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("h5", [
+                                    _vm._v(
+                                      _vm._s(_vm.trans("Email: ")) +
+                                        " " +
+                                        _vm._s(authorized_user["email"])
+                                    )
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "modal fade",
+                                  attrs: {
+                                    id: "DeleteAuthorisedUserFirstModal",
+                                    tabindex: "-1",
+                                    role: "dialog",
+                                    "aria-labelledby": "delete-element-label",
+                                    "aria-hidden": "true"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "modal-dialog modal-dialog-centered modal-sm",
+                                      attrs: { role: "document" }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "modal-content" },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "modal-body p-0" },
+                                            [
+                                              _vm._m(4, true),
+                                              _vm._v(" "),
+                                              _c(
+                                                "form",
+                                                {
+                                                  staticClass: "mb-0",
+                                                  attrs: {
+                                                    action:
+                                                      _vm.delete_authorized_user
+                                                  },
+                                                  on: {
+                                                    submit: function($event) {
+                                                      $event.preventDefault()
+                                                      return _vm.deleteAuthorizedUser(
+                                                        _vm.user
+                                                          .authorized_user_id_1
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "d-flex my-3 pl-4 pt-4"
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "
+                                                      }),
+                                                      _vm._v(" "),
+                                                      _c("div", [
+                                                        _c(
+                                                          "h3",
+                                                          {
+                                                            staticClass: "mb-0"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                              " +
+                                                                _vm._s(
+                                                                  _vm.trans(
+                                                                    "Are you Sure?"
+                                                                  )
+                                                                ) +
+                                                                "\n                              "
+                                                            ),
+                                                            _c("br")
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c("p", {
+                                                          staticClass:
+                                                            "element-detail text-black-50"
+                                                        })
+                                                      ])
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "d-flex overflow-hidden rounded-bottom"
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "btn btn-lg btn-outline-light rounded-0 text-body w-50",
+                                                          attrs: {
+                                                            type: "button",
+                                                            "data-dismiss":
+                                                              "modal"
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                            " +
+                                                              _vm._s(
+                                                                _vm.trans(
+                                                                  "No! Go Back"
+                                                                )
+                                                              ) +
+                                                              "\n                          "
+                                                          )
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "btn btn-lg btn-danger ladda-button rounded-0 w-50",
+                                                          attrs: {
+                                                            type: "submit",
+                                                            "data-style":
+                                                              "zoom-out"
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                            " +
+                                                              _vm._s(
+                                                                _vm.trans(
+                                                                  "Yes, Sure"
+                                                                )
+                                                              ) +
+                                                              "\n                          "
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.user.authorized_user_id_2 &&
+                        _vm.user.authorized_user_id_2 == authorized_user["id"]
+                          ? _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("label", [
+                                    _vm._v(
+                                      _vm._s(_vm.trans("Authorized User")) + " "
+                                    ),
+                                    _vm._m(5, true)
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("h5", [
+                                    _vm._v(
+                                      _vm._s(_vm.trans("Name: ")) +
+                                        " " +
+                                        _vm._s(
+                                          authorized_user["first_name"] +
+                                            " " +
+                                            authorized_user["last_name"]
+                                        )
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("h5", [
+                                    _vm._v(
+                                      _vm._s(_vm.trans("Email: ")) +
+                                        " " +
+                                        _vm._s(authorized_user["email"])
+                                    )
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "modal fade",
+                                  attrs: {
+                                    id: "DeleteAuthorisedUserSecondModal",
+                                    tabindex: "-1",
+                                    role: "dialog",
+                                    "aria-labelledby": "delete-element-label",
+                                    "aria-hidden": "true"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "modal-dialog modal-dialog-centered modal-sm",
+                                      attrs: { role: "document" }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "modal-content" },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "modal-body p-0" },
+                                            [
+                                              _vm._m(6, true),
+                                              _vm._v(" "),
+                                              _c(
+                                                "form",
+                                                {
+                                                  staticClass: "mb-0",
+                                                  attrs: {
+                                                    action:
+                                                      _vm.delete_authorized_user
+                                                  },
+                                                  on: {
+                                                    submit: function($event) {
+                                                      $event.preventDefault()
+                                                      return _vm.deleteAuthorizedUser(
+                                                        _vm.user
+                                                          .authorized_user_id_2
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "d-flex my-3 pl-4 pt-4"
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "
+                                                      }),
+                                                      _vm._v(" "),
+                                                      _c("div", [
+                                                        _c(
+                                                          "h3",
+                                                          {
+                                                            staticClass: "mb-0"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                              " +
+                                                                _vm._s(
+                                                                  _vm.trans(
+                                                                    "Are you Sure?"
+                                                                  )
+                                                                ) +
+                                                                "\n                              "
+                                                            ),
+                                                            _c("br")
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c("p", {
+                                                          staticClass:
+                                                            "element-detail text-black-50"
+                                                        })
+                                                      ])
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "d-flex overflow-hidden rounded-bottom"
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "btn btn-lg btn-outline-light rounded-0 text-body w-50",
+                                                          attrs: {
+                                                            type: "button",
+                                                            "data-dismiss":
+                                                              "modal"
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                            " +
+                                                              _vm._s(
+                                                                _vm.trans(
+                                                                  "No! Go Back"
+                                                                )
+                                                              ) +
+                                                              "\n                          "
+                                                          )
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "btn btn-lg btn-danger ladda-button rounded-0 w-50",
+                                                          attrs: {
+                                                            type: "submit",
+                                                            "data-style":
+                                                              "zoom-out"
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                            " +
+                                                              _vm._s(
+                                                                _vm.trans(
+                                                                  "Yes, Sure"
+                                                                )
+                                                              ) +
+                                                              "\n                          "
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.user.authorized_user_id_3 &&
+                        _vm.user.authorized_user_id_3 == authorized_user["id"]
+                          ? _c("div", { staticClass: "row" }, [
+                              _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                                _c("div", { staticClass: "form-group" }, [
+                                  _c("label", [
+                                    _vm._v(
+                                      _vm._s(_vm.trans("Authorized User")) +
+                                        "  "
+                                    ),
+                                    _vm._m(7, true)
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("h5", [
+                                    _vm._v(
+                                      _vm._s(_vm.trans("Name: ")) +
+                                        " " +
+                                        _vm._s(
+                                          authorized_user["first_name"] +
+                                            " " +
+                                            authorized_user["last_name"]
+                                        )
+                                    )
+                                  ]),
+                                  _vm._v(" "),
+                                  _c("h5", [
+                                    _vm._v(
+                                      _vm._s(_vm.trans("Email: ")) +
+                                        " " +
+                                        _vm._s(authorized_user["email"])
+                                    )
+                                  ])
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "div",
+                                {
+                                  staticClass: "modal fade",
+                                  attrs: {
+                                    id: "DeleteAuthorisedUserThirdModal",
+                                    tabindex: "-1",
+                                    role: "dialog",
+                                    "aria-labelledby": "delete-element-label",
+                                    "aria-hidden": "true"
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "div",
+                                    {
+                                      staticClass:
+                                        "modal-dialog modal-dialog-centered modal-sm",
+                                      attrs: { role: "document" }
+                                    },
+                                    [
+                                      _c(
+                                        "div",
+                                        { staticClass: "modal-content" },
+                                        [
+                                          _c(
+                                            "div",
+                                            { staticClass: "modal-body p-0" },
+                                            [
+                                              _vm._m(8, true),
+                                              _vm._v(" "),
+                                              _c(
+                                                "form",
+                                                {
+                                                  staticClass: "mb-0",
+                                                  attrs: {
+                                                    action:
+                                                      _vm.delete_authorized_user
+                                                  },
+                                                  on: {
+                                                    submit: function($event) {
+                                                      $event.preventDefault()
+                                                      return _vm.deleteAuthorizedUser(
+                                                        _vm.user
+                                                          .authorized_user_id_3
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "d-flex my-3 pl-4 pt-4"
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "
+                                                      }),
+                                                      _vm._v(" "),
+                                                      _c("div", [
+                                                        _c(
+                                                          "h3",
+                                                          {
+                                                            staticClass: "mb-0"
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                              " +
+                                                                _vm._s(
+                                                                  _vm.trans(
+                                                                    "Are you Sure?"
+                                                                  )
+                                                                ) +
+                                                                "\n                              "
+                                                            ),
+                                                            _c("br")
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c("p", {
+                                                          staticClass:
+                                                            "element-detail text-black-50"
+                                                        })
+                                                      ])
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "d-flex overflow-hidden rounded-bottom"
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "btn btn-lg btn-outline-light rounded-0 text-body w-50",
+                                                          attrs: {
+                                                            type: "button",
+                                                            "data-dismiss":
+                                                              "modal"
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                            " +
+                                                              _vm._s(
+                                                                _vm.trans(
+                                                                  "No! Go Back"
+                                                                )
+                                                              ) +
+                                                              "\n                          "
+                                                          )
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "button",
+                                                        {
+                                                          staticClass:
+                                                            "btn btn-lg btn-danger ladda-button rounded-0 w-50",
+                                                          attrs: {
+                                                            type: "submit",
+                                                            "data-style":
+                                                              "zoom-out"
+                                                          }
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                            " +
+                                                              _vm._s(
+                                                                _vm.trans(
+                                                                  "Yes, Sure"
+                                                                )
+                                                              ) +
+                                                              "\n                          "
+                                                          )
+                                                        ]
+                                                      )
+                                                    ]
+                                                  )
+                                                ]
+                                              )
+                                            ]
+                                          )
+                                        ]
+                                      )
+                                    ]
+                                  )
+                                ]
+                              )
+                            ])
+                          : _vm._e()
+                      ])
+                    }),
+                    _vm._v(" "),
+                    !_vm.user.authorized_user_id_1
+                      ? _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [
+                                _vm._v(
+                                  _vm._s(_vm.trans("Add New Authorized User"))
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.user.authorized_user_1,
+                                    expression: "user.authorized_user_1"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "email" },
+                                domProps: { value: _vm.user.authorized_user_1 },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.user,
+                                      "authorized_user_1",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.authorized_user_1
+                                ? _c(
+                                    "div",
+                                    { staticClass: "validation-error" },
+                                    _vm._l(
+                                      _vm.errors.authorized_user_1,
+                                      function(error) {
+                                        return _c("div", { key: error.id }, [
+                                          _c("span", { staticClass: "small" }, [
+                                            _vm._v(
+                                              "\n                                      " +
+                                                _vm._s(error) +
+                                                "\n                                  "
+                                            )
+                                          ])
+                                        ])
+                                      }
+                                    ),
+                                    0
+                                  )
+                                : _vm._e()
+                            ])
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.user.authorized_user_id_2
+                      ? _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [
+                                _vm._v(
+                                  _vm._s(_vm.trans("Add New Authorized User"))
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.user.authorized_user_2,
+                                    expression: "user.authorized_user_2"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "email" },
+                                domProps: { value: _vm.user.authorized_user_2 },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.user,
+                                      "authorized_user_2",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.authorized_user_2
+                                ? _c(
+                                    "div",
+                                    { staticClass: "validation-error" },
+                                    _vm._l(
+                                      _vm.errors.authorized_user_2,
+                                      function(error) {
+                                        return _c("div", { key: error.id }, [
+                                          _c("span", { staticClass: "small" }, [
+                                            _vm._v(
+                                              "\n                                      " +
+                                                _vm._s(error) +
+                                                "\n                                  "
+                                            )
+                                          ])
+                                        ])
+                                      }
+                                    ),
+                                    0
+                                  )
+                                : _vm._e()
+                            ])
+                          ])
+                        ])
+                      : _vm._e(),
+                    _vm._v(" "),
+                    !_vm.user.authorized_user_id_3
+                      ? _c("div", { staticClass: "row" }, [
+                          _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                            _c("div", { staticClass: "form-group" }, [
+                              _c("label", [
+                                _vm._v(
+                                  _vm._s(_vm.trans("Add New Authorized User"))
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.user.authorized_user_3,
+                                    expression: "user.authorized_user_3"
+                                  }
+                                ],
+                                staticClass: "form-control",
+                                attrs: { type: "email" },
+                                domProps: { value: _vm.user.authorized_user_3 },
+                                on: {
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.user,
+                                      "authorized_user_3",
+                                      $event.target.value
+                                    )
+                                  }
+                                }
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.authorized_user_3
+                                ? _c(
+                                    "div",
+                                    { staticClass: "validation-error" },
+                                    _vm._l(
+                                      _vm.errors.authorized_user_3,
+                                      function(error) {
+                                        return _c("div", { key: error.id }, [
+                                          _c("span", { staticClass: "small" }, [
+                                            _vm._v(
+                                              "\n                                      " +
+                                                _vm._s(error) +
+                                                "\n                                  "
+                                            )
+                                          ])
+                                        ])
+                                      }
+                                    ),
+                                    0
+                                  )
+                                : _vm._e()
+                            ])
+                          ])
+                        ])
+                      : _vm._e()
+                  ],
+                  2
+                )
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c("div", { staticClass: "text-right" }, [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary btn btn-primary ladda-button",
+              attrs: {
+                type: "submit",
+                id: "add_authorized_user",
+                "data-style": "zoom-out"
+              }
+            },
+            [_vm._v("\n        " + _vm._s(_vm.trans("Add")) + "\n      ")]
+          )
+        ])
+      ]
     )
   ])
 }
@@ -73892,6 +75021,123 @@ var staticRenderFns = [
         _c("p", [_vm._v("we're sad to see you go.")])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close mr-3 mt-3",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("i", { staticClass: "fe fe-x-circle" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        attrs: {
+          href: "#",
+          "data-style": "zoom-out",
+          "data-toggle": "modal",
+          "data-target": "#DeleteAuthorisedUserFirstModal"
+        }
+      },
+      [
+        _c("i", {
+          staticClass: "fa fa-trash",
+          attrs: { "aria-hidden": "true" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close mr-3 mt-3",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("i", { staticClass: "fe fe-x-circle" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        attrs: {
+          href: "#",
+          "data-style": "zoom-out",
+          "data-toggle": "modal",
+          "data-target": "#DeleteAuthorisedUserSecondModal"
+        }
+      },
+      [
+        _c("i", {
+          staticClass: "fa fa-trash",
+          attrs: { "aria-hidden": "true" }
+        })
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close mr-3 mt-3",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("i", { staticClass: "fe fe-x-circle" })]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "a",
+      {
+        attrs: {
+          href: "#",
+          "data-style": "zoom-out",
+          "data-toggle": "modal",
+          "data-target": "#DeleteAuthorisedUserThirdModal"
+        }
+      },
+      [
+        _c("i", {
+          staticClass: "fa fa-trash",
+          attrs: { "aria-hidden": "true" }
+        })
+      ]
+    )
   },
   function() {
     var _vm = this

@@ -10,6 +10,7 @@
 
     <title>{{ config('app.name') }} - @yield('page-title')</title>
 
+    <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
     <!-- Scripts -->
     @stack('head-scripts')
     <script src="{{ asset(mix('js/app.js')) }}" defer></script>

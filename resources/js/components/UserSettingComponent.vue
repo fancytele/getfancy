@@ -486,6 +486,243 @@
       </div>
     </div>
     <!--Cancel Subscription Modal -->
+
+    <!-- Add Authorized User -->
+    <form :action="add_authorized_user" @submit.prevent="addAuthorizedUser()">
+    <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
+      <div class="card-body">
+        <div class="row">
+          <div class="col-xl-4">
+            <h2 class="mb-1">{{ trans('Add Authorized User') }}</h2>
+          </div>
+          <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
+            <div v-for="authorized_user in authorized_users">
+              <div v-if="user.authorized_user_id_1 && user.authorized_user_id_1 == authorized_user['id']" class="row">
+                <div class="col-md-8 col-lg-6">
+                  <div class="form-group">
+                    <label>{{ trans('Authorized User') }} <a  href="#"
+                                                              data-style="zoom-out"
+                                                              data-toggle="modal"
+                                                              data-target="#DeleteAuthorisedUserFirstModal"><i class="fa fa-trash" aria-hidden="true"></i></a></label>
+                    <h5>{{ trans('Name: ') }} {{ authorized_user['first_name'] + ' ' +authorized_user['last_name'] }}</h5>
+                    <h5>{{ trans('Email: ') }} {{ authorized_user['email']}}</h5>
+                  </div>
+                </div>
+                <div class="modal fade" id="DeleteAuthorisedUserFirstModal" tabindex="-1" role="dialog"
+                     aria-labelledby="delete-element-label" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body p-0">
+                        <button type="button" class="close mr-3 mt-3"
+                                data-dismiss="modal" aria-label="Close">
+                          <i class="fe fe-x-circle"></i>
+                        </button>
+                        <form :action="delete_authorized_user" class="mb-0" @submit.prevent="deleteAuthorizedUser(user.authorized_user_id_1)">
+                          <div class="d-flex my-3 pl-4 pt-4">
+                            <i
+                                class="display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "></i>
+                            <div>
+                              <h3 class="mb-0">
+                                {{ trans('Are you Sure?') }}
+                                <br>
+                              </h3>
+                              <p class="element-detail text-black-50"></p>
+                            </div>
+                          </div>
+
+                          <div class="d-flex overflow-hidden rounded-bottom">
+                            <button type="button"
+                                    class="btn btn-lg btn-outline-light rounded-0 text-body w-50"
+                                    data-dismiss="modal">
+                              {{ trans('No! Go Back') }}
+                            </button>
+                            <button type="submit"
+                                    class="btn btn-lg btn-danger ladda-button rounded-0 w-50"
+                                    data-style="zoom-out">
+                              {{ trans('Yes, Sure') }}
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div v-if="user.authorized_user_id_2 && user.authorized_user_id_2 == authorized_user['id']" class="row">
+
+                <div class="col-md-8 col-lg-6">
+                  <div class="form-group">
+                    <label>{{ trans('Authorized User') }} <a  href="#"
+                                                              data-style="zoom-out"
+                                                              data-toggle="modal"
+                                                              data-target="#DeleteAuthorisedUserSecondModal"><i class="fa fa-trash" aria-hidden="true"></i></a></label>
+                    <h5>{{ trans('Name: ') }} {{ authorized_user['first_name'] + ' ' +authorized_user['last_name'] }}</h5>
+                    <h5>{{ trans('Email: ') }} {{ authorized_user['email']}}</h5>
+                  </div>
+                </div>
+                <div class="modal fade" id="DeleteAuthorisedUserSecondModal" tabindex="-1" role="dialog"
+                     aria-labelledby="delete-element-label" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body p-0">
+                        <button type="button" class="close mr-3 mt-3"
+                                data-dismiss="modal" aria-label="Close">
+                          <i class="fe fe-x-circle"></i>
+                        </button>
+                        <form :action="delete_authorized_user" class="mb-0" @submit.prevent="deleteAuthorizedUser(user.authorized_user_id_2)">
+                          <div class="d-flex my-3 pl-4 pt-4">
+                            <i
+                                class="display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "></i>
+                            <div>
+                              <h3 class="mb-0">
+                                {{ trans('Are you Sure?') }}
+                                <br>
+                              </h3>
+                              <p class="element-detail text-black-50"></p>
+                            </div>
+                          </div>
+
+                          <div class="d-flex overflow-hidden rounded-bottom">
+                            <button type="button"
+                                    class="btn btn-lg btn-outline-light rounded-0 text-body w-50"
+                                    data-dismiss="modal">
+                              {{ trans('No! Go Back') }}
+                            </button>
+                            <button type="submit"
+                                    class="btn btn-lg btn-danger ladda-button rounded-0 w-50"
+                                    data-style="zoom-out">
+                              {{ trans('Yes, Sure') }}
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div v-if="user.authorized_user_id_3 && user.authorized_user_id_3 == authorized_user['id']" class="row">
+                <div class="col-md-8 col-lg-6">
+                  <div class="form-group">
+                    <label>{{ trans('Authorized User') }}  <a  href="#"
+                                                               data-style="zoom-out"
+                                                               data-toggle="modal"
+                                                               data-target="#DeleteAuthorisedUserThirdModal"><i class="fa fa-trash" aria-hidden="true"></i></a></label>
+                    <h5>{{ trans('Name: ') }} {{ authorized_user['first_name'] + ' ' +authorized_user['last_name'] }}</h5>
+                    <h5>{{ trans('Email: ') }} {{ authorized_user['email']}}</h5>
+                  </div>
+                </div>
+                <div class="modal fade" id="DeleteAuthorisedUserThirdModal" tabindex="-1" role="dialog"
+                     aria-labelledby="delete-element-label" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                    <div class="modal-content">
+                      <div class="modal-body p-0">
+                        <button type="button" class="close mr-3 mt-3"
+                                data-dismiss="modal" aria-label="Close">
+                          <i class="fe fe-x-circle"></i>
+                        </button>
+                        <form :action="delete_authorized_user" class="mb-0" @submit.prevent="deleteAuthorizedUser(user.authorized_user_id_3)">
+                          <div class="d-flex my-3 pl-4 pt-4">
+                            <i
+                                class="display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "></i>
+                            <div>
+                              <h3 class="mb-0">
+                                {{ trans('Are you Sure?') }}
+                                <br>
+                              </h3>
+                              <p class="element-detail text-black-50"></p>
+                            </div>
+                          </div>
+
+                          <div class="d-flex overflow-hidden rounded-bottom">
+                            <button type="button"
+                                    class="btn btn-lg btn-outline-light rounded-0 text-body w-50"
+                                    data-dismiss="modal">
+                              {{ trans('No! Go Back') }}
+                            </button>
+                            <button type="submit"
+                                    class="btn btn-lg btn-danger ladda-button rounded-0 w-50"
+                                    data-style="zoom-out">
+                              {{ trans('Yes, Sure') }}
+                            </button>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div v-if="!user.authorized_user_id_1" class="row">
+              <div class="col-md-8 col-lg-6">
+                <div class="form-group">
+                  <label>{{ trans('Add New Authorized User') }}</label>
+                  <input type="email"
+                         class="form-control"
+                         v-model="user.authorized_user_1"
+
+                  />
+                  <div v-if ="errors.authorized_user_1" class = "validation-error">
+                    <div v-for="error in errors.authorized_user_1" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-if="!user.authorized_user_id_2" class="row">
+              <div class="col-md-8 col-lg-6">
+                <div class="form-group">
+                  <label>{{ trans('Add New Authorized User') }}</label>
+                  <input type="email"
+                         class="form-control"
+                         v-model="user.authorized_user_2"
+
+                  />
+                  <div v-if ="errors.authorized_user_2" class = "validation-error">
+                    <div v-for="error in errors.authorized_user_2" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div v-if="!user.authorized_user_id_3" class="row">
+              <div class="col-md-8 col-lg-6">
+                <div class="form-group">
+                  <label>{{ trans('Add New Authorized User') }}</label>
+                  <input type="email"
+                         class="form-control"
+                         v-model="user.authorized_user_3"
+                  />
+                  <div v-if ="errors.authorized_user_3" class = "validation-error">
+                    <div v-for="error in errors.authorized_user_3" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+      <div class="text-right">
+        <button type="submit"
+                id="add_authorized_user"
+                class="btn btn-primary btn btn-primary ladda-button"
+                data-style="zoom-out">
+          {{ trans('Add') }}
+        </button>
+      </div>
+    </form>
+    <!-- Add Authorized User -->
   </div>
 </template>
 
@@ -530,7 +767,15 @@ export default {
     update_two_factor_authentication:{
       type:String,
       required:true
-    }
+    },
+    add_authorized_user:{
+      type:String,
+      required:true
+    },
+    delete_authorized_user:{
+      type:String,
+      required:true
+    },
   },
 
   directives: {
@@ -553,6 +798,7 @@ export default {
   data(){
     return {
       laddaButton: null,
+      authorized_users:{},
       user: {
         first_name:'',
         last_name:'',
@@ -562,7 +808,13 @@ export default {
         new_password: null,
         new_password_confirmation:'',
         is_twoFactorAuthentication:'',
-        subscription:''
+        subscription:'',
+        authorized_user_id_1:'',
+        authorized_user_id_2:'',
+        authorized_user_id_3:'',
+        authorized_user_1:'',
+        authorized_user_2:'',
+        authorized_user_3:'',
       },
       billing_address:{
         address1: '',
@@ -587,6 +839,9 @@ export default {
         country: null,
         state: null,
         zip_code: null,
+        authorized_user_1:null,
+        authorized_user_2:null,
+        authorized_user_3:null,
       },
       payment_methods:{},
       default_card:'',
@@ -733,6 +988,53 @@ export default {
 
     },
 
+    addAuthorizedUser(){
+      this.laddaButton = Ladda.create(
+          document.querySelector('#add_authorized_user')
+      );
+
+      this.laddaButton.start();
+
+      this.errors.authorized_user_1 = null;
+      this.errors.authorized_user_2 = null;
+      this.errors.authorized_user_3 = null;
+      axios.post(this.add_authorized_user,{
+        'authorized_user_1' : this.user.authorized_user_1,
+        'authorized_user_2' : this.user.authorized_user_2,
+        'authorized_user_3' : this.user.authorized_user_3,
+
+      })
+        .then(response=>{
+          console.log(response);
+          this.laddaButton.stop();
+          window.location.reload();
+        })
+        .catch(error => {
+          console.log(error.response);
+          this.laddaButton.stop();
+          this.errors.authorized_user_1 = error.response.data.original.authorized_user_1
+          this.errors.authorized_user_2 = error.response.data.original.authorized_user_2
+          this.errors.authorized_user_3 = error.response.data.original.authorized_user_3
+        });
+
+
+    },
+
+    deleteAuthorizedUser(id){
+      axios.post(this.delete_authorized_user ,{
+        'authorized_user_id': id
+      })
+          .then(response=>{
+            console.log(response);
+            this.laddaButton.stop();
+            window.location.reload();
+          })
+          .catch(error => {
+            console.log(error.response);
+            this.laddaButton.stop();
+          });
+    },
+
     cancelSubscriptionModal(id) {
       this.laddaButton = Ladda.create(
           document.querySelector('#cancel-subscription')
@@ -760,6 +1062,7 @@ export default {
             this.user = response.data.user;
             this.billing_address = response.data.billing_information;
             this.user.subscription = response.data.subscription;
+            this.authorized_users = response.data.authorized_users;
           })
           .catch(error => {
             console.log(error);
@@ -777,6 +1080,7 @@ export default {
             console.log(error);
           });
     },
+
   },
 
   computed: {

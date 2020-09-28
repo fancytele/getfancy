@@ -7,8 +7,11 @@ use App\Enums\AddressType;
 use App\Enums\DIDOrderStatus;
 use App\Enums\Role;
 use App\FancyNumber;
+use App\Rules\AuthUserEmailNotAllowed;
+use App\Rules\EmailAlreadyExists;
 use App\Rules\MatchOldPassword;
 use App\Rules\StrongPassword;
+use App\Rules\UnauthorisedEmail;
 use App\User;
 use App\Subscription;
 use Carbon\Carbon;
@@ -354,6 +357,69 @@ class UserService
 
         $user = Subscription::where('user_id' , '=' , auth()->user()->id)->first();
         $user->delete();
+
+        return $user;
+    }
+
+    public function addAuthorizedUser($data , $user){
+
+        $validator = Validator::make($data,[
+            'authorized_user_1'=> ['bail','exists:users,email', new UnauthorisedEmail, new EmailAlreadyExists, new AuthUserEmailNotAllowed],
+            'authorized_user_2'=>[ 'bail','exists:users,email', new UnauthorisedEmail, new EmailAlreadyExists, new AuthUserEmailNotAllowed],
+            'authorized_user_3'=> ['bail','exists:users,email', new UnauthorisedEmail, new EmailAlreadyExists, new AuthUserEmailNotAllowed],
+        ]);
+
+        if($validator->fails())
+        {
+            return response($validator->errors() , 422);
+        }
+
+        if(array_key_exists('authorized_user_1' , $data)){
+
+            $authorized_user= User::where('email' ,'=',$data['authorized_user_1'])->first();
+
+            $user->authorized_user_id_1 = $authorized_user->id;
+
+            $user->save();
+        }
+        if(array_key_exists('authorized_user_2' , $data)){
+            $authorized_user= User::where('email' ,'=',$data['authorized_user_2'])->first();
+
+            $user->authorized_user_id_2 = $authorized_user->id;
+
+            $user->save();
+        }
+        if(array_key_exists('authorized_user_3' , $data)){
+            $authorized_user = User::where('email' ,'=',$data['authorized_user_3'])->first();
+
+            $user->authorized_user_id_3 = $authorized_user->id;
+
+            $user->save();
+        }
+
+        return response($user , 200);
+    }
+
+    public function deleteAuthorizedUser($data , $user){
+
+        if($data['authorized_user_id'] == $user['authorized_user_id_1']){
+
+            $user->authorized_user_id_1 = null;
+
+            $user->save();
+        }
+        if($data['authorized_user_id'] ==  $user['authorized_user_id_2']){
+
+            $user->authorized_user_id_2 = null;
+
+            $user->save();
+        }
+        if($data['authorized_user_id'] ==  $user['authorized_user_id_3']){
+
+            $user->authorized_user_id_3 = null;
+
+            $user->save();
+        }
 
         return $user;
     }

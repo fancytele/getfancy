@@ -42,8 +42,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication','usersByRole','impersonate','stopImpersonate']);
-        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication']);
+        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication','usersByRole','impersonate','stopImpersonate','addAuthorizedUser','deleteAuthorizedUser']);
+        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication' ,'addAuthorizedUser','deleteAuthorizedUser']);
         $this->middleware(['role:admin|user|agent'])->only(['usersByRole','impersonate','stopImpersonate']);
     }
 
@@ -281,16 +281,16 @@ class UserController extends Controller
     {
         if(auth()->user()->hasRole(Role::USER))
         {
-            $authorized_user = User::where('authorized_user_id_1' , '=' , auth()->user()->id)
-                ->orWhere('authorized_user_id_2' , '=' , auth()->user()->id)
-                ->orWhere('authorized_user_id_3' , '=' , auth()->user()->id)
+            $authorized_users = User::where('id' , '=', auth()->user()->authorized_user_id_1)
+                ->orWhere('id' , '=',  auth()->user()->authorized_user_id_2)
+                ->orWhere('id' , '=',  auth()->user()->authorized_user_id_3)
                 ->simplePaginate(5);
 
-            $authorized_user->setPath('');
+            $authorized_users->setPath('');
 
             //auth()->user()->assignRole(Role::AUTHORIZED_USER);
 
-            return response()->json($authorized_user);
+            return response()->json($authorized_users);
 
 
         }
@@ -354,7 +354,16 @@ class UserController extends Controller
 
             $subscription = Subscription::where('user_id', '=', $user->id)->pluck('id')->first();
 
-            return response()->json(["user" =>$user, "billing_information" => $billing_information, 'subscription' =>$subscription] , 200);
+            $authorized_users = User::where('id' , '=', $user->authorized_user_id_1)
+                ->orWhere('id' , '=', $user->authorized_user_id_2)
+                ->orWhere('id' , '=', $user->authorized_user_id_3)
+                ->get();
+
+            return response()->json(["user" =>$user,
+                "billing_information" => $billing_information,
+                'subscription' =>$subscription,
+                'authorized_users' => $authorized_users
+            ] , 200);
         }
         else{
             return view ('admin.users.edit-user', array('user' => $user));
@@ -381,12 +390,15 @@ class UserController extends Controller
 
         $user = $user_service->updateProfile($data, $user);
 
+        dd($user);
         if($user->status() == 422)
         {
             return response()->json($user , 422);
         }
+        if($user->status() == 401){
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
         else{
-
             return response()->json($user , 200);
         }
     }
@@ -486,9 +498,50 @@ class UserController extends Controller
         return response()->json($delete_payment_method);
     }
 
-    public function assignRoleAuthorizedUser(){
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addAuthorizedUser(Request $request, User $user){
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
 
+        $data = $request->all();
 
+        $user_service = new UserService();
+
+        $user = $user_service->addAuthorizedUser($data, $user);
+
+        if($user->status() == 422)
+        {
+            return response()->json($user , 422);
+        }
+        else{
+            return response()->json($user , 200);
+        }
     }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteAuthorizedUser(Request $request, User $user){
+
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+
+        $data = $request->all();
+
+        $user_service = new UserService();
+
+        $user = $user_service->deleteAuthorizedUser($data, $user);
+
+        return response()->json($user , 200);
+    }
+
 
 }
