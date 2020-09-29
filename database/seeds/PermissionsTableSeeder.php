@@ -32,6 +32,7 @@ class PermissionsTableSeeder extends Seeder
         Role::create(['name' => 'user']);
         $supervisor = Role::create(['name' => 'supervisor']);
         $operator = Role::create(['name' => 'operator']);
+        $authorized_user = Role::create(['name' => 'authorized_user']);
 
         $permissions = [
             'create admin', 'update admin', 'view admin', 'remove admin',
@@ -64,5 +65,6 @@ class PermissionsTableSeeder extends Seeder
 
         // Operator
         $operator->givePermissionTo(['view ticket', 'update ticket', 'remove ticket']);
+
     }
 }

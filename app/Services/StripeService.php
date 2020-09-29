@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Stripe\Customer as StripeCustomer;
+use Stripe\Exception\ApiErrorException;
 use Stripe\Invoice as StripeInvoice;
 use Stripe\InvoiceItem as StripeInvoiceItem;
 use Stripe\Plan as StripePlan;
@@ -22,7 +23,7 @@ class StripeService
      * Create a Stripe customer for the given model.
      *
      * @param array $options
-     * @return \Stripe\Customer
+     * @return StripeCustomer
      */
     public function createCustomer(array $options = [])
     {
@@ -203,5 +204,99 @@ class StripeService
             'customer' => $customerId,
             'description' => $description,
         ], $this->getStripeKey());
+    }
+
+    public function cancelSubscription($subscription_id)
+    {
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+        try {
+            $subscription = StripeSubscription::retrieve($subscription_id);
+            return $subscription->cancel();
+        } catch (ApiErrorException $e) {
+           return $e->getMessage();
+        }
+    }
+
+    public function updatePaymentMethod($data)
+    {
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+        try{
+
+            $customer = StripeCustomer::retrieve(auth()->user()->stripe_id);
+
+            $card = StripeCustomer::createSource(auth()->user()->stripe_id , [
+                'source' => $data['stripe_token']
+            ]);
+
+            $customer->default_source=$card['id'];
+
+            $customer->save();
+
+            return $card;
+
+        } catch (ApiErrorException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function updateBillingAddress(array $data){
+
+        try {
+            return StripeCustomer::update(auth()->user()->stripe_id, [
+                'address' => [
+                    'city' => $data['address_1'],
+                    'country' => $data['country'],
+                    'line1' => $data['address_1'],
+                    'line2' => $data['address_2'],
+                    'postal_code' => $data['zip_code'],
+                    'state' => $data['state']
+                ],
+            ], $this->getStripeKey());
+        } catch (ApiErrorException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function getAllPaymentMethods(){
+
+        try {
+            $customer = StripeCustomer::retrieve(auth()->user()->stripe_id, $this->getStripeKey());
+
+            $default_card = $customer->default_source;
+            $payment_method = \Stripe\PaymentMethod::all([
+                'customer' => auth()->user()->stripe_id,
+                'type' => 'card',
+            ], $this->getStripeKey());
+
+            return ([$default_card, $payment_method ]);
+        } catch (ApiErrorException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function deletePaymentMethod($data){
+        try {
+            return StripeCustomer::deleteSource(auth()->user()->stripe_id , $data['card_id'], [],$this->getStripeKey());
+        } catch (ApiErrorException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function updateDefaultCard($data){
+
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+        try{
+
+            $customer = StripeCustomer::retrieve(auth()->user()->stripe_id);
+
+            $customer->default_source=$data['card_id'];
+
+            $customer->save();
+
+            return $customer;
+
+        } catch (ApiErrorException $e) {
+            return $e->getMessage();
+        }
     }
 }

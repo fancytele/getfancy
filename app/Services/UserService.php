@@ -7,11 +7,17 @@ use App\Enums\AddressType;
 use App\Enums\DIDOrderStatus;
 use App\Enums\Role;
 use App\FancyNumber;
+use App\Rules\AuthUserEmailNotAllowed;
+use App\Rules\EmailAlreadyExists;
+use App\Rules\MatchOldPassword;
+use App\Rules\StrongPassword;
+use App\Rules\UnauthorisedEmail;
 use App\User;
 use App\Subscription;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Stripe\Customer as StripeCustomer;
 use Stripe\Subscription as StripeSubscription;
 
@@ -265,4 +271,157 @@ class UserService
 
         return compact('total', 'successful', 'successful_average', 'unsuccessful', 'unsuccessful_average', 'duration');
     }
+
+    /**
+     * @param $data
+     * @param $user
+     * @return mixed
+     */
+    public function updateProfile($data, $user)
+    {
+        $validator = Validator::make($data,[
+            'first_name'=> 'required|string|min:2',
+            'last_name'=> 'required|string|min:2',
+            'email'=> 'required|email',
+            'phone_number'=> 'required|integer',
+            'current_password' =>['required_with:new_password', new MatchOldPassword],
+            'new_password' =>['required_with:current_password','min:8','confirmed' , new StrongPassword],
+            'address_1' =>'required|string',
+            'address_2' =>'required|string',
+            'country' =>'required|string',
+            'state' =>'required|string',
+            'city'=>'required|string',
+            'zip_code' => 'required|integer'
+        ]);
+
+        if($validator->fails())
+        {
+            return response($validator->errors() , 422);
+        }
+
+        $address = Address::where('user_id' , '=' , $user->id)
+            ->where('type' , '=', 'billing')->first();
+
+        if(array_key_exists('new_password' , $data)){
+
+            $user->update([
+                'first_name'=> $data['first_name'],
+                'last_name'=> $data['last_name'],
+                'email'=> $data['email'],
+                'phone_number'=> $data['phone_number'],
+                'password'=> Hash::make($data['new_password'])
+            ]);
+
+            $address->update([
+                'address1' => $data['address_1'],
+                'address2' =>$data['address_2'],
+                'country' => $data['country'],
+                'city' => $data['city'],
+                'state'=> $data['state'],
+                'zip_code' => $data['zip_code']
+            ]);
+        }
+
+        else{
+            $user->update([
+                'first_name'=> $data['first_name'],
+                'last_name'=> $data['last_name'],
+                'email'=> $data['email'],
+                'phone_number'=> $data['phone_number'],
+            ]);
+            $address->update([
+                'address1' => $data['address_1'],
+                'address2' =>$data['address_2'],
+                'country' => $data['country'],
+                'city' => $data['city'],
+                'state'=> $data['state'],
+                'zip_code' => $data['zip_code']
+            ]);
+        }
+
+        $stripe_service = new StripeService();
+        $stripe_service->updateBillingAddress($data);
+
+     if($data['stripe_token'] != null){
+            $update_payment = $stripe_service->updatePaymentMethod($data);
+            $user->update([
+                'card_brand' =>$update_payment->brand,
+                'card_last_four' => $update_payment->last4
+            ]);
+
+        }
+        return response([$user , $address] , 200);
+    }
+
+    public function cancelSubscription(){
+
+        $user = Subscription::where('user_id' , '=' , auth()->user()->id)->first();
+        $user->delete();
+
+        return $user;
+    }
+
+    public function addAuthorizedUser($data , $user){
+
+        $validator = Validator::make($data,[
+            'authorized_user_1'=> ['bail','exists:users,email', new UnauthorisedEmail, new EmailAlreadyExists, new AuthUserEmailNotAllowed],
+            'authorized_user_2'=>[ 'bail','exists:users,email', new UnauthorisedEmail, new EmailAlreadyExists, new AuthUserEmailNotAllowed],
+            'authorized_user_3'=> ['bail','exists:users,email', new UnauthorisedEmail, new EmailAlreadyExists, new AuthUserEmailNotAllowed],
+        ]);
+
+        if($validator->fails())
+        {
+            return response($validator->errors() , 422);
+        }
+
+        if(array_key_exists('authorized_user_1' , $data)){
+
+            $authorized_user= User::where('email' ,'=',$data['authorized_user_1'])->first();
+
+            $user->authorized_user_id_1 = $authorized_user->id;
+
+            $user->save();
+        }
+        if(array_key_exists('authorized_user_2' , $data)){
+            $authorized_user= User::where('email' ,'=',$data['authorized_user_2'])->first();
+
+            $user->authorized_user_id_2 = $authorized_user->id;
+
+            $user->save();
+        }
+        if(array_key_exists('authorized_user_3' , $data)){
+            $authorized_user = User::where('email' ,'=',$data['authorized_user_3'])->first();
+
+            $user->authorized_user_id_3 = $authorized_user->id;
+
+            $user->save();
+        }
+
+        return response($user , 200);
+    }
+
+    public function deleteAuthorizedUser($data , $user){
+
+        if($data['authorized_user_id'] == $user['authorized_user_id_1']){
+
+            $user->authorized_user_id_1 = null;
+
+            $user->save();
+        }
+        if($data['authorized_user_id'] ==  $user['authorized_user_id_2']){
+
+            $user->authorized_user_id_2 = null;
+
+            $user->save();
+        }
+        if($data['authorized_user_id'] ==  $user['authorized_user_id_3']){
+
+            $user->authorized_user_id_3 = null;
+
+            $user->save();
+        }
+
+        return $user;
+    }
+
 }

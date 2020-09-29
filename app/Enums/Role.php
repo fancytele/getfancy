@@ -8,4 +8,5 @@ abstract class Role extends Enum
     const AGENT = 'agent';
     const USER = 'user';
     const OPERATOR = 'operator';
+    const AUTHORIZED_USER = 'authorized_user';
 }

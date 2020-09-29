@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Admin\Users;
 
 use App\Addon;
+use App\Address;
 use App\Enums\AddonCode;
 use App\Enums\FancyNotificationPeriod;
 use App\Enums\Role;
 use App\Enums\TicketStatus;
 use App\Events\RegisterInvoiceEvent;
+use App\FancyNumber;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\FancyNumberRequest;
 use App\Http\Requests\FancySettingRequest;
@@ -19,6 +21,7 @@ use App\Services\DIDService;
 use App\Services\FancySettingService;
 use App\Services\StripeService;
 use App\Services\UserService;
+use App\Subscription;
 use App\Ticket;
 use App\User;
 use Exception;
@@ -39,14 +42,15 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy']);
-        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy']);
+        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication','usersByRole','impersonate','stopImpersonate','addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard']);
+        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication' ,'addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard']);
+        $this->middleware(['role:admin|user|agent'])->only(['usersByRole','impersonate','stopImpersonate']);
     }
 
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function index()
     {
@@ -58,7 +62,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function create()
     {
@@ -275,15 +279,31 @@ class UserController extends Controller
      */
     public function usersByRole(string $role)
     {
-        $users = SpatieRole::findByName($role)
-            ->users()
-            ->select(['id', 'first_name', 'last_name'])
-            ->orderBy('first_name')
-            ->simplePaginate(5);
+        if(auth()->user()->hasRole(Role::USER))
+        {
+            $authorized_users = User::where('authorized_user_id_1' , '=', auth()->user()->id)
+                ->orWhere('authorized_user_id_1' , '=',  auth()->user()->id)
+                ->orWhere('authorized_user_id_1' , '=',  auth()->user()->id)
+                ->simplePaginate(5);
 
-        $users->setPath('');
+            $authorized_users->setPath('');
 
-        return response()->json($users);
+            return response()->json($authorized_users);
+
+
+        }
+       else{
+           $users = SpatieRole::findByName($role)
+               ->users()
+               ->select(['id', 'first_name', 'last_name'])
+               ->orderBy('first_name')
+               ->simplePaginate(5);
+
+           $users->setPath('');
+
+           return response()->json($users);
+       }
+
     }
 
     /**
@@ -296,7 +316,7 @@ class UserController extends Controller
     {
         $user_to_personify = User::find($id);
 
-        if (Auth::user()->hasRole(Role::ADMIN) && $user_to_personify->hasRole(Role::ADMIN) === false) {
+        if (Auth::user()->hasRole(Role::ADMIN) OR Auth::user()->hasRole(Role::USER) && $user_to_personify->hasRole(Role::ADMIN) === false) {
             Auth::user()->setImpersonating($user_to_personify->id);
         }
 
@@ -315,4 +335,224 @@ class UserController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param Request $request
+     * @param \App\User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function editProfile(Request $request, User $user)
+    {
+        if($request->wantsJson())
+        {
+            $billing_information = Address::where('user_id' , '=' , $user->id)
+                ->where('type' , '=' , 'billing')->first();
+
+            $subscription = Subscription::where('user_id', '=', $user->id)->pluck('id')->first();
+
+            $authorized_users = User::where('id' , '=', $user->authorized_user_id_1)
+                ->orWhere('id' , '=', $user->authorized_user_id_2)
+                ->orWhere('id' , '=', $user->authorized_user_id_3)
+                ->get();
+
+            return response()->json(["user" =>$user,
+                "billing_information" => $billing_information,
+                'subscription' =>$subscription,
+                'authorized_users' => $authorized_users
+            ] , 200);
+        }
+        else{
+            return view ('admin.users.edit-user', array('user' => $user));
+        }
+
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \App\Http\Requests\FancySettingRequest $request
+     * @param \App\User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateProfile(Request $request, User $user)
+    {
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+
+        $data = $request->all();
+
+        $user_service = new UserService();
+
+        $user = $user_service->updateProfile($data, $user);
+
+        dd($user);
+        if($user->status() == 422)
+        {
+            return response()->json($user , 422);
+        }
+        if($user->status() == 401){
+            return response()->json(['message' => 'Unauthorized'], 401);
+        }
+        else{
+            return response()->json($user , 200);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     */
+    public function updateTwoFactorAuthentication(Request $request, User $user){
+
+        $data = $request->all();
+
+        if($data['is_twoFactorAuthentication'] == false){
+            $user->is_twoFactorAuthentication = 0;
+            $user->save();
+        }
+        if($data['is_twoFactorAuthentication'] == true){
+            $user->is_twoFactorAuthentication = 1;
+            $user->save();
+        }
+
+        return response()->json($user);
+    }
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function cancelSubscription(Request $request, User $user){
+
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+
+        $subscription_id = Subscription::where('user_id' , '=' , auth()->user()->id)->pluck('stripe_id')->first();
+
+        if(!$subscription_id)
+        {
+            return response()->json(['data'=>['errors' => ['message' => 'No Subscription']]],404);
+        }
+
+        $user_service = new UserService();
+
+        //Cancel Subscription
+        $user_service->cancelSubscription();
+
+        $fancyNumber_id = FancyNumber::where('user_id' , auth()->user()->id)->pluck('id')->first();
+
+        // Update Ticket
+        $ticket = Ticket::where('fancy_number_id' ,'=' ,  $fancyNumber_id)->first();
+        $ticket->status = TicketStatus::CANCELED;
+        $ticket->save();
+
+        //Cancel Stripe Subscription
+        $stripe_service = new StripeService();
+        $cancel_subscription= $stripe_service->cancelSubscription($subscription_id);
+
+        return response()->json($cancel_subscription);
+    }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+   public function getAllPaymentMethods(Request $request, User $user){
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+
+        if($user->stripe_id){
+            $stripe_service = new StripeService();
+            $all_payment_method= $stripe_service->getAllPaymentMethods();
+            return response()->json($all_payment_method);
+        }
+        else{
+            return response()->json('There is no payment method' , 204);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deletePaymentMethod(Request $request, User $user){
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+
+        $data = $request->all();
+
+        $stripe_service = new StripeService();
+
+        $delete_payment_method = $stripe_service->deletePaymentMethod($data);
+
+        return response()->json($delete_payment_method);
+    }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addAuthorizedUser(Request $request, User $user){
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+
+        $data = $request->all();
+
+        $user_service = new UserService();
+
+        $user = $user_service->addAuthorizedUser($data, $user);
+
+        if($user->status() == 422)
+        {
+            return response()->json($user , 422);
+        }
+        else{
+            return response()->json($user , 200);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function deleteAuthorizedUser(Request $request, User $user){
+
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+
+        $data = $request->all();
+
+        $user_service = new UserService();
+
+        $user = $user_service->deleteAuthorizedUser($data, $user);
+
+        return response()->json($user , 200);
+    }
+    public function updateDefaultCard(Request $request, User $user)
+    {
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+
+        $data = $request->all();
+
+        $stripe_service = new StripeService();
+
+        $update_default_card = $stripe_service->updateDefaultCard($data);
+
+        return response()->json($update_default_card);
+    }
+
 }

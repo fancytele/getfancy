@@ -38,9 +38,10 @@ Route::prefix('admin')->group(function () {
     Route::post('password/reset', 'Auth\ResetPasswordController@reset')->name('password.update');
 
     // Impersonate user
-    Route::get('roles/{role}/users', 'Admin\Users\UserController@usersByRole')->middleware(['role:admin'])->name('admin.roles.users');
+    Route::get('roles/{role}/users', 'Admin\Users\UserController@usersByRole')->middleware(['role:admin|user'])->name('admin.roles.users');
     Route::get('users/{id}/impersonate', 'Admin\Users\UserController@impersonate')->name('admin.users.impersonate');
     Route::get('users/stop', 'Admin\Users\UserController@stopImpersonate')->name('admin.users.stop_impersonate');
+
 
     Route::middleware(['impersonate'])->group(function () {
         // Dashboard
@@ -53,6 +54,18 @@ Route::prefix('admin')->group(function () {
         Route::get('users/{user}/edit/fancy', 'Admin\Users\UserController@editFancy')->name('admin.users.edit_fancy');
         Route::post('users/{user}/update/fancy', 'Admin\Users\UserController@updateFancy')->name('admin.users.update_fancy');
         Route::resource('users', 'Admin\Users\UserController', ['as' => 'admin'])->except(['show', 'edit', 'destroy']);
+        // Milestone 2 - user profile settings
+        Route::get('users/{user}/edit/profile', 'Admin\Users\UserController@editProfile')->name('admin.users.edit_profile');
+        Route::post('users/{user}/update/profile', 'Admin\Users\UserController@updateProfile')->name('admin.users.update_profile');
+        Route::post('users/{user}/cancel/subscription' , 'Admin\Users\UserController@cancelSubscription')->name('admin.users.cancel_subscription');
+        Route::get('users/{user}/payment_methods' , 'Admin\Users\UserController@getAllPaymentMethods')->name('admin.users.get_all_payment_methods');
+        Route::post('users/{user}/update/default_card','Admin\Users\UserController@updateDefaultCard')->name('admin.users.update_default_card');
+        Route::delete('users/{user}/delete/payment_methods' , 'Admin\Users\UserController@deletePaymentMethod')->name('admin.users.delete_payment_methods');
+        Route::post('users/{user}/update/two_factor_authentication' , 'Admin\Users\UserController@updateTwoFactorAuthentication')->name('admin.users.update_two_factor_authentication');
+        Route::post('users/{user}/add/authorized_user','Admin\Users\UserController@addAuthorizedUser')->name('admin.users.add_authorized_user');
+        Route::post('users/{user}/delete/authorized_user','Admin\Users\UserController@deleteAuthorizedUser')->name('admin.users.delete_authorized_user');
+        Route::get('users/{user}/authorized_user','Admin\Users\UserController@getAuthorizedUser')->name('admin.users.get_authorized_user');
+
 
         // Agents Management
         Route::post('agents/{agent}/reset_password', 'Admin\Users\AgentController@resetPassword')->name('admin.agents.reset_password');
