@@ -318,6 +318,9 @@
                         <div v-if="payment_method.id == default_card">
                           <span class="badge badge-pill badge-primary float-right">{{ trans('Default Card') }}</span>
                         </div>
+                        <div v-if="payment_method.id != default_card">
+                          <a href="#" @click="setAsDefaultCard(payment_method.id)"><span class="badge badge-pill badge-secondary float-right">{{ trans('Set As Default Card') }}</span></a>
+                        </div>
                         <p class="card-text" style="text-transform: capitalize;">{{ trans('Card Brand:') }} <strong>{{ payment_method.card.brand }}</strong></p>
                         <p class="card-text">{{ trans('Card Number:') }} <strong>XXXX XXXX XXXX {{ payment_method.card.last4 }}</strong></p>
                         <p class="card-text">{{ trans('Card Expiry Date:') }}<strong>{{ payment_method.card.exp_month }}/{{ payment_method.card.exp_year }}</strong></p>
@@ -724,7 +727,7 @@
 
 <script>
 import {IMaskDirective} from "vue-imask";
-import { Card, createToken } from 'vue-stripe-elements-plus';
+import {Card, createToken} from 'vue-stripe-elements-plus';
 
 export default {
   name: "UserSettingComponent",
@@ -769,6 +772,10 @@ export default {
       required:true
     },
     delete_authorized_user:{
+      type:String,
+      required:true
+    },
+    update_default_card:{
       type:String,
       required:true
     },
@@ -950,15 +957,27 @@ export default {
           });
     },
 
+    setAsDefaultCard(id){
+      axios.post(this.update_default_card,{
+        'card_id' : id
+      })
+      .then(response=>{
+        console.log(response);
+        this.laddaButton.stop();
+        window.location.reload();
+      })
+      .catch(error => {
+        console.log(error);
+        this.laddaButton.stop();
+      });
+    },
     deleteCardDetail(id){
       this.laddaButton = Ladda.create(
           document.querySelector('#delete-card-details')
       );
-      let card_id = id;
-
-       axios.post(this.delete_payment_method,{
+      axios.post(this.delete_payment_method,{
          _method: 'delete',
-          card_id :  card_id
+          card_id :  id
          })
           .then(response=>{
             console.log(response);

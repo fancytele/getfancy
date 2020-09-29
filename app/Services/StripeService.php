@@ -229,6 +229,7 @@ class StripeService
             ]);
 
             $customer->default_source=$card['id'];
+
             $customer->save();
 
             return $card;
@@ -276,6 +277,24 @@ class StripeService
     public function deletePaymentMethod($data){
         try {
             return StripeCustomer::deleteSource(auth()->user()->stripe_id , $data['card_id'], [],$this->getStripeKey());
+        } catch (ApiErrorException $e) {
+            return $e->getMessage();
+        }
+    }
+
+    public function updateDefaultCard($data){
+
+        \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
+        try{
+
+            $customer = StripeCustomer::retrieve(auth()->user()->stripe_id);
+
+            $customer->default_source=$data['card_id'];
+
+            $customer->save();
+
+            return $customer;
+
         } catch (ApiErrorException $e) {
             return $e->getMessage();
         }

@@ -25,6 +25,7 @@
                                 :update_two_factor_authentication="'{{ route('admin.users.update_two_factor_authentication', $user->id )}}'"
                                 :add_authorized_user="'{{ route('admin.users.add_authorized_user', $user->id) }}'"
                                 :delete_authorized_user="'{{ route('admin.users.delete_authorized_user', $user->id) }}'"
+                                :update_default_card="'{{ route('admin.users.update_default_card', $user->id) }}'"
         ></user-setting-component>
     </div>
 @endsection

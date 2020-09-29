@@ -6173,6 +6173,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6215,6 +6218,10 @@ __webpack_require__.r(__webpack_exports__);
       required: true
     },
     delete_authorized_user: {
+      type: String,
+      required: true
+    },
+    update_default_card: {
       type: String,
       required: true
     }
@@ -6383,14 +6390,11 @@ __webpack_require__.r(__webpack_exports__);
         _this2.laddaButton.stop();
       });
     },
-    deleteCardDetail: function deleteCardDetail(id) {
+    setAsDefaultCard: function setAsDefaultCard(id) {
       var _this3 = this;
 
-      this.laddaButton = Ladda.create(document.querySelector('#delete-card-details'));
-      var card_id = id;
-      axios.post(this.delete_payment_method, {
-        _method: 'delete',
-        card_id: card_id
+      axios.post(this.update_default_card, {
+        'card_id': id
       }).then(function (response) {
         console.log(response);
 
@@ -6403,6 +6407,25 @@ __webpack_require__.r(__webpack_exports__);
         _this3.laddaButton.stop();
       });
     },
+    deleteCardDetail: function deleteCardDetail(id) {
+      var _this4 = this;
+
+      this.laddaButton = Ladda.create(document.querySelector('#delete-card-details'));
+      axios.post(this.delete_payment_method, {
+        _method: 'delete',
+        card_id: id
+      }).then(function (response) {
+        console.log(response);
+
+        _this4.laddaButton.stop();
+
+        window.location.reload();
+      })["catch"](function (error) {
+        console.log(error);
+
+        _this4.laddaButton.stop();
+      });
+    },
     toggleTwoFactorAuthentication: function toggleTwoFactorAuthentication() {
       axios.post(this.update_two_factor_authentication, {
         is_twoFactorAuthentication: this.user.is_twoFactorAuthentication
@@ -6413,7 +6436,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     addAuthorizedUser: function addAuthorizedUser() {
-      var _this4 = this;
+      var _this5 = this;
 
       this.laddaButton = Ladda.create(document.querySelector('#add_authorized_user'));
       this.laddaButton.start();
@@ -6427,38 +6450,38 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         console.log(response);
 
-        _this4.laddaButton.stop();
+        _this5.laddaButton.stop();
 
         window.location.reload();
       })["catch"](function (error) {
         console.log(error.response);
 
-        _this4.laddaButton.stop();
+        _this5.laddaButton.stop();
 
-        _this4.errors.authorized_user_1 = error.response.data.original.authorized_user_1;
-        _this4.errors.authorized_user_2 = error.response.data.original.authorized_user_2;
-        _this4.errors.authorized_user_3 = error.response.data.original.authorized_user_3;
+        _this5.errors.authorized_user_1 = error.response.data.original.authorized_user_1;
+        _this5.errors.authorized_user_2 = error.response.data.original.authorized_user_2;
+        _this5.errors.authorized_user_3 = error.response.data.original.authorized_user_3;
       });
     },
     deleteAuthorizedUser: function deleteAuthorizedUser(id) {
-      var _this5 = this;
+      var _this6 = this;
 
       axios.post(this.delete_authorized_user, {
         'authorized_user_id': id
       }).then(function (response) {
         console.log(response);
 
-        _this5.laddaButton.stop();
+        _this6.laddaButton.stop();
 
         window.location.reload();
       })["catch"](function (error) {
         console.log(error.response);
 
-        _this5.laddaButton.stop();
+        _this6.laddaButton.stop();
       });
     },
     cancelSubscriptionModal: function cancelSubscriptionModal(id) {
-      var _this6 = this;
+      var _this7 = this;
 
       this.laddaButton = Ladda.create(document.querySelector('#cancel-subscription'));
       this.laddaButton.start();
@@ -6467,37 +6490,37 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         console.log(response);
 
-        _this6.laddaButton.stop();
+        _this7.laddaButton.stop();
 
         window.location.reload();
       })["catch"](function (error) {
         console.log(error.response);
 
-        _this6.laddaButton.stop();
+        _this7.laddaButton.stop();
 
         window.location.reload();
       });
     },
     getUserDetails: function getUserDetails() {
-      var _this7 = this;
+      var _this8 = this;
 
       axios.get(this.route).then(function (response) {
         console.log(response);
-        _this7.user = response.data.user;
-        _this7.billing_address = response.data.billing_information;
-        _this7.user.subscription = response.data.subscription;
-        _this7.authorized_users = response.data.authorized_users;
+        _this8.user = response.data.user;
+        _this8.billing_address = response.data.billing_information;
+        _this8.user.subscription = response.data.subscription;
+        _this8.authorized_users = response.data.authorized_users;
       })["catch"](function (error) {
         console.log(error);
       });
     },
     getAllPaymentMethods: function getAllPaymentMethods() {
-      var _this8 = this;
+      var _this9 = this;
 
       axios.get(this.get_all_payment_methods).then(function (response) {
         console.log(response);
-        _this8.payment_methods = response.data[1].data;
-        _this8.default_card = response.data[0];
+        _this9.payment_methods = response.data[1].data;
+        _this9.default_card = response.data[0];
       })["catch"](function (error) {
         console.log(error);
       });
@@ -73715,6 +73738,42 @@ var render = function() {
                                                 _vm._s(
                                                   _vm.trans("Default Card")
                                                 )
+                                              )
+                                            ]
+                                          )
+                                        ])
+                                      : _vm._e(),
+                                    _vm._v(" "),
+                                    payment_method.id != _vm.default_card
+                                      ? _c("div", [
+                                          _c(
+                                            "a",
+                                            {
+                                              attrs: { href: "#" },
+                                              on: {
+                                                click: function($event) {
+                                                  return _vm.setAsDefaultCard(
+                                                    payment_method.id
+                                                  )
+                                                }
+                                              }
+                                            },
+                                            [
+                                              _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-pill badge-secondary float-right"
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(
+                                                      _vm.trans(
+                                                        "Set As Default Card"
+                                                      )
+                                                    )
+                                                  )
+                                                ]
                                               )
                                             ]
                                           )
