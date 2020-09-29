@@ -6173,10 +6173,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -72924,7 +72920,7 @@ var render = function() {
                     _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-md-8 col-lg-6" }, [
                         _c("div", { staticClass: "form-group" }, [
-                          _c("label", [_vm._v(_vm._s(_vm.trans("last Name")))]),
+                          _c("label", [_vm._v(_vm._s(_vm.trans("Last Name")))]),
                           _vm._v(" "),
                           _c("input", {
                             directives: [
@@ -73273,401 +73269,395 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
-        _c("div", [
-          _c(
-            "div",
-            {
-              staticClass:
-                "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
-            },
-            [
-              _c("div", { staticClass: "card-body" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-xl-4" }, [
-                    _c("h2", { staticClass: "mb-1" }, [
-                      _vm._v(_vm._s(_vm.trans("Billing Information")))
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
-                    },
-                    [
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-md-8 col-lg-6" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
-                              "label",
-                              { attrs: { for: "billing_address1" } },
-                              [_vm._v(_vm._s(_vm.trans("Address")) + " 1")]
-                            ),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.billing_address.address1,
-                                  expression: "billing_address.address1"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                id: "billing_address1",
-                                name: "billing_address1",
-                                required: ""
-                              },
-                              domProps: { value: _vm.billing_address.address1 },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.billing_address,
-                                    "address1",
-                                    $event.target.value
-                                  )
-                                }
+        _c(
+          "div",
+          {
+            staticClass:
+              "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xl-4" }, [
+                  _c("h2", { staticClass: "mb-1" }, [
+                    _vm._v(_vm._s(_vm.trans("Billing Information")))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+                  },
+                  [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "billing_address1" } }, [
+                            _vm._v(_vm._s(_vm.trans("Address")) + " 1")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.billing_address.address1,
+                                expression: "billing_address.address1"
                               }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors.address1
-                              ? _c(
-                                  "div",
-                                  { staticClass: "validation-error" },
-                                  _vm._l(_vm.errors.address1, function(error) {
-                                    return _c("div", { key: error.id }, [
-                                      _c("span", { staticClass: "small" }, [
-                                        _vm._v(
-                                          "\n                                      " +
-                                            _vm._s(error) +
-                                            "\n                                  "
-                                        )
-                                      ])
-                                    ])
-                                  }),
-                                  0
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "billing_address1",
+                              name: "billing_address1",
+                              required: ""
+                            },
+                            domProps: { value: _vm.billing_address.address1 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.billing_address,
+                                  "address1",
+                                  $event.target.value
                                 )
-                              : _vm._e()
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-md-8 col-lg-6" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c(
-                              "label",
-                              { attrs: { for: "billing_address2" } },
-                              [_vm._v(_vm._s(_vm.trans("Address")) + " 2")]
-                            ),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.billing_address.address2,
-                                  expression: "billing_address.address2"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                id: "billing_address2",
-                                name: "billing_address2",
-                                required: ""
-                              },
-                              domProps: { value: _vm.billing_address.address2 },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.billing_address,
-                                    "address2",
-                                    $event.target.value
-                                  )
-                                }
                               }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors.address2
-                              ? _c(
-                                  "div",
-                                  { staticClass: "validation-error" },
-                                  _vm._l(_vm.errors.address2, function(error) {
-                                    return _c("div", { key: error.id }, [
-                                      _c("span", { staticClass: "small" }, [
-                                        _vm._v(
-                                          "\n                                      " +
-                                            _vm._s(error) +
-                                            "\n                                  "
-                                        )
-                                      ])
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.address1
+                            ? _c(
+                                "div",
+                                { staticClass: "validation-error" },
+                                _vm._l(_vm.errors.address1, function(error) {
+                                  return _c("div", { key: error.id }, [
+                                    _c("span", { staticClass: "small" }, [
+                                      _vm._v(
+                                        "\n                                      " +
+                                          _vm._s(error) +
+                                          "\n                                  "
+                                      )
                                     ])
-                                  }),
-                                  0
-                                )
-                              : _vm._e()
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-md-8 col-lg-6" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", { attrs: { for: "country" } }, [
-                              _vm._v(_vm._s(_vm.trans("Country")))
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.billing_address.country,
-                                  expression: "billing_address.country"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                name: "country",
-                                id: "country",
-                                required: ""
-                              },
-                              domProps: { value: _vm.billing_address.country },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.billing_address,
-                                    "country",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors.country
-                              ? _c(
-                                  "div",
-                                  { staticClass: "validation-error" },
-                                  _vm._l(_vm.errors.country, function(error) {
-                                    return _c("div", { key: error.id }, [
-                                      _c("span", { staticClass: "small" }, [
-                                        _vm._v(
-                                          "\n                                      " +
-                                            _vm._s(error) +
-                                            "\n                                  "
-                                        )
-                                      ])
-                                    ])
-                                  }),
-                                  0
-                                )
-                              : _vm._e()
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-md-8 col-lg-6" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", { attrs: { for: "city" } }, [
-                              _vm._v(_vm._s(_vm.trans("City")))
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.billing_address.city,
-                                  expression: "billing_address.city"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                id: "city",
-                                name: "city",
-                                required: ""
-                              },
-                              domProps: { value: _vm.billing_address.city },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.billing_address,
-                                    "city",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors.city
-                              ? _c(
-                                  "div",
-                                  { staticClass: "validation-error" },
-                                  _vm._l(_vm.errors.city, function(error) {
-                                    return _c("div", { key: error.id }, [
-                                      _c("span", { staticClass: "small" }, [
-                                        _vm._v(
-                                          "\n                                      " +
-                                            _vm._s(error) +
-                                            "\n                                  "
-                                        )
-                                      ])
-                                    ])
-                                  }),
-                                  0
-                                )
-                              : _vm._e()
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-md-8 col-lg-6" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", { attrs: { for: "state" } }, [
-                              _vm._v(
-                                _vm._s(_vm.trans("State, Providence, Region"))
+                                  ])
+                                }),
+                                0
                               )
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.billing_address.state,
-                                  expression: "billing_address.state"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                id: "state",
-                                name: "state",
-                                required: ""
-                              },
-                              domProps: { value: _vm.billing_address.state },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.billing_address,
-                                    "state",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors.state
-                              ? _c(
-                                  "div",
-                                  { staticClass: "validation-error" },
-                                  _vm._l(_vm.errors.state, function(error) {
-                                    return _c("div", { key: error.id }, [
-                                      _c("span", { staticClass: "small" }, [
-                                        _vm._v(
-                                          "\n                                      " +
-                                            _vm._s(error) +
-                                            "\n                                  "
-                                        )
-                                      ])
-                                    ])
-                                  }),
-                                  0
-                                )
-                              : _vm._e()
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-md-8 col-lg-6" }, [
-                          _c("div", { staticClass: "form-group" }, [
-                            _c("label", { attrs: { for: "zip_code" } }, [
-                              _vm._v(_vm._s(_vm.trans("Zip Code")))
-                            ]),
-                            _vm._v(" "),
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.billing_address.zip_code,
-                                  expression: "billing_address.zip_code"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              attrs: {
-                                type: "text",
-                                id: "zip_code",
-                                name: "zip_code",
-                                required: ""
-                              },
-                              domProps: { value: _vm.billing_address.zip_code },
-                              on: {
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
-                                  }
-                                  _vm.$set(
-                                    _vm.billing_address,
-                                    "zip_code",
-                                    $event.target.value
-                                  )
-                                }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors.zip_code
-                              ? _c(
-                                  "div",
-                                  { staticClass: "validation-error" },
-                                  _vm._l(_vm.errors.zip_code, function(error) {
-                                    return _c("div", { key: error.id }, [
-                                      _c("span", { staticClass: "small" }, [
-                                        _vm._v(
-                                          "\n                                      " +
-                                            _vm._s(error) +
-                                            "\n                                  "
-                                        )
-                                      ])
-                                    ])
-                                  }),
-                                  0
-                                )
-                              : _vm._e()
-                          ])
+                            : _vm._e()
                         ])
                       ])
-                    ]
-                  )
-                ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "billing_address2" } }, [
+                            _vm._v(_vm._s(_vm.trans("Address")) + " 2")
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.billing_address.address2,
+                                expression: "billing_address.address2"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "billing_address2",
+                              name: "billing_address2",
+                              required: ""
+                            },
+                            domProps: { value: _vm.billing_address.address2 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.billing_address,
+                                  "address2",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.address2
+                            ? _c(
+                                "div",
+                                { staticClass: "validation-error" },
+                                _vm._l(_vm.errors.address2, function(error) {
+                                  return _c("div", { key: error.id }, [
+                                    _c("span", { staticClass: "small" }, [
+                                      _vm._v(
+                                        "\n                                      " +
+                                          _vm._s(error) +
+                                          "\n                                  "
+                                      )
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            : _vm._e()
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "country" } }, [
+                            _vm._v(_vm._s(_vm.trans("Country")))
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.billing_address.country,
+                                expression: "billing_address.country"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              name: "country",
+                              id: "country",
+                              required: ""
+                            },
+                            domProps: { value: _vm.billing_address.country },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.billing_address,
+                                  "country",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.country
+                            ? _c(
+                                "div",
+                                { staticClass: "validation-error" },
+                                _vm._l(_vm.errors.country, function(error) {
+                                  return _c("div", { key: error.id }, [
+                                    _c("span", { staticClass: "small" }, [
+                                      _vm._v(
+                                        "\n                                      " +
+                                          _vm._s(error) +
+                                          "\n                                  "
+                                      )
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            : _vm._e()
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "city" } }, [
+                            _vm._v(_vm._s(_vm.trans("City")))
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.billing_address.city,
+                                expression: "billing_address.city"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "city",
+                              name: "city",
+                              required: ""
+                            },
+                            domProps: { value: _vm.billing_address.city },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.billing_address,
+                                  "city",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.city
+                            ? _c(
+                                "div",
+                                { staticClass: "validation-error" },
+                                _vm._l(_vm.errors.city, function(error) {
+                                  return _c("div", { key: error.id }, [
+                                    _c("span", { staticClass: "small" }, [
+                                      _vm._v(
+                                        "\n                                      " +
+                                          _vm._s(error) +
+                                          "\n                                  "
+                                      )
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            : _vm._e()
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "state" } }, [
+                            _vm._v(
+                              _vm._s(_vm.trans("State, Providence, Region"))
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.billing_address.state,
+                                expression: "billing_address.state"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "state",
+                              name: "state",
+                              required: ""
+                            },
+                            domProps: { value: _vm.billing_address.state },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.billing_address,
+                                  "state",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.state
+                            ? _c(
+                                "div",
+                                { staticClass: "validation-error" },
+                                _vm._l(_vm.errors.state, function(error) {
+                                  return _c("div", { key: error.id }, [
+                                    _c("span", { staticClass: "small" }, [
+                                      _vm._v(
+                                        "\n                                      " +
+                                          _vm._s(error) +
+                                          "\n                                  "
+                                      )
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            : _vm._e()
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c("div", { staticClass: "form-group" }, [
+                          _c("label", { attrs: { for: "zip_code" } }, [
+                            _vm._v(_vm._s(_vm.trans("Zip Code")))
+                          ]),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.billing_address.zip_code,
+                                expression: "billing_address.zip_code"
+                              }
+                            ],
+                            staticClass: "form-control",
+                            attrs: {
+                              type: "text",
+                              id: "zip_code",
+                              name: "zip_code",
+                              required: ""
+                            },
+                            domProps: { value: _vm.billing_address.zip_code },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.billing_address,
+                                  "zip_code",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          }),
+                          _vm._v(" "),
+                          _vm.errors.zip_code
+                            ? _c(
+                                "div",
+                                { staticClass: "validation-error" },
+                                _vm._l(_vm.errors.zip_code, function(error) {
+                                  return _c("div", { key: error.id }, [
+                                    _c("span", { staticClass: "small" }, [
+                                      _vm._v(
+                                        "\n                                      " +
+                                          _vm._s(error) +
+                                          "\n                                  "
+                                      )
+                                    ])
+                                  ])
+                                }),
+                                0
+                              )
+                            : _vm._e()
+                        ])
+                      ])
+                    ])
+                  ]
+                )
               ])
-            ]
-          )
-        ]),
+            ])
+          ]
+        ),
         _vm._v(" "),
         _c(
           "div",
@@ -73731,16 +73721,25 @@ var render = function() {
                                         ])
                                       : _vm._e(),
                                     _vm._v(" "),
-                                    _c("p", { staticClass: "card-text" }, [
-                                      _vm._v(
-                                        _vm._s(_vm.trans("Card brand:")) + " "
-                                      ),
-                                      _c("strong", [
+                                    _c(
+                                      "p",
+                                      {
+                                        staticClass: "card-text",
+                                        staticStyle: {
+                                          "text-transform": "capitalize"
+                                        }
+                                      },
+                                      [
                                         _vm._v(
-                                          _vm._s(payment_method.card.brand)
-                                        )
-                                      ])
-                                    ]),
+                                          _vm._s(_vm.trans("Card Brand:")) + " "
+                                        ),
+                                        _c("strong", [
+                                          _vm._v(
+                                            _vm._s(payment_method.card.brand)
+                                          )
+                                        ])
+                                      ]
+                                    ),
                                     _vm._v(" "),
                                     _c("p", { staticClass: "card-text" }, [
                                       _vm._v(
@@ -73756,7 +73755,7 @@ var render = function() {
                                     _vm._v(" "),
                                     _c("p", { staticClass: "card-text" }, [
                                       _vm._v(
-                                        _vm._s(_vm.trans("Card expiry date:"))
+                                        _vm._s(_vm.trans("Card Expiry Date:"))
                                       ),
                                       _c("strong", [
                                         _vm._v(
@@ -73815,7 +73814,7 @@ var render = function() {
                             _c("label", { attrs: { for: "credit-card" } }, [
                               _c("strong", [
                                 _vm._v(
-                                  _vm._s(_vm.trans("Add a new credit card"))
+                                  _vm._s(_vm.trans("Add A New Credit Card"))
                                 )
                               ])
                             ]),
@@ -73976,6 +73975,7 @@ var render = function() {
                           "label",
                           {
                             staticClass: "custom-control-label",
+                            staticStyle: { "text-transform": "capitalize" },
                             attrs: { for: "two-factor-authentication" }
                           },
                           [
@@ -74101,7 +74101,7 @@ var render = function() {
                         _c("h3", { staticClass: "mb-0" }, [
                           _vm._v(
                             "\n                  " +
-                              _vm._s(_vm.trans("Are you Sure?")) +
+                              _vm._s(_vm.trans("Are You Sure?")) +
                               "\n                  "
                           ),
                           _c("br"),
@@ -74112,7 +74112,7 @@ var render = function() {
                           _vm._v(
                             _vm._s(
                               _vm.trans(
-                                "If you cancel your subscription you will loss all your data."
+                                "If You Cancel Your Subscription You Will Lose Data."
                               )
                             ) + "\n                "
                           )
@@ -75015,11 +75015,18 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
-        _c("h5", [_vm._v("Need to cancel your subscription?")]),
-        _vm._v(" "),
-        _c("p", [_vm._v("we're sad to see you go.")])
-      ])
+      _c(
+        "div",
+        {
+          staticClass: "col-md-8 col-lg-6",
+          staticStyle: { "text-transform": "capitalize" }
+        },
+        [
+          _c("h5", [_vm._v("Need to cancel your subscription?")]),
+          _vm._v(" "),
+          _c("p", [_vm._v("we're sad to see you go.")])
+        ]
+      )
     ])
   },
   function() {

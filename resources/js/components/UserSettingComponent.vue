@@ -32,7 +32,7 @@
               <div class="row">
                 <div class="col-md-8 col-lg-6">
                   <div class="form-group">
-                    <label>{{ trans('last Name') }}</label>
+                    <label>{{ trans('Last Name') }}</label>
                     <input type="text"
                            class="form-control"
                            required
@@ -156,8 +156,6 @@
       <!--Update Password -->
 
       <!--Billing information -->
-
-      <div>
         <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
           <div class="card-body">
             <div class="row">
@@ -301,9 +299,6 @@
             </div>
           </div>
         </div>
-      </div>
-
-
       <!--Billing information -->
 
       <!--Update Payment Method -->
@@ -323,9 +318,9 @@
                         <div v-if="payment_method.id == default_card">
                           <span class="badge badge-pill badge-primary float-right">{{ trans('Default Card') }}</span>
                         </div>
-                        <p class="card-text">{{ trans('Card brand:') }} <strong>{{ payment_method.card.brand }}</strong></p>
+                        <p class="card-text" style="text-transform: capitalize;">{{ trans('Card Brand:') }} <strong>{{ payment_method.card.brand }}</strong></p>
                         <p class="card-text">{{ trans('Card Number:') }} <strong>XXXX XXXX XXXX {{ payment_method.card.last4 }}</strong></p>
-                        <p class="card-text">{{ trans('Card expiry date:') }}<strong>{{ payment_method.card.exp_month }}/{{ payment_method.card.exp_year }}</strong></p>
+                        <p class="card-text">{{ trans('Card Expiry Date:') }}<strong>{{ payment_method.card.exp_month }}/{{ payment_method.card.exp_year }}</strong></p>
                         <div v-if="payment_method.id !== default_card">
                           <button @click ="deleteCardDetail(payment_method.id)" id="delete-card-details" class="btn btn-primary btn btn-primary ladda-button"
                                   data-style="zoom-out">{{ trans('Delete') }}</button>
@@ -338,7 +333,7 @@
               <div class="row">
                 <div class="col-md-8 col-lg-6">
                   <div class="form-group">
-                    <label for="credit-card"><strong>{{ trans('Add a new credit card') }}</strong></label>
+                    <label for="credit-card"><strong>{{ trans('Add A New Credit Card') }}</strong></label>
                     <card
                         class="stripe-card"
                         :stripe="stripe"
@@ -399,6 +394,7 @@
                   <label
                       class="custom-control-label"
                       for="two-factor-authentication"
+                      style="text-transform: capitalize"
                   >{{ trans('Do you want two factor authentication') }}?</label>
                 </div>
               </div>
@@ -418,7 +414,7 @@
           </div>
           <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
             <div class="row">
-              <div class="col-md-8 col-lg-6">
+              <div class="col-md-8 col-lg-6" style="text-transform: capitalize">
                 <h5>Need to cancel your subscription?</h5>
                 <p>we're sad to see you go.</p>
               </div>
@@ -458,10 +454,10 @@
                     class="display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "></i>
                 <div>
                   <h3 class="mb-0">
-                    {{ trans('Are you Sure?') }}
+                    {{ trans('Are You Sure?') }}
                     <br>
                     <span
-                        class="element-name text-capitalize"></span>{{ trans('If you cancel your subscription you will loss all your data.') }}
+                        class="element-name text-capitalize"></span>{{ trans('If You Cancel Your Subscription You Will Lose Data.') }}
                   </h3>
                   <p class="element-detail text-black-50"></p>
                 </div>
