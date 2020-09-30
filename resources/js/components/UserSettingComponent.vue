@@ -486,7 +486,7 @@
     </div>
     <!--Cancel Subscription Modal -->
 
-    <!-- Add Authorized User -->
+    <!-- Add Authorized User
     <form :action="add_authorized_user" @submit.prevent="addAuthorizedUser()">
     <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
       <div class="card-body">
@@ -721,7 +721,7 @@
         </button>
       </div>
     </form>
-    <!-- Add Authorized User -->
+    Add Authorized User -->
   </div>
 </template>
 
