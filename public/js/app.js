@@ -6166,7 +6166,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6371,8 +6370,8 @@ __webpack_require__.r(__webpack_exports__);
         _this2.errors.phone_number = error.response.data.original.phone_number;
         _this2.errors.current_password = error.response.data.original.current_password;
         _this2.errors.new_password = error.response.data.original.new_password;
-        _this2.errors.address1 = error.response.data.original.address1;
-        _this2.errors.address2 = error.response.data.original.address2;
+        _this2.errors.address1 = error.response.data.original.address_1;
+        _this2.errors.address2 = error.response.data.original.address_2;
         _this2.errors.city = error.response.data.original.city;
         _this2.errors.country = error.response.data.original.country;
         _this2.errors.state = error.response.data.original.state;
@@ -73362,8 +73361,7 @@ var render = function() {
                             attrs: {
                               type: "text",
                               id: "billing_address2",
-                              name: "billing_address2",
-                              required: ""
+                              name: "billing_address2"
                             },
                             domProps: { value: _vm.billing_address.address2 },
                             on: {
