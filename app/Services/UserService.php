@@ -287,7 +287,7 @@ class UserService
             'current_password' =>['required_with:new_password', new MatchOldPassword],
             'new_password' =>['required_with:current_password','min:8','confirmed' , new StrongPassword],
             'address_1' =>'required|string',
-            'address_2' =>'required|string',
+            'address_2' =>'sometimes|nullable|string',
             'country' =>'required|string',
             'state' =>'required|string',
             'city'=>'required|string',

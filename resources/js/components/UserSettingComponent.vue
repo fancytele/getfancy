@@ -189,7 +189,6 @@
                         id="billing_address2"
                         name="billing_address2"
                         v-model="billing_address.address2"
-                        required
                     />
                     <div v-if ="errors.address2" class = "validation-error">
                       <div v-for="error in errors.address2" v-bind:key="error.id">
@@ -938,8 +937,8 @@ export default {
             this.errors.phone_number= error.response.data.original.phone_number;
             this.errors.current_password= error.response.data.original.current_password;
             this.errors.new_password= error.response.data.original.new_password;
-            this.errors.address1= error.response.data.original.address1;
-            this.errors.address2= error.response.data.original.address2;
+            this.errors.address1= error.response.data.original.address_1;
+            this.errors.address2= error.response.data.original.address_2;
             this.errors.city= error.response.data.original.city;
             this.errors.country= error.response.data.original.country;
             this.errors.state= error.response.data.original.state;
