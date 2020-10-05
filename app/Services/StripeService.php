@@ -206,6 +206,10 @@ class StripeService
         ], $this->getStripeKey());
     }
 
+    /**
+     * @param $subscription_id
+     * @return string|StripeSubscription
+     */
     public function cancelSubscription($subscription_id)
     {
         \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
@@ -217,6 +221,10 @@ class StripeService
         }
     }
 
+    /**
+     * @param $data
+     * @return string
+     */
     public function updatePaymentMethod($data)
     {
         \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
@@ -239,6 +247,10 @@ class StripeService
         }
     }
 
+    /**
+     * @param array $data
+     * @return string|StripeCustomer
+     */
     public function updateBillingAddress(array $data){
 
         try {
@@ -257,6 +269,9 @@ class StripeService
         }
     }
 
+    /**
+     * @return array|string
+     */
     public function getAllPaymentMethods(){
 
         try {
@@ -274,6 +289,10 @@ class StripeService
         }
     }
 
+    /**
+     * @param $data
+     * @return string
+     */
     public function deletePaymentMethod($data){
         try {
             return StripeCustomer::deleteSource(auth()->user()->stripe_id , $data['card_id'], [],$this->getStripeKey());
@@ -282,6 +301,10 @@ class StripeService
         }
     }
 
+    /**
+     * @param $data
+     * @return string|StripeCustomer
+     */
     public function updateDefaultCard($data){
 
         \Stripe\Stripe::setApiKey(config('services.stripe.secret'));

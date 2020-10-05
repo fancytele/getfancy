@@ -196,7 +196,6 @@ class UserController extends Controller
     {
         $did_service = new DIDService();
         $did_purchase = $did_service->purchaseAvailableDID($request->input('data.did.id', ''));
-
         // Create User Fancy number
         $user_service = new UserService($request->user());
         $user_service->assignFancyNumber($did_purchase['number'], $request->input('number_type'), $did_purchase);
@@ -540,6 +539,12 @@ class UserController extends Controller
 
         return response()->json($user , 200);
     }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function updateDefaultCard(Request $request, User $user)
     {
         if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
@@ -554,5 +559,4 @@ class UserController extends Controller
 
         return response()->json($update_default_card);
     }
-
 }
