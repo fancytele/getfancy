@@ -387,7 +387,6 @@ class UserController extends Controller
 
         $user = $user_service->updateProfile($data, $user);
 
-        dd($user);
         if($user->status() == 422)
         {
             return response()->json($user , 422);
