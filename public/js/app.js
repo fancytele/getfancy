@@ -6167,15 +6167,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -6408,22 +6399,14 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     deleteCardDetail: function deleteCardDetail(id) {
-      var _this4 = this;
-
-      this.laddaButton = Ladda.create(document.querySelector('#delete-card-details'));
       axios.post(this.delete_payment_method, {
         _method: 'delete',
         card_id: id
       }).then(function (response) {
         console.log(response);
-
-        _this4.laddaButton.stop();
-
         window.location.reload();
       })["catch"](function (error) {
         console.log(error);
-
-        _this4.laddaButton.stop();
       });
     },
     toggleTwoFactorAuthentication: function toggleTwoFactorAuthentication() {
@@ -6436,7 +6419,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     addAuthorizedUser: function addAuthorizedUser() {
-      var _this5 = this;
+      var _this4 = this;
 
       this.laddaButton = Ladda.create(document.querySelector('#add_authorized_user'));
       this.laddaButton.start();
@@ -6450,38 +6433,38 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         console.log(response);
 
-        _this5.laddaButton.stop();
+        _this4.laddaButton.stop();
 
         window.location.reload();
       })["catch"](function (error) {
         console.log(error.response);
 
-        _this5.laddaButton.stop();
+        _this4.laddaButton.stop();
 
-        _this5.errors.authorized_user_1 = error.response.data.original.authorized_user_1;
-        _this5.errors.authorized_user_2 = error.response.data.original.authorized_user_2;
-        _this5.errors.authorized_user_3 = error.response.data.original.authorized_user_3;
+        _this4.errors.authorized_user_1 = error.response.data.original.authorized_user_1;
+        _this4.errors.authorized_user_2 = error.response.data.original.authorized_user_2;
+        _this4.errors.authorized_user_3 = error.response.data.original.authorized_user_3;
       });
     },
     deleteAuthorizedUser: function deleteAuthorizedUser(id) {
-      var _this6 = this;
+      var _this5 = this;
 
       axios.post(this.delete_authorized_user, {
         'authorized_user_id': id
       }).then(function (response) {
         console.log(response);
 
-        _this6.laddaButton.stop();
+        _this5.laddaButton.stop();
 
         window.location.reload();
       })["catch"](function (error) {
         console.log(error.response);
 
-        _this6.laddaButton.stop();
+        _this5.laddaButton.stop();
       });
     },
     cancelSubscriptionModal: function cancelSubscriptionModal(id) {
-      var _this7 = this;
+      var _this6 = this;
 
       this.laddaButton = Ladda.create(document.querySelector('#cancel-subscription'));
       this.laddaButton.start();
@@ -6490,37 +6473,37 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (response) {
         console.log(response);
 
-        _this7.laddaButton.stop();
+        _this6.laddaButton.stop();
 
         window.location.reload();
       })["catch"](function (error) {
         console.log(error.response);
 
-        _this7.laddaButton.stop();
+        _this6.laddaButton.stop();
 
         window.location.reload();
       });
     },
     getUserDetails: function getUserDetails() {
-      var _this8 = this;
+      var _this7 = this;
 
       axios.get(this.route).then(function (response) {
         console.log(response);
-        _this8.user = response.data.user;
-        _this8.billing_address = response.data.billing_information;
-        _this8.user.subscription = response.data.subscription;
-        _this8.authorized_users = response.data.authorized_users;
+        _this7.user = response.data.user;
+        _this7.billing_address = response.data.billing_information;
+        _this7.user.subscription = response.data.subscription;
+        _this7.authorized_users = response.data.authorized_users;
       })["catch"](function (error) {
         console.log(error);
       });
     },
     getAllPaymentMethods: function getAllPaymentMethods() {
-      var _this9 = this;
+      var _this8 = this;
 
       axios.get(this.get_all_payment_methods).then(function (response) {
         console.log(response);
-        _this9.payment_methods = response.data[1].data;
-        _this9.default_card = response.data[0];
+        _this8.payment_methods = response.data[1].data;
+        _this8.default_card = response.data[0];
       })["catch"](function (error) {
         console.log(error);
       });
@@ -72880,13 +72863,10 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  {
-                    staticClass:
-                      "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
-                  },
+                  { staticClass: "border-top border-top-2 col-xl-12 pt-4" },
                   [
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                      _c("div", { staticClass: "col-md-6 col-lg-6" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", [
                             _vm._v(_vm._s(_vm.trans("First Name")))
@@ -72937,11 +72917,9 @@ var render = function() {
                               )
                             : _vm._e()
                         ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-6 col-lg-6" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", [_vm._v(_vm._s(_vm.trans("Last Name")))]),
                           _vm._v(" "),
@@ -72994,7 +72972,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                      _c("div", { staticClass: "col-md-6 col-lg-6" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", [_vm._v(_vm._s(_vm.trans("E-mail")))]),
                           _vm._v(" "),
@@ -73039,11 +73017,9 @@ var render = function() {
                               )
                             : _vm._e()
                         ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-6 col-lg-6" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", [
                             _vm._v(_vm._s(_vm.trans("Phone Number")))
@@ -73129,13 +73105,10 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  {
-                    staticClass:
-                      "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
-                  },
+                  { staticClass: "border-top border-top-2 col-xl-12 pt-4" },
                   [
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                      _c("div", { staticClass: "col-md-6 col-lg-6" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", [
                             _vm._v(_vm._s(_vm.trans("Current Password")))
@@ -73192,7 +73165,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                      _c("div", { staticClass: "col-md-6 col-lg-6" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", [
                             _vm._v(_vm._s(_vm.trans("New Password")))
@@ -73245,11 +73218,9 @@ var render = function() {
                               )
                             : _vm._e()
                         ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-6 col-lg-6" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", [
                             _vm._v(_vm._s(_vm.trans("Confirm New Password")))
@@ -73284,7 +73255,9 @@ var render = function() {
                           })
                         ])
                       ])
-                    ])
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" })
                   ]
                 )
               ])
@@ -73309,13 +73282,10 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "div",
-                  {
-                    staticClass:
-                      "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
-                  },
+                  { staticClass: "border-top border-top-2 col-xl-12 pt-4" },
                   [
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                      _c("div", { staticClass: "col-md-6 col-lg-6" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", { attrs: { for: "billing_address1" } }, [
                             _vm._v(_vm._s(_vm.trans("Address")) + " 1")
@@ -73371,11 +73341,9 @@ var render = function() {
                               )
                             : _vm._e()
                         ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-6 col-lg-6" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", { attrs: { for: "billing_address2" } }, [
                             _vm._v(_vm._s(_vm.trans("Address")) + " 2")
@@ -73435,7 +73403,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                      _c("div", { staticClass: "col-md-6 col-lg-6" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", { attrs: { for: "country" } }, [
                             _vm._v(_vm._s(_vm.trans("Country")))
@@ -73491,11 +73459,9 @@ var render = function() {
                               )
                             : _vm._e()
                         ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-6 col-lg-6" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", { attrs: { for: "city" } }, [
                             _vm._v(_vm._s(_vm.trans("City")))
@@ -73555,7 +73521,7 @@ var render = function() {
                     ]),
                     _vm._v(" "),
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                      _c("div", { staticClass: "col-md-6 col-lg-6" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", { attrs: { for: "state" } }, [
                             _vm._v(
@@ -73613,11 +73579,9 @@ var render = function() {
                               )
                             : _vm._e()
                         ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-6 col-lg-6" }, [
                         _c("div", { staticClass: "form-group" }, [
                           _c("label", { attrs: { for: "zip_code" } }, [
                             _vm._v(_vm._s(_vm.trans("Zip Code")))
@@ -73721,7 +73685,7 @@ var render = function() {
                                 "div",
                                 {
                                   staticClass: "card",
-                                  staticStyle: { width: "22rem" }
+                                  staticStyle: { "max-width": "22rem" }
                                 },
                                 [
                                   _c("div", { staticClass: "card-body" }, [
@@ -73789,38 +73753,36 @@ var render = function() {
                                         }
                                       },
                                       [
-                                        _vm._v(
-                                          _vm._s(_vm.trans("Card Brand:")) + " "
-                                        ),
-                                        _c("strong", [
+                                        _c("small", [
                                           _vm._v(
-                                            _vm._s(payment_method.card.brand)
+                                            _vm._s(_vm.trans("Card Brand:")) +
+                                              " " +
+                                              _vm._s(payment_method.card.brand)
                                           )
                                         ])
                                       ]
                                     ),
                                     _vm._v(" "),
                                     _c("p", { staticClass: "card-text" }, [
-                                      _vm._v(
-                                        _vm._s(_vm.trans("Card Number:")) + " "
-                                      ),
-                                      _c("strong", [
+                                      _c("small", [
                                         _vm._v(
-                                          "XXXX XXXX XXXX " +
+                                          _vm._s(_vm.trans("Card Number:")) +
+                                            " XXXX XXXX XXXX " +
                                             _vm._s(payment_method.card.last4)
                                         )
                                       ])
                                     ]),
                                     _vm._v(" "),
                                     _c("p", { staticClass: "card-text" }, [
-                                      _vm._v(
-                                        _vm._s(_vm.trans("Card Expiry Date:"))
-                                      ),
-                                      _c("strong", [
+                                      _c("small", [
                                         _vm._v(
                                           _vm._s(
-                                            payment_method.card.exp_month
+                                            _vm.trans("Card Expiry Date:")
                                           ) +
+                                            " " +
+                                            _vm._s(
+                                              payment_method.card.exp_month
+                                            ) +
                                             "/" +
                                             _vm._s(payment_method.card.exp_year)
                                         )
@@ -73828,31 +73790,34 @@ var render = function() {
                                     ]),
                                     _vm._v(" "),
                                     payment_method.id !== _vm.default_card
-                                      ? _c("div", [
-                                          _c(
-                                            "button",
-                                            {
-                                              staticClass:
-                                                "btn btn-primary btn btn-primary ladda-button",
-                                              attrs: {
-                                                id: "delete-card-details",
-                                                "data-style": "zoom-out"
-                                              },
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.deleteCardDetail(
-                                                    payment_method.id
-                                                  )
+                                      ? _c(
+                                          "div",
+                                          { staticClass: "text-right" },
+                                          [
+                                            _c(
+                                              "button",
+                                              {
+                                                staticClass:
+                                                  "btn btn-primary btn btn-primary ladda-button",
+                                                attrs: {
+                                                  "data-style": "zoom-out"
+                                                },
+                                                on: {
+                                                  click: function($event) {
+                                                    return _vm.deleteCardDetail(
+                                                      payment_method.id
+                                                    )
+                                                  }
                                                 }
-                                              }
-                                            },
-                                            [
-                                              _vm._v(
-                                                _vm._s(_vm.trans("Delete"))
-                                              )
-                                            ]
-                                          )
-                                        ])
+                                              },
+                                              [
+                                                _vm._v(
+                                                  _vm._s(_vm.trans("Delete"))
+                                                )
+                                              ]
+                                            )
+                                          ]
+                                        )
                                       : _vm._e()
                                   ])
                                 ]
@@ -73915,6 +73880,311 @@ var render = function() {
           ]
         ),
         _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xl-4" }, [
+                  _c("h2", { staticClass: "mb-1" }, [
+                    _vm._v(_vm._s(_vm.trans("Two Factor Authentication")))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+                  },
+                  [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c(
+                          "div",
+                          { staticClass: "custom-control custom-switch my-4" },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.user.is_twoFactorAuthentication,
+                                  expression: "user.is_twoFactorAuthentication"
+                                }
+                              ],
+                              staticClass: "custom-control-input",
+                              attrs: {
+                                type: "checkbox",
+                                id: "two-factor-authentication",
+                                name: "two-factor-authentication"
+                              },
+                              domProps: {
+                                checked: Array.isArray(
+                                  _vm.user.is_twoFactorAuthentication
+                                )
+                                  ? _vm._i(
+                                      _vm.user.is_twoFactorAuthentication,
+                                      null
+                                    ) > -1
+                                  : _vm.user.is_twoFactorAuthentication
+                              },
+                              on: {
+                                change: [
+                                  function($event) {
+                                    var $$a =
+                                        _vm.user.is_twoFactorAuthentication,
+                                      $$el = $event.target,
+                                      $$c = $$el.checked ? true : false
+                                    if (Array.isArray($$a)) {
+                                      var $$v = null,
+                                        $$i = _vm._i($$a, $$v)
+                                      if ($$el.checked) {
+                                        $$i < 0 &&
+                                          _vm.$set(
+                                            _vm.user,
+                                            "is_twoFactorAuthentication",
+                                            $$a.concat([$$v])
+                                          )
+                                      } else {
+                                        $$i > -1 &&
+                                          _vm.$set(
+                                            _vm.user,
+                                            "is_twoFactorAuthentication",
+                                            $$a
+                                              .slice(0, $$i)
+                                              .concat($$a.slice($$i + 1))
+                                          )
+                                      }
+                                    } else {
+                                      _vm.$set(
+                                        _vm.user,
+                                        "is_twoFactorAuthentication",
+                                        $$c
+                                      )
+                                    }
+                                  },
+                                  function($event) {
+                                    return _vm.toggleTwoFactorAuthentication()
+                                  }
+                                ]
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c(
+                              "label",
+                              {
+                                staticClass: "custom-control-label",
+                                staticStyle: { "text-transform": "capitalize" },
+                                attrs: { for: "two-factor-authentication" }
+                              },
+                              [
+                                _vm._v(
+                                  _vm._s(
+                                    _vm.trans(
+                                      "Do you want two factor authentication"
+                                    )
+                                  ) + "?"
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass:
+              "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
+          },
+          [
+            _c("div", { staticClass: "card-body" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-xl-4" }, [
+                  _c("h2", { staticClass: "mb-1" }, [
+                    _vm._v(_vm._s(_vm.trans("Subscription")))
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
+                  },
+                  [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-8 col-lg-6" }, [
+                        _c(
+                          "button",
+                          {
+                            staticClass:
+                              "btn btn-danger btn btn-danger ladda-button",
+                            attrs: {
+                              "data-style": "zoom-out",
+                              "data-toggle": "modal",
+                              "data-target": "#exampleModal",
+                              disabled: _vm.isDisabled
+                            }
+                          },
+                          [
+                            _vm._v(
+                              "\n                  " +
+                                _vm._s(_vm.trans("Cancel Subscription")) +
+                                "\n                "
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            staticClass: "modal fade",
+            attrs: {
+              id: "exampleModal",
+              tabindex: "-1",
+              role: "dialog",
+              "aria-labelledby": "delete-element-label",
+              "aria-hidden": "true"
+            }
+          },
+          [
+            _c(
+              "div",
+              {
+                staticClass: "modal-dialog modal-dialog-centered modal-sm",
+                attrs: { role: "document" }
+              },
+              [
+                _c("div", { staticClass: "modal-content" }, [
+                  _c("div", { staticClass: "modal-body p-0" }, [
+                    _vm._m(2),
+                    _vm._v(" "),
+                    _c(
+                      "form",
+                      {
+                        staticClass: "mb-0",
+                        attrs: { action: _vm.url },
+                        on: {
+                          submit: function($event) {
+                            $event.preventDefault()
+                            return _vm.cancelSubscriptionModal(_vm.user.id)
+                          }
+                        }
+                      },
+                      [
+                        _c("div", { staticClass: "d-flex my-3 pl-4 pt-4" }, [
+                          _c("i", {
+                            staticClass:
+                              "display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "
+                          }),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c("h3", { staticClass: "mb-0" }, [
+                              _vm._v(
+                                "\n                    " +
+                                  _vm._s(_vm.trans("Are You Sure?")) +
+                                  "\n                    "
+                              ),
+                              _c("br"),
+                              _vm._v(" "),
+                              _c("span", {
+                                staticClass: "element-name text-capitalize"
+                              }),
+                              _vm._v(
+                                _vm._s(
+                                  _vm.trans(
+                                    "If You Cancel Your Subscription You Will Lose Data."
+                                  )
+                                ) + "\n                  "
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("p", {
+                              staticClass: "element-detail text-black-50"
+                            })
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "d-flex overflow-hidden rounded-bottom"
+                          },
+                          [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-lg btn-outline-light rounded-0 text-body w-50",
+                                attrs: {
+                                  type: "button",
+                                  "data-dismiss": "modal"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(_vm.trans("No! Go Back")) +
+                                    "\n                "
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "btn btn-lg btn-danger ladda-button rounded-0 w-50",
+                                attrs: {
+                                  type: "submit",
+                                  id: "cancel-subscription",
+                                  "data-style": "zoom-out"
+                                }
+                              },
+                              [
+                                _vm._v(
+                                  "\n                  " +
+                                    _vm._s(_vm.trans("Yes, Sure")) +
+                                    "\n                "
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ])
+                ])
+              ]
+            )
+          ]
+        ),
+        _vm._v(" "),
         _c("div", { staticClass: "text-right" }, [
           _c(
             "button",
@@ -73928,306 +74198,7 @@ var render = function() {
             },
             [_vm._v("\n        " + _vm._s(_vm.trans("Submit")) + "\n      ")]
           )
-        ]),
-        _vm._v(" "),
-        _vm._v("\n        \n  ")
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass:
-          "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
-      },
-      [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-xl-4" }, [
-              _c("h2", { staticClass: "mb-1" }, [
-                _vm._v(_vm._s(_vm.trans("Two Factor Authentication")))
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
-              },
-              [
-                _vm._m(0),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-8 col-lg-6" }, [
-                    _c(
-                      "div",
-                      { staticClass: "custom-control custom-switch my-4" },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.is_twoFactorAuthentication,
-                              expression: "user.is_twoFactorAuthentication"
-                            }
-                          ],
-                          staticClass: "custom-control-input",
-                          attrs: {
-                            type: "checkbox",
-                            id: "two-factor-authentication",
-                            name: "two-factor-authentication"
-                          },
-                          domProps: {
-                            checked: Array.isArray(
-                              _vm.user.is_twoFactorAuthentication
-                            )
-                              ? _vm._i(
-                                  _vm.user.is_twoFactorAuthentication,
-                                  null
-                                ) > -1
-                              : _vm.user.is_twoFactorAuthentication
-                          },
-                          on: {
-                            change: [
-                              function($event) {
-                                var $$a = _vm.user.is_twoFactorAuthentication,
-                                  $$el = $event.target,
-                                  $$c = $$el.checked ? true : false
-                                if (Array.isArray($$a)) {
-                                  var $$v = null,
-                                    $$i = _vm._i($$a, $$v)
-                                  if ($$el.checked) {
-                                    $$i < 0 &&
-                                      _vm.$set(
-                                        _vm.user,
-                                        "is_twoFactorAuthentication",
-                                        $$a.concat([$$v])
-                                      )
-                                  } else {
-                                    $$i > -1 &&
-                                      _vm.$set(
-                                        _vm.user,
-                                        "is_twoFactorAuthentication",
-                                        $$a
-                                          .slice(0, $$i)
-                                          .concat($$a.slice($$i + 1))
-                                      )
-                                  }
-                                } else {
-                                  _vm.$set(
-                                    _vm.user,
-                                    "is_twoFactorAuthentication",
-                                    $$c
-                                  )
-                                }
-                              },
-                              function($event) {
-                                return _vm.toggleTwoFactorAuthentication()
-                              }
-                            ]
-                          }
-                        }),
-                        _vm._v(" "),
-                        _c(
-                          "label",
-                          {
-                            staticClass: "custom-control-label",
-                            staticStyle: { "text-transform": "capitalize" },
-                            attrs: { for: "two-factor-authentication" }
-                          },
-                          [
-                            _vm._v(
-                              _vm._s(
-                                _vm.trans(
-                                  "Do you want two factor authentication"
-                                )
-                              ) + "?"
-                            )
-                          ]
-                        )
-                      ]
-                    )
-                  ])
-                ])
-              ]
-            )
-          ])
         ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass:
-          "border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card"
-      },
-      [
-        _c("div", { staticClass: "card-body" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-xl-4" }, [
-              _c("h2", { staticClass: "mb-1" }, [
-                _vm._v(_vm._s(_vm.trans("Subscription")))
-              ])
-            ]),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass:
-                  "border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0"
-              },
-              [
-                _vm._m(1),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-md-8 col-lg-6" }, [
-                    _c(
-                      "button",
-                      {
-                        staticClass:
-                          "btn btn-danger btn btn-danger ladda-button",
-                        attrs: {
-                          "data-style": "zoom-out",
-                          "data-toggle": "modal",
-                          "data-target": "#exampleModal",
-                          disabled: _vm.isDisabled
-                        }
-                      },
-                      [
-                        _vm._v(
-                          "\n                " +
-                            _vm._s(_vm.trans("Cancel Subscription")) +
-                            "\n              "
-                        )
-                      ]
-                    )
-                  ])
-                ])
-              ]
-            )
-          ])
-        ])
-      ]
-    ),
-    _vm._v(" "),
-    _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: {
-          id: "exampleModal",
-          tabindex: "-1",
-          role: "dialog",
-          "aria-labelledby": "delete-element-label",
-          "aria-hidden": "true"
-        }
-      },
-      [
-        _c(
-          "div",
-          {
-            staticClass: "modal-dialog modal-dialog-centered modal-sm",
-            attrs: { role: "document" }
-          },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-body p-0" }, [
-                _vm._m(2),
-                _vm._v(" "),
-                _c(
-                  "form",
-                  {
-                    staticClass: "mb-0",
-                    attrs: { action: _vm.url },
-                    on: {
-                      submit: function($event) {
-                        $event.preventDefault()
-                        return _vm.cancelSubscriptionModal(_vm.user.id)
-                      }
-                    }
-                  },
-                  [
-                    _c("div", { staticClass: "d-flex my-3 pl-4 pt-4" }, [
-                      _c("i", {
-                        staticClass:
-                          "display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "
-                      }),
-                      _vm._v(" "),
-                      _c("div", [
-                        _c("h3", { staticClass: "mb-0" }, [
-                          _vm._v(
-                            "\n                  " +
-                              _vm._s(_vm.trans("Are You Sure?")) +
-                              "\n                  "
-                          ),
-                          _c("br"),
-                          _vm._v(" "),
-                          _c("span", {
-                            staticClass: "element-name text-capitalize"
-                          }),
-                          _vm._v(
-                            _vm._s(
-                              _vm.trans(
-                                "If You Cancel Your Subscription You Will Lose Data."
-                              )
-                            ) + "\n                "
-                          )
-                        ]),
-                        _vm._v(" "),
-                        _c("p", { staticClass: "element-detail text-black-50" })
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      { staticClass: "d-flex overflow-hidden rounded-bottom" },
-                      [
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "btn btn-lg btn-outline-light rounded-0 text-body w-50",
-                            attrs: { type: "button", "data-dismiss": "modal" }
-                          },
-                          [
-                            _vm._v(
-                              "\n                " +
-                                _vm._s(_vm.trans("No! Go Back")) +
-                                "\n              "
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "btn btn-lg btn-danger ladda-button rounded-0 w-50",
-                            attrs: {
-                              type: "submit",
-                              id: "cancel-subscription",
-                              "data-style": "zoom-out"
-                            }
-                          },
-                          [
-                            _vm._v(
-                              "\n                " +
-                                _vm._s(_vm.trans("Yes, Sure")) +
-                                "\n              "
-                            )
-                          ]
-                        )
-                      ]
-                    )
-                  ]
-                )
-              ])
-            ])
-          ]
-        )
       ]
     )
   ])

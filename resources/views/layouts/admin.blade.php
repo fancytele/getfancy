@@ -225,9 +225,9 @@
         @elseif (Auth::user()->hasRole('admin'))
             <impersonate-component :roles-url="'{{ route('admin.roles.users', '_role_') }}'"
                                    :impersonate-url="'{{ route('admin.users.impersonate', '_user_')}}'"></impersonate-component>
-        @elseif (Auth::user()->hasRole('user'))
-            <!--<user-impersonate-component :roles-url="'{{ route('admin.roles.users', '_role_') }}'"
-                                   :impersonate-url="'{{ route('admin.users.impersonate', '_user_')}}'"></user-impersonate-component> -->
+     @elseif (Auth::user()->hasRole('user'))
+        <!--   <user-impersonate-component :roles-url="'{{ route('admin.roles.users', '_role_') }}'"
+                                   :impersonate-url="'{{ route('admin.users.impersonate', '_user_')}}'"></user-impersonate-component>-->
         @endif
 
     <!-- HEADER -->

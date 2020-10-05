@@ -9,9 +9,9 @@
             <div class="col-xl-4">
               <h2 class="mb-1">{{ trans('User Profile') }}</h2>
             </div>
-            <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
+            <div class="border-top border-top-2 col-xl-12 pt-4">
               <div class="row">
-                <div class="col-md-8 col-lg-6">
+                <div class="col-md-6 col-lg-6">
                   <div class="form-group">
                     <label>{{ trans('First Name') }}</label>
                     <input type="text"
@@ -28,9 +28,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8 col-lg-6">
+                <div class="col-md-6 col-lg-6">
                   <div class="form-group">
                     <label>{{ trans('Last Name') }}</label>
                     <input type="text"
@@ -49,7 +47,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-8 col-lg-6">
+                <div class="col-md-6 col-lg-6">
                   <div class="form-group">
                     <label>{{ trans('E-mail') }}</label>
                     <input type="email"
@@ -66,9 +64,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8 col-lg-6">
+                <div class="col-md-6 col-lg-6">
                   <div class="form-group">
                     <label>{{ trans('Phone Number') }}</label>
                     <input type="phoneNumber"
@@ -101,9 +97,9 @@
             <div class="col-xl-4">
               <h2 class="mb-1">{{ trans('Update Password') }}</h2>
             </div>
-            <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
+            <div class="border-top border-top-2 col-xl-12 pt-4">
               <div class="row">
-                <div class="col-md-8 col-lg-6">
+                <div class="col-md-6 col-lg-6">
                   <div class="form-group">
                     <label>{{ trans('Current Password') }}</label>
                     <input type="password"
@@ -121,7 +117,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-8 col-lg-6">
+                <div class="col-md-6 col-lg-6">
                   <div class="form-group">
                     <label>{{ trans('New Password') }}</label>
                     <input type="password"
@@ -137,9 +133,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-8 col-lg-6">
+                <div class="col-md-6 col-lg-6">
                   <div class="form-group">
                     <label>{{ trans('Confirm New Password') }}</label>
                     <input type="password"
@@ -149,6 +143,8 @@
                   </div>
                 </div>
               </div>
+              <div class="row">
+              </div>
             </div>
           </div>
         </div>
@@ -156,141 +152,136 @@
       <!--Update Password -->
 
       <!--Billing information -->
-        <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
-          <div class="card-body">
-            <div class="row">
-              <div class="col-xl-4">
-                <h2 class="mb-1">{{ trans('Billing Information') }}</h2>
+      <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-xl-4">
+              <h2 class="mb-1">{{ trans('Billing Information') }}</h2>
+            </div>
+            <div class="border-top border-top-2 col-xl-12 pt-4">
+              <div class="row">
+                <div class="col-md-6 col-lg-6">
+                  <div class="form-group">
+                    <label for="billing_address1">{{ trans('Address') }} 1</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="billing_address1"
+                        name="billing_address1"
+                        v-model="billing_address.address1"
+                        required
+                    />
+                    <div v-if ="errors.address1" class = "validation-error">
+                      <div v-for="error in errors.address1" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 col-lg-6">
+                  <div class="form-group">
+                    <label for="billing_address2">{{ trans('Address') }} 2</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="billing_address2"
+                        name="billing_address2"
+                        v-model="billing_address.address2"
+                        required
+                    />
+                    <div v-if ="errors.address2" class = "validation-error">
+                      <div v-for="error in errors.address2" v-bind:key="error.id">
+                                    <span class="small">
+                                        {{error}}
+                                    </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
-                <div class="row">
-                  <div class="col-md-8 col-lg-6">
-                    <div class="form-group">
-                      <label for="billing_address1">{{ trans('Address') }} 1</label>
-                      <input
-                          type="text"
-                          class="form-control"
-                          id="billing_address1"
-                          name="billing_address1"
-                          v-model="billing_address.address1"
-                          required
-                      />
-                      <div v-if ="errors.address1" class = "validation-error">
-                        <div v-for="error in errors.address1" v-bind:key="error.id">
+
+              <div class="row">
+                <div class="col-md-6 col-lg-6">
+                  <div class="form-group">
+                    <label for="country">{{ trans('Country') }}</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="country"
+                        id="country"
+                        v-model="billing_address.country"
+                        required
+                    />
+                    <div v-if ="errors.country" class = "validation-error">
+                      <div v-for="error in errors.country" v-bind:key="error.id">
                                     <span class="small">
                                         {{error}}
                                     </span>
-                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-8 col-lg-6">
-                    <div class="form-group">
-                      <label for="billing_address2">{{ trans('Address') }} 2</label>
-                      <input
-                          type="text"
-                          class="form-control"
-                          id="billing_address2"
-                          name="billing_address2"
-                          v-model="billing_address.address2"
-                          required
-                      />
-                      <div v-if ="errors.address2" class = "validation-error">
-                        <div v-for="error in errors.address2" v-bind:key="error.id">
+                <div class="col-md-6 col-lg-6">
+                  <div class="form-group">
+                    <label for="city">{{ trans('City') }}</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="city"
+                        name="city"
+                        v-model="billing_address.city"
+                        required
+                    />
+                    <div v-if ="errors.city" class = "validation-error">
+                      <div v-for="error in errors.city" v-bind:key="error.id">
                                     <span class="small">
                                         {{error}}
                                     </span>
-                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-8 col-lg-6">
-                    <div class="form-group">
-                      <label for="country">{{ trans('Country') }}</label>
-                      <input
-                          type="text"
-                          class="form-control"
-                          name="country"
-                          id="country"
-                          v-model="billing_address.country"
-                          required
-                      />
-                      <div v-if ="errors.country" class = "validation-error">
-                        <div v-for="error in errors.country" v-bind:key="error.id">
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 col-lg-6">
+                  <div class="form-group">
+                    <label for="state">{{ trans('State, Providence, Region') }}</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="state"
+                        name="state"
+                        v-model="billing_address.state"
+                        required
+                    />
+                    <div v-if ="errors.state" class = "validation-error">
+                      <div v-for="error in errors.state" v-bind:key="error.id">
                                     <span class="small">
                                         {{error}}
                                     </span>
-                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-md-8 col-lg-6">
-                    <div class="form-group">
-                      <label for="city">{{ trans('City') }}</label>
-                      <input
-                          type="text"
-                          class="form-control"
-                          id="city"
-                          name="city"
-                          v-model="billing_address.city"
-                          required
-                      />
-                      <div v-if ="errors.city" class = "validation-error">
-                        <div v-for="error in errors.city" v-bind:key="error.id">
+                <div class="col-md-6 col-lg-6">
+                  <div class="form-group">
+                    <label for="zip_code">{{ trans('Zip Code') }}</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        id="zip_code"
+                        name="zip_code"
+                        v-model="billing_address.zip_code"
+                        required
+                    />
+                    <div v-if ="errors.zip_code" class = "validation-error">
+                      <div v-for="error in errors.zip_code" v-bind:key="error.id">
                                     <span class="small">
                                         {{error}}
                                     </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-8 col-lg-6">
-                    <div class="form-group">
-                      <label for="state">{{ trans('State, Providence, Region') }}</label>
-                      <input
-                          type="text"
-                          class="form-control"
-                          id="state"
-                          name="state"
-                          v-model="billing_address.state"
-                          required
-                      />
-                      <div v-if ="errors.state" class = "validation-error">
-                        <div v-for="error in errors.state" v-bind:key="error.id">
-                                    <span class="small">
-                                        {{error}}
-                                    </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-8 col-lg-6">
-                    <div class="form-group">
-                      <label for="zip_code">{{ trans('Zip Code') }}</label>
-                      <input
-                          type="text"
-                          class="form-control"
-                          id="zip_code"
-                          name="zip_code"
-                          v-model="billing_address.zip_code"
-                          required
-                      />
-                      <div v-if ="errors.zip_code" class = "validation-error">
-                        <div v-for="error in errors.zip_code" v-bind:key="error.id">
-                                    <span class="small">
-                                        {{error}}
-                                    </span>
-                        </div>
                       </div>
                     </div>
                   </div>
@@ -299,6 +290,7 @@
             </div>
           </div>
         </div>
+      </div>
       <!--Billing information -->
 
       <!--Update Payment Method -->
@@ -313,7 +305,7 @@
                 <div class="col-md-8 col-lg-6">
                   <label><strong>{{ trans('Available Cards') }}</strong></label>
                   <div v-for = "payment_method in payment_methods">
-                    <div class="card" style="width: 22rem;">
+                    <div class="card" style="max-width: 22rem;">
                       <div class="card-body">
                         <div v-if="payment_method.id == default_card">
                           <span class="badge badge-pill badge-primary float-right">{{ trans('Default Card') }}</span>
@@ -321,11 +313,11 @@
                         <div v-if="payment_method.id != default_card">
                           <a href="#" @click="setAsDefaultCard(payment_method.id)"><span class="badge badge-pill badge-secondary float-right">{{ trans('Set As Default Card') }}</span></a>
                         </div>
-                        <p class="card-text" style="text-transform: capitalize;">{{ trans('Card Brand:') }} <strong>{{ payment_method.card.brand }}</strong></p>
-                        <p class="card-text">{{ trans('Card Number:') }} <strong>XXXX XXXX XXXX {{ payment_method.card.last4 }}</strong></p>
-                        <p class="card-text">{{ trans('Card Expiry Date:') }}<strong>{{ payment_method.card.exp_month }}/{{ payment_method.card.exp_year }}</strong></p>
-                        <div v-if="payment_method.id !== default_card">
-                          <button @click ="deleteCardDetail(payment_method.id)" id="delete-card-details" class="btn btn-primary btn btn-primary ladda-button"
+                        <p class="card-text" style="text-transform: capitalize;"><small>{{ trans('Card Brand:') }} {{ payment_method.card.brand }}</small></p>
+                        <p class="card-text"><small>{{ trans('Card Number:') }} XXXX XXXX XXXX {{ payment_method.card.last4 }}</small></p>
+                        <p class="card-text"><small>{{ trans('Card Expiry Date:')}} {{ payment_method.card.exp_month }}/{{ payment_method.card.exp_year }}</small></p>
+                        <div v-if="payment_method.id !== default_card" class="text-right">
+                          <button @click ="deleteCardDetail(payment_method.id)"  class="btn btn-primary btn btn-primary ladda-button"
                                   data-style="zoom-out">{{ trans('Delete') }}</button>
                         </div>
                       </div>
@@ -356,7 +348,122 @@
           </div>
         </div>
       </div>
-      <!--Update Payment Method -->
+      <!-- Update Payment Method -->
+
+      <!--Two Factor Authentication -->
+      <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-xl-4">
+              <h2 class="mb-1">{{ trans('Two Factor Authentication') }}</h2>
+            </div>
+            <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
+              <div class="row">
+                <div class="col-md-8 col-lg-6">
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8 col-lg-6">
+                  <div class="custom-control custom-switch my-4">
+                    <input
+                        type="checkbox"
+                        class="custom-control-input"
+                        id="two-factor-authentication"
+                        name="two-factor-authentication"
+                        v-model="user.is_twoFactorAuthentication"
+                        @change="toggleTwoFactorAuthentication()"
+                    />
+                    <label
+                        class="custom-control-label"
+                        for="two-factor-authentication"
+                        style="text-transform: capitalize"
+                    >{{ trans('Do you want two factor authentication') }}?</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Two Factor Authentication -->
+
+      <!--Cancel Subscription -->
+      <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-xl-4">
+              <h2 class="mb-1">{{ trans('Subscription') }}</h2>
+            </div>
+            <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
+              <div class="row">
+                <div class="col-md-8 col-lg-6" style="text-transform: capitalize">
+                  <h5>Need to cancel your subscription?</h5>
+                  <p>we're sad to see you go.</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-8 col-lg-6">
+                  <button
+                      class="btn btn-danger btn btn-danger ladda-button"
+                      data-style="zoom-out"
+                      data-toggle="modal"
+                      data-target="#exampleModal"
+                      :disabled='isDisabled'
+                  >
+                    {{ trans('Cancel Subscription') }}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Cancel Subscription -->
+
+      <!--Cancel Subscription Modal -->
+      <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+           aria-labelledby="delete-element-label" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+          <div class="modal-content">
+            <div class="modal-body p-0">
+              <button type="button" class="close mr-3 mt-3"
+                      data-dismiss="modal" aria-label="Close">
+                <i class="fe fe-x-circle"></i>
+              </button>
+              <form :action="url" class="mb-0" @submit.prevent="cancelSubscriptionModal(user.id)">
+                <div class="d-flex my-3 pl-4 pt-4">
+                  <i
+                      class="display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "></i>
+                  <div>
+                    <h3 class="mb-0">
+                      {{ trans('Are You Sure?') }}
+                      <br>
+                      <span
+                          class="element-name text-capitalize"></span>{{ trans('If You Cancel Your Subscription You Will Lose Data.') }}
+                    </h3>
+                    <p class="element-detail text-black-50"></p>
+                  </div>
+                </div>
+
+                <div class="d-flex overflow-hidden rounded-bottom">
+                  <button type="button"
+                          class="btn btn-lg btn-outline-light rounded-0 text-body w-50"
+                          data-dismiss="modal">
+                    {{ trans('No! Go Back') }}
+                  </button>
+                  <button type="submit"
+                          id="cancel-subscription"
+                          class="btn btn-lg btn-danger ladda-button rounded-0 w-50"
+                          data-style="zoom-out">
+                    {{ trans('Yes, Sure') }}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--Cancel Subscription Modal -->
 
       <!--Submit Button -->
       <div class="text-right">
@@ -368,124 +475,8 @@
         </button>
       </div>
       <!--Submit Button -->
-      &nbsp;&nbsp;&nbsp;&nbsp;
     </form>
-
-    <!--Two Factor Authentication -->
-    <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-xl-4">
-            <h2 class="mb-1">{{ trans('Two Factor Authentication') }}</h2>
-          </div>
-          <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
-            <div class="row">
-              <div class="col-md-8 col-lg-6">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-8 col-lg-6">
-                <div class="custom-control custom-switch my-4">
-                  <input
-                      type="checkbox"
-                      class="custom-control-input"
-                      id="two-factor-authentication"
-                      name="two-factor-authentication"
-                      v-model="user.is_twoFactorAuthentication"
-                      @change="toggleTwoFactorAuthentication()"
-                  />
-                  <label
-                      class="custom-control-label"
-                      for="two-factor-authentication"
-                      style="text-transform: capitalize"
-                  >{{ trans('Do you want two factor authentication') }}?</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--Two Factor Authentication -->
-
-    <!--Cancel Subscription -->
-    <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
-      <div class="card-body">
-        <div class="row">
-          <div class="col-xl-4">
-            <h2 class="mb-1">{{ trans('Subscription') }}</h2>
-          </div>
-          <div class="border-top border-top-2 border-xl-top-0 border-xl-left border-xl-left-2 col-xl-8 pt-4 pt-xl-0">
-            <div class="row">
-              <div class="col-md-8 col-lg-6" style="text-transform: capitalize">
-                <h5>Need to cancel your subscription?</h5>
-                <p>we're sad to see you go.</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-8 col-lg-6">
-                <button
-                        class="btn btn-danger btn btn-danger ladda-button"
-                        data-style="zoom-out"
-                        data-toggle="modal"
-                        data-target="#exampleModal"
-                        :disabled='isDisabled'
-                >
-                  {{ trans('Cancel Subscription') }}
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--Cancel Subscription -->
-
-    <!--Cancel Subscription Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
-         aria-labelledby="delete-element-label" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-        <div class="modal-content">
-          <div class="modal-body p-0">
-            <button type="button" class="close mr-3 mt-3"
-                    data-dismiss="modal" aria-label="Close">
-              <i class="fe fe-x-circle"></i>
-            </button>
-            <form :action="url" class="mb-0" @submit.prevent="cancelSubscriptionModal(user.id)">
-              <div class="d-flex my-3 pl-4 pt-4">
-                <i
-                    class="display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "></i>
-                <div>
-                  <h3 class="mb-0">
-                    {{ trans('Are You Sure?') }}
-                    <br>
-                    <span
-                        class="element-name text-capitalize"></span>{{ trans('If You Cancel Your Subscription You Will Lose Data.') }}
-                  </h3>
-                  <p class="element-detail text-black-50"></p>
-                </div>
-              </div>
-
-              <div class="d-flex overflow-hidden rounded-bottom">
-                <button type="button"
-                        class="btn btn-lg btn-outline-light rounded-0 text-body w-50"
-                        data-dismiss="modal">
-                  {{ trans('No! Go Back') }}
-                </button>
-                <button type="submit"
-                        id="cancel-subscription"
-                        class="btn btn-lg btn-danger ladda-button rounded-0 w-50"
-                        data-style="zoom-out">
-                  {{ trans('Yes, Sure') }}
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!--Cancel Subscription Modal -->
-
+    
     <!-- Add Authorized User
     <form :action="add_authorized_user" @submit.prevent="addAuthorizedUser()">
     <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
@@ -972,21 +963,16 @@ export default {
       });
     },
     deleteCardDetail(id){
-      this.laddaButton = Ladda.create(
-          document.querySelector('#delete-card-details')
-      );
       axios.post(this.delete_payment_method,{
          _method: 'delete',
           card_id :  id
          })
           .then(response=>{
             console.log(response);
-            this.laddaButton.stop();
             window.location.reload();
           })
           .catch(error => {
             console.log(error);
-            this.laddaButton.stop();
           });
     },
 
