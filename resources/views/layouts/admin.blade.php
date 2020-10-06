@@ -124,12 +124,12 @@
                                 <i class="fe fe-settings"></i> Fancy Settings
                             </a>
                         </li>
-                        <li class="nav-item">
+                      <!--  <li class="nav-item">
                             <a class="nav-link"
                                href="{{ route('admin.users.edit_profile', Auth::id()) }}">
                                 <i class="fe fe-user"></i>User Settings
                             </a>
-                        </li>
+                        </li> -->
                         @endhasanyrole
                     </ul>
 
@@ -202,6 +202,11 @@
                                 <a href="{{ route('admin.users.stop_impersonate') }}" class="dropdown-item">
                                     @lang('Stop viewing as ') {{ Auth::user()->roles->first()->name }}
                                 </a>
+                                <div class="dropdown-divider m-0"></div>
+                            @endif
+                            @if(Auth::user()->fancy_number AND Auth::user()->roles->first()->name  == "user")
+                                <a href="{{ route('admin.users.edit_profile', Auth::id()) }}" class="dropdown-item">
+                                    @lang('Account Settings')</a>
                                 <div class="dropdown-divider m-0"></div>
                             @endif
                             <a href="{{ route('admin.logout') }}" class="dropdown-item logout-action">
