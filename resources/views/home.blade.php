@@ -24,6 +24,17 @@
         <!-- Styles -->
         <link href="{{ asset(mix('css/web.css')) }}" rel="stylesheet">
 
+        <style>
+            #InputPrice{
+                border: 0;
+                outline: 0;
+                background: transparent;
+                border-bottom: 1px solid white;
+                width: 15px;
+                border-collapse: separate;
+                border-spacing: 15px;
+            }
+        </style>
         @env('production')
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143244951-1">
@@ -492,41 +503,25 @@
                             </div>
 
                             <div>
-                                <h2 class="display-1 text-primary plan-wrapper">
-                                    @foreach ($products as $product)
-                                    <span id="{{ $product->slug }}"
-                                          class="plan-item{{ $product->is_primary ? ' active' : '' }}">
-                                        <span class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3">$</span>
-                                        <span class="plan-amount">{{ $product->cost }}</span>
-                                        @if($product->discount)
-                                        <small
-                                               class="badge badge-pill badge-success font-weight-bold plan-save position-absolute px-3 py-2">
-                                            @lang('Save') {{ $product->discount }}
-                                        </small>
-                                        @endif
-                                    </span>
-                                    @endforeach
-                                </h2>
-
-                                <div class="btn-group" role="group" aria-label="Our Plans Button Groups">
-                                    @foreach ($products as $product)
-                                    <button type="button"
-                                            class="btn btn-outline-light{{ $product->is_primary ? ' active' : '' }}"
-                                            data-type="{{ $product->slug }}"
-                                            data-description="{{ $product->description }}">@lang($product->name)</button>
-                                    @endforeach
+                                <h5>
+                                    @lang('How much do you want to pay?')
+                                </h5>
+                                <div style="background-color: #704895; display: flex; flex-direction: column; justify-content: center;    max-width: 15rem;
+    border: thin;
+    border-radius: 5px;">
+                                    <div>
+                                        <input type=number id="InputPrice"/>
+                                    </div>
+                                    <div>
+                                        <span class="small text-muted">@lang('Monthly Payment')</span>
+                                    </div>
                                 </div>
-
-                                <p>
-                                    <small class="plan-item-description font-italic text-muted">
-                                        {{ $products->where('is_primary', 1)->first()->description }}!
-                                    </small>
-                                </p>
+                                <br>
+                                <h5>
+                                    @lang('Pay whatever you think is fair')<br>
+                                    @lang('You can select add ons later')
+                                </h5>
                             </div>
-
-                            <a id="plan-buy" href="#" class="btn btn-primary px-7">
-                                @lang('Buy now')
-                            </a>
                         </div>
                     </div>
                 </div>
