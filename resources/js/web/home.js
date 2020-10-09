@@ -59,6 +59,11 @@ import navbarCollapse from '../navbarCollapse';
   $(document).ready(() => {
     navbar.init();
 
+    $('#price').keyup(function (event){
+      if(event.target.value){
+        document.getElementById('plan_submit').disabled = false;
+      }
+    })
     // Get Started buton
     $('#home #get-started').click(e => {
       e.preventDefault();
@@ -70,10 +75,15 @@ import navbarCollapse from '../navbarCollapse';
     $('#plans .btn-group button').on('click', changePlan);
     $('#plans #plan-buy').click(redirectToCheckout);
 
+
     // Have Us Call You
     const phoneInput = document.querySelector('#have-us-call-you #phone');
     const maskOptions = { mask: '(000) 000-0000' };
     IMask(phoneInput, maskOptions);
+
+    const priceInput = document.querySelector('#price');
+    const maskOption = { mask: '00.00' };
+    IMask(priceInput, maskOption);
 
     haveUsCallYou.init('#have-us-call-you', '.call-you-button', '.call-you-error');
 
@@ -96,6 +106,7 @@ import navbarCollapse from '../navbarCollapse';
         .catch(() => contactUs.showErrorMessage())
         .then(() => contactUs.enableSubmit());
     });
+
 
     // Init AOS Animation
     if (typeof AOS !== 'undefined') {

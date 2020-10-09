@@ -95,7 +95,14 @@ class UserController extends Controller
     {
         $data = $request->all();
 
-        $stripe_service = new StripeService();
+        Product::create([
+            'name' => 'Monthly',
+            'slug' => 'monthly',
+            'cost' => $data['cost']
+        ]);
+
+
+       /* $stripe_service = new StripeService();
 
         // Find product by slug
         $product = Product::whereSlug($data['product'])->first();
@@ -160,6 +167,8 @@ class UserController extends Controller
         $ticket->save();
 
         return response()->json(['success' => true, 'user' => $user->model()->id]);
+
+       */
     }
 
     /**

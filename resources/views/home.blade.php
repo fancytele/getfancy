@@ -12,12 +12,24 @@
 
         <!-- Scripts -->
         <script src="/js/lang.js" defer></script>
-        <script src="{{ asset(mix('js/home.js')) }}" defer></script>
+        <script src="{{ asset(mix('js/home.js')) }}" defer>
+        </script>
 
+        <script>
+          function validateForm() {
+            var x = document.forms["myForm"]["price"].value;
+            if (x < 10) {
+              document.getElementById('costError').style.display = "block";
+              return false;
+            }
+          }
+        </script>
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <link rel="stylesheet"
               href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+
+        <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
 
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
@@ -25,19 +37,14 @@
         <link href="{{ asset(mix('css/web.css')) }}" rel="stylesheet">
 
         <style>
-            #InputPrice{
-                border: 0;
-                outline: 0;
-                background: transparent;
-                border-bottom: 1px solid white;
-                width: 15px;
-                border-collapse: separate;
-                border-spacing: 15px;
+            input{
+                outline: none;
             }
         </style>
         @env('production')
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143244951-1">
+
         </script>
         <script>
             window.dataLayer = window.dataLayer || [];
@@ -502,31 +509,53 @@
                                 </div>
                             </div>
 
-                            <div>
-                                <h5>
+                            <form name="myForm" action="{{ route('web.planCost') }}" method="POST" onsubmit="return validateForm()">
+                                @csrf
+                                <h3 class="text-primary">
                                     @lang('How much do you want to pay?')
-                                </h5>
-                                <div style="background-color: #704895; display: flex; flex-direction: column; justify-content: center;    max-width: 15rem;
-    border: thin;
-    border-radius: 5px;">
-                                    <div>
-                                        <input type=number id="InputPrice"/>
+                                </h3>
+                                <div style="background-color: #704895;border: thin;border-radius: 5px;max-width: 12rem;
+                                 margin: 0 auto;display: flex; flex-direction: column; justify-content: center;" >
+                                    <div style="display: flex; flex-direction: row; justify-content: center;">
+                                        <span class="text-white">$</span>
+                                        <input style="border: none;background-color: #704895;color: white;max-width: 4rem;"
+                                               type="number" step=".01" name="price"
+                                               placeholder="__.__" id="price"
+                                               required
+                                        >
                                     </div>
                                     <div>
-                                        <span class="small text-muted">@lang('Monthly Payment')</span>
+                                        <span class="small text-white">@lang('Monthly Payment')</span>
                                     </div>
                                 </div>
                                 <br>
-                                <h5>
+                                <div id="costError" class="alert alert-info alert-dismissible" style="max-width: 30rem; display:none; margin: 0 auto">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <i class="fa fa-info-circle" aria-hidden="true"></i><strong>Heads Up!</strong><br>
+                                    <span>Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair</span>
+                                </div>
+                                <br>
+                                @if($errors->any())
+                                    <div class="alert alert-info alert-dismissible" style="max-width: 30rem; margin: 0 auto">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i><strong>Heads Up!</strong><br>
+                                        <span>Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair</span>
+                                    </div>
+                                    <br>
+                                @endif
+                                <p class="small ">
                                     @lang('Pay whatever you think is fair')<br>
                                     @lang('You can select add ons later')
-                                </h5>
-                            </div>
+                                </p>
+                                <button id="plan_submit" type="submit" class="btn btn-outline-primary px-7" disabled>Next</button>
+                            </form>
+
                         </div>
                     </div>
                 </div>
             </section>
             <!-- / Plans Section -->
+            >
 
             <!-- Testimonials Section -->
             <section id="about" class="fancy-section position-relative pt-0">

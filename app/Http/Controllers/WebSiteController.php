@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class WebSiteController extends Controller
@@ -30,20 +32,16 @@ class WebSiteController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @param string $slug
+     * @param int $plan_id
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function checkout(string $slug)
+    public function checkout(int $plan_id)
     {
-        $products = Product::all();
-
-        if (!$products->contains('slug', $slug)) {
-            $primary_slug = $products->firstWhere('is_primary')->slug;
-
-            return redirect()->route('web.checkout', $primary_slug);
+        if(!$plan_id)
+        {
+            return redirect()->route('web.homepage');
         }
-
-        $product = $products->firstWhere('slug', $slug);
+        $product = Product::find($plan_id);
         $addons = Addon::subscription()->orWhere('code', AddonCode::PROFESSIONAL_RECORDING)->get();
 
         return view('checkout', compact('product', 'addons'));
@@ -121,14 +119,45 @@ class WebSiteController extends Controller
         exit();
     }
 
+    //Milestone4
+
+    public function getPlanCost(Request $request){
+
+        $validator = Validator::make($request->all(),[
+            'price' => 'required|numeric|between:10,99.99'
+        ]);
+
+        if($validator->fails()) {
+            return Redirect::to('/#cost')->withErrors($validator);
+        }
+
+        $product = Product::create([
+            'name' => 'Monthly',
+            'slug' => 'monthly',
+            'cost' => $request->price,
+        ]);
+
+        return redirect()->route('web.checkout', $product->id);
+    }
+
+    //Milestone1
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getPrivacyPolicy(){
         return view('privacy-policy');
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getTermsOfService(){
         return view('terms-of-service');
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getCookiePolicy(){
         return view('cookie-policy');
     }
