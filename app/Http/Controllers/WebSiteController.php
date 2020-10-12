@@ -32,16 +32,16 @@ class WebSiteController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @param int $plan_id
+     * @param int $product_id
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function checkout(int $plan_id)
+    public function checkout(int $product_id)
     {
-        if(!$plan_id)
+        if(!$product_id)
         {
             return redirect()->route('web.homepage');
         }
-        $product = Product::find($plan_id);
+        $product = Product::find($product_id);
         $addons = Addon::subscription()->orWhere('code', AddonCode::PROFESSIONAL_RECORDING)->get();
 
         return view('checkout', compact('product', 'addons'));

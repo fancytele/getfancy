@@ -4157,6 +4157,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -68870,53 +68873,55 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("span", [_vm._v(_vm._s(_vm.trans("$")))]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "imask",
-                            rawName: "v-imask",
-                            value: _vm.costMask,
-                            expression: "costMask"
-                          },
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.user.cost,
-                            expression: "user.cost"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        class: {
-                          "is-invalid": _vm.errors.hasOwnProperty("cost")
-                        },
-                        attrs: {
-                          type: "number",
-                          id: "cost",
-                          name: "cost",
-                          placeholder: "__.__",
-                          required: ""
-                        },
-                        domProps: { value: _vm.user.cost },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
+                      _c("div", { staticClass: "d-flex flex-row" }, [
+                        _c("span", [_vm._v(_vm._s(_vm.trans("$")))]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "imask",
+                              rawName: "v-imask",
+                              value: _vm.costMask,
+                              expression: "costMask"
+                            },
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.user.cost,
+                              expression: "user.cost"
                             }
-                            _vm.$set(_vm.user, "cost", $event.target.value)
+                          ],
+                          staticClass: "form-control",
+                          class: {
+                            "is-invalid": _vm.errors.hasOwnProperty("cost")
+                          },
+                          attrs: {
+                            type: "number",
+                            id: "cost",
+                            name: "cost",
+                            placeholder: "__.__",
+                            required: ""
+                          },
+                          domProps: { value: _vm.user.cost },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(_vm.user, "cost", $event.target.value)
+                            }
                           }
-                        }
-                      }),
-                      _vm._v(" "),
-                      _vm.errors.hasOwnProperty("cost")
-                        ? _c("div", { staticClass: "invalid-feedback" }, [
-                            _vm._v(
-                              _vm._s(_vm.errors.cost[0]) +
-                                "\n                                "
-                            )
-                          ])
-                        : _vm._e()
+                        }),
+                        _vm._v(" "),
+                        _vm.errors.hasOwnProperty("cost")
+                          ? _c("div", { staticClass: "invalid-feedback" }, [
+                              _vm._v(
+                                _vm._s(_vm.errors.cost[0]) +
+                                  "\n                                "
+                              )
+                            ])
+                          : _vm._e()
+                      ])
                     ]),
                     _vm._v(" "),
                     _c(

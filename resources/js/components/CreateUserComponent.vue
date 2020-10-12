@@ -28,22 +28,25 @@
                             <div class="col-lg-6 col-xl-6">
                                 <div class="form-group">
                                   <label>{{ trans('How much do you want to pay?') }}</label>
-                                  <span>{{ trans('$')}}</span>
-                                  <input type="number"
-                                         class="form-control"
-                                         id="cost"
-                                         name="cost"
-                                         v-imask="costMask"
-                                         v-model="user.cost"
-                                         placeholder="__.__"
-                                         required
-                                         :class="{'is-invalid': errors.hasOwnProperty('cost')}"
-                                  >
+                                  <div class="d-flex flex-row">
+                                    <span>{{ trans('$')}}</span>
+                                    <input type="number"
+                                           class="form-control"
+                                           id="cost"
+                                           name="cost"
+                                           v-imask="costMask"
+                                           v-model="user.cost"
+                                           placeholder="__.__"
+                                           required
+                                           :class="{'is-invalid': errors.hasOwnProperty('cost')}"
+                                    >
+
                                     <div
                                             class="invalid-feedback"
                                             v-if="errors.hasOwnProperty('cost')"
                                     >{{ errors.cost[0] }}
                                     </div>
+                                  </div>
                                 </div>
                               <div class="modal fade" id= "exampleModal" tabindex="-1" role="dialog"
                                    aria-labelledby="delete-element-label" aria-hidden="true">
