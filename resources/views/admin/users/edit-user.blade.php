@@ -26,6 +26,7 @@
                                 :add_authorized_user="'{{ route('admin.users.add_authorized_user', $user->id) }}'"
                                 :delete_authorized_user="'{{ route('admin.users.delete_authorized_user', $user->id) }}'"
                                 :update_default_card="'{{ route('admin.users.update_default_card', $user->id) }}'"
+                                :get_call_logs="'{{ route('admin.users.get_call_logs' , $user->id) }}'"
         ></user-setting-component>
     </div>
 @endsection

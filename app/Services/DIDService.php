@@ -219,6 +219,14 @@ class DIDService
         return $this->purchaseDID($available_did->getId(), $available_did->getNumber(), $did_group);
     }
 
+
+    public function getCallLogs(string $did)
+    {
+        $cdr_export = new DIDWWCDRExport();
+        return $cdr_export->setFilerDidNumber($did);
+
+    }
+
     public function getCDRReport(string $did, int $year, int $month)
     {
         // generate cdr export

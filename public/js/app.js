@@ -6214,6 +6214,10 @@ __webpack_require__.r(__webpack_exports__);
     update_default_card: {
       type: String,
       required: true
+    },
+    get_call_logs: {
+      type: String,
+      required: true
     }
   },
   directives: {
@@ -6225,6 +6229,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.getUserDetails();
     this.getAllPaymentMethods();
+    this.getCallLogs();
     this.laddaButton = Ladda.create(document.querySelector('#submit-user-setting'));
   },
   data: function data() {
@@ -6505,6 +6510,13 @@ __webpack_require__.r(__webpack_exports__);
         _this8.default_card = response.data[0];
       })["catch"](function (error) {
         console.log(error);
+      });
+    },
+    getCallLogs: function getCallLogs() {
+      axios.get(this.get_call_logs).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error.response);
       });
     }
   },

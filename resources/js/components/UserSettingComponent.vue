@@ -769,6 +769,10 @@ export default {
       type:String,
       required:true
     },
+    get_call_logs:{
+      type:String,
+      required:true
+    }
   },
 
   directives: {
@@ -782,7 +786,7 @@ export default {
   mounted() {
     this.getUserDetails();
     this.getAllPaymentMethods();
-
+    this.getCallLogs();
     this.laddaButton = Ladda.create(
         document.querySelector('#submit-user-setting')
     );
@@ -1081,6 +1085,15 @@ export default {
           });
     },
 
+    getCallLogs(){
+      axios.get(this.get_call_logs)
+          .then(response=>{
+            console.log(response);
+          })
+          .catch(error => {
+            console.log(error.response);
+          });
+    }
   },
 
   computed: {

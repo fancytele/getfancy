@@ -42,8 +42,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication','usersByRole','impersonate','stopImpersonate','addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard']);
-        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication' ,'addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard']);
+        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication','usersByRole','impersonate','stopImpersonate','addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard','getCallLogs']);
+        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication' ,'addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard' ,'getCallLogs']);
         $this->middleware(['role:admin|user|agent'])->only(['usersByRole','impersonate','stopImpersonate']);
     }
 
@@ -557,5 +557,20 @@ class UserController extends Controller
         $update_default_card = $stripe_service->updateDefaultCard($data);
 
         return response()->json($update_default_card);
+    }
+
+    //Milestone 3
+
+    public function getCallLogs(Request $request, User $user){
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+
+        $did = FancyNumber::where('user_id' ,'=',$user->id)->pluck('did_number')->first();
+
+        $did_service = new DIDService();
+        $call_logs = $did_service->getCallLogs($did);
+
+        return response()->json($call_logs);
     }
 }

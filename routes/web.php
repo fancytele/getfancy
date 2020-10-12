@@ -67,6 +67,9 @@ Route::prefix('admin')->group(function () {
         Route::get('users/{user}/authorized_user','Admin\Users\UserController@getAuthorizedUser')->name('admin.users.get_authorized_user');
 
 
+        //Milestone 3 - DIDWW
+        Route::get('users/{user}/call_logs', 'Admin\Users\UserController@getCallLogs')->name('admin.users.get_call_logs');
+
         // Agents Management
         Route::post('agents/{agent}/reset_password', 'Admin\Users\AgentController@resetPassword')->name('admin.agents.reset_password');
         Route::post('agents/{agent}/restore', 'Admin\Users\AgentController@restore')->name('admin.agents.restore');
