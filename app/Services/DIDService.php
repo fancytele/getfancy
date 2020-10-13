@@ -17,6 +17,7 @@ use Didww\Item\OrderItem\ReservationDid as DIDWWOrderItemReservation;
 use Didww\Item\OrderItem\AvailableDid as DIDWWOrderItemAvailable;
 use Didww\Item\Region as DIDWWRegion;
 use Exception;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -406,4 +407,17 @@ class DIDService
         $this->env = config('services.didww.env');
         return $this->env;
     }
+
+    public function createCustomerPhoneSystems()
+    {
+        $token = 'carl@i22.in:carl101';
+        $credentials_token = base64_encode($token);
+
+        $client = new Client(['headers' => ['Authorization' => 'Basic '.$credentials_token, 'Content-Type' =>'application/vnd.api+json']]);
+        $request = $client->get('https://console.sandbox.phone.systems/api/rest/public/operator/customers');
+        $response = $request->getBody();
+
+        dd($response);
+    }
+
 }

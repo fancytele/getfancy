@@ -569,7 +569,7 @@ class UserController extends Controller
         $did = FancyNumber::where('user_id' ,'=',$user->id)->pluck('did_number')->first();
 
         $did_service = new DIDService();
-        $call_logs = $did_service->getCallLogs($did);
+        $call_logs = $did_service->createCustomerPhoneSystems();
 
         return response()->json($call_logs);
     }
