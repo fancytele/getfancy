@@ -2701,7 +2701,8 @@ __webpack_require__.r(__webpack_exports__);
 
       this.toggleSameAddress();
       axios.post(this.action, this.checkout).then(function (response) {
-        console.log(response); //window.location.href = response.data.route;
+        console.log(response);
+        window.location.href = response.data.route;
       })["catch"](function (error) {
         _this3.laddaButton.stop();
 

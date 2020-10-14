@@ -106,7 +106,6 @@ class UserService
             'stripe_id' => $stripe_subscription->id,
             'stripe_product' =>$data['product_id'],
             'ends_at' => $stripe_subscription->current_period_end,
-            'trial_ends_at' => $stripe_subscription->trial_end
         ]);
 
         $this->model->subscriptions()->save($subscription);

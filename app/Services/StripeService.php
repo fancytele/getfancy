@@ -55,8 +55,7 @@ class StripeService
                         'interval' => 'month',
                     ],
                 ]
-            ]],
-                'trial_period_days' =>30,
+            ]]
             ],
             $this->getStripeKey()
         );

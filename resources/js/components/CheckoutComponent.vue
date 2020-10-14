@@ -857,7 +857,7 @@ export default {
         .post(this.action, this.checkout)
         .then(response => {
           console.log(response);
-          //window.location.href = response.data.route;
+          window.location.href = response.data.route;
         })
         .catch(error => {
           this.laddaButton.stop();
