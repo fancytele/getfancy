@@ -14,6 +14,7 @@ class DropProductIdSubcriptions extends Migration
     public function up()
     {
         Schema::table('subscriptions', function (Blueprint $table) {
+            $table->dropForeign(['product_id']);
             $table->dropColumn('product_id');
         });
     }

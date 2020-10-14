@@ -13,7 +13,7 @@ class Subscription extends Model
      * @var array
      */
     protected $fillable = [
-        "product_id", "stripe_id", "stripe_product", "stripe_invoice", "ends_at"
+         "stripe_id", "stripe_product", "stripe_invoice", "ends_at"
     ];
 
     /**
@@ -28,17 +28,17 @@ class Subscription extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo|\App\Product
      */
-    public function product()
+    /*public function product()
     {
         return $this->belongsTo(Product::class);
     }
-
+*/
     /**
      * Get total active subscriptions by product type
      *
      * @return mixed
      */
-    public static function countByProduct()
+    /*public static function countByProduct()
     {
         return static::selectRaw('products.id, products.name as product_name, IFNULL(count(subscriptions.product_id), 0) as total')
             ->from('products')
@@ -48,4 +48,5 @@ class Subscription extends Model
             ->groupBy('products.id')
             ->get();
     }
+    */
 }

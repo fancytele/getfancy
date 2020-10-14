@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use Carbon\Carbon;
 use Stripe\Customer as StripeCustomer;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Invoice as StripeInvoice;
@@ -44,7 +45,6 @@ class StripeService
      */
     public function createSubscription(string $customer_id, array $data)
     {
-
         return StripeSubscription::create(
             ['customer' => $customer_id, 'items' => [[
                 'price_data' => [
@@ -54,8 +54,9 @@ class StripeService
                     'recurring' => [
                         'interval' => 'month',
                     ],
-                ],
+                ]
             ]],
+                'trial_period_days' =>30,
             ],
             $this->getStripeKey()
         );

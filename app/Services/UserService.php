@@ -95,19 +95,18 @@ class UserService
     /**
      * Create user Subscription with Stripe info
      *
-     * @param int $product_id
-     * @param string $stripe_product_id
+     * @param array $data
      * @param StripeSubscription $stripe_subscription
-     * 
+     *
      * @return UserService
      */
-    public function createSubscription(array  $data, StripeSubscription $stripe_subscription)
+    public function createSubscription(array $data, StripeSubscription $stripe_subscription)
     {
         $subscription = new Subscription([
-            'product_id' => $data['product_id'],
             'stripe_id' => $stripe_subscription->id,
             'stripe_product' =>$data['product_id'],
-            'ends_at' => $stripe_subscription->current_period_end
+            'ends_at' => $stripe_subscription->current_period_end,
+            'trial_ends_at' => $stripe_subscription->trial_end
         ]);
 
         $this->model->subscriptions()->save($subscription);
