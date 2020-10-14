@@ -179,7 +179,8 @@
                                         :locale="'{{ app()->getLocale() }}'"
                                         :action="'{{ route('subscription') }}'"
                                         :recaptcha-key="'{{ config('fancy.recaptcha_site_key') }}'"
-                                        :product='@json($product)'
+                                        :product_id="'{{ $product_id }}'"
+                                        :price='{{ $price }}'
                                         :addons='@json($addons)'>
                     </checkout-component>
                 </div>

@@ -24,6 +24,7 @@ class StripeService
      *
      * @param array $options
      * @return StripeCustomer
+     * @throws ApiErrorException
      */
     public function createCustomer(array $options = [])
     {
@@ -37,13 +38,25 @@ class StripeService
      * Create a Stripe Subscription for the given Customer and plan(s)
      *
      * @param string $customer_id
-     * @param array $plans
+     * @param array $data
      * @return \Stripe\Subscription
+     * @throws ApiErrorException
      */
-    public function createSubscription(string $customer_id, array $plans)
+    public function createSubscription(string $customer_id, array $data)
     {
+
         return StripeSubscription::create(
-            ['customer' => $customer_id, 'items' => $plans],
+            ['customer' => $customer_id, 'items' => [[
+                'price_data' => [
+                    'unit_amount' => ($data['price']*100),
+                    'currency' => 'usd',
+                    'product' => $data['product_id'],
+                    'recurring' => [
+                        'interval' => 'month',
+                    ],
+                ],
+            ]],
+            ],
             $this->getStripeKey()
         );
     }

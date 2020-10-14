@@ -101,12 +101,12 @@ class UserService
      * 
      * @return UserService
      */
-    public function createSubscription(int $product_id, string $stripe_product_id, StripeSubscription $stripe_subscription)
+    public function createSubscription(array  $data, StripeSubscription $stripe_subscription)
     {
         $subscription = new Subscription([
-            'product_id' => $product_id,
+            'product_id' => $data['product_id'],
             'stripe_id' => $stripe_subscription->id,
-            'stripe_product' => $stripe_product_id,
+            'stripe_product' =>$data['product_id'],
             'ends_at' => $stripe_subscription->current_period_end
         ]);
 

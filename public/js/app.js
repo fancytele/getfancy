@@ -1841,9 +1841,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_recaptcha__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-recaptcha */ "./node_modules/vue-recaptcha/dist/vue-recaptcha.es.js");
 /* harmony import */ var vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-stripe-elements-plus */ "./node_modules/vue-stripe-elements-plus/dist/index.js");
 /* harmony import */ var vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_stripe_elements_plus__WEBPACK_IMPORTED_MODULE_1__);
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-//
 //
 //
 //
@@ -2565,8 +2562,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       type: String,
       required: true
     },
-    product: {
-      type: Object,
+    product_id: {
+      type: String,
+      required: true
+    },
+    price: {
+      type: Number,
       required: true
     },
     addons: {
@@ -2583,8 +2584,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     VueRecaptcha: vue_recaptcha__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   data: function data() {
-    var _checkout;
-
     return {
       sameAddress: true,
       laddaButton: null,
@@ -2616,8 +2615,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       stripeError: '',
       isProcessing: true,
       countries: [],
-      checkout: (_checkout = {
-        checkout_product: this.product.slug,
+      checkout: {
+        product_id: this.product_id,
+        price: this.price,
         stripe_token: '',
         first_name: '',
         last_name: '',
@@ -2639,8 +2639,12 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         billing_state: '',
         billing_zip_code: '',
         billing_address1: '',
-        billing_address2: ''
-      }, _defineProperty(_checkout, "stripe_token", ''), _defineProperty(_checkout, "number_type", ''), _defineProperty(_checkout, "phone_number", ''), _defineProperty(_checkout, "addons", []), _defineProperty(_checkout, "recaptcha", ''), _checkout)
+        billing_address2: '',
+        number_type: '',
+        phone_number: '',
+        addons: [],
+        recaptcha: ''
+      }
     };
   },
   methods: {
@@ -2697,7 +2701,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       this.toggleSameAddress();
       axios.post(this.action, this.checkout).then(function (response) {
-        window.location.href = response.data.route;
+        console.log(response); //window.location.href = response.data.route;
       })["catch"](function (error) {
         _this3.laddaButton.stop();
 
@@ -2732,8 +2736,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var _this4 = this;
 
       var product = {
-        name: this.product.name,
-        cost: this.product.cost
+        name: 'Monthly',
+        cost: this.price
       };
       var summary = this.addons.filter(function (el) {
         return _this4.checkout.addons.includes(el.code);
@@ -66310,9 +66314,9 @@ var render = function() {
                       [
                         _vm._v(
                           "\n                  " +
-                            _vm._s(_vm.trans(_vm.product.name)) +
+                            _vm._s(_vm.trans("Monthly")) +
                             "\n                  $" +
-                            _vm._s(_vm.product.cost) +
+                            _vm._s(_vm.price) +
                             "\n                "
                         )
                       ]
@@ -67947,7 +67951,7 @@ var render = function() {
                       staticClass:
                         "d-inline-block display-1 font-weight-light mt-n3 plan-price-amount"
                     },
-                    [_vm._v(_vm._s(_vm.product.cost))]
+                    [_vm._v(_vm._s(_vm.price))]
                   ),
                   _vm._v(" "),
                   _c(
@@ -67956,16 +67960,16 @@ var render = function() {
                       staticClass:
                         "d-inline-block h3 mb-0 plan-price-time text-lowercase text-white"
                     },
-                    [_vm._v("/ " + _vm._s(_vm.trans(_vm.product.name)))]
+                    [_vm._v("/ " + _vm._s(_vm.trans("Monthly")))]
                   )
                 ]),
                 _vm._v(" "),
                 _c("p", { staticClass: "font-italic mb-0" }, [
                   _c("span", [
-                    _vm._v(_vm._s(_vm.trans("Automatically renews every")))
-                  ]),
-                  _vm._v(" "),
-                  _c("span", [_vm._v(_vm._s(_vm.trans(_vm.product.renew)))])
+                    _vm._v(
+                      _vm._s(_vm.trans("Automatically renews every month"))
+                    )
+                  ])
                 ])
               ]),
               _vm._v(" "),

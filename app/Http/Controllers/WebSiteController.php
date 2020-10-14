@@ -32,19 +32,21 @@ class WebSiteController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @param int $product_id
+     * @param string $product_id
+     * @param float $price
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function checkout(int $product_id)
+    public function checkout(string $product_id, float $price)
     {
-        if(!$product_id)
+        if(!$product_id && !$price)
         {
             return redirect()->route('web.homepage');
         }
-        $product = Product::find($product_id);
+
+
         $addons = Addon::subscription()->orWhere('code', AddonCode::PROFESSIONAL_RECORDING)->get();
 
-        return view('checkout', compact('product', 'addons'));
+        return view('checkout', compact('product_id', 'addons' ,'price'));
     }
 
     /**
@@ -121,23 +123,17 @@ class WebSiteController extends Controller
 
     //Milestone4
 
-    public function getPlanCost(Request $request){
+    public function getPlanPrice(Request $request){
 
         $validator = Validator::make($request->all(),[
             'price' => 'required|numeric|between:10,99.99'
         ]);
 
         if($validator->fails()) {
-            return Redirect::to('/#cost')->withErrors($validator);
+            return Redirect::to('/#price')->withErrors($validator);
         }
 
-        $product = Product::create([
-            'name' => 'Monthly',
-            'slug' => 'monthly',
-            'cost' => $request->price,
-        ]);
-
-        return redirect()->route('web.checkout', $product->id);
+        return redirect()->route('web.checkout', [env('STRIPE_PRODUCT_ID'), $request->price]);
     }
 
     //Milestone1

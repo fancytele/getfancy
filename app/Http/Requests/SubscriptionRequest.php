@@ -44,7 +44,8 @@ class SubscriptionRequest extends FormRequest
             'billing_state' => ['required'],
             'billing_zip_code' => ['required'],
             'billing_address1' => ['required'],
-            'checkout_product' => ['required', 'string', 'exists:products,slug'],
+            'product_id'=> ['required' , 'string'],
+            'price'=>['required'],
             'stripe_token' => ['required', 'string'],
             'recaptcha' => ['required', 'recaptcha']
         ];

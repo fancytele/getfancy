@@ -19,7 +19,7 @@
           function validateForm() {
             var x = document.forms["myForm"]["price"].value;
             if (x < 10) {
-              document.getElementById('costError').style.display = "block";
+              document.getElementById('priceError').style.display = "block";
               return false;
             }
           }
@@ -509,7 +509,7 @@
                                 </div>
                             </div>
 
-                            <form name="myForm" action="{{ route('web.planCost') }}" method="POST" onsubmit="return validateForm()">
+                            <form name="myForm" action="{{ route('web.planPrice') }}" method="POST" onsubmit="return validateForm()">
                                 @csrf
                                 <h3 class="text-primary">
                                     @lang('How much do you want to pay?')
@@ -529,7 +529,7 @@
                                     </div>
                                 </div>
                                 <br>
-                                <div id="costError" class="alert alert-info alert-dismissible" style="max-width: 30rem; display:none; margin: 0 auto">
+                                <div id="priceError" class="alert alert-info alert-dismissible" style="max-width: 30rem; display:none; margin: 0 auto">
                                     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                                     <i class="fa fa-info-circle" aria-hidden="true"></i><strong>Heads Up!</strong><br>
                                     <span>Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair</span>
