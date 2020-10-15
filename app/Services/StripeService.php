@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use Carbon\Carbon;
 use Stripe\Customer as StripeCustomer;
 use Stripe\Exception\ApiErrorException;
 use Stripe\Invoice as StripeInvoice;
@@ -55,7 +54,8 @@ class StripeService
                         'interval' => 'month',
                     ],
                 ]
-            ]]
+            ]],
+                'trial_period_days' => 30
             ],
             $this->getStripeKey()
         );

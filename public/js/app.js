@@ -4185,12 +4185,12 @@ __webpack_require__.r(__webpack_exports__);
       type: Array,
       required: true
     },
-    products: {
+    addons: {
       type: Array,
       required: true
     },
-    addons: {
-      type: Array,
+    product_id: {
+      type: String,
       required: true
     }
   },
@@ -4248,7 +4248,7 @@ __webpack_require__.r(__webpack_exports__);
         description: 'Select plan and one or more features',
         isActive: true,
         isCompleted: false,
-        required: ['cost']
+        required: ['price']
       }],
       currentStep: {},
       countries: [],
@@ -4281,6 +4281,7 @@ __webpack_require__.r(__webpack_exports__);
         error: ''
       },
       user: {
+        product_id: this.product_id,
         addons: [],
         first_name: '',
         last_name: '',
@@ -4305,9 +4306,9 @@ __webpack_require__.r(__webpack_exports__);
         number_type: '',
         phone_number: '',
         did: {},
-        cost: ''
+        price: ''
       },
-      costMask: {
+      priceMask: {
         mask: '00.00'
       },
       invalid_cost: false
@@ -4600,7 +4601,7 @@ __webpack_require__.r(__webpack_exports__);
       })["catch"](function (error) {
         var data = error.response.data;
 
-        if (data.errors.cost) {
+        if (data.errors.price) {
           $('#exampleModal').modal('show');
         }
 
@@ -4609,7 +4610,7 @@ __webpack_require__.r(__webpack_exports__);
         }
 
         if (data.errors) {
-          if (data.errors.cost) {
+          if (data.errors.price) {
             _this14.errors == null;
           } else {
             _this14.errors = data.errors;
@@ -11056,7 +11057,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#cost[data-v-2528f0bb]{\n  border: none;\n}\ninput[data-v-2528f0bb]:focus{\n  outline: none;\n}\ninput[data-v-2528f0bb]::-webkit-outer-spin-button,\ninput[data-v-2528f0bb]::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n\n/* Firefox */\ninput[type=number][data-v-2528f0bb] {\n  -moz-appearance: textfield;\n}\n", ""]);
+exports.push([module.i, "\n#price[data-v-2528f0bb]{\n  border: none;\n}\ninput[data-v-2528f0bb]:focus{\n  outline: none;\n}\ninput[data-v-2528f0bb]::-webkit-outer-spin-button,\ninput[data-v-2528f0bb]::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n\n/* Firefox */\ninput[type=number][data-v-2528f0bb] {\n  -moz-appearance: textfield;\n}\n", ""]);
 
 // exports
 
@@ -68886,42 +68887,42 @@ var render = function() {
                             {
                               name: "imask",
                               rawName: "v-imask",
-                              value: _vm.costMask,
-                              expression: "costMask"
+                              value: _vm.priceMask,
+                              expression: "priceMask"
                             },
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.user.cost,
-                              expression: "user.cost"
+                              value: _vm.user.price,
+                              expression: "user.price"
                             }
                           ],
                           staticClass: "form-control",
                           class: {
-                            "is-invalid": _vm.errors.hasOwnProperty("cost")
+                            "is-invalid": _vm.errors.hasOwnProperty("price")
                           },
                           attrs: {
                             type: "number",
-                            id: "cost",
-                            name: "cost",
+                            id: "price",
+                            name: "price",
                             placeholder: "__.__",
                             required: ""
                           },
-                          domProps: { value: _vm.user.cost },
+                          domProps: { value: _vm.user.price },
                           on: {
                             input: function($event) {
                               if ($event.target.composing) {
                                 return
                               }
-                              _vm.$set(_vm.user, "cost", $event.target.value)
+                              _vm.$set(_vm.user, "price", $event.target.value)
                             }
                           }
                         }),
                         _vm._v(" "),
-                        _vm.errors.hasOwnProperty("cost")
+                        _vm.errors.hasOwnProperty("price")
                           ? _c("div", { staticClass: "invalid-feedback" }, [
                               _vm._v(
-                                _vm._s(_vm.errors.cost[0]) +
+                                _vm._s(_vm.errors.price[0]) +
                                   "\n                                "
                               )
                             ])

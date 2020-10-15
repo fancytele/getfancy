@@ -32,19 +32,19 @@
                                     <span>{{ trans('$')}}</span>
                                     <input type="number"
                                            class="form-control"
-                                           id="cost"
-                                           name="cost"
-                                           v-imask="costMask"
-                                           v-model="user.cost"
+                                           id="price"
+                                           name="price"
+                                           v-imask="priceMask"
+                                           v-model="user.price"
                                            placeholder="__.__"
                                            required
-                                           :class="{'is-invalid': errors.hasOwnProperty('cost')}"
+                                           :class="{'is-invalid': errors.hasOwnProperty('price')}"
                                     >
 
                                     <div
                                             class="invalid-feedback"
-                                            v-if="errors.hasOwnProperty('cost')"
-                                    >{{ errors.cost[0] }}
+                                            v-if="errors.hasOwnProperty('price')"
+                                    >{{ errors.price[0] }}
                                     </div>
                                   </div>
                                 </div>
@@ -923,12 +923,12 @@ export default {
       type: Array,
       required: true
     },
-    products: {
+    addons: {
       type: Array,
       required: true
     },
-    addons: {
-      type: Array,
+    product_id:{
+      type: String,
       required: true
     }
   },
@@ -1010,7 +1010,7 @@ export default {
           description: 'Select plan and one or more features',
           isActive: true,
           isCompleted: false,
-          required: ['cost']
+          required: ['price']
         }
       ],
       currentStep: {},
@@ -1044,6 +1044,7 @@ export default {
         error: ''
       },
       user: {
+        product_id: this.product_id,
         addons: [],
         first_name: '',
         last_name: '',
@@ -1068,10 +1069,10 @@ export default {
         number_type: '',
         phone_number: '',
         did: {},
-        cost:'',
+        price:'',
       },
 
-      costMask: {
+      priceMask: {
         mask: '00.00'
       },
       invalid_cost: false
@@ -1370,7 +1371,7 @@ export default {
         .catch(error => {
           const data = error.response.data;
 
-          if(data.errors.cost){
+          if(data.errors.price){
             $('#exampleModal').modal('show');
           }
           if (data.message) {
@@ -1378,7 +1379,7 @@ export default {
           }
 
           if (data.errors) {
-            if(data.errors.cost){
+            if(data.errors.price){
               this.errors == null;
             }
             else{
@@ -1481,7 +1482,7 @@ export default {
 };
 </script>
 <style scoped>
-#cost{
+#price{
   border: none;
 }
 input:focus{

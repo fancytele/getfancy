@@ -50,7 +50,8 @@ class UserRequest extends FormRequest
             'did.id' => ['required', 'uuid'],
             'did.number' => ['required'],
             'did.reservation' => ['required', 'uuid'],
-            'cost' => ['required','numeric','between:10,99.99']
+            'price' => ['required','numeric','between:10,99.99'],
+            'product_id' =>['required', 'string']
         ];
     }
 }

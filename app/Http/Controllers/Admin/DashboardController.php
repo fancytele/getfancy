@@ -39,8 +39,8 @@ class DashboardController extends Controller
         }
 
         $users = User::countByRole();
-        $subscriptions = Subscription::countByProduct();
+        //$subscriptions = Subscription::countByProduct();               Removing product table dependency
 
-        return view("admin.dashboard-admin", compact('users', 'subscriptions'));
+        return view("admin.dashboard-admin", compact('users'));
     }
 }

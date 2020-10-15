@@ -228,6 +228,9 @@ class UserService
     }
 
     /**
+     * @param string $fancy_number
+     * @param int $year
+     * @param int $month
      * @return Collection
      */
     private function getCalls(string $fancy_number, int $year, int $month)
@@ -237,6 +240,9 @@ class UserService
 
     /**
      * return array
+     * @param Collection $calls
+     * @return array
+     * @throws \Exception
      */
     private function getCallsChart(Collection $calls)
     {
@@ -256,6 +262,7 @@ class UserService
     }
 
     /**
+     * @param Collection $calls
      * @return array
      */
     private function getCallsOverview(Collection $calls)
