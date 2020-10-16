@@ -124,12 +124,12 @@
                                 <i class="fe fe-settings"></i> Fancy Settings
                             </a>
                         </li>
-                      <!--  <li class="nav-item">
+                      <li class="nav-item">
                             <a class="nav-link"
-                               href="{{ route('admin.users.edit_profile', Auth::id()) }}">
-                                <i class="fe fe-user"></i>User Settings
+                               href="{{ route('admin.users.did_setting', Auth::id()) }}">
+                                <i class="fe fe-user"></i> DID Settings
                             </a>
-                        </li> -->
+                      </li>
                         @endhasanyrole
                     </ul>
 
