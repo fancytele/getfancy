@@ -769,7 +769,7 @@ export default {
       type:String,
       required:true
     },
-    get_call_logs:{
+    phone_system_dashboard_link:{
       type:String,
       required:true
     }
@@ -786,7 +786,7 @@ export default {
   mounted() {
     this.getUserDetails();
     this.getAllPaymentMethods();
-    this.getCallLogs();
+    this.getPhoneSystemDashboardLink();
     this.laddaButton = Ladda.create(
         document.querySelector('#submit-user-setting')
     );
@@ -1085,8 +1085,8 @@ export default {
           });
     },
 
-    getCallLogs(){
-      axios.get(this.get_call_logs)
+    getPhoneSystemDashboardLink(){
+      axios.get(this.phone_system_dashboard_link)
           .then(response=>{
             console.log(response);
           })

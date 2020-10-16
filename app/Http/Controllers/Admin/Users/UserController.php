@@ -19,6 +19,7 @@ use App\PBXMessage;
 use App\Product;
 use App\Services\DIDService;
 use App\Services\FancySettingService;
+use App\Services\PhoneSystemService;
 use App\Services\StripeService;
 use App\Services\UserService;
 use App\Subscription;
@@ -42,8 +43,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication','usersByRole','impersonate','stopImpersonate','addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard','getCallLogs']);
-        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication' ,'addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard' ,'getCallLogs']);
+        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication','usersByRole','impersonate','stopImpersonate','addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard','getPhoneSystemsDashboardLink']);
+        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication' ,'addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard' ,'getPhoneSystemsDashboardLink']);
         $this->middleware(['role:admin|user|agent'])->only(['usersByRole','impersonate','stopImpersonate']);
     }
 
@@ -189,18 +190,24 @@ class UserController extends Controller
     /**
      * Store a new Fancy Number
      *
-     * @param \App\Http\Requests\FancyNumberRequest $request
+     * @param FancyNumberRequest $request
      * @return \Illuminate\Http\Response
      */
     public function storeFancy(FancyNumberRequest $request)
     {
+
         $did_service = new DIDService();
         $did_purchase = $did_service->purchaseAvailableDID($request->input('data.did.id', ''));
         // Create User Fancy number
         $user_service = new UserService($request->user());
         $user_service->assignFancyNumber($did_purchase['number'], $request->input('number_type'), $did_purchase);
-
+        
         $request->user()->update(['phone_number' => $request->input('phone_number')]);
+
+        //Create Customer Phone System
+        $phonesystem_service = new PhoneSystemService();
+        $customer = $phonesystem_service->createCustomer();
+
 
         // Create Ticket
         $ticket = new Ticket();
@@ -561,16 +568,14 @@ class UserController extends Controller
 
     //Milestone 3
 
-    public function getCallLogs(Request $request, User $user){
+    public function getPhoneSystemsDashboardLink(Request $request, User $user){
         if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
             return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
         }
 
-        $did = FancyNumber::where('user_id' ,'=',$user->id)->pluck('did_number')->first();
+        $service = new PhoneSystemService();
+        $response = $service->createCustomerSession();
 
-        $did_service = new DIDService();
-        $call_logs = $did_service->createCustomerPhoneSystems();
-
-        return response()->json($call_logs);
+        return response()->json($response);
     }
 }

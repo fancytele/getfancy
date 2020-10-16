@@ -408,16 +408,4 @@ class DIDService
         return $this->env;
     }
 
-    public function createCustomerPhoneSystems()
-    {
-        $token = 'carl@i22.in:carl101';
-        $credentials_token = base64_encode($token);
-
-        $client = new Client(['headers' => ['Authorization' => 'Basic '.$credentials_token, 'Content-Type' =>'application/vnd.api+json']]);
-        $request = $client->get('https://console.sandbox.phone.systems/api/rest/public/operator/customers');
-        $response = $request->getBody();
-
-        dd($response);
-    }
-
 }

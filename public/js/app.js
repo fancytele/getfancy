@@ -6215,7 +6215,7 @@ __webpack_require__.r(__webpack_exports__);
       type: String,
       required: true
     },
-    get_call_logs: {
+    phone_system_dashboard_link: {
       type: String,
       required: true
     }
@@ -6229,7 +6229,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.getUserDetails();
     this.getAllPaymentMethods();
-    this.getCallLogs();
+    this.getPhoneSystemDashboardLink();
     this.laddaButton = Ladda.create(document.querySelector('#submit-user-setting'));
   },
   data: function data() {
@@ -6512,8 +6512,8 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error);
       });
     },
-    getCallLogs: function getCallLogs() {
-      axios.get(this.get_call_logs).then(function (response) {
+    getPhoneSystemDashboardLink: function getPhoneSystemDashboardLink() {
+      axios.get(this.phone_system_dashboard_link).then(function (response) {
         console.log(response);
       })["catch"](function (error) {
         console.log(error.response);
