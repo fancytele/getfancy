@@ -6570,11 +6570,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   computed: {
     isDisabled: function isDisabled() {
-      if (this.user.subscription == null) {
-        return true;
-      } else {
-        return false;
-      }
+      return this.user.subscription == null ? "disabled" : "";
     }
   }
 });
@@ -73912,7 +73908,9 @@ var render = function() {
                                           _c(
                                             "a",
                                             {
-                                              attrs: { href: "#" },
+                                              attrs: {
+                                                href: "javascript:void(0)"
+                                              },
                                               on: {
                                                 click: function($event) {
                                                   return _vm.setAsDefaultCard(
@@ -73994,11 +73992,12 @@ var render = function() {
                                           { staticClass: "text-right" },
                                           [
                                             _c(
-                                              "button",
+                                              "a",
                                               {
                                                 staticClass:
                                                   "btn btn-primary btn btn-primary ladda-button",
                                                 attrs: {
+                                                  href: "javascript:void(0)",
                                                   "data-style": "zoom-out"
                                                 },
                                                 on: {
@@ -74231,15 +74230,16 @@ var render = function() {
                     _c("div", { staticClass: "row" }, [
                       _c("div", { staticClass: "col-md-8 col-lg-6" }, [
                         _c(
-                          "button",
+                          "a",
                           {
                             staticClass:
                               "btn btn-danger btn btn-danger ladda-button",
+                            class: _vm.isDisabled,
                             attrs: {
+                              href: "javascript:void(0)",
                               "data-style": "zoom-out",
                               "data-toggle": "modal",
-                              "data-target": "#exampleModal",
-                              disabled: _vm.isDisabled
+                              "data-target": "#exampleModal"
                             }
                           },
                           [

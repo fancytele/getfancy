@@ -260,6 +260,17 @@ class StripeService
         }
     }
 
+    public function updateUserDetails(array $data){
+        try {
+            return StripeCustomer::update(auth()->user()->stripe_id, [
+                'email' => $data['email'],
+                'name' =>"{$data['first_name']} {$data['last_name']}",
+            ], $this->getStripeKey());
+        } catch (ApiErrorException $e) {
+            return $e->getMessage();
+        }
+    }
+
     /**
      * @param array $data
      * @return string|StripeCustomer

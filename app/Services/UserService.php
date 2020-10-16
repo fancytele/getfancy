@@ -346,6 +346,7 @@ class UserService
 
         $stripe_service = new StripeService();
         $stripe_service->updateBillingAddress($data);
+        $stripe_service->updateUserDetails($data);
 
      if($data['stripe_token'] != null){
             $update_payment = $stripe_service->updatePaymentMethod($data);
