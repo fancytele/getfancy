@@ -310,14 +310,14 @@
                           <span class="badge badge-pill badge-primary float-right">{{ trans('Default Card') }}</span>
                         </div>
                         <div v-if="payment_method.id != default_card">
-                          <a href="#" @click="setAsDefaultCard(payment_method.id)"><span class="badge badge-pill badge-secondary float-right">{{ trans('Set As Default Card') }}</span></a>
+                          <a href="javascript:void(0)" @click="setAsDefaultCard(payment_method.id)"><span class="badge badge-pill badge-secondary float-right">{{ trans('Set As Default Card') }}</span></a>
                         </div>
                         <p class="card-text" style="text-transform: capitalize;"><small>{{ trans('Card Brand:') }} {{ payment_method.card.brand }}</small></p>
                         <p class="card-text"><small>{{ trans('Card Number:') }} XXXX XXXX XXXX {{ payment_method.card.last4 }}</small></p>
                         <p class="card-text"><small>{{ trans('Card Expiry Date:')}} {{ payment_method.card.exp_month }}/{{ payment_method.card.exp_year }}</small></p>
                         <div v-if="payment_method.id !== default_card" class="text-right">
-                          <button @click ="deleteCardDetail(payment_method.id)"  class="btn btn-primary btn btn-primary ladda-button"
-                                  data-style="zoom-out">{{ trans('Delete') }}</button>
+                          <a href="javascript:void(0)" @click ="deleteCardDetail(payment_method.id)"  class="btn btn-primary btn btn-primary ladda-button"
+                                  data-style="zoom-out">{{ trans('Delete') }}</a>
                         </div>
                       </div>
                     </div>
@@ -402,15 +402,15 @@
               </div>
               <div class="row">
                 <div class="col-md-8 col-lg-6">
-                  <button
+                  <a href="javascript:void(0)"
                       class="btn btn-danger btn btn-danger ladda-button"
                       data-style="zoom-out"
                       data-toggle="modal"
                       data-target="#exampleModal"
-                      :disabled='isDisabled'
+                     :class="isDisabled"
                   >
                     {{ trans('Cancel Subscription') }}
-                  </button>
+                  </a>
                 </div>
               </div>
             </div>
@@ -475,7 +475,7 @@
       </div>
       <!--Submit Button -->
     </form>
-    
+
     <!-- Add Authorized User
     <form :action="add_authorized_user" @submit.prevent="addAuthorizedUser()">
     <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card">
@@ -1085,13 +1085,7 @@ export default {
 
   computed: {
     isDisabled() {
-      if(this.user.subscription == null)
-      {
-        return true;
-      }
-      else{
-        return false;
-      }
+      return this.user.subscription==null? "disabled" : ""
     },
   }
 }

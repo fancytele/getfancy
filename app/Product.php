@@ -7,6 +7,11 @@ use App\Enums\ProductRenews;
 
 class Product extends Model
 {
+    protected $fillable = [
+      'name',
+      'slug',
+      'cost'
+    ];
     /**
      * The attributes that should be cast to native types.
      *

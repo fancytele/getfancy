@@ -19,7 +19,7 @@
                            :urls='@json($urls)'
                            :did-country='@json($did_country)'
                            :did-regions='@json($did_regions)'
-                           :products='@json($products)'
+                           :product_id="'{{ env('STRIPE_PRODUCT_ID') }}'"
                            :addons='@json($addons)'></create-user-component>
 </div>
 @endsection

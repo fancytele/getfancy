@@ -39,7 +39,6 @@ class UserRequest extends FormRequest
             'company_zip_code' => ['required'],
             'company_address1' => ['required'],
             'addons.*' => 'exists:addons,code',
-            'product' => ['required', 'string', 'exists:products,slug'],
             'billing_country' => ['required'],
             'billing_city' => ['required'],
             'billing_state' => ['required'],
@@ -50,7 +49,9 @@ class UserRequest extends FormRequest
             'phone_number' => ['required'],
             'did.id' => ['required', 'uuid'],
             'did.number' => ['required'],
-            'did.reservation' => ['required', 'uuid']
+            'did.reservation' => ['required', 'uuid'],
+            'price' => ['required','numeric','between:10,99.99'],
+            'product_id' =>['required', 'string']
         ];
     }
 }

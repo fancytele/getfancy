@@ -25,29 +25,62 @@
                 <div id="create-user-form">
                     <div v-show="currentStep.id === 'plans'">
                         <div class="row">
-                            <div class="col-lg-6 col-xl-4">
+                            <div class="col-lg-6 col-xl-6">
                                 <div class="form-group">
-                                    <label for="product">{{ trans('Product') }}</label>
-                                    <select name="product"
-                                            id="product"
-                                            class="form-control"
-                                            required
-                                            autofocus
-                                            :class="{'is-invalid': errors.hasOwnProperty('product')}"
-                                            v-model="user.product">
-                                        <option
-                                                v-for="product in products"
-                                                :key="product.slug"
-                                                :value="product.slug"
-                                        >{{ trans(product.name) }} - ${{ trans(product.cost) }}
-                                        </option>
-                                    </select>
+                                  <label>{{ trans('How much do you want to pay?') }}</label>
+                                  <div class="d-flex flex-row">
+                                    <span>{{ trans('$')}}</span>
+                                    <input type="number"
+                                           class="form-control"
+                                           id="price"
+                                           name="price"
+                                           v-imask="priceMask"
+                                           v-model="user.price"
+                                           placeholder="__.__"
+                                           required
+                                           :class="{'is-invalid': errors.hasOwnProperty('price')}"
+                                    >
+
                                     <div
                                             class="invalid-feedback"
-                                            v-if="errors.hasOwnProperty('product')"
-                                    >{{ errors.product[0] }}
+                                            v-if="errors.hasOwnProperty('price')"
+                                    >{{ errors.price[0] }}
                                     </div>
+                                  </div>
                                 </div>
+                              <div class="modal fade" id= "exampleModal" tabindex="-1" role="dialog"
+                                   aria-labelledby="delete-element-label" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                  <div class="modal-content">
+                                    <div class="modal-body p-0">
+                                      <button type="button" class="close mr-3 mt-3"
+                                              data-dismiss="modal" aria-label="Close">
+                                        <i class="fe fe-x-circle"></i>
+                                      </button>
+                                      <div class="d-flex my-3 pl-4 pt-4">
+                                        <i
+                                            class="display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "></i>
+                                        <div>
+                                          <h3 class="mb-0">
+                                            {{ trans('Heads Up!') }}
+                                            <br>
+                                            <span
+                                                class="element-name text-capitalize"></span>{{ trans('Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair') }}
+                                          </h3>
+                                          <p class="element-detail text-black-50"></p>
+                                        </div>
+                                      </div>
+                                        <div class="d-flex overflow-hidden rounded-bottom">
+                                          <button type="button"
+                                                  class="btn btn-lg btn-outline-primary rounded-0 text-body w-100"
+                                                  data-dismiss="modal">
+                                            {{ trans('OK') }}
+                                          </button>
+                                        </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
 
                                 <p>{{ trans('Additional Features') }}</p>
                                 <div class="form-group" v-for="addon in addons" :key="addon.code">
@@ -70,7 +103,7 @@
                                 </div>
                             </div>
 
-                            <div class="col-lg-5 col-xl-6 mt-4 mt-lg-0 offset-lg-1">
+                            <div class="col-lg-6 col-xl-6">
                                 <p class="font-weight-normal h3">{{ trans('Features') }}</p>
                                 <ul class="list-unstyled">
                                     <li class="pb-3">
@@ -869,6 +902,7 @@
 </template>
 
 <script>
+import {IMaskDirective} from "vue-imask";
 import { Card, createToken } from 'vue-stripe-elements-plus';
 
 export default {
@@ -889,18 +923,22 @@ export default {
       type: Array,
       required: true
     },
-    products: {
+    addons: {
       type: Array,
       required: true
     },
-    addons: {
-      type: Array,
+    product_id:{
+      type: String,
       required: true
     }
   },
   components: {
     Card
   },
+  directives: {
+    imask: IMaskDirective
+  },
+
   data() {
     return {
       laddaButton: null,
@@ -970,9 +1008,9 @@ export default {
           id: 'plans',
           title: 'Plan & Features',
           description: 'Select plan and one or more features',
-          isActive: false,
+          isActive: true,
           isCompleted: false,
-          required: ['product']
+          required: ['price']
         }
       ],
       currentStep: {},
@@ -1006,7 +1044,7 @@ export default {
         error: ''
       },
       user: {
-        product: this.products[0].slug,
+        product_id: this.product_id,
         addons: [],
         first_name: '',
         last_name: '',
@@ -1030,8 +1068,14 @@ export default {
         stripe_token: '',
         number_type: '',
         phone_number: '',
-        did: {}
-      }
+        did: {},
+        price:'',
+      },
+
+      priceMask: {
+        mask: '00.00'
+      },
+      invalid_cost: false
     };
   },
   methods: {
@@ -1218,6 +1262,7 @@ export default {
         if (this.user[el] === '') {
           this.$set(this.errors, el, ['This field is required']);
         }
+
       });
 
       return Object.keys(this.errors).length === 0;
@@ -1243,7 +1288,7 @@ export default {
       const previousStep = this.currentStep;
       previousStep.isActive = false;
 
-      for (let i = stepIndex + 1; i < this.steps.length - 1; i++) {
+      for (let i = stepIndex + 1; i < this.steps.length-1; i++) {
         this.steps[i].isCompleted = false;
       }
 
@@ -1284,6 +1329,11 @@ export default {
       }
     },
     submit() {
+
+      if(!this.currentStepIsCompleted())
+      {
+        return false;
+      }
       if (this.isProcessing) {
         return;
       }
@@ -1321,18 +1371,29 @@ export default {
         .catch(error => {
           const data = error.response.data;
 
+          if(data.errors.price){
+            $('#exampleModal').modal('show');
+          }
           if (data.message) {
-            this.errorMessage = data.mesage;
+            this.errorMessage = data.message;
           }
 
           if (data.errors) {
-            this.errors = data.errors;
+            if(data.errors.price){
+              this.errors == null;
+            }
+            else{
+              this.errors = data.errors;
+            }
+
           }
 
           this.laddaButton.stop();
           this.toggleProcessing();
         });
     }
+
+
   },
   filters: {
     phone: function(value) {
@@ -1420,3 +1481,21 @@ export default {
   }
 };
 </script>
+<style scoped>
+#price{
+  border: none;
+}
+input:focus{
+  outline: none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+</style>

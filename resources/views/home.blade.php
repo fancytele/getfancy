@@ -12,21 +12,39 @@
 
         <!-- Scripts -->
         <script src="/js/lang.js" defer></script>
-        <script src="{{ asset(mix('js/home.js')) }}" defer></script>
+        <script src="{{ asset(mix('js/home.js')) }}" defer>
+        </script>
 
+        <script>
+          function validateForm() {
+            var x = document.forms["myForm"]["price"].value;
+            if (x < 10) {
+              document.getElementById('priceError').style.display = "block";
+              return false;
+            }
+          }
+        </script>
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <link rel="stylesheet"
               href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+
+        <link href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" rel="stylesheet">
 
         <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
         <!-- Styles -->
         <link href="{{ asset(mix('css/web.css')) }}" rel="stylesheet">
 
+        <style>
+            input{
+                outline: none;
+            }
+        </style>
         @env('production')
         <!-- Global site tag (gtag.js) - Google Analytics -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143244951-1">
+
         </script>
         <script>
             window.dataLayer = window.dataLayer || [];
@@ -491,47 +509,54 @@
                                 </div>
                             </div>
 
-                            <div>
-                                <h2 class="display-1 text-primary plan-wrapper">
-                                    @foreach ($products as $product)
-                                    <span id="{{ $product->slug }}"
-                                          class="plan-item{{ $product->is_primary ? ' active' : '' }}">
-                                        <span class="align-top d-inline-block font-weight-bold h1 mr-n3 mt-3">$</span>
-                                        <span class="plan-amount">{{ $product->cost }}</span>
-                                        @if($product->discount)
-                                        <small
-                                               class="badge badge-pill badge-success font-weight-bold plan-save position-absolute px-3 py-2">
-                                            @lang('Save') {{ $product->discount }}
-                                        </small>
-                                        @endif
-                                    </span>
-                                    @endforeach
-                                </h2>
-
-                                <div class="btn-group" role="group" aria-label="Our Plans Button Groups">
-                                    @foreach ($products as $product)
-                                    <button type="button"
-                                            class="btn btn-outline-light{{ $product->is_primary ? ' active' : '' }}"
-                                            data-type="{{ $product->slug }}"
-                                            data-description="{{ $product->description }}">@lang($product->name)</button>
-                                    @endforeach
+                            <form name="myForm" action="{{ route('web.planPrice') }}" method="POST" onsubmit="return validateForm()">
+                                @csrf
+                                <h3 class="text-primary">
+                                    @lang('How much do you want to pay?')
+                                </h3>
+                                <div style="background-color: #704895;border: thin;border-radius: 5px;max-width: 12rem;
+                                 margin: 0 auto;display: flex; flex-direction: column; justify-content: center;" >
+                                    <div style="display: flex; flex-direction: row; justify-content: center;">
+                                        <span class="text-white">$</span>
+                                        <input style="border: none;background-color: #704895;color: white;max-width: 4rem;"
+                                               type="number" step=".01" name="price"
+                                               placeholder="__.__" id="price"
+                                               required
+                                        >
+                                    </div>
+                                    <div>
+                                        <span class="small text-white">@lang('Monthly Payment')</span>
+                                    </div>
                                 </div>
-
-                                <p>
-                                    <small class="plan-item-description font-italic text-muted">
-                                        {{ $products->where('is_primary', 1)->first()->description }}!
-                                    </small>
+                                <br>
+                                <div id="priceError" class="alert alert-info alert-dismissible" style="max-width: 30rem; display:none; margin: 0 auto">
+                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                    <i class="fa fa-info-circle" aria-hidden="true"></i><strong>Heads Up!</strong><br>
+                                    <span>Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair</span>
+                                </div>
+                                <br>
+                                @if($errors->any())
+                                    <div class="alert alert-info alert-dismissible" style="max-width: 30rem; margin: 0 auto">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <i class="fa fa-info-circle" aria-hidden="true"></i><strong>Heads Up!</strong><br>
+                                        <span>Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair</span>
+                                    </div>
+                                    <br>
+                                @endif
+                                <p class="small ">
+                                    @lang('Pay whatever you think is fair')<br>
+                                    @lang('You can select add ons later')
                                 </p>
-                            </div>
+                                <button id="plan_submit" type="submit" class="btn btn-outline-primary px-7" disabled>Next</button>
+                            </form>
 
-                            <a id="plan-buy" href="#" class="btn btn-primary px-7">
-                                @lang('Buy now')
-                            </a>
                         </div>
                     </div>
                 </div>
             </section>
             <!-- / Plans Section -->
+
+            >
 
             <!-- Testimonials Section -->
             <section id="about" class="fancy-section position-relative pt-0">

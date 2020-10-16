@@ -11,11 +11,17 @@
 
 Route::get('/', 'WebSiteController@index')->name('web.homepage');
 Route::get('/{locale}', 'WebSiteController@changeLocalization')->name('web.locale');
-Route::get('checkout/{slug}', 'WebSiteController@checkout')->name('web.checkout');
+Route::get('checkout/{product_id}/{price}', 'WebSiteController@checkout')->name('web.checkout');
 Route::post('callyou', 'WebSiteController@callYou')->name('web.callyou');
 Route::post('contactus', 'WebSiteController@contactUs')->name('web.contactus');
 Route::get('js/lang.js', 'WebSiteController@getJSONLocalization')->name('web.lang');
 Route::post('subscription', 'SubscriptionController@create')->name('subscription');
+
+//Milestone4
+Route::post('planPrice', 'WebSiteController@getPlanPrice')->name('web.planPrice');
+
+
+//Milestone1
 Route::get('pages/privacy-policy', 'WebSiteController@getPrivacyPolicy')->name('web.privacy_policy');
 Route::get('pages/terms-of-service', 'WebSiteController@getTermsOfService')->name('web.terms_of_service');
 Route::get('pages/cookie-policy', 'WebSiteController@getCookiePolicy')->name('web.cookie_policy');

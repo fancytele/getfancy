@@ -10,8 +10,8 @@
                 <h2 class="display-4">
                   {{ trans('Checkout') }}
                   <span class="d-block d-lg-none text-primary">
-                    {{ trans(product.name) }}
-                    ${{ product.cost }}
+                    {{ trans('Monthly') }}
+                    ${{ price }}
                   </span>
                 </h2>
               </div>
@@ -622,14 +622,13 @@
                 <span class="align-top d-inline-block h2 mb-0 plan-price-sign">$</span>
                 <span
                   class="d-inline-block display-1 font-weight-light mt-n3 plan-price-amount"
-                >{{ product.cost }}</span>
+                >{{ price }}</span>
                 <span
                   class="d-inline-block h3 mb-0 plan-price-time text-lowercase text-white"
-                >/ {{ trans(product.name) }}</span>
+                >/ {{ trans('Monthly') }}</span>
               </div>
               <p class="font-italic mb-0">
-                <span>{{ trans('Automatically renews every') }}</span>
-                <span>{{ trans(product.renew) }}</span>
+                <span>{{ trans('Automatically renews every month') }}</span>
               </p>
             </div>
 
@@ -722,8 +721,12 @@ export default {
       type: String,
       required: true
     },
-    product: {
-      type: Object,
+    product_id: {
+      type: String,
+      required: true
+    },
+    price:{
+      type: Number,
       required: true
     },
     addons: {
@@ -772,7 +775,8 @@ export default {
       isProcessing: true,
       countries: [],
       checkout: {
-        checkout_product: this.product.slug,
+        product_id: this.product_id,
+        price:this.price,
         stripe_token: '',
         first_name: '',
         last_name: '',
@@ -795,7 +799,6 @@ export default {
         billing_zip_code: '',
         billing_address1: '',
         billing_address2: '',
-        stripe_token: '',
         number_type: '',
         phone_number: '',
         addons: [],
@@ -853,6 +856,7 @@ export default {
       axios
         .post(this.action, this.checkout)
         .then(response => {
+          console.log(response);
           window.location.href = response.data.route;
         })
         .catch(error => {
@@ -885,8 +889,8 @@ export default {
   computed: {
     summaryDetail() {
       const product = {
-        name: this.product.name,
-        cost: this.product.cost
+        name: 'Monthly',
+        cost: this.price
       };
 
       const summary = this.addons
