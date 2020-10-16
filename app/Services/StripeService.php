@@ -253,6 +253,7 @@ class StripeService
 
             $customer->save();
 
+         
             return $card;
 
         } catch (ApiErrorException $e) {
