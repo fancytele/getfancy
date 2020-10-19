@@ -126,7 +126,7 @@ class WebSiteController extends Controller
     public function getPlanPrice(Request $request){
 
         $validator = Validator::make($request->all(),[
-            'price' => 'required|numeric|between:10,99.99'
+            'price' => 'required|numeric|min:'.env('MINIMUM_PRODUCT_PRICE')
         ]);
 
         if($validator->fails()) {
