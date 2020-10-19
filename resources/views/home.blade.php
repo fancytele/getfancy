@@ -18,7 +18,7 @@
         <script>
           function validateForm() {
             var x = document.forms["myForm"]["price"].value;
-            if (x < 10) {
+            if (x < {{ env('MINIMUM_PRODUCT_PRICE') }}) {
               document.getElementById('priceError').style.display = "block";
               return false;
             }
@@ -534,7 +534,6 @@
                                     <i class="fa fa-info-circle" aria-hidden="true"></i><strong>Heads Up!</strong><br>
                                     <span>Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair</span>
                                 </div>
-                                <br>
                                 @if($errors->any())
                                     <div class="alert alert-info alert-dismissible" style="max-width: 30rem; margin: 0 auto">
                                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -544,8 +543,7 @@
                                     <br>
                                 @endif
                                 <p class="small ">
-                                    @lang('Pay whatever you think is fair')<br>
-                                    @lang('You can select add ons later')
+                                    @lang('Pay whatever you think is fair')
                                 </p>
                                 <button id="plan_submit" type="submit" class="btn btn-outline-primary px-7" disabled>Next</button>
                             </form>

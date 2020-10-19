@@ -50,7 +50,7 @@ class UserRequest extends FormRequest
             'did.id' => ['required', 'uuid'],
             'did.number' => ['required'],
             'did.reservation' => ['required', 'uuid'],
-            'price' => ['required','numeric','between:10,99.99'],
+            'price' => 'required|numeric|min:'.env('MINIMUM_PRODUCT_PRICE'),
             'product_id' =>['required', 'string']
         ];
     }
