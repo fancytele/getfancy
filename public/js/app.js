@@ -3209,7 +3209,10 @@ __webpack_require__.r(__webpack_exports__);
       this.submitButton.start();
       axios.post(this.urls.create_fancy, data).then(function (response) {
         console.log(response);
-        window.location = _this6.urls.fancy_settings.replace('_user_', response.data.user);
+        /*window.location = this.urls.fancy_settings.replace(
+          '_user_',
+          response.data.user
+        ); */
       })["catch"](function (error) {
         var data = error.response.data;
 
@@ -4659,12 +4662,39 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "DidSettingComponent",
   props: {
     get_dashboard_link: {
       type: String,
       required: true
+    }
+  },
+  mounted: function mounted() {
+    this.laddaButton = Ladda.create(document.querySelector('#link-to-dashboard'));
+  },
+  methods: {
+    getDashboardLink: function getDashboardLink() {
+      var _this = this;
+
+      this.laddaButton.start();
+      axios.get(this.get_dashboard_link).then(function (response) {
+        console.log(response.data.link);
+        window.open(response.data.link, '_blank');
+
+        _this.laddaButton.stop();
+      })["catch"](function (error) {
+        console.log(error.response);
+
+        _this.laddaButton.stop();
+      });
     }
   }
 });
@@ -6260,7 +6290,6 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     this.getUserDetails();
     this.getAllPaymentMethods();
-    this.getPhoneSystemDashboardLink();
     this.laddaButton = Ladda.create(document.querySelector('#submit-user-setting'));
   },
   data: function data() {
@@ -6541,13 +6570,6 @@ __webpack_require__.r(__webpack_exports__);
         _this8.default_card = response.data[0];
       })["catch"](function (error) {
         console.log(error);
-      });
-    },
-    getPhoneSystemDashboardLink: function getPhoneSystemDashboardLink() {
-      axios.get(this.phone_system_dashboard_link).then(function (response) {
-        console.log(response);
-      })["catch"](function (error) {
-        console.log(error.response);
       });
     }
   },
@@ -71205,14 +71227,26 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-lg btn-success ladda-button rounded-0 w-50",
-        attrs: { type: "submit", "data-style": "zoom-out" }
-      },
-      [_vm._v("\n    " + _vm._s(_vm.trans("Link to Dashboard")) + "\n  ")]
-    )
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col" }, [
+        _c(
+          "button",
+          {
+            staticClass:
+              "btn btn-primary btn btn-primary ladda-button float-right",
+            attrs: { id: "link-to-dashboard", "data-style": "zoom-out" },
+            on: { click: _vm.getDashboardLink }
+          },
+          [
+            _c("i", {
+              staticClass: "fa fa-link",
+              attrs: { "aria-hidden": "true" }
+            }),
+            _vm._v(" " + _vm._s(_vm.trans("Link to Dashboard")) + "\n      ")
+          ]
+        )
+      ])
+    ])
   ])
 }
 var staticRenderFns = []

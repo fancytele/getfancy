@@ -195,9 +195,9 @@ class UserController extends Controller
      */
     public function storeFancy(FancyNumberRequest $request)
     {
-
         $did_service = new DIDService();
         $did_purchase = $did_service->purchaseAvailableDID($request->input('data.did.id', ''));
+
         // Create User Fancy number
         $user_service = new UserService($request->user());
         $user_service->assignFancyNumber($did_purchase['number'], $request->input('number_type'), $did_purchase);
@@ -205,10 +205,11 @@ class UserController extends Controller
         $request->user()->update(['phone_number' => $request->input('phone_number')]);
 
         //Create Customer Phone System
-        $phonesystem_service = new PhoneSystemService();
-        $customer = $phonesystem_service->createCustomer();
+        $phone_system_service = new PhoneSystemService();
+        $customer = $phone_system_service->createCustomer();
 
-
+        //Create Customer Session PhoneSystem
+        $customer_session= $phone_system_service->createCustomerSession();
         // Create Ticket
         $ticket = new Ticket();
         $ticket->fancy_number_id = $user_service->fancyNumberModel()->id;
@@ -573,10 +574,9 @@ class UserController extends Controller
             return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
         }
 
-        $service = new PhoneSystemService();
-        $response = $service->createCustomerSession();
+        $link = FancyNumber::where('user_id', '=', auth()->user()->id)->pluck('dashboard_link_phone_system')->first();
 
-        return response()->json($response);
+        return response()->json(['link' => $link]);
     }
 
     public function getDIDSetting(Request $request, User $user){

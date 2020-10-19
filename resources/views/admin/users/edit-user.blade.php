@@ -26,7 +26,6 @@
                                 :add_authorized_user="'{{ route('admin.users.add_authorized_user', $user->id) }}'"
                                 :delete_authorized_user="'{{ route('admin.users.delete_authorized_user', $user->id) }}'"
                                 :update_default_card="'{{ route('admin.users.update_default_card', $user->id) }}'"
-                                :phone_system_dashboard_link="'{{ route('admin.users.dashboard_link' , $user->id) }}'"
         ></user-setting-component>
     </div>
 @endsection

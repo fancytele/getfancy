@@ -786,7 +786,6 @@ export default {
   mounted() {
     this.getUserDetails();
     this.getAllPaymentMethods();
-    this.getPhoneSystemDashboardLink();
     this.laddaButton = Ladda.create(
         document.querySelector('#submit-user-setting')
     );
@@ -1084,16 +1083,6 @@ export default {
             console.log(error);
           });
     },
-
-    getPhoneSystemDashboardLink(){
-      axios.get(this.phone_system_dashboard_link)
-          .then(response=>{
-            console.log(response);
-          })
-          .catch(error => {
-            console.log(error.response);
-          });
-    }
   },
 
   computed: {

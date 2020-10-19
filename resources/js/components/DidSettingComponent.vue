@@ -1,10 +1,17 @@
 <template>
 <div>
-  <button type="submit"
-          class="btn btn-lg btn-success ladda-button rounded-0 w-50"
-          data-style="zoom-out">
-    {{ trans('Link to Dashboard') }}
-  </button>
+  <div class="row">
+    <div class="col">
+      <button @click="getDashboardLink"
+              id="link-to-dashboard"
+              class="btn btn-primary btn btn-primary ladda-button float-right"
+              data-style="zoom-out"
+      >
+        <i class="fa fa-link" aria-hidden="true"></i> {{ trans('Link to Dashboard') }}
+      </button>
+    </div>
+  </div>
+
 </div>
 </template>
 
@@ -15,6 +22,27 @@ name: "DidSettingComponent",
     get_dashboard_link:{
       type:String,
       required: true
+    }
+  },
+  mounted() {
+    this.laddaButton = Ladda.create(
+        document.querySelector('#link-to-dashboard')
+    );
+  },
+
+  methods:{
+    getDashboardLink(){
+      this.laddaButton.start();
+    axios.get(this.get_dashboard_link)
+        .then(response=>{
+          console.log(response.data.link);
+          window.open(response.data.link , '_blank');
+          this.laddaButton.stop();
+        })
+        .catch(error => {
+          console.log(error.response);
+          this.laddaButton.stop();
+        });
     }
   }
 }

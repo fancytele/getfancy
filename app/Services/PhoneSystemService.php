@@ -7,7 +7,6 @@ use App\FancyNumber;
 class PhoneSystemService{
 
     /**
-     * @param string $did
      * @return bool|string
      */
     public function createCustomer(){
@@ -18,7 +17,6 @@ class PhoneSystemService{
         $name= auth()->user()->first_name." ".auth()->user()->last_name;
 
         $body = array('data' => array('id' => auth()->user()->id, 'type' => 'customers', 'attributes' => array('name' => $name, 'language' => 'EN')));
-
 
         $curl = curl_init();
 
@@ -36,27 +34,25 @@ class PhoneSystemService{
                 "authorization: Basic ".$credentials_token,
                 "content-type: application/vnd.api+json"
             ),
+            CURLOPT_FAILONERROR=> true,
         ));
 
         $response = curl_exec($curl);
-        $err = curl_error($curl);
+        $error = curl_error($curl);
 
         curl_close($curl);
 
-        if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
+        if ($error) {
 
+            return response()->json(['error' => $error] , 409);
+        }
+        else{
             $customer_response= json_decode($response);
             $customer = FancyNumber::where('user_id','=', auth()->user()->id)->first();
-             $customer_id=   $customer->update([
-                'customer_id_phone_system' => $customer_response->data->id
-            ]);
+            $customer->customer_id_phone_system = $customer_response->data->id;
+            $customer->save();
 
-             dd($customer_id);
-             $customer_id->save();
-
-            return $response;
+            return $customer_response;
         }
     }
 
@@ -85,18 +81,24 @@ class PhoneSystemService{
                 "authorization: Basic ".$credentials_token,
                 "content-type: application/vnd.api+json"
             ),
+            CURLOPT_FAILONERROR=> true,
         ));
 
         $response = curl_exec($curl);
-        $err = curl_error($curl);
+        $error = curl_error($curl);
 
         curl_close($curl);
 
-        if ($err) {
-            echo "cURL Error #:" . $err;
-        } else {
+        if ($error) {
+            return response()->json(['error' => $error] , 409);
+        }
+        else {
+            $customer_response= json_decode($response);
+            $customer = FancyNumber::where('user_id','=', auth()->user()->id)->first();
+            $customer->dashboard_link_phone_system = $customer_response->data->attributes->uri;
+            $customer->save();
 
-            return json_decode($response);
+            return $customer_response;
         }
     }
 
