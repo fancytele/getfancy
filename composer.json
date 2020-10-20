@@ -18,7 +18,8 @@
         "league/flysystem-aws-s3-v3": "^1.0",
         "spatie/laravel-permission": "^3.0",
         "spatie/laravel-stripe-webhooks": "^2.1",
-        "stripe/stripe-php": "v7.49.0"
+        "stripe/stripe-php": "v7.49.0",
+        "ext-json": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",

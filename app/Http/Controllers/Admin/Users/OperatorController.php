@@ -7,9 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\OperatorRequest;
 use App\Mail\WelcomeMail;
 use App\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 
 class OperatorController extends Controller
 {
@@ -28,7 +32,7 @@ class OperatorController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|Response|View
      */
     public function index()
     {
@@ -39,7 +43,7 @@ class OperatorController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|Response|View
      */
     public function create()
     {
@@ -50,7 +54,7 @@ class OperatorController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\OperatorRequest  $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(OperatorRequest $request)
     {
@@ -75,7 +79,7 @@ class OperatorController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\User $operator
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(User $operator)
     {
@@ -87,7 +91,7 @@ class OperatorController extends Controller
      *
      * @param  \App\Http\Requests\OperatorRequest  $request
      * @param  \App\User $operator
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(OperatorRequest $request, User $operator)
     {
@@ -107,7 +111,7 @@ class OperatorController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\User $operator
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(User $operator)
     {
@@ -141,7 +145,7 @@ class OperatorController extends Controller
      * Reset password for the specified resource in storage.
      *
      * @param  \App\User $operator
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function resetPassword(Request $request, User $operator)
     {
