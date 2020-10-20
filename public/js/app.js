@@ -3209,10 +3209,7 @@ __webpack_require__.r(__webpack_exports__);
       this.submitButton.start();
       axios.post(this.urls.create_fancy, data).then(function (response) {
         console.log(response);
-        /*window.location = this.urls.fancy_settings.replace(
-          '_user_',
-          response.data.user
-        ); */
+        window.location = _this6.urls.fancy_settings.replace('_user_', response.data.user);
       })["catch"](function (error) {
         var data = error.response.data;
 

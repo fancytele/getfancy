@@ -206,10 +206,11 @@ class UserController extends Controller
 
         //Create Customer Phone System
         $phone_system_service = new PhoneSystemService();
-        $customer = $phone_system_service->createCustomer();
+        $phone_system_service->createCustomer();
 
         //Create Customer Session PhoneSystem
-        $customer_session= $phone_system_service->createCustomerSession();
+        $phone_system_service->createCustomerSession();
+
         // Create Ticket
         $ticket = new Ticket();
         $ticket->fancy_number_id = $user_service->fancyNumberModel()->id;

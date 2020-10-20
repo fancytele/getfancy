@@ -387,10 +387,10 @@ export default {
         .post(this.urls.create_fancy, data)
         .then(response => {
           console.log(response);
-          /*window.location = this.urls.fancy_settings.replace(
+          window.location = this.urls.fancy_settings.replace(
             '_user_',
             response.data.user
-          ); */
+          );
         })
         .catch(error => {
           const data = error.response.data;
