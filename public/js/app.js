@@ -4666,6 +4666,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "DidSettingComponent",
   props: {
@@ -4691,6 +4725,8 @@ __webpack_require__.r(__webpack_exports__);
         console.log(error.response);
 
         _this.laddaButton.stop();
+
+        $('#exampleModal').modal('show');
       });
     }
   }
@@ -71243,10 +71279,111 @@ var render = function() {
           ]
         )
       ])
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "exampleModal",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "delete-element-label",
+          "aria-hidden": "true"
+        }
+      },
+      [
+        _c(
+          "div",
+          {
+            staticClass: "modal-dialog modal-dialog-centered modal-sm",
+            attrs: { role: "document" }
+          },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _c("div", { staticClass: "modal-body p-0" }, [
+                _vm._m(0),
+                _vm._v(" "),
+                _c("div", { staticClass: "d-flex my-3 pl-4 pt-4" }, [
+                  _c("i", {
+                    staticClass:
+                      "display-4 fe fe-alert-circle mr-3 mt-n2 mt-n3 "
+                  }),
+                  _vm._v(" "),
+                  _c("div", [
+                    _c("h3", { staticClass: "mb-0" }, [
+                      _vm._v(
+                        "\n                " +
+                          _vm._s(_vm.trans("Oops!")) +
+                          "\n                "
+                      ),
+                      _c("br"),
+                      _vm._v(" "),
+                      _c("span", {
+                        staticClass: "element-name text-capitalize"
+                      }),
+                      _vm._v(
+                        _vm._s(
+                          _vm.trans(
+                            "Something went wrong, Please try again later."
+                          )
+                        ) + "\n              "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "element-detail text-black-50" })
+                  ])
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  { staticClass: "d-flex overflow-hidden rounded-bottom" },
+                  [
+                    _c(
+                      "button",
+                      {
+                        staticClass:
+                          "btn btn-lg btn-outline-primary rounded-0 text-body w-100",
+                        attrs: { type: "button", "data-dismiss": "modal" }
+                      },
+                      [
+                        _vm._v(
+                          "\n              " +
+                            _vm._s(_vm.trans("OK")) +
+                            "\n            "
+                        )
+                      ]
+                    )
+                  ]
+                )
+              ])
+            ])
+          ]
+        )
+      ]
+    )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "button",
+      {
+        staticClass: "close mr-3 mt-3",
+        attrs: {
+          type: "button",
+          "data-dismiss": "modal",
+          "aria-label": "Close"
+        }
+      },
+      [_c("i", { staticClass: "fe fe-x-circle" })]
+    )
+  }
+]
 render._withStripped = true
 
 

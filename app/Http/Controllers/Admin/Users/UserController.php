@@ -151,6 +151,13 @@ class UserController extends Controller
         // Create User Fancy number
         $user->assignFancyNumber($did_data['number'], $data['number_type'], $did_purchase);
 
+        //Create Customer Phone System
+        $phone_system_service = new PhoneSystemService();
+        $phone_system_service->createCustomer($user->model());
+
+        //Create Customer Session PhoneSystem
+        $phone_system_service->createCustomerSession($user->model());
+
         // Send reset password to new user
         Mail::to($user->model())->send(new WelcomeMail($user->model()));
 
@@ -206,10 +213,10 @@ class UserController extends Controller
 
         //Create Customer Phone System
         $phone_system_service = new PhoneSystemService();
-        $phone_system_service->createCustomer();
+        $phone_system_service->createCustomer($request->user());
 
         //Create Customer Session PhoneSystem
-        $phone_system_service->createCustomerSession();
+        $phone_system_service->createCustomerSession($request->user());
 
         // Create Ticket
         $ticket = new Ticket();
@@ -576,6 +583,8 @@ class UserController extends Controller
         }
 
         $link = FancyNumber::where('user_id', '=', auth()->user()->id)->pluck('dashboard_link_phone_system')->first();
+
+        if(!$link) return response()->json(['message' => 'No Data Found'], 404);
 
         return response()->json(['link' => $link]);
     }

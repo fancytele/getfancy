@@ -3,20 +3,21 @@
 namespace App\Services;
 
 use App\FancyNumber;
+use Illuminate\Http\JsonResponse;
 
 class PhoneSystemService{
 
     /**
+     * @param  $data
      * @return bool|string
      */
-    public function createCustomer(){
+    public function createCustomer($data){
 
         $token = env('PHONE_SYSTEM_USERNAME').':'.env('PHONE_SYSTEM_PASSWORD');
         $credentials_token = base64_encode($token);
 
-        $name= auth()->user()->first_name." ".auth()->user()->last_name;
-
-        $body = array('data' => array('id' => auth()->user()->id, 'type' => 'customers', 'attributes' => array('name' => $name, 'language' => 'EN')));
+        $name = $data->first_name." ".$data->last_name;
+        $body = array('data' => array('id' => $data->id, 'type' => 'customers', 'attributes' => array('name' => $name, 'language' => 'EN')));
 
         $curl = curl_init();
 
@@ -48,7 +49,7 @@ class PhoneSystemService{
         }
         else{
             $customer_response= json_decode($response);
-            $customer = FancyNumber::where('user_id','=', auth()->user()->id)->first();
+            $customer = FancyNumber::where('user_id','=', $data->id)->first();
             $customer->customer_id_phone_system = $customer_response->data->id;
             $customer->save();
 
@@ -56,12 +57,16 @@ class PhoneSystemService{
         }
     }
 
-    public function createCustomerSession()
+    /**
+     * @param $data
+     * @return JsonResponse|mixed
+     */
+    public function createCustomerSession($data)
     {
         $token = env('PHONE_SYSTEM_USERNAME').':'.env('PHONE_SYSTEM_PASSWORD');
         $credentials_token = base64_encode($token);
 
-        $customer_id = FancyNumber::where('user_id', auth()->user()->id)->pluck('customer_id_phone_system')->first();
+        $customer_id = FancyNumber::where('user_id','=',$data->id)->pluck('customer_id_phone_system')->first();
 
         $body = array('data' => array('type' => 'sessions', 'relationships' => array('customer' => array('data' => array('id' => $customer_id, 'type' => 'customers')))));
 
@@ -94,7 +99,7 @@ class PhoneSystemService{
         }
         else {
             $customer_response= json_decode($response);
-            $customer = FancyNumber::where('user_id','=', auth()->user()->id)->first();
+            $customer = FancyNumber::where('user_id','=', $data->id)->first();
             $customer->dashboard_link_phone_system = $customer_response->data->attributes->uri;
             $customer->save();
 
