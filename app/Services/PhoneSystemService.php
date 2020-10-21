@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\FancyNumber;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Log;
 
 class PhoneSystemService{
 
@@ -17,7 +18,10 @@ class PhoneSystemService{
         $credentials_token = base64_encode($token);
 
         $name = $data->first_name." ".$data->last_name;
-        $body = array('data' => array('id' => $data->id, 'type' => 'customers', 'attributes' => array('name' => $name, 'language' => 'EN')));
+
+        $did = FancyNumber::where('user_id' ,'=' , $data->id)->first();
+
+        $body = array('data' => array('id' => $did->did_number, 'type' => 'customers', 'attributes' => array('name' => $name, 'language' => 'EN')));
 
         $curl = curl_init();
 
@@ -44,15 +48,13 @@ class PhoneSystemService{
         curl_close($curl);
 
         if ($error) {
-
+            Log::info('Create Customer Error:'.$error);
             return response()->json(['error' => $error] , 409);
         }
         else{
             $customer_response= json_decode($response);
-            $customer = FancyNumber::where('user_id','=', $data->id)->first();
-            $customer->customer_id_phone_system = $customer_response->data->id;
-            $customer->save();
-
+            $did->customer_id_phone_system = $customer_response->data->id;
+            $did->save();
             return $customer_response;
         }
     }
@@ -66,9 +68,9 @@ class PhoneSystemService{
         $token = env('PHONE_SYSTEM_USERNAME').':'.env('PHONE_SYSTEM_PASSWORD');
         $credentials_token = base64_encode($token);
 
-        $customer_id = FancyNumber::where('user_id','=',$data->id)->pluck('customer_id_phone_system')->first();
+        $did = FancyNumber::where('user_id','=',$data->id)->first();
 
-        $body = array('data' => array('type' => 'sessions', 'relationships' => array('customer' => array('data' => array('id' => $customer_id, 'type' => 'customers')))));
+        $body = array('data' => array('type' => 'sessions', 'relationships' => array('customer' => array('data' => array('id' => $did->customer_id_phone_system, 'type' => 'customers')))));
 
         $curl = curl_init();
 
@@ -95,13 +97,13 @@ class PhoneSystemService{
         curl_close($curl);
 
         if ($error) {
+            Log::info('Create Customer Session Error:'. $error);
             return response()->json(['error' => $error] , 409);
         }
         else {
             $customer_response= json_decode($response);
-            $customer = FancyNumber::where('user_id','=', $data->id)->first();
-            $customer->dashboard_link_phone_system = $customer_response->data->attributes->uri;
-            $customer->save();
+            $did->dashboard_link_phone_system = $customer_response->data->attributes->uri;
+            $did->save();
 
             return $customer_response;
         }

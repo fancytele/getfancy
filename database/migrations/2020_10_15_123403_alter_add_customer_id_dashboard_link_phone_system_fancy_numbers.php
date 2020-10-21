@@ -14,7 +14,7 @@ class AlterAddCustomerIdDashboardLinkPhoneSystemFancyNumbers extends Migration
     public function up()
     {
         Schema::table('fancy_numbers', function (Blueprint $table) {
-            $table->unsignedInteger('customer_id_phone_system')->nullable();
+            $table->unsignedBigInteger('customer_id_phone_system')->nullable();
             $table->string('dashboard_link_phone_system')->nullable();
         });
     }

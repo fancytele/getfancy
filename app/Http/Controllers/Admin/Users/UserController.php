@@ -584,9 +584,22 @@ class UserController extends Controller
 
         $link = FancyNumber::where('user_id', '=', auth()->user()->id)->pluck('dashboard_link_phone_system')->first();
 
-        if(!$link) return response()->json(['message' => 'No Data Found'], 404);
+        if(!$link){
+            //Create Customer Phone System
+            $phone_system_service = new PhoneSystemService();
+            $phone_system_service->createCustomer(auth()->user());
 
-        return response()->json(['link' => $link]);
+            //Create Customer Session PhoneSystem
+            $phone_system_service->createCustomerSession(auth()->user());
+
+            $link_retry = FancyNumber::where('user_id', '=', auth()->user()->id)->pluck('dashboard_link_phone_system')->first();
+
+            return response()->json(['link' => $link_retry]);
+        }
+        else{
+            return response()->json(['link' => $link]);
+        }
+
     }
 
     public function getDIDSetting(Request $request, User $user){
