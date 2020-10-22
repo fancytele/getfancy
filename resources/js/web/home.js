@@ -9,33 +9,6 @@ import navbar from '../navbar';
 import navbarCollapse from '../navbarCollapse';
 
 (function () {
-  const changePlan = function (e) {
-    const activeClass = 'active';
-
-    if ($(this).hasClass(activeClass)) {
-      e.stopPropagation();
-      return;
-    }
-
-    const id = e.target.dataset.type;
-    const description = e.target.dataset.description;
-
-    // Remove active Button and Plan Item the 'active' class
-    $('#plans .active').removeClass(activeClass);
-
-    // Add selected Button and Plan Item class 'active'
-    $(`#plans .btn-group button[data-type="${id}"], #plans .plan-wrapper #${id}`).addClass(activeClass);
-
-    $('#plans .plan-item-description').text(description);
-  };
-
-  const redirectToCheckout = function (e) {
-    e.preventDefault();
-
-    const planType = $('#plans .btn-group .active').data('type');
-    window.location.href = `/checkout/${planType}`;
-  }
-
   const normalizeSlideHeights = function (element) {
     if (!element) {
       return false;
@@ -71,10 +44,6 @@ import navbarCollapse from '../navbarCollapse';
       const target = e.target.attributes.href.value;
       $('html, body').animate({ scrollTop: $(e.target.attributes.href.value).offset().top - 120 }, 800);
     })
-
-    $('#plans .btn-group button').on('click', changePlan);
-    $('#plans #plan-buy').click(redirectToCheckout);
-
 
     // Have Us Call You
     const phoneInput = document.querySelector('#have-us-call-you #phone');

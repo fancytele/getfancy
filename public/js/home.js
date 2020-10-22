@@ -42221,29 +42221,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 (function () {
-  var changePlan = function changePlan(e) {
-    var activeClass = 'active';
-
-    if ($(this).hasClass(activeClass)) {
-      e.stopPropagation();
-      return;
-    }
-
-    var id = e.target.dataset.type;
-    var description = e.target.dataset.description; // Remove active Button and Plan Item the 'active' class
-
-    $('#plans .active').removeClass(activeClass); // Add selected Button and Plan Item class 'active'
-
-    $("#plans .btn-group button[data-type=\"".concat(id, "\"], #plans .plan-wrapper #").concat(id)).addClass(activeClass);
-    $('#plans .plan-item-description').text(description);
-  };
-
-  var redirectToCheckout = function redirectToCheckout(e) {
-    e.preventDefault();
-    var planType = $('#plans .btn-group .active').data('type');
-    window.location.href = "/checkout/".concat(planType);
-  };
-
   var normalizeSlideHeights = function normalizeSlideHeights(element) {
     if (!element) {
       return false;
@@ -42274,9 +42251,7 @@ __webpack_require__.r(__webpack_exports__);
       $('html, body').animate({
         scrollTop: $(e.target.attributes.href.value).offset().top - 120
       }, 800);
-    });
-    $('#plans .btn-group button').on('click', changePlan);
-    $('#plans #plan-buy').click(redirectToCheckout); // Have Us Call You
+    }); // Have Us Call You
 
     var phoneInput = document.querySelector('#have-us-call-you #phone');
     var maskOptions = {

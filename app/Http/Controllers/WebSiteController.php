@@ -7,6 +7,11 @@ use App\Enums\AddonCode;
 use App\Product;
 use App\Mail\ContactUsMail;
 use App\Mail\HaveUsCallYouMail;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\Support\Renderable;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\App;
@@ -14,27 +19,25 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Illuminate\View\View;
 
 class WebSiteController extends Controller
 {
     /**
      * Show Website homepage.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Renderable
      */
     public function index()
     {
-        $products = Product::get(['name', 'description', 'slug', 'cost', 'discount', 'is_primary']);
-
-        return view('home', compact('products'));
+        return view('home');
     }
 
     /**
      * Show the application dashboard.
-     *
      * @param string $product_id
      * @param float $price
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return Application|Factory|RedirectResponse|View
      */
     public function checkout(string $product_id, float $price)
     {
@@ -42,7 +45,6 @@ class WebSiteController extends Controller
         {
             return redirect()->route('web.homepage');
         }
-
 
         $addons = Addon::subscription()->orWhere('code', AddonCode::PROFESSIONAL_RECORDING)->get();
 
@@ -53,7 +55,7 @@ class WebSiteController extends Controller
      * Send Email to Support about new User who wants to be call
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function callYou(Request $request)
     {
@@ -66,7 +68,7 @@ class WebSiteController extends Controller
      * Send Email to Support about new User who wants to Contact Us
      *
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function contactUs(Request $request)
     {
@@ -83,7 +85,7 @@ class WebSiteController extends Controller
      * Set App lang
      *
      * @param Request $request
-     * @return void
+     * @return RedirectResponse
      */
     public function changeLocalization(Request $request)
     {
@@ -138,21 +140,21 @@ class WebSiteController extends Controller
 
     //Milestone1
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
     public function getPrivacyPolicy(){
         return view('privacy-policy');
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
     public function getTermsOfService(){
         return view('terms-of-service');
     }
 
     /**
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return Application|Factory|View
      */
     public function getCookiePolicy(){
         return view('cookie-policy');

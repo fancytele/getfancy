@@ -7,7 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Services\UserService;
 use App\Subscription;
 use App\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class DashboardController extends Controller
 {
@@ -22,9 +26,8 @@ class DashboardController extends Controller
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
+     *  Show the application dashboard.
+     * @return Application|Factory|RedirectResponse|View
      */
     public function index()
     {
@@ -39,7 +42,6 @@ class DashboardController extends Controller
         }
 
         $users = User::countByRole();
-        //$subscriptions = Subscription::countByProduct();               Removing product table dependency
 
         return view("admin.dashboard-admin", compact('users'));
     }
