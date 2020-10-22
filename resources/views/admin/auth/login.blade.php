@@ -162,7 +162,7 @@
                     <p class="text-center">
                         <small>
                             @lang('Don\'t have an account yet?') 
-                            <a class="text-decoration-underline text-white" href="{{ route('web.checkout', 'annually') }}">
+                            <a class="text-decoration-underline text-white" href="{{ route('web.homepage')}}#plans ">
                                 @lang('Sign Up Here')</a>.
                         </small>
                     </p>

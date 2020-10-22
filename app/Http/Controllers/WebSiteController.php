@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 
 class WebSiteController extends Controller
@@ -30,23 +32,21 @@ class WebSiteController extends Controller
     /**
      * Show the application dashboard.
      *
-     * @param string $slug
+     * @param string $product_id
+     * @param float $price
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function checkout(string $slug)
+    public function checkout(string $product_id, float $price)
     {
-        $products = Product::all();
-
-        if (!$products->contains('slug', $slug)) {
-            $primary_slug = $products->firstWhere('is_primary')->slug;
-
-            return redirect()->route('web.checkout', $primary_slug);
+        if(!$product_id && !$price)
+        {
+            return redirect()->route('web.homepage');
         }
 
-        $product = $products->firstWhere('slug', $slug);
+
         $addons = Addon::subscription()->orWhere('code', AddonCode::PROFESSIONAL_RECORDING)->get();
 
-        return view('checkout', compact('product', 'addons'));
+        return view('checkout', compact('product_id', 'addons' ,'price'));
     }
 
     /**
@@ -121,14 +121,39 @@ class WebSiteController extends Controller
         exit();
     }
 
+    //Milestone4
+
+    public function getPlanPrice(Request $request){
+
+        $validator = Validator::make($request->all(),[
+            'price' => 'required|numeric|min:'.env('MINIMUM_PRODUCT_PRICE')
+        ]);
+
+        if($validator->fails()) {
+            return Redirect::to('/#price')->withErrors($validator);
+        }
+
+        return redirect()->route('web.checkout', [env('STRIPE_PRODUCT_ID'), $request->price]);
+    }
+
+    //Milestone1
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getPrivacyPolicy(){
         return view('privacy-policy');
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getTermsOfService(){
         return view('terms-of-service');
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function getCookiePolicy(){
         return view('cookie-policy');
     }

@@ -95,19 +95,18 @@ class UserService
     /**
      * Create user Subscription with Stripe info
      *
-     * @param int $product_id
-     * @param string $stripe_product_id
+     * @param array $data
      * @param StripeSubscription $stripe_subscription
-     * 
+     *
      * @return UserService
      */
-    public function createSubscription(int $product_id, string $stripe_product_id, StripeSubscription $stripe_subscription)
+    public function createSubscription(array $data, StripeSubscription $stripe_subscription)
     {
         $subscription = new Subscription([
-            'product_id' => $product_id,
             'stripe_id' => $stripe_subscription->id,
-            'stripe_product' => $stripe_product_id,
-            'ends_at' => $stripe_subscription->current_period_end
+            'stripe_product' =>$data['product_id'],
+            'ends_at' => $stripe_subscription->current_period_end,
+            'trial_ends_at' => $stripe_subscription->trial_end,
         ]);
 
         $this->model->subscriptions()->save($subscription);
@@ -230,6 +229,9 @@ class UserService
     }
 
     /**
+     * @param string $fancy_number
+     * @param int $year
+     * @param int $month
      * @return Collection
      */
     private function getCalls(string $fancy_number, int $year, int $month)
@@ -239,6 +241,9 @@ class UserService
 
     /**
      * return array
+     * @param Collection $calls
+     * @return array
+     * @throws \Exception
      */
     private function getCallsChart(Collection $calls)
     {
@@ -258,6 +263,7 @@ class UserService
     }
 
     /**
+     * @param Collection $calls
      * @return array
      */
     private function getCallsOverview(Collection $calls)
@@ -341,6 +347,7 @@ class UserService
 
         $stripe_service = new StripeService();
         $stripe_service->updateBillingAddress($data);
+        $stripe_service->updateUserDetails($data);
 
      if($data['stripe_token'] != null){
             $update_payment = $stripe_service->updatePaymentMethod($data);

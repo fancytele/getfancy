@@ -42261,7 +42261,12 @@ __webpack_require__.r(__webpack_exports__);
   };
 
   $(document).ready(function () {
-    _navbar__WEBPACK_IMPORTED_MODULE_5__["default"].init(); // Get Started buton
+    _navbar__WEBPACK_IMPORTED_MODULE_5__["default"].init();
+    $('#price').keyup(function (event) {
+      if (event.target.value) {
+        document.getElementById('plan_submit').disabled = false;
+      }
+    }); // Get Started buton
 
     $('#home #get-started').click(function (e) {
       e.preventDefault();
@@ -42278,6 +42283,11 @@ __webpack_require__.r(__webpack_exports__);
       mask: '(000) 000-0000'
     };
     Object(imask__WEBPACK_IMPORTED_MODULE_2__["default"])(phoneInput, maskOptions);
+    var priceInput = document.querySelector('#price');
+    var maskOption = {
+      mask: '00.00'
+    };
+    Object(imask__WEBPACK_IMPORTED_MODULE_2__["default"])(priceInput, maskOption);
     _haveUsCallYou__WEBPACK_IMPORTED_MODULE_4__["default"].init('#have-us-call-you', '.call-you-button', '.call-you-error');
     _haveUsCallYou__WEBPACK_IMPORTED_MODULE_4__["default"].submit(function (data) {
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/callyou', data).then(function () {

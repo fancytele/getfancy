@@ -32,33 +32,5 @@
             @endforeach
         </div>
     @endif
-
-    @if(count($subscriptions) > 0)
-        <h2 class="mt-5">Subscriptions</h2>
-        <div class="row">
-            @foreach ($subscriptions as $subscription)
-                <div class="col-12 col-lg-6 col-xl-3">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col text-truncate">
-                                    <!-- Title -->
-                                    <h6 class="card-title text-uppercase text-muted mb-2">
-                                        Subscription: {{ $subscription->product_name }}
-                                    </h6>
-
-                                    <!-- Heading -->
-                                    <span class="h2 mb-0">{{ $subscription->total }}</span>
-                                </div>
-                                <div class="col-auto">
-                                    <span class="h2 fe fe-dollar-sign text-muted mb-0"></span>
-                                </div>
-                            </div> <!-- / .row -->
-                        </div>
-                    </div>
-                </div>
-            @endforeach
-        </div>
-    @endif
 </div>
 @endsection
