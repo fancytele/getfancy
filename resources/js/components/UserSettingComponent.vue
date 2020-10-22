@@ -768,10 +768,6 @@ export default {
     update_default_card:{
       type:String,
       required:true
-    },
-    phone_system_dashboard_link:{
-      type:String,
-      required:true
     }
   },
 
