@@ -6,12 +6,17 @@ use App\Http\Controllers\Controller;
 use App\Mail\TwoFactorCodeVerificationEmail;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -59,8 +64,8 @@ class LoginController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
-     * @throws \Illuminate\Validation\ValidationException
+     * @return Application|RedirectResponse|Redirector
+     * @throws ValidationException
      * First it checks if user two factor authentication is on or not if on then,
      * it checks the two factor code is not expired and not null then,
      * it checks if the two factor code matches with the database or not if yes,
@@ -77,35 +82,38 @@ class LoginController extends Controller
             'password' => 'required',
         ]);
 
-
-        $two_factor_code_details = User::select('two_factor_code_expire_time' , 'two_factor_code')->where('email' , $request->email)->first();
+        $two_factor_code_details = User::select('two_factor_code_expire_time' , 'two_factor_code','is_twoFactorAuthentication')->where('email' , $request->email)->first();
 
         if($two_factor_code_details)
         {
             if($two_factor_code_details->is_twoFactorAuthentication == 1)
             {
-                $expire_time = \DateTime::createFromFormat("Y-m-d H:i:s" , $two_factor_code_details->two_factor_code_expire_time);
-
-                if(!empty($expire_time) && $expire_time > Carbon::now())
-                {
-                    if($two_factor_code_details->two_factor_code== $request->two_factor_code)
+                if($request->two_factor_code != null){
+                    $expire_time = \DateTime::createFromFormat("Y-m-d H:i:s" , $two_factor_code_details->two_factor_code_expire_time);
+                    if(!empty($expire_time) && $expire_time > Carbon::now())
                     {
-                        if (Auth::attempt(['email' => $request->email, 'password' => $request->password]))
+                        if($two_factor_code_details->two_factor_code== $request->two_factor_code)
                         {
+                            if (Auth::attempt(['email' => $request->email, 'password' => $request->password]))
+                            {
 
-                            return redirect(route('admin.dashboard'));
+                                return redirect(route('admin.dashboard'));
+                            }
+                            else{
+                                return back()->withInput()->with('credentialErrorMessage','These credentials do not match our records.');
+                            }
                         }
+
                         else{
-                            return back()->withInput()->with('credentialErrorMessage','These credentials do not match our records.');
+                            return back()->withInput()->with('twoFactorCodeErrorMessage','Two factor code is invalid');
                         }
                     }
-
                     else{
-                        return back()->withInput()->with('twoFactorCodeErrorMessage','Two factor code is invalid');
+                        return back()->withInput()->with('twoFactorCodeExpiredErrorMessage','Two factor code is expired.');
                     }
                 }
                 else{
-                    return back()->withInput()->with('twoFactorCodeExpiredErrorMessage','Two factor code is expired.');
+                    return back()->withInput()->with('TwoFactorCodeEmpty','Please provide some input.');
                 }
             }
             else{
@@ -125,7 +133,7 @@ class LoginController extends Controller
 
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      * if two factor authentication is on, it will generate two factor authentication code.
      * else it will authenticate the user and return user object with status code 202 and in blade file it will automatically press the submit button,
      * then, it will go to authenticated() and, again authenticate the user and redirect the user to the dashboard.
@@ -167,7 +175,6 @@ class LoginController extends Controller
             }
 
         }
-
         else{
             return response()->json('These credentials do not match our records.',401);
         }

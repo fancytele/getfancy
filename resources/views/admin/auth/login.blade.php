@@ -50,8 +50,6 @@
                                placeholder="john@doe.com" autocomplete="email"
                                value="{{ old('email') }}" required autofocus>
 
-                         <span id="emailError" class="invalid-feedback" style="display: block" role="alert"></span>
-
                          @if(session()->has('twoFactorCodeExpiredErrorMessage'))
                             <span class="invalid-feedback" style="display: block" role="alert"><strong>{{ session()->get('twoFactorCodeExpiredErrorMessage') }}</strong></span>
                         @endif
@@ -71,6 +69,7 @@
                             <strong>{{ $message }}</strong>
                         </span>
                         @enderror
+                          <span id="emailError" class="invalid-feedback" style="display: block" role="alert"></span>
                     </div>
 
                     <!-- Password -->
@@ -130,7 +129,7 @@
                             <!-- Input -->
                             <input type="number" name="two_factor_code"
                                    class="form-control form-control-appended @error('two_factor_code') is-invalid @enderror"
-                                   placeholder="@lang('Enter your two factor code')" >
+                                   placeholder="@lang('Enter your two factor code')">
 
                             @error('two_factor_code')
                             <span id="error" class="invalid-feedback" role="alert">
@@ -141,6 +140,9 @@
 
                             @if(session()->has('twoFactorCodeErrorMessage'))
                                 <span class="invalid-feedback" style="display: block" role="alert"><strong>{{ session()->get('twoFactorCodeErrorMessage') }}</strong></span>
+                            @endif
+                            @if(session()->has('TwoFactorCodeEmpty'))
+                                <span class="invalid-feedback" style="display: block" role="alert"><strong>{{ session()->get('TwoFactorCodeEmpty') }}</strong></span>
                             @endif
 
                         </div>
@@ -246,8 +248,10 @@
             l.stop();
            if(!document.getElementById('password').value){
              document.getElementById('passwordError').innerHTML = '<strong>@lang('Please provide some input')</strong>';
-             document.getElementById('emailError').innerHTML = '';
            }
+            if(!document.getElementById('email').value){
+              document.getElementById('emailError').innerHTML = '<strong>@lang('Please provide some input')</strong>';
+            }
            else{
              document.getElementById('passwordError').innerHTML = '';
              document.getElementById('emailError').innerHTML = '<strong>@lang('These credentials do not match our records.')</strong>';
@@ -275,8 +279,8 @@
 </script>
 
     <style>
-        @if(session()->has('credentialErrorMessage') OR session()->has('twoFactorCodeErrorMessage'))
-               #email_display{
+        @if(session()->has('credentialErrorMessage') OR session()->has('twoFactorCodeErrorMessage') OR session()->has('TwoFactorCodeEmpty'))
+            #email_display{
             display: block;
             }
             #password_display{
@@ -307,7 +311,6 @@
                 #login-two-factor-code-button{
                     display: block;
                 }
-
             @else
                 #email_display{
                 display: block;
