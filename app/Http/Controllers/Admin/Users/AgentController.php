@@ -7,9 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\AgentRequest;
 use App\Mail\WelcomeMail;
 use App\User;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 
 class AgentController extends Controller
 {
@@ -28,7 +32,7 @@ class AgentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|Response|View
      */
     public function index()
     {;
@@ -39,7 +43,7 @@ class AgentController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|Response|View
      */
     public function create()
     {
@@ -50,7 +54,7 @@ class AgentController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\AgentRequest $request
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function store(AgentRequest $request)
     {
@@ -76,7 +80,7 @@ class AgentController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\User $agent
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(User $agent)
     {
@@ -88,7 +92,7 @@ class AgentController extends Controller
      *
      * @param  \App\Http\Requests\AgentRequest $request
      * @param  \App\User $agent
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(AgentRequest $request, User $agent)
     {
@@ -143,7 +147,7 @@ class AgentController extends Controller
      * Reset password for the specified resource in storage.
      *
      * @param  \App\User $agent
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function resetPassword(Request $request, User $agent)
     {

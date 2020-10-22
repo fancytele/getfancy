@@ -7,7 +7,12 @@ use App\Enums\TicketStatus;
 use App\Http\Controllers\Controller;
 use App\Ticket;
 use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class TicketController extends Controller
 {
@@ -24,7 +29,7 @@ class TicketController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|Response|View
      */
     public function index()
     {
@@ -57,7 +62,7 @@ class TicketController extends Controller
      * Display the specified resource.
      *
      * @param  int $id
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|Response|View
      */
     public function show(int $id)
     {
@@ -68,9 +73,8 @@ class TicketController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  \App\Ticket $ticket
-     * @return \Illuminate\Http\Response
+     * @param Ticket $ticket
+     * @return Application|Factory|RedirectResponse|View
      */
     public function edit(Ticket $ticket)
     {
@@ -103,7 +107,7 @@ class TicketController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Ticket $ticket
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function update(Ticket $ticket)
     {
@@ -126,7 +130,7 @@ class TicketController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Ticket $ticket
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function destroy(Ticket $ticket)
     {

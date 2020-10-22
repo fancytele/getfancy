@@ -769,6 +769,10 @@ export default {
       type:String,
       required:true
     },
+    phone_system_dashboard_link:{
+      type:String,
+      required:true
+    }
   },
 
   directives: {
@@ -782,7 +786,6 @@ export default {
   mounted() {
     this.getUserDetails();
     this.getAllPaymentMethods();
-
     this.laddaButton = Ladda.create(
         document.querySelector('#submit-user-setting')
     );
@@ -1080,7 +1083,6 @@ export default {
             console.log(error);
           });
     },
-
   },
 
   computed: {

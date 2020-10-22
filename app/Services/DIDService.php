@@ -17,6 +17,7 @@ use Didww\Item\OrderItem\ReservationDid as DIDWWOrderItemReservation;
 use Didww\Item\OrderItem\AvailableDid as DIDWWOrderItemAvailable;
 use Didww\Item\Region as DIDWWRegion;
 use Exception;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -219,6 +220,14 @@ class DIDService
         return $this->purchaseDID($available_did->getId(), $available_did->getNumber(), $did_group);
     }
 
+
+    public function getCallLogs(string $did)
+    {
+        $cdr_export = new DIDWWCDRExport();
+        return $cdr_export->setFilerDidNumber($did);
+
+    }
+
     public function getCDRReport(string $did, int $year, int $month)
     {
         // generate cdr export
@@ -398,4 +407,5 @@ class DIDService
         $this->env = config('services.didww.env');
         return $this->env;
     }
+
 }

@@ -73,6 +73,14 @@ Route::prefix('admin')->group(function () {
         Route::get('users/{user}/authorized_user','Admin\Users\UserController@getAuthorizedUser')->name('admin.users.get_authorized_user');
 
 
+        //Milestone 3 - DIDWW
+        Route::get('users/{user}/dashboard_link', 'Admin\Users\UserController@getPhoneSystemsDashboardLink')->name('admin.users.dashboard_link');
+        Route::get('users/{user}/view/settings', 'Admin\Users\UserController@getDIDSetting')->name('admin.users.did_setting');
+
+        //Milestone 3- PhoneSystemAPI
+        Route::get('phonesystem/create_customer', 'Admin\PhoneSystemController@createCustomer')->name('admin.phonesystem.create_customer');
+        Route::get('phonesystem/create_customer_session', 'Admin\PhoneSystemController@createCustomerSession')->name('admin.phonesystem.create_customer_session');
+
         // Agents Management
         Route::post('agents/{agent}/reset_password', 'Admin\Users\AgentController@resetPassword')->name('admin.agents.reset_password');
         Route::post('agents/{agent}/restore', 'Admin\Users\AgentController@restore')->name('admin.agents.restore');

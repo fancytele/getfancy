@@ -18,6 +18,7 @@ use App\Mail\WelcomeMail;
 use App\PBXMessage;
 use App\Services\DIDService;
 use App\Services\FancySettingService;
+use App\Services\PhoneSystemService;
 use App\Services\StripeService;
 use App\Services\UserService;
 use App\Subscription;
@@ -47,8 +48,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication','usersByRole','impersonate','stopImpersonate','addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard']);
-        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication' ,'addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard']);
+        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication','usersByRole','impersonate','stopImpersonate','addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard','getPhoneSystemsDashboardLink','getDIDSetting']);
+        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication' ,'addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard' ,'getPhoneSystemsDashboardLink','getDIDSetting']);
         $this->middleware(['role:admin|user|agent'])->only(['usersByRole','impersonate','stopImpersonate']);
     }
 
@@ -85,7 +86,7 @@ class UserController extends Controller
             'did_reservation' => route('admin.dids.create_reservation'),
         ];
 
-        return view('admin.users.create', compact('addons', 'did_country', 'did_regions', 'urls'));
+        return view('admin.users.create', compact( 'addons', 'did_country', 'did_regions', 'urls'));
     }
 
     /**
@@ -118,7 +119,6 @@ class UserController extends Controller
         try {
             $did_purchase = $did_service->purchaseReservation($did_data['reservation'], $did_data['number']);
         } catch (Exception $e) {
-
             return response()->json(['message' => $e->getMessage()], Response::HTTP_NOT_FOUND);
         };
 
@@ -142,6 +142,13 @@ class UserController extends Controller
         // Create User Fancy number
         $user->assignFancyNumber($did_data['number'], $data['number_type'], $did_purchase);
 
+        //Create Customer Phone System
+        $phone_system_service = new PhoneSystemService();
+        $phone_system_service->createCustomer($user->model());
+
+        //Create Customer Session PhoneSystem
+        $phone_system_service->createCustomerSession($user->model());
+
         // Send reset password to new user
         Mail::to($user->model())->send(new WelcomeMail($user->model()));
 
@@ -152,9 +159,7 @@ class UserController extends Controller
         $ticket->save();
 
         return response()->json(['success' => true, 'user' => $user->model()->id]);
-
     }
-
 
     /**
      * @return Application|Factory|RedirectResponse|View
@@ -183,18 +188,26 @@ class UserController extends Controller
     /**
      * Store a new Fancy Number
      *
-     * @param \App\Http\Requests\FancyNumberRequest $request
-     * @return JsonResponse
+     * @param FancyNumberRequest $request
+     * @return \Illuminate\Http\Response
      */
     public function storeFancy(FancyNumberRequest $request)
     {
         $did_service = new DIDService();
         $did_purchase = $did_service->purchaseAvailableDID($request->input('data.did.id', ''));
+
         // Create User Fancy number
         $user_service = new UserService($request->user());
         $user_service->assignFancyNumber($did_purchase['number'], $request->input('number_type'), $did_purchase);
-
+        
         $request->user()->update(['phone_number' => $request->input('phone_number')]);
+
+        //Create Customer Phone System
+        $phone_system_service = new PhoneSystemService();
+        $phone_system_service->createCustomer($request->user());
+
+        //Create Customer Session PhoneSystem
+        $phone_system_service->createCustomerSession($request->user());
 
         // Create Ticket
         $ticket = new Ticket();
@@ -298,11 +311,13 @@ class UserController extends Controller
 
     }
 
+
     /**
      * Impersonate user
      * @param $id
      * @return RedirectResponse
      */
+
     public function impersonate($id)
     {
         $user_to_personify = User::find($id);
@@ -326,6 +341,7 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -333,6 +349,7 @@ class UserController extends Controller
      * @param User $user
      * @return Application|Factory|JsonResponse|View
      */
+
     public function editProfile(Request $request, User $user)
     {
         if($request->wantsJson())
@@ -358,6 +375,7 @@ class UserController extends Controller
         }
 
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -391,8 +409,10 @@ class UserController extends Controller
     }
 
     /**
+     * Update Two Factor Authentication
      * @param Request $request
      * @param User $user
+     * @return JsonResponse
      */
     public function updateTwoFactorAuthentication(Request $request, User $user){
 
@@ -410,6 +430,7 @@ class UserController extends Controller
         return response()->json($user);
     }
     /**
+     * Cancel Subscription
      * @param Request $request
      * @param User $user
      * @return JsonResponse
@@ -447,6 +468,7 @@ class UserController extends Controller
     }
 
     /**
+     * To fetch all payment methods
      * @param Request $request
      * @param User $user
      * @return JsonResponse
@@ -466,7 +488,9 @@ class UserController extends Controller
         }
     }
 
+
     /**
+     * Delete payment method, where as default card can't be deleted
      * @param Request $request
      * @param User $user
      * @return JsonResponse
@@ -486,6 +510,7 @@ class UserController extends Controller
     }
 
     /**
+     * Add Authorised User
      * @param Request $request
      * @param User $user
      * @return JsonResponse
@@ -511,6 +536,7 @@ class UserController extends Controller
     }
 
     /**
+     * Delete Authorised User
      * @param Request $request
      * @param User $user
      * @return JsonResponse
@@ -531,6 +557,7 @@ class UserController extends Controller
     }
 
     /**
+     * Update Default Card
      * @param Request $request
      * @param User $user
      * @return JsonResponse
@@ -548,5 +575,50 @@ class UserController extends Controller
         $update_default_card = $stripe_service->updateDefaultCard($data);
 
         return response()->json($update_default_card);
+    }
+
+    //Milestone 3
+
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return JsonResponse
+     */
+    public function getPhoneSystemsDashboardLink(Request $request, User $user){
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+
+        $link = FancyNumber::where('user_id', '=', auth()->user()->id)->pluck('dashboard_link_phone_system')->first();
+
+        if(!$link){
+            //Create Customer Phone System
+            $phone_system_service = new PhoneSystemService();
+            $phone_system_service->createCustomer(auth()->user());
+
+            //Create Customer Session PhoneSystem
+            $phone_system_service->createCustomerSession(auth()->user());
+
+            $link_retry = FancyNumber::where('user_id', '=', auth()->user()->id)->pluck('dashboard_link_phone_system')->first();
+
+            return response()->json(['link' => $link_retry]);
+        }
+        else{
+            return response()->json(['link' => $link]);
+        }
+
+    }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return Application|Factory|JsonResponse|View
+     */
+    public function getDIDSetting(Request $request, User $user){
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+
+        return view('admin.users.did-setting' ,array('user' => $user));
     }
 }
