@@ -16,7 +16,6 @@ use App\Http\Requests\FancySettingRequest;
 use App\Http\Requests\UserRequest;
 use App\Mail\WelcomeMail;
 use App\PBXMessage;
-use App\Product;
 use App\Services\DIDService;
 use App\Services\FancySettingService;
 use App\Services\PhoneSystemService;
@@ -26,11 +25,17 @@ use App\Subscription;
 use App\Ticket;
 use App\User;
 use Exception;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
 use Spatie\Permission\Models\Role as SpatieRole;
+use Stripe\Exception\ApiErrorException;
 use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
@@ -51,7 +56,7 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return Application|Factory|\Illuminate\Http\Response|View
      */
     public function index()
     {
@@ -63,7 +68,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
+     * @return Application|Factory|\Illuminate\Http\Response|View
      */
     public function create()
     {
@@ -71,7 +76,6 @@ class UserController extends Controller
         $did_country = $did_service->getCountryByISO('US');
         $did_regions = $did_service->getRegionsByCountry($did_country['id']);
 
-        $products = Product::all();
         $addons = Addon::subscription()->orWhere('code', AddonCode::PROFESSIONAL_RECORDING)->get();
 
         $urls = [
@@ -82,15 +86,15 @@ class UserController extends Controller
             'did_reservation' => route('admin.dids.create_reservation'),
         ];
 
-        return view('admin.users.create', compact('products', 'addons', 'did_country', 'did_regions', 'urls'));
+        return view('admin.users.create', compact( 'addons', 'did_country', 'did_regions', 'urls'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \App\Http\Requests\UserRequest $request
-     * @return \Illuminate\Http\Response
-     * @throws \Stripe\Error\Api
+     * @param UserRequest $request
+     * @return JsonResponse
+     * @throws ApiErrorException
      */
     public function store(UserRequest $request)
     {
@@ -98,26 +102,13 @@ class UserController extends Controller
 
         $stripe_service = new StripeService();
 
-        // Find product by slug
-        $product = Product::whereSlug($data['product'])->first();
-
-        // Get Stripe Product by Name
-        $stripe_product = $stripe_service->getProductByName($product->name);
-
-        // Get all product Plans (base and subscription add-ons)
-        $stripe_plans = $stripe_service->getProductPlansByNames($stripe_product->id, [$product->name]);
-
-        $stripe_plans_id = $stripe_plans->map(function ($item) {
-            return ['plan' => $item->id];
-        })->toArray();
-
         // Create Stripe Customer
         // TODO: Catch error and send response to user
         $stripe_customer = $stripe_service->createCustomer($data);
 
         // Create Subscription
         // TODO: Catch error to delete Stripe Customer and send response to user
-        $stripe_subscription = $stripe_service->createSubscription($stripe_customer->id, $stripe_plans_id);
+        $stripe_subscription = $stripe_service->createSubscription($stripe_customer->id, $data);
 
         // Purchase Reserved DID
         $did_data = $data['did'];
@@ -138,7 +129,7 @@ class UserController extends Controller
         $user = $user_service->createFromStripe($data, $stripe_customer);
 
         // Create User subscription
-        $user->createSubscription($product->id, $stripe_product->id, $stripe_subscription);
+        $user->createSubscription($data, $stripe_subscription);
 
         // Create Invoice for One Time Fee Add-ons
         $addons = Addon::whereIn('code', $data['addons'])->get();
@@ -171,7 +162,7 @@ class UserController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|RedirectResponse|View
      */
     public function createFancy()
     {
@@ -228,10 +219,10 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\User $user
-     * @return \Illuminate\Http\Response
+     *  Show the form for editing the specified resource.
+     * @param Request $request
+     * @param User $user
+     * @return Application|Factory|RedirectResponse|View
      */
     public function editFancy(Request $request, User $user)
     {
@@ -260,10 +251,9 @@ class UserController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \App\Http\Requests\FancySettingRequest $request
-     * @param \App\User $user
-     * @return \Illuminate\Http\Response
+     * @param FancySettingRequest $request
+     * @param User $user
+     * @return JsonResponse
      */
     public function updateFancy(FancySettingRequest $request, User $user)
     {
@@ -290,7 +280,7 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param string $role
-     * @return \Illuminate\Http\Response
+     * @return JsonResponse
      */
     public function usersByRole(string $role)
     {
@@ -321,12 +311,13 @@ class UserController extends Controller
 
     }
 
+
     /**
      * Impersonate user
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return RedirectResponse
      */
+
     public function impersonate($id)
     {
         $user_to_personify = User::find($id);
@@ -341,8 +332,7 @@ class UserController extends Controller
     /**
      * Stop Impersonate user
      *
-     * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function stopImpersonate()
     {
@@ -351,13 +341,15 @@ class UserController extends Controller
         return redirect()->back();
     }
 
+
     /**
      * Show the form for editing the specified resource.
      *
      * @param Request $request
-     * @param \App\User $user
-     * @return \Illuminate\Http\JsonResponse
+     * @param User $user
+     * @return Application|Factory|JsonResponse|View
      */
+
     public function editProfile(Request $request, User $user)
     {
         if($request->wantsJson())
@@ -384,12 +376,13 @@ class UserController extends Controller
 
     }
 
+
     /**
      * Update the specified resource in storage.
      *
-     * @param \App\Http\Requests\FancySettingRequest $request
-     * @param \App\User $user
-     * @return \Illuminate\Http\JsonResponse
+     * @param Request $request
+     * @param User $user
+     * @return JsonResponse
      */
     public function updateProfile(Request $request, User $user)
     {
@@ -416,8 +409,10 @@ class UserController extends Controller
     }
 
     /**
+     * Update Two Factor Authentication
      * @param Request $request
      * @param User $user
+     * @return JsonResponse
      */
     public function updateTwoFactorAuthentication(Request $request, User $user){
 
@@ -435,9 +430,10 @@ class UserController extends Controller
         return response()->json($user);
     }
     /**
+     * Cancel Subscription
      * @param Request $request
      * @param User $user
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function cancelSubscription(Request $request, User $user){
 
@@ -472,9 +468,10 @@ class UserController extends Controller
     }
 
     /**
+     * To fetch all payment methods
      * @param Request $request
      * @param User $user
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
    public function getAllPaymentMethods(Request $request, User $user){
         if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
@@ -491,10 +488,12 @@ class UserController extends Controller
         }
     }
 
+
     /**
+     * Delete payment method, where as default card can't be deleted
      * @param Request $request
      * @param User $user
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function deletePaymentMethod(Request $request, User $user){
         if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
@@ -511,9 +510,10 @@ class UserController extends Controller
     }
 
     /**
+     * Add Authorised User
      * @param Request $request
      * @param User $user
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function addAuthorizedUser(Request $request, User $user){
         if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
@@ -536,9 +536,10 @@ class UserController extends Controller
     }
 
     /**
+     * Delete Authorised User
      * @param Request $request
      * @param User $user
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function deleteAuthorizedUser(Request $request, User $user){
 
@@ -556,9 +557,10 @@ class UserController extends Controller
     }
 
     /**
+     * Update Default Card
      * @param Request $request
      * @param User $user
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function updateDefaultCard(Request $request, User $user)
     {
@@ -577,6 +579,11 @@ class UserController extends Controller
 
     //Milestone 3
 
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return JsonResponse
+     */
     public function getPhoneSystemsDashboardLink(Request $request, User $user){
         if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
             return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
@@ -602,6 +609,11 @@ class UserController extends Controller
 
     }
 
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return Application|Factory|JsonResponse|View
+     */
     public function getDIDSetting(Request $request, User $user){
         if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
             return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
