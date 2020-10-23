@@ -40,6 +40,10 @@
             input{
                 outline: none;
             }
+            ::placeholder {
+                color: white;
+                font-weight: bold;
+            }
         </style>
         @env('production')
         <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -514,37 +518,57 @@
                                 <h3 class="text-primary">
                                     @lang('How much do you want to pay?')
                                 </h3>
-                                <div style="background-color: #704895;border: thin;border-radius: 5px;max-width: 12rem;
+                                <div style="  border: 2px solid #704895;border-radius: 5px;max-width: 24rem;
                                  margin: 0 auto;display: flex; flex-direction: column; justify-content: center;" >
-                                    <div style="display: flex; flex-direction: row; justify-content: center;">
-                                        <span class="text-white">$</span>
+                                    <div style="background-color: #704895">
+                                        <span class="small text-white">@lang('Monthly Payment')</span>
+                                    </div>
+                                    <div style="display: flex; flex-direction: row; justify-content: center;background-color: #704895;">
+                                        <span class="text-white font-weight-bold">$</span>
                                         <input style="border: none;background-color: #704895;color: white;max-width: 4rem;"
                                                type="number" step=".01" name="price"
-                                               placeholder="__.__" id="price"
+                                               placeholder="00.00" id="price"
                                                required
                                         >
                                     </div>
-                                    <div>
-                                        <span class="small text-white">@lang('Monthly Payment')</span>
+                                    <div style="background-color: #FFFFFF;" >
+                                        <p class="small mt-3">
+                                            @lang('Pay whatever you think is fair')
+                                        </p>
                                     </div>
                                 </div>
                                 <br>
-                                <div id="priceError" class="alert alert-info alert-dismissible" style="max-width: 30rem; display:none; margin: 0 auto">
-                                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                    <i class="fa fa-info-circle" aria-hidden="true"></i><strong>Heads Up!</strong><br>
-                                    <span>Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair</span>
+
+                                <div id="priceError" class="alert alert-dismissible" style="max-width: 24rem; display:none; margin: 0 auto; background-color: ghostwhite">
+                                    <div style="display:flex;flex-direction: row;align-items: center;">
+                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                        <div>
+                                            <h1><i class="fa fa-exclamation-triangle text-primary"></i></h1>
+                                        </div>
+                                        &nbsp;&nbsp;
+                                            <div style="text-align: left">
+                                                <span class="small text-primary font-weight-bolder">Heads Up!</span><br>
+                                                <span class="small">Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair</span>
+                                            </div>
+                                    </div>
                                 </div>
                                 @if($errors->any())
-                                    <div class="alert alert-info alert-dismissible" style="max-width: 30rem; margin: 0 auto">
-                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                        <i class="fa fa-info-circle" aria-hidden="true"></i><strong>Heads Up!</strong><br>
-                                        <span>Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair</span>
+                                    <div class="alert alert-dismissible" style="max-width: 24rem; display:none; margin: 0 auto; background-color: ghostwhite">
+                                        <div style="display:flex;flex-direction: row;align-items: center;">
+                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                                            <div>
+                                                <h1><i class="fa fa-exclamation-triangle text-primary"></i></h1>
+                                            </div>
+                                            &nbsp;&nbsp;
+                                            <div style="text-align: left">
+                                                <span class="small text-primary font-weight-bolder">Heads Up!</span><br>
+                                                <span class="small">Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair</span>
+                                            </div>
+                                        </div>
                                     </div>
                                     <br>
                                 @endif
-                                <p class="small ">
-                                    @lang('Pay whatever you think is fair')
-                                </p>
+                                <br>
                                 <button id="plan_submit" type="submit" class="btn btn-outline-primary px-7" disabled>Next</button>
                             </form>
 
@@ -650,5 +674,4 @@
             </div>
         </footer>
     </body>
-
 </html>

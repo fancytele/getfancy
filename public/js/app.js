@@ -6336,10 +6336,6 @@ __webpack_require__.r(__webpack_exports__);
     update_default_card: {
       type: String,
       required: true
-    },
-    phone_system_dashboard_link: {
-      type: String,
-      required: true
     }
   },
   directives: {
