@@ -20,8 +20,17 @@
             var x = document.forms["myForm"]["price"].value;
             if (x < {{ env('MINIMUM_PRODUCT_PRICE') }}) {
               document.getElementById('priceError').style.display = "block";
+              document.getElementById('plan_submit').disabled = "true";
+
               return false;
             }
+            else{
+              document.getElementById('plan_submit_backend').click();
+              return true;
+            }
+          }
+          function closeDialog(){
+            document.getElementById('priceError').style.display = "none";
           }
         </script>
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
@@ -43,6 +52,34 @@
             ::placeholder {
                 color: white;
                 font-weight: bold;
+            }
+            .arrow_box {
+                position: relative;
+                background: #704895;
+                border: 1px solid #704895;
+            }
+            .arrow_box:after, .arrow_box:before {
+                top: 100%;
+                left: 50%;
+                border: solid transparent;
+                content: "";
+                height: 0;
+                width: 0;
+                position: absolute;
+                pointer-events: none;
+            }
+
+            .arrow_box:after {
+                border-color: rgba(136, 183, 213, 0);
+                border-top-color: #704895;
+                border-width: 5px;
+                margin-left: -5px;
+            }
+            .arrow_box:before {
+                border-color: rgba(194, 225, 245, 0);
+                border-top-color: #704895;
+                border-width: 6px;
+                margin-left: -6px;
             }
         </style>
         @env('production')
@@ -513,65 +550,75 @@
                                 </div>
                             </div>
 
-                            <form name="myForm" action="{{ route('web.planPrice') }}" method="POST" onsubmit="return validateForm()">
+                            <form name="myForm" action="{{ route('web.planPrice') }}" method="POST">
                                 @csrf
-                                <h3 class="text-primary">
+                                <h5 class="text-primary">
                                     @lang('How much do you want to pay?')
-                                </h3>
-                                <div style="  border: 2px solid #704895;border-radius: 5px;max-width: 24rem;
+                                </h5>
+                                <div style="border: 2px solid #704895;border-radius: 5px;max-width: 20rem;
                                  margin: 0 auto;display: flex; flex-direction: column; justify-content: center;" >
                                     <div style="background-color: #704895">
                                         <span class="small text-white">@lang('Monthly Payment')</span>
                                     </div>
                                     <div style="display: flex; flex-direction: row; justify-content: center;background-color: #704895;">
-                                        <span class="text-white font-weight-bold">$</span>
-                                        <input style="border: none;background-color: #704895;color: white;max-width: 4rem;"
+                                        <span class="text-white font-weight-bold" style="font-size: 22px">$</span>
+                                        <input style="border: none;background-color: #704895;color: white;max-width: 4.5rem; font-size: 22px;font-weight: bold"
                                                type="number" step=".01" name="price"
                                                placeholder="00.00" id="price"
                                                required
                                         >
                                     </div>
-                                    <div style="background-color: #FFFFFF;" >
-                                        <p class="small mt-3">
-                                            @lang('Pay whatever you think is fair')
-                                        </p>
+                                    <div class="arrow_box"></div>
+                                    <div class="small m-2" style="background-color: #FFFFFF;" >
+                                        @lang('Pay whatever you think is fair')
                                     </div>
                                 </div>
-                                <br>
 
-                                <div id="priceError" class="alert alert-dismissible" style="max-width: 24rem; display:none; margin: 0 auto; background-color: ghostwhite">
-                                    <div style="display:flex;flex-direction: row;align-items: center;">
-                                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                        <div>
+                                <div id="priceError" style="max-width: 20rem; display:none; margin: 0 auto; background-color: #F3F3F3; border-radius: 5px;">
+                                    <div style="display:flex;flex-direction: row;">
+                                        <div style="padding: 9px 10px 0">
                                             <h1><i class="fa fa-exclamation-triangle text-primary"></i></h1>
                                         </div>
-                                        &nbsp;&nbsp;
-                                            <div style="text-align: left">
-                                                <span class="small text-primary font-weight-bolder">Heads Up!</span><br>
-                                                <span class="small">Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair</span>
+                                            <div style="text-align: left; line-height: 12px; padding:5px 0 0">
+                                                <div>
+                                                    <span class="text-primary font-weight-bolder" style="font-size: 10px">@lang('Heads Up!')</span>
+                                                </div>
+                                                <div>
+                                                    <span style="font-size: 10px;">@lang('Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair')</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="text-left pr-3">
+                                                <a href="javascript:void(0)" onclick="closeDialog()" style="color:#464343">&times;</a>
                                             </div>
                                     </div>
                                 </div>
+
                                 @if($errors->any())
-                                    <div class="alert alert-dismissible" style="max-width: 24rem; display:none; margin: 0 auto; background-color: ghostwhite">
-                                        <div style="display:flex;flex-direction: row;align-items: center;">
-                                            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                                            <div>
+                                    <div id="priceError" style="max-width: 20rem; display:block; margin: 0 auto; background-color: #F3F3F3; border-radius: 5px;">
+                                        <div style="display:flex;flex-direction: row;">
+                                            <div style="padding: 9px 10px 0">
                                                 <h1><i class="fa fa-exclamation-triangle text-primary"></i></h1>
                                             </div>
-                                            &nbsp;&nbsp;
-                                            <div style="text-align: left">
-                                                <span class="small text-primary font-weight-bolder">Heads Up!</span><br>
-                                                <span class="small">Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair</span>
+                                            <div style="text-align: left; line-height: 12px; padding:5px 0 0">
+                                                <div>
+                                                    <span class="text-primary font-weight-bolder" style="font-size: 10px">@lang('Heads Up!')</span>
+                                                </div>
+                                                <div>
+                                                    <span style="font-size: 10px;">@lang('Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair')</span>
+                                                </div>
+
+                                            </div>
+                                            <div class="text-left pr-3">
+                                                <a href="javascript:void(0)" onclick="closeDialog()" style="color:#464343">&times;</a>
                                             </div>
                                         </div>
                                     </div>
-                                    <br>
                                 @endif
                                 <br>
-                                <button id="plan_submit" type="submit" class="btn btn-outline-primary px-7" disabled>Next</button>
+                                <button id="plan_submit_backend" type="submit" style="display: none" class="btn btn-primary px-7" disabled>Nextyolo</button>
+                                <button id="plan_submit"  onclick="return validateForm()" class="btn btn-primary px-7" disabled>Next</button>
                             </form>
-
                         </div>
                     </div>
                 </div>
