@@ -182,7 +182,7 @@
       }
       if(window.getComputedStyle(twofactorButton).display === "none"){
         if((e.key === 'Enter' ) || (e.keyCode=== "13")){
-          document.getElementById('submit-button').click();;
+          document.getElementById('submit-button').click();
         }
       }
     });
