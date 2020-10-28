@@ -17,8 +17,7 @@
     <link href="{{ asset(mix('css/app.css')) }}" rel="stylesheet">
 </head>
 
-<body
-      class="d-flex align-items-center bg-auth border-top border-top-2 border-primary">
+<body class="d-flex align-items-center bg-auth border-top border-top-2 border-primary">
     <div class="container">
         <div class="row justify-content-center">
             <span class="col-12 col-md-5 col-xl-4 my-5">
@@ -35,7 +34,7 @@
                 </p>
 
                 <!-- Form -->
-                <form class="bg-primary px-5 py-4 rounded-sm shadow text-white" method="POST" action="{{ route('admin.login') }}">
+                <form class="bg-primary px-5 py-4 rounded-sm shadow text-white" method="POST" action="{{ route('admin.login') }}" onkeypress= "return event.key !== 'Enter'">
                     @csrf
 
                     <!-- Email address -->
@@ -169,11 +168,44 @@
                         </small>
                     </p>
                 </form>
-            </div>
-        </div> <!-- / .row -->
-    </div>
-
+            </span>
+        </div>
+        </div>
 <script>
+  var twofactorButton = document.getElementById('login-two-factor-code-button');
+
+  document.getElementById('email').addEventListener('keypress',function(e){
+      if(window.getComputedStyle(twofactorButton).display === "block"){
+        if((e.key === 'Enter' ) || (e.keyCode=== "13")){
+          document.getElementById('login-two-factor-code-button').click();
+        }
+      }
+      if(window.getComputedStyle(twofactorButton).display === "none"){
+        if((e.key === 'Enter' ) || (e.keyCode=== "13")){
+          document.getElementById('submit-button').click();
+        }
+      }
+    });
+
+    document.getElementById('password').addEventListener('keypress',function(e){
+      if(window.getComputedStyle(twofactorButton).display === "block"){
+        if((e.key === 'Enter' ) || (e.keyCode=== "13")){
+          document.getElementById('login-two-factor-code-button').click();
+        }
+      }
+      if(window.getComputedStyle(twofactorButton).display==="none"){
+        if((e.key === 'Enter' ) || (e.keyCode=== "13")){
+          document.getElementById('submit-button').click();
+        }
+      }
+    });
+
+    document.getElementById('two_factor_code').addEventListener('keypress',function(e){
+      if((e.key === 'Enter' ) || (e.keyCode=== "13")){
+        document.getElementById('submit-button').click();
+      }
+    });
+
     function getOtp()
     {
       var l = Ladda.create(document.getElementById('login-two-factor-code-button'));
@@ -278,7 +310,7 @@
     }
 </script>
 
-    <style>
+<style>
         @if(session()->has('credentialErrorMessage') OR session()->has('twoFactorCodeErrorMessage') OR session()->has('TwoFactorCodeEmpty'))
             #email_display{
             display: block;
