@@ -75,7 +75,6 @@ Route::prefix('admin')->group(function () {
 
         //Milestone 3 - DIDWW
         Route::get('users/{user}/dashboard_link', 'Admin\Users\UserController@getPhoneSystemsDashboardLink')->name('admin.users.dashboard_link');
-        Route::get('users/{user}/view/settings', 'Admin\Users\UserController@getDIDSetting')->name('admin.users.did_setting');
 
         //Milestone 3- PhoneSystemAPI
         Route::get('phonesystem/create_customer', 'Admin\PhoneSystemController@createCustomer')->name('admin.phonesystem.create_customer');
