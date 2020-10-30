@@ -609,16 +609,4 @@ class UserController extends Controller
 
     }
 
-    /**
-     * @param Request $request
-     * @param User $user
-     * @return Application|Factory|JsonResponse|View
-     */
-    public function getDIDSetting(Request $request, User $user){
-        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
-            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
-        }
-
-        return view('admin.users.did-setting' ,array('user' => $user));
-    }
 }

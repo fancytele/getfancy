@@ -124,12 +124,6 @@
                                 <i class="fe fe-settings"></i> Fancy Settings
                             </a>
                         </li>
-                      <li class="nav-item">
-                            <a class="nav-link"
-                               href="{{ route('admin.users.did_setting', Auth::id()) }}">
-                                <i class="fe fe-phone"></i> DID Settings
-                            </a>
-                      </li>
                         @endhasanyrole
                     </ul>
 

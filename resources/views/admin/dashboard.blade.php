@@ -16,7 +16,6 @@
 
 @section('content')
     <div class="container-fluid">
-        @isset($calls)
             <div class="row">
                 <div class="col-12 col-lg-6 col-xl">
                     <div class="card">
@@ -27,7 +26,7 @@
                                         Fancy Number
                                     </h6>
 
-                                    <span class="h2 mb-0">{{ $user->fancy_number->us_did_number }}</span>
+                                    <span class="h2 mb-0"></span>
                                 </div>
                                 <div class="col-auto">
                                     <span class="h2 fe fe-phone text-primary mb-0"></span>
@@ -46,7 +45,7 @@
                                         Total calls
                                     </h6>
 
-                                    <span class="h2 mb-0">{{ $overview['total'] }}</span>
+                                    <span class="h2 mb-0"></span>
                                 </div>
                                 <div class="col-auto">
                                     <span class="h2 fe fe-phone-call text-muted mb-0"></span>
@@ -65,9 +64,8 @@
                                         Successful calls
                                     </h6>
 
-                                    <span class="h2 mb-0">{{ $overview['successful'] }}</span>
+                                    <span class="h2 mb-0"></span>
                                     <span class="badge badge-soft-success mt-n1">
-                                        {{ $overview['successful_average'] }}%
                                     </span>
                                 </div>
                                 <div class="col-auto">
@@ -87,9 +85,9 @@
                                         Unsuccessful calls
                                     </h6>
 
-                                    <span class="h2 mb-0">{{ $overview['unsuccessful'] }}</span>
+                                    <span class="h2 mb-0"></span>
                                     <span class="badge badge-soft-danger mt-n1">
-                                        {{ $overview['unsuccessful_average'] }}%
+
                                     </span>
                                 </div>
                                 <div class="col-auto">
@@ -109,7 +107,7 @@
                                         Average call durations
                                     </h6>
 
-                                    <span class="h2 mb-0">{{ $overview['duration'] }} min</span>
+                                    <span class="h2 mb-0"></span>
                                 </div>
                                 <div class="col-auto">
                                     <span class="h2 fe fe-clock text-muted mb-0"></span>
@@ -120,11 +118,10 @@
                 </div>
             </div>
 
-            @if(count($calls) > 0)
                 <div class="row">
                     <div class="col-12 col-xl-5">
                         <!-- Calls -->
-                        <div class="card" id="chart-calls">
+                        <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card" id="chart-calls">
                             <div class="card-header">
                                 <div class="row align-items-center">
                                     <div class="col">
@@ -163,8 +160,7 @@
                                 <div class="chart">
                                     <canvas id="callsChart" 
                                             class="chart-canvas" 
-                                            data-labels='@json($chart["labels"])'
-                                            data-values='@json($chart["values"])'></canvas>
+                                    ></canvas>
                                 </div>
 
                             </div>
@@ -172,7 +168,7 @@
                     </div>
                     <div class="col-12 col-xl-7">
                         <!-- Card -->
-                        <div class="card" data-toggle="lists"
+                        <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card" data-toggle="lists"
                             data-options='{"valueNames": ["calls-did", "calls-source", "calls-duration", "calls-state"]}'>
                             <div class="card-header">
                                 <div class="row align-items-center">
@@ -222,42 +218,31 @@
                                 <div id="table-calls" class="overflow-auto">
                                     <table class="table table-hover table-sm table-nowrap card-table">
                                         <tbody class="list">
-                                            @foreach ($calls as $call)
                                             <tr>
                                                 <td class="calls-did" width="25%">
-                                                    {{ (new \Carbon\Carbon($call['Date']))->toFormattedDateString() }}
                                                     <p class="mb-0">
-                                                        {{ $call['Time'] }}
                                                     </p>
                                                 </td>
                                                 <td class="calls-source" width="25%">
-                                                    @if(is_numeric($call['Source']))
-                                                    {{ preg_replace('/(\d{1})(\d{3})(\d{3})(\d{4})/', '$1($2) $3-$4', $call['Source']) }}
-                                                    @else
-                                                    <span class="text-capitalize">{{ $call['Source'] }}</span>
-                                                    @endif
+
+                                                    <span class="text-capitalize"></span>
+
                                                 </td>
                                                 <td class="calls-duration" width="25%">
-                                                    @isset($call['Duration (secs)'])
-                                                    {{ gmdate("i:s",  $call['Duration (secs)']) }} min
-                                                    @else
                                                     00:00 min
-                                                    @endisset
 
                                                 </td>
                                                 <td class="calls-state" colspan="2" width="25%">
-                                                    @if($call['Disconnect Code'] == 200)
                                                     <div class="badge badge-soft-success font-size-inherit">
                                                         Success
                                                     </div>
-                                                    @else
                                                     <div class="badge badge-soft-danger font-size-inherit">
                                                         Missed
                                                     </div>
-                                                    @endif
+
                                                 </td>
                                             </tr>
-                                            @endforeach
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -265,8 +250,7 @@
                         </div>
                     </div>
                 </div>
-            @endif
-        @else
+
             <div class="row">
                 <div class="col-12">
                     <div class="card card-flush">
@@ -278,6 +262,6 @@
                     </div>
                 </div>
             </div> <!-- / .row -->
-        @endisset
+
     </div>
 @endsection
