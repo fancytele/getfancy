@@ -6,13 +6,19 @@
     <script src="{{ asset('js/lang.js') }}" defer></script>
     <script>
         function getDashboardLink(){
+          this.laddaButton = Ladda.create(
+            document.querySelector('#link-to-dashboard')
+          );
+          this.laddaButton.start();
           axios.get("{{ route('admin.users.dashboard_link' , $user->id) }}")
           .then(response =>{
             console.log(response)
             window.open(response.data.link , '_blank');
+            this.laddaButton.stop();
           })
           .catch(error =>{
             console.log(error);
+            this.laddaButton.stop();
           })
         }
     </script>
