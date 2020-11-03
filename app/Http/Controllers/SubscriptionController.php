@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Addon;
 use App\Enums\AddonType;
 use App\Events\RegisterInvoiceEvent;
+use App\Invoice;
+use App\Mail\ReceiptSubscriptionMail;
 use App\Product;
 use App\Http\Requests\SubscriptionRequest;
 use App\Services\StripeService;
@@ -12,6 +14,7 @@ use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Stripe\Exception\ApiErrorException;
 
 class SubscriptionController extends Controller
@@ -62,6 +65,10 @@ class SubscriptionController extends Controller
             $stripe_invoice = $this->stripeService->createInvoice($addon->cost * 100, $data['email'], $addon->name);
             event(new RegisterInvoiceEvent($user->model(), $addon, $stripe_invoice));
         });
+
+        //Trigger email
+        $invoice= app(EmailController::class)->receiptSubscription($stripe_subscription->latest_invoice , $data);
+        Mail::to($data['email'])->send(new ReceiptSubscriptionMail($invoice->receipt));
 
         // Login User and redirect to Dashboard
         Auth::login($user->model());

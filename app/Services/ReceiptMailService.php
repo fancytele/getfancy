@@ -42,24 +42,22 @@ class ReceiptMailService
      * @var array
      */
     private $receiptPlans;
+    private $data;
 
     /**
      * Create a new service instance.
      *
-     * @return void
+     * @param array $receipt
+     * @param $data
      */
-    public function __construct(array $receipt)
+    public function __construct(array $receipt , $data)
     {
         $this->receipt = $receipt;
+        $this->data = $data;
         $this->stripeService = new StripeService();
         $this->receiptSubscription = $this->stripeService->getSubscription($this->receipt['subscription']);
 
-        $stripe_plans = collect($this->receipt['lines']['data'])->map(function ($item) {
-            return $item['plan'];
-        });
-
-        $this->setProduct($stripe_plans);
-        $this->setPlans($stripe_plans);
+        $this->setPlans($data['addons']);
     }
 
     /**
@@ -77,49 +75,36 @@ class ReceiptMailService
             'period_start' => $this->receiptSubscription->current_period_start,
             'period_end' => $this->receiptSubscription->current_period_end,
             'product' => (object) [
-                'name' => $this->receiptProduct['nickname'],
-                'amount' => $this->formatStripeAmount($this->receiptProduct['amount'])
+                'name' => 'Monthly',
+                'amount' => $this->data['price']
             ],
-            'plans' => (object) $this->receiptPlans
+            'plans' => (object) $this->receiptPlans,
+            'amount_paid' => array_sum(array_column($this->receiptPlans , 'amount'))
         ];
-    }
-
-    /**
-     * Set Receipt data
-     *
-     * @param Collection $stripe_plans
-     * @return void
-     */
-    private function setProduct(Collection $stripe_plans)
-    {
-        $subscription = Subscription::where('stripe_id', $this->receiptSubscription->id)->first();
-        $this->receiptProduct = $stripe_plans->firstWhere('nickname', $subscription->product->name);
     }
 
     /**
      * Set Receipt Plans
      *
-     * @param Collection $stripe_plans
+     * @param $data
      * @return void
      */
-    private function setPlans(Collection $stripe_plans)
+    private function setPlans($data)
     {
-        $only_plans = $stripe_plans->filter(function ($item) {
-            return $item['nickname'] !== $this->receiptProduct['nickname'];
-        })->values();
+        $addons = Addon::whereIn('code' , $data)->get();
 
-        $addons = Addon::whereIn('code', $only_plans->pluck('nickname'))->get();
-
-        $this->receiptPlans = $only_plans->map(function ($item) use ($addons) {
-            return [
-                'name' => $addons->firstWhere('code', $item['nickname'])->name,
-                'amount' => $this->formatStripeAmount($item['amount'])
+        $this->receiptPlans = [];
+       foreach ($addons as $addon){
+            $this->receiptPlans[] =  [
+              'name' =>$addon['name'],
+              'amount' => $addon['cost']
             ];
-        })->toArray();
+        }
     }
 
     /**
      * Set Stripe amount to currency format
+     *
      * e.g.: 199900 -> 1,999.00
      * 
      * @param int $amount

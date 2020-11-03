@@ -21,7 +21,7 @@ class EmailController extends Controller
         $this->stripeService = $stripeService;
     }
 
-    public function receiptSubscription(string $receipt_id)
+    public function receiptSubscription(string $receipt_id , $data)
     {
         try {
             $receipt = $this->stripeService->getInvoice($receipt_id);
@@ -29,7 +29,7 @@ class EmailController extends Controller
             return abort(404);
         }
 
-        $receipt_service = new ReceiptMailService($receipt->__toArray(true));
+        $receipt_service = new ReceiptMailService($receipt->toArray() , $data);
 
         return new ReceiptSubscriptionMail($receipt_service->getDataToMail());
     }

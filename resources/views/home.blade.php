@@ -555,7 +555,7 @@
                                 <h5 class="text-primary">
                                     @lang('How much do you want to pay?')
                                 </h5>
-                                <div style="border: 2px solid #704895;border-radius: 5px;max-width: 20rem;
+                                <div style="border: 2px solid #704895;border-radius: 5px;max-width: 14rem;
                                  margin: 0 auto;display: flex; flex-direction: column; justify-content: center;" >
                                     <div style="background-color: #704895">
                                         <span class="small text-white">@lang('Monthly Payment')</span>
@@ -574,17 +574,17 @@
                                     </div>
                                 </div>
 
-                                <div id="priceError" style="max-width: 20rem; display:none; margin: 0 auto; background-color: #F3F3F3; border-radius: 5px;">
+                                <div id="priceError" style="max-width: 14rem; display:none; margin: 0 auto; background-color: #F3F3F3; border-radius: 5px;">
                                     <div style="display:flex;flex-direction: row;">
-                                        <div style="padding: 9px 10px 0">
+                                        <div style="padding: 16px 10px 0">
                                             <h1><i class="fa fa-exclamation-triangle text-primary"></i></h1>
                                         </div>
-                                            <div style="text-align: left; line-height: 12px; padding:5px 0 0">
+                                            <div style="text-align: left; line-height: 10px; padding:5px 0 0">
                                                 <div>
                                                     <span class="text-primary font-weight-bolder" style="font-size: 10px">@lang('Heads Up!')</span>
                                                 </div>
                                                 <div>
-                                                    <span style="font-size: 10px;">@lang('Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair')</span>
+                                                    <span style="font-size: 9px;">@lang('Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair')</span>
                                                 </div>
 
                                             </div>
@@ -595,17 +595,17 @@
                                 </div>
 
                                 @if($errors->any())
-                                    <div id="priceError" style="max-width: 20rem; display:block; margin: 0 auto; background-color: #F3F3F3; border-radius: 5px;">
+                                    <div id="priceError" style="max-width: 14rem; display:none; margin: 0 auto; background-color: #F3F3F3; border-radius: 5px;">
                                         <div style="display:flex;flex-direction: row;">
-                                            <div style="padding: 9px 10px 0">
+                                            <div style="padding: 16px 10px 0">
                                                 <h1><i class="fa fa-exclamation-triangle text-primary"></i></h1>
                                             </div>
-                                            <div style="text-align: left; line-height: 12px; padding:5px 0 0">
+                                            <div style="text-align: left; line-height: 10px; padding:5px 0 0">
                                                 <div>
                                                     <span class="text-primary font-weight-bolder" style="font-size: 10px">@lang('Heads Up!')</span>
                                                 </div>
                                                 <div>
-                                                    <span style="font-size: 10px;">@lang('Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair')</span>
+                                                    <span style="font-size: 9px;">@lang('Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair')</span>
                                                 </div>
 
                                             </div>
@@ -616,8 +616,8 @@
                                     </div>
                                 @endif
                                 <br>
-                                <button id="plan_submit_backend" type="submit" style="display: none" class="btn btn-primary px-7" disabled>Nextyolo</button>
-                                <button id="plan_submit"  onclick="return validateForm()" class="btn btn-primary px-7" disabled>Next</button>
+                                <button id="plan_submit_backend" type="submit" style="display: none" class="btn btn-primary px-6" disabled>Nextyolo</button>
+                                <button id="plan_submit"  onclick="return validateForm()" class="btn btn-primary px-6" disabled>Next</button>
                             </form>
                         </div>
                     </div>

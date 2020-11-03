@@ -189,7 +189,7 @@
 
                     <div class="Shadow"
                          style="border-bottom-left-radius: 5px;border-bottom-right-radius: 5px;box-shadow: 0 7px 14px 0 rgba(50,50,93,0.10), 0 3px 6px 0 rgba(0,0,0,0.07);">
-                        <table dir="ltr" class="Section Header" width="100%"
+                       <!-- <table dir="ltr" class="Section Header" width="100%"
                                style="border: 0;border-collapse: collapse;margin: 0;padding: 0;background-color: #ffffff;">
                             <tbody>
                                 <tr>
@@ -200,7 +200,7 @@
                                         <a href="#"
                                            style="pointer-events: none;cursor: default;">
                                             <img alt="" height="156" width="252"
-                                                 src="{{ asset('img/mail/header-left.png') }}"
+                                                 src="{{ URL::asset('img/mail/header-left.png') }}"
                                                  style="display: block;border: 0;line-height: 100%;width: 100%;">
                                         </a>
                                     </td>
@@ -211,7 +211,7 @@
                                         <a href="#" target="_blank"
                                            style="pointer-events: none;cursor: default;">
                                             <img alt=""
-                                                 src="{{ asset('img/mail/header-center.png') }}"
+                                                 src="{{ URL::asset('img/mail/header-center.png') }}"
                                                  style="display: block;border: 0;line-height: 100%;width: 100%;">
                                         </a>
                                     </td>
@@ -222,13 +222,13 @@
                                         <a href="#"
                                            style="pointer-events: none;cursor: default;">
                                             <img alt="" height="156" width="252"
-                                                 src="{{ asset('img/mail/header-right.png') }}"
+                                                 src="{{ URL::asset('img/mail/header-right.png') }}"
                                                  style="display: block;border: 0;line-height: 100%;width: 100%;">
                                         </a>
                                     </td>
                                 </tr>
                             </tbody>
-                        </table>
+                        </table> -->
 
                         @yield('content')
 
