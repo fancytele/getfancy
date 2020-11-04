@@ -2546,6 +2546,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2648,6 +2649,10 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    showTooltip: function showTooltip() {
+      console.log("Here");
+      $('#show-password-requirements').tooltip('toggle');
+    },
     setCountryList: function setCountryList() {
       var _this = this;
 
@@ -66553,9 +66558,39 @@ var render = function() {
                           _vm._v(
                             "\n                      " +
                               _vm._s(_vm.trans("Password")) +
-                              "\n                        "
+                              "\n                      "
                           ),
-                          _vm._m(0),
+                          _c(
+                            "span",
+                            {
+                              on: {
+                                click: function($event) {
+                                  return _vm.showTooltip()
+                                }
+                              }
+                            },
+                            [
+                              _c("i", {
+                                staticClass: "fa fa-info-circle",
+                                staticStyle: {
+                                  color: "#7C2C9C",
+                                  cursor: "pointer"
+                                },
+                                attrs: { "aria-hidden": "true" }
+                              })
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c("span", {
+                            staticClass: "small",
+                            attrs: {
+                              id: "show-password-requirements",
+                              "data-toggle": "tooltip",
+                              "data-placement": "right",
+                              title:
+                                "Password must be at least 8 characters, and include a number, a special character, a lower and a upper case letter"
+                            }
+                          }),
                           _vm._v(" "),
                           _c("small", { staticClass: "text-muted" }, [
                             _vm._v(
@@ -67898,7 +67933,7 @@ var render = function() {
                   ),
                   _vm._v(" "),
                   _c("p", { staticClass: "mt-4 text-center" }, [
-                    _vm._m(1),
+                    _vm._m(0),
                     _vm._v(" "),
                     _c("span", { staticClass: "font-weight-bold" }, [
                       _vm._v(_vm._s(_vm.trans("Need any help?")))
@@ -68186,28 +68221,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "a",
-      {
-        attrs: {
-          href: "javascript:void(0)",
-          "data-toggle": "tooltip",
-          title:
-            "Password must be at least 8 characters, and include a number, a special character, a lower and a upper case letter"
-        }
-      },
-      [
-        _c("i", {
-          staticClass: "fa fa-info-circle",
-          attrs: { "aria-hidden": "true" }
-        })
-      ]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

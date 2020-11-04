@@ -111,8 +111,9 @@
                     <div class="form-group">
                       <label for="password">
                         {{ trans('Password') }}
-                          <a href="javascript:void(0)" data-toggle="tooltip" title="Password must be at least 8 characters, and include a number, a special character, a lower and a upper case letter"><i class="fa fa-info-circle" aria-hidden="true"></i></a>
-                          <small class="text-muted">{{ trans('Show Password Requirements') }}</small>
+                        <span @click= "showTooltip()"><i class="fa fa-info-circle" aria-hidden="true" style="color: #7C2C9C; cursor:pointer"></i></span>
+                        <span id="show-password-requirements" data-toggle="tooltip"  class="small" data-placement="right" title="Password must be at least 8 characters, and include a number, a special character, a lower and a upper case letter"></span>
+                        <small class="text-muted">{{ trans('Show Password Requirements') }}</small>
                       </label>
                       <input
                         type="password"
@@ -807,6 +808,10 @@ export default {
     };
   },
   methods: {
+    showTooltip(){
+      console.log("Here");
+      $('#show-password-requirements').tooltip('toggle')
+    },
     setCountryList() {
       axios
         .get('/data/countries.json')
