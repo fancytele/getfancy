@@ -68194,7 +68194,7 @@ var staticRenderFns = [
       "a",
       {
         attrs: {
-          href: "#",
+          href: "javascript:void(0)",
           "data-toggle": "tooltip",
           title:
             "Password must be at least 8 characters, and include a number, a special character, a lower and a upper case letter"
