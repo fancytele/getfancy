@@ -52,8 +52,9 @@ import navbarCollapse from '../navbarCollapse';
 
     const priceInput = document.querySelector('#price');
     const maskOption = { mask: '00.00' };
-    IMask(priceInput, maskOption);
-
+    if(priceInput){
+      IMask(priceInput, maskOption);
+    }
     haveUsCallYou.init('#have-us-call-you', '.call-you-button', '.call-you-error');
 
     haveUsCallYou.submit((data) => {

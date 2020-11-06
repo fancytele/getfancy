@@ -42262,7 +42262,11 @@ __webpack_require__.r(__webpack_exports__);
     var maskOption = {
       mask: '00.00'
     };
-    Object(imask__WEBPACK_IMPORTED_MODULE_2__["default"])(priceInput, maskOption);
+
+    if (priceInput) {
+      Object(imask__WEBPACK_IMPORTED_MODULE_2__["default"])(priceInput, maskOption);
+    }
+
     _haveUsCallYou__WEBPACK_IMPORTED_MODULE_4__["default"].init('#have-us-call-you', '.call-you-button', '.call-you-error');
     _haveUsCallYou__WEBPACK_IMPORTED_MODULE_4__["default"].submit(function (data) {
       axios__WEBPACK_IMPORTED_MODULE_1___default.a.post('/callyou', data).then(function () {
