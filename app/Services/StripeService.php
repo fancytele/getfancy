@@ -44,7 +44,8 @@ class StripeService
      */
     public function createSubscription(string $customer_id, array $data)
     {
-        $price = floor($data['price']*100)/100;
+        $price = substr($data['price'] , 0 , 2);
+
         return StripeSubscription::create(
             ['customer' => $customer_id, 'items' => [[
                 'price_data' => [

@@ -4170,6 +4170,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4314,7 +4318,7 @@ __webpack_require__.r(__webpack_exports__);
         price: ''
       },
       priceMask: {
-        mask: '00.00'
+        mask: '00'
       },
       invalid_cost: false
     };
@@ -68888,55 +68892,69 @@ var render = function() {
                         )
                       ]),
                       _vm._v(" "),
-                      _c("div", { staticClass: "d-flex flex-row" }, [
-                        _c("span", [_vm._v(_vm._s(_vm.trans("$")))]),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "imask",
-                              rawName: "v-imask",
-                              value: _vm.priceMask,
-                              expression: "priceMask"
-                            },
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.user.price,
-                              expression: "user.price"
-                            }
-                          ],
-                          staticClass: "form-control",
-                          class: {
-                            "is-invalid": _vm.errors.hasOwnProperty("price")
-                          },
-                          attrs: {
-                            type: "number",
-                            id: "price",
-                            name: "price",
-                            placeholder: "__.__",
-                            required: ""
-                          },
-                          domProps: { value: _vm.user.price },
-                          on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
+                      _c(
+                        "div",
+                        {
+                          staticClass: "d-flex flex-row justify-content-center"
+                        },
+                        [
+                          _c("div", [
+                            _c("span", [_vm._v(_vm._s(_vm.trans("$")))])
+                          ]),
+                          _vm._v(" "),
+                          _c("div", [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "imask",
+                                  rawName: "v-imask",
+                                  value: _vm.priceMask,
+                                  expression: "priceMask"
+                                },
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.user.price,
+                                  expression: "user.price"
+                                }
+                              ],
+                              staticClass: "form-control",
+                              class: {
+                                "is-invalid": _vm.errors.hasOwnProperty("price")
+                              },
+                              attrs: {
+                                type: "number",
+                                id: "price",
+                                name: "price",
+                                placeholder: "__",
+                                required: ""
+                              },
+                              domProps: { value: _vm.user.price },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.user,
+                                    "price",
+                                    $event.target.value
+                                  )
+                                }
                               }
-                              _vm.$set(_vm.user, "price", $event.target.value)
-                            }
-                          }
-                        }),
-                        _vm._v(" "),
-                        _vm.errors.hasOwnProperty("price")
-                          ? _c("div", { staticClass: "invalid-feedback" }, [
-                              _vm._v(
-                                _vm._s(_vm.errors.price[0]) +
-                                  "\n                                "
-                              )
-                            ])
-                          : _vm._e()
-                      ])
+                            }),
+                            _vm._v(" "),
+                            _vm.errors.hasOwnProperty("price")
+                              ? _c("div", { staticClass: "invalid-feedback" }, [
+                                  _vm._v(
+                                    _vm._s(_vm.errors.price[0]) +
+                                      "\n                                  "
+                                  )
+                                ])
+                              : _vm._e()
+                          ])
+                        ]
+                      )
                     ]),
                     _vm._v(" "),
                     _c(

@@ -552,9 +552,9 @@
 
                             <form name="myForm" action="{{ route('web.planPrice') }}" method="POST">
                                 @csrf
-                                <h5 class="text-primary">
+                                <h2 class="display-4 font-heading text-primary">
                                     @lang('How much do you want to pay?')
-                                </h5>
+                                </h2>
                                 <div style="border: 2px solid #704895;border-radius: 5px;max-width: 14rem;
                                  margin: 0 auto;display: flex; flex-direction: column; justify-content: center;" >
                                     <div style="background-color: #704895">
@@ -562,9 +562,9 @@
                                     </div>
                                     <div style="display: flex; flex-direction: row; justify-content: center;background-color: #704895;">
                                         <span class="text-white font-weight-bold" style="font-size: 22px">$</span>
-                                        <input style="border: none;background-color: #704895;color: white;max-width: 4.5rem; font-size: 22px;font-weight: bold"
-                                               type="number" step=".01" name="price"
-                                               placeholder="00.00" id="price"
+                                        <input style="border: none;background-color: #704895;color: white;max-width: 2.5rem; font-size: 22px;font-weight: bold"
+                                               type="number" name="price"
+                                               placeholder="__" id="price"
                                                required
                                         >
                                     </div>
@@ -616,6 +616,7 @@
                                     </div>
                                 @endif
                                 <br>
+                                <h5>First month free!</h5>
                                 <button id="plan_submit_backend" type="submit" style="display: none" class="btn btn-primary px-6" disabled>Nextyolo</button>
                                 <button id="plan_submit"  onclick="return validateForm()" class="btn btn-primary px-6" disabled>Next</button>
                             </form>

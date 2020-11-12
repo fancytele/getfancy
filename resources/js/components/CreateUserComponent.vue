@@ -28,24 +28,28 @@
                             <div class="col-lg-6 col-xl-6">
                                 <div class="form-group">
                                   <label>{{ trans('How much do you want to pay?') }}</label>
-                                  <div class="d-flex flex-row">
-                                    <span>{{ trans('$')}}</span>
-                                    <input type="number"
-                                           class="form-control"
-                                           id="price"
-                                           name="price"
-                                           v-imask="priceMask"
-                                           v-model="user.price"
-                                           placeholder="__.__"
-                                           required
-                                           :class="{'is-invalid': errors.hasOwnProperty('price')}"
-                                    >
-
-                                    <div
-                                            class="invalid-feedback"
-                                            v-if="errors.hasOwnProperty('price')"
-                                    >{{ errors.price[0] }}
+                                  <div class="d-flex flex-row justify-content-center">
+                                    <div>
+                                      <span>{{ trans('$')}}</span>
                                     </div>
+                                    <div>
+                                      <input type="number"
+                                             class="form-control"
+                                             id="price"
+                                             name="price"
+                                             v-imask="priceMask"
+                                             v-model="user.price"
+                                             placeholder="__"
+                                             required
+                                             :class="{'is-invalid': errors.hasOwnProperty('price')}"
+                                      >
+                                      <div
+                                          class="invalid-feedback"
+                                          v-if="errors.hasOwnProperty('price')"
+                                      >{{ errors.price[0] }}
+                                      </div>
+                                    </div>
+
                                   </div>
                                 </div>
                               <div class="modal fade" id= "exampleModal" tabindex="-1" role="dialog"
@@ -1073,7 +1077,7 @@ export default {
       },
 
       priceMask: {
-        mask: '00.00'
+        mask: '00'
       },
       invalid_cost: false
     };

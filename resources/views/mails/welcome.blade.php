@@ -39,7 +39,7 @@
                             style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; padding: 25px 0; text-align: center;">
                             <a href="{{ config('app.url') }}"
                                style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #ffffff; font-size: 19px; font-weight: bold; text-decoration: none;">
-                               <img class="fancy-logo" src="{{ URL::asset('img/logo-light.png') }}" style="width: 200px" alt="Fancy Logo">
+                               <img class="fancy-logo" src="{{ URL::asset('img/logo-light.png') }}" style="width: 200px" alt="Fancyy Logo">
                             </a>
                         </td>
                     </tr>
@@ -104,13 +104,13 @@
 
                                         <p
                                            style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #1d2c3c; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
-                                           You are receiving this email because you signed up for Fancy. <br><small>If you did not, then no further action is required.</small>
+                                           You are receiving this email because you signed up for Fancyy. <br><small>If you did not, then no further action is required.</small>
                                         </p>
 
                                         <p
                                            style="font-family: Avenir, Helvetica, sans-serif; box-sizing: border-box; color: #1d2c3c; font-size: 16px; line-height: 1.5em; margin-top: 0; text-align: left;">
                                             Regards,<br>
-                                            The Fancy Team.
+                                            The Fancyy Team.
                                         </p>
                                         <table class="subcopy" width="100%"
                                                cellpadding="0" cellspacing="0"
