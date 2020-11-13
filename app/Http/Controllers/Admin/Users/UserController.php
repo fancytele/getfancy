@@ -589,24 +589,13 @@ class UserController extends Controller
             return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
         }
 
+        //Create Customer Session PhoneSystem
+        $phone_system_service = new PhoneSystemService();
+        $phone_system_service->createCustomerSession(auth()->user());
+
         $link = FancyNumber::where('user_id', '=', auth()->user()->id)->pluck('dashboard_link_phone_system')->first();
 
-        if(!$link){
-            //Create Customer Phone System
-            $phone_system_service = new PhoneSystemService();
-            $phone_system_service->createCustomer(auth()->user());
-
-            //Create Customer Session PhoneSystem
-            $phone_system_service->createCustomerSession(auth()->user());
-
-            $link_retry = FancyNumber::where('user_id', '=', auth()->user()->id)->pluck('dashboard_link_phone_system')->first();
-
-            return response()->json(['link' => $link_retry]);
-        }
-        else{
-            return response()->json(['link' => $link]);
-        }
-
+        return response()->json(['link' => $link]);
     }
 
 }
