@@ -591,11 +591,15 @@ class UserController extends Controller
 
         //Create Customer Session PhoneSystem
         $phone_system_service = new PhoneSystemService();
-        $phone_system_service->createCustomerSession(auth()->user());
+        $phone_system_link = $phone_system_service->createCustomerSession(auth()->user());
 
-        $link = FancyNumber::where('user_id', '=', auth()->user()->id)->pluck('dashboard_link_phone_system')->first();
-
-        return response()->json(['link' => $link]);
+        if($phone_system_link->getStatusCode() == 200){
+            $link = FancyNumber::where('user_id', '=', auth()->user()->id)->pluck('dashboard_link_phone_system')->first();
+            return response()->json(['link' => $link]);
+        }
+        else{
+            return response()->json(['message' => "Something went wrong. Please try again later"] , 409);
+        }
     }
 
 }
