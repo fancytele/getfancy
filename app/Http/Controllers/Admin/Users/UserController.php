@@ -595,10 +595,10 @@ class UserController extends Controller
 
         if($phone_system_link->getStatusCode() == 200){
             $link = FancyNumber::where('user_id', '=', auth()->user()->id)->pluck('dashboard_link_phone_system')->first();
-            return response()->json(['link' => $link]);
+            return response()->json(['link' => $link],200);
         }
         else{
-            return response()->json(['message' => "Something went wrong. Please try again later"] , 409);
+            return response()->json(['message' => "Something went wrong. Please try again later"] , 401);
         }
     }
 
