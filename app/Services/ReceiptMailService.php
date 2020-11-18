@@ -76,7 +76,7 @@ class ReceiptMailService
             'period_end' => $this->receiptSubscription->current_period_end,
             'product' => (object) [
                 'name' => 'Monthly',
-                'amount' => substr($this->data['price'],0,2)
+                'amount' => $this->data['price']
             ],
             'plans' => (object) $this->receiptPlans,
             'amount_paid' => array_sum(array_column($this->receiptPlans , 'amount'))

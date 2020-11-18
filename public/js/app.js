@@ -4174,6 +4174,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4320,10 +4321,14 @@ __webpack_require__.r(__webpack_exports__);
       priceMask: {
         mask: '00'
       },
-      invalid_cost: false
+      invalid_cost: false,
+      unmaskedprice: ''
     };
   },
   methods: {
+    onComplete: function onComplete(e) {
+      this.unmaskedprice = e.detail.unmaskedValue;
+    },
     setCountryList: function setCountryList() {
       var _this = this;
 
@@ -4598,6 +4603,7 @@ __webpack_require__.r(__webpack_exports__);
       var _this14 = this;
 
       this.toggleSameAddress();
+      this.user.price = this.unmaskedprice;
       axios.post(this.urls.create_user, this.user).then(function (response) {
         _this14.userCreated = response.data.user;
 
@@ -68931,6 +68937,7 @@ var render = function() {
                               },
                               domProps: { value: _vm.user.price },
                               on: {
+                                complete: _vm.onComplete,
                                 input: function($event) {
                                   if ($event.target.composing) {
                                     return

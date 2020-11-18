@@ -42,6 +42,7 @@
                                              placeholder="__"
                                              required
                                              :class="{'is-invalid': errors.hasOwnProperty('price')}"
+                                             @complete="onComplete"
                                       >
                                       <div
                                           class="invalid-feedback"
@@ -1079,10 +1080,15 @@ export default {
       priceMask: {
         mask: '00'
       },
-      invalid_cost: false
+      invalid_cost: false,
+      unmaskedprice:'',
     };
   },
   methods: {
+    onComplete: function(e) {
+      this.unmaskedprice = e.detail.unmaskedValue;
+    },
+
     setCountryList() {
       axios
         // .get('https://datahub.io/core/country-list/r/data.json')
@@ -1360,6 +1366,7 @@ export default {
     processPayment() {
       this.toggleSameAddress();
 
+      this.user.price = this.unmaskedprice;
       axios
         .post(this.urls.create_user, this.user)
         .then(response => {
