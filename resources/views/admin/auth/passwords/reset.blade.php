@@ -26,7 +26,7 @@
                 <div class="mb-5 text-center">
                     <img class="w-50"
                             src="{{ asset('img/logo-primary.png') }}"
-                            alt="Fancy Logo">
+                            alt="Fancyy Logo">
                 </div>
 
                 <!-- Heading -->

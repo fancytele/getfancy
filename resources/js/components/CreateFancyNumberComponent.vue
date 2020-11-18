@@ -9,7 +9,7 @@
           @click="setNumberType('fancy')"
         >Create New number</button>
         <p>
-          <small>You can choose a brand new Fancy number to publish and share any way you like</small>
+          <small>You can choose a brand new Fancyy number to publish and share any way you like</small>
         </p>
       </div>
       
@@ -22,7 +22,7 @@
         >Use my existing number</button>
         <p>
           <small>
-            You will get all of Fancy's features by forwarding your existing calls to a secret Fancy number. This lets you keep your published number and decide when to play the greeting.
+            You will get all of Fancyy's features by forwarding your existing calls to a secret Fancyy number. This lets you keep your published number and decide when to play the greeting.
           </small>
         </p>
       </div>
@@ -49,7 +49,7 @@
               <p
                 id="phoneHelp"
                 class="form-text mb-0 text-muted"
-              >We will email you instructions on how to forward your calls to your secret Fancy number.</p>
+              >We will email you instructions on how to forward your calls to your secret Fancyy number.</p>
             </div>
           </div>
         </div>

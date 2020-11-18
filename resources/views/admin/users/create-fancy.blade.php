@@ -1,7 +1,7 @@
 @extends('layouts.admin', ['hide_menu' => true])
 
 @section('page-title')
-    @lang('Configure Your Fancy Number')
+    @lang('Configure Your Fancyy Number')
     <p class="mb-0 mt-1 small text-muted">@lang('Get the Perfect Phone Number for Your Business')</p>
 @endsection
 

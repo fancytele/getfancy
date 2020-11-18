@@ -24,7 +24,7 @@
                             <div class="row align-items-center">
                                 <div class="col text-truncate">
                                     <h6 class="card-title text-uppercase text-muted mb-2">
-                                        Fancy Number
+                                        Fancyy Number
                                     </h6>
 
                                     <span class="h2 mb-0">{{ $user->fancy_number->us_did_number }}</span>

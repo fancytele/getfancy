@@ -4246,7 +4246,7 @@ __webpack_require__.r(__webpack_exports__);
         required: ['billing_country', 'billing_city', 'billing_state', 'billing_zip_code', 'billing_address1']
       }, {
         id: 'fancy-number',
-        title: 'Fancy Number on Hold',
+        title: 'Fancyy Number on Hold',
         description: 'Virtual number reservation',
         isActive: false,
         isCompleted: false,
@@ -68381,7 +68381,7 @@ var render = function() {
                       },
                       [
                         _vm._v(
-                          "We will email you instructions on how to forward your calls to your secret Fancy number."
+                          "We will email you instructions on how to forward your calls to your secret Fancyy number."
                         )
                       ]
                     )
@@ -68776,7 +68776,7 @@ var staticRenderFns = [
     return _c("p", [
       _c("small", [
         _vm._v(
-          "You can choose a brand new Fancy number to publish and share any way you like"
+          "You can choose a brand new Fancyy number to publish and share any way you like"
         )
       ])
     ])
@@ -68788,7 +68788,7 @@ var staticRenderFns = [
     return _c("p", [
       _c("small", [
         _vm._v(
-          "\n          You will get all of Fancy's features by forwarding your existing calls to a secret Fancy number. This lets you keep your published number and decide when to play the greeting.\n        "
+          "\n          You will get all of Fancyy's features by forwarding your existing calls to a secret Fancyy number. This lets you keep your published number and decide when to play the greeting.\n        "
         )
       ])
     ])
@@ -69325,7 +69325,7 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _c("option", { attrs: { value: "fancy" } }, [
-                          _vm._v(_vm._s(_vm.trans("New Fancy number")))
+                          _vm._v(_vm._s(_vm.trans("New Fancyy number")))
                         ])
                       ]
                     ),
@@ -69395,7 +69395,7 @@ var render = function() {
               _vm._v(" "),
               _c("fieldset", { staticClass: "mt-4" }, [
                 _c("legend", [
-                  _vm._v(_vm._s(_vm.trans("Reserve Fancy Number")))
+                  _vm._v(_vm._s(_vm.trans("Reserve Fancyy Number")))
                 ]),
                 _vm._v(" "),
                 _vm.userHasReservation
@@ -69403,7 +69403,7 @@ var render = function() {
                       _c("div", { staticClass: "mt-2" }, [
                         _c("p", { staticClass: "mb-0" }, [
                           _c("b", [
-                            _vm._v(_vm._s(_vm.trans("Fancy Number")) + ":")
+                            _vm._v(_vm._s(_vm.trans("Fancyy Number")) + ":")
                           ]),
                           _vm._v(
                             "\n                                    " +
@@ -69459,7 +69459,7 @@ var render = function() {
                         _c("i", { staticClass: "fe fe-search mr-2" }),
                         _vm._v(
                           "\n                            " +
-                            _vm._s(_vm.trans("Search Fancy Numbers")) +
+                            _vm._s(_vm.trans("Search Fancyy Numbers")) +
                             "\n                        "
                         )
                       ]
@@ -69473,7 +69473,7 @@ var render = function() {
                       { staticClass: "d-block invalid-feedback mt-3" },
                       [
                         _vm._v(
-                          _vm._s(_vm.trans("The Fancy Number is required")) +
+                          _vm._s(_vm.trans("The Fancyy Number is required")) +
                             "\n                        "
                         )
                       ]
@@ -70753,7 +70753,7 @@ var render = function() {
                               { staticClass: "text-decoration-underline" },
                               [
                                 _vm._v(
-                                  _vm._s(_vm.trans("Fancy Number")) +
+                                  _vm._s(_vm.trans("Fancyy Number")) +
                                     " reservation expires in:"
                                 )
                               ]
@@ -70789,14 +70789,14 @@ var render = function() {
                             { staticClass: "text-decoration-underline" },
                             [
                               _vm._v(
-                                _vm._s(_vm.trans("Fancy Number")) +
+                                _vm._s(_vm.trans("Fancyy Number")) +
                                   " has expired"
                               )
                             ]
                           ),
                           _vm._v(
                             ", please select a new " +
-                              _vm._s(_vm.trans("Fancy Number")) +
+                              _vm._s(_vm.trans("Fancyy Number")) +
                               "\n                                "
                           )
                         ])
@@ -70839,7 +70839,7 @@ var render = function() {
                         staticClass: "modal-title",
                         attrs: { id: "search-did-title" }
                       },
-                      [_vm._v(_vm._s(_vm.trans("Reserve Fancy Number")))]
+                      [_vm._v(_vm._s(_vm.trans("Reserve Fancyy Number")))]
                     ),
                     _vm._v(" "),
                     _vm._m(1)
@@ -71026,7 +71026,7 @@ var render = function() {
                           ]),
                           _vm._v(
                             "\n                            " +
-                              _vm._s(_vm.trans("Available Fancy Numbers")) +
+                              _vm._s(_vm.trans("Available Fancyy Numbers")) +
                               "\n                        "
                           )
                         ]),
@@ -71199,7 +71199,7 @@ var render = function() {
                         ? _c("div", { staticClass: "col" }, [
                             _vm._v(
                               "\n                        " +
-                                _vm._s(_vm.trans("Selected Fancy Number")) +
+                                _vm._s(_vm.trans("Selected Fancyy Number")) +
                                 ":\n                        "
                             ),
                             _c("div", { staticClass: "font-weight-bold" }, [
@@ -71319,7 +71319,7 @@ var render = function() {
                               "data-style": "zoom-out"
                             }
                           },
-                          [_vm._v(_vm._s(_vm.trans("Go to Fancy Settings")))]
+                          [_vm._v(_vm._s(_vm.trans("Go to Fancyy Settings")))]
                         )
                       ]
                     )
@@ -72549,7 +72549,7 @@ var render = function() {
                       _vm._v(" "),
                       _c("div", [
                         _c("h3", { staticClass: "mb-1" }, [
-                          _vm._v(_vm._s(_vm.trans("Fancy Settings saved")))
+                          _vm._v(_vm._s(_vm.trans("Fancyy Settings saved")))
                         ]),
                         _vm._v(" "),
                         _c(

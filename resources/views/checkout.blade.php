@@ -52,10 +52,10 @@
                         {{-- TODO: Change to SVG --}}
                         <img class="fancy-logo"
                              src="{{ URL::asset('img/Fancyy_Logo-06.png') }}"
-                             alt="Fancy Logo">
+                             alt="Fancyy Logo">
                         <img class="fancy-logo fancy-dark-logo"
                              src="{{ URL::asset('img/Fancyy_Logo-02.png') }}"
-                             alt="Fancy Logo">
+                             alt="Fancyy Logo">
                     </a>
                     <div class="collapse navbar-collapse flex-column align-items-end"
                          id="fancy-menu">

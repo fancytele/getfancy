@@ -81,7 +81,7 @@
                                 {{ $ticket->fancy_number->user->full_name }}
                             </dd>
 
-                            <dt>Fancy Number</dt>
+                            <dt>Fancyy Number</dt>
                             <dd class="mb-4 text-black-50">{{ $ticket->fancy_number->us_did_number }}</dd>
                         </dl>
 

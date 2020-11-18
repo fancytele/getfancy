@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@section('page-title', __('Fancy Settings'))
+@section('page-title', __('Fancyy Settings'))
 
 @push('head-scripts')
     <script src="{{ asset('js/lang.js') }}" defer></script>

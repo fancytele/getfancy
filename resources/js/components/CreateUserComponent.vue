@@ -165,7 +165,7 @@
                                             v-model="user.number_type"
                                     >
                                         <option value="custom">{{ trans('Existing number') }}</option>
-                                        <option value="fancy">{{ trans('New Fancy number') }}</option>
+                                        <option value="fancy">{{ trans('New Fancyy number') }}</option>
                                     </select>
                                     <div
                                             class="invalid-feedback"
@@ -197,11 +197,11 @@
                         </div>
 
                         <fieldset class="mt-4">
-                            <legend>{{ trans('Reserve Fancy Number') }}</legend>
+                            <legend>{{ trans('Reserve Fancyy Number') }}</legend>
                             <div v-if="userHasReservation">
                                 <div class="mt-2">
                                     <p class="mb-0">
-                                        <b>{{ trans('Fancy Number') }}:</b>
+                                        <b>{{ trans('Fancyy Number') }}:</b>
                                         {{ user.did.number | phone }}
                                     </p>
                                 </div>
@@ -228,13 +228,13 @@
                                     @click="resetSearchDIDs()"
                             >
                                 <i class="fe fe-search mr-2"></i>
-                                {{ trans('Search Fancy Numbers') }}
+                                {{ trans('Search Fancyy Numbers') }}
                             </button>
 
                             <div
                                     class="d-block invalid-feedback mt-3"
                                     v-if="errors.hasOwnProperty('did') || errors.hasOwnProperty('did.number') || errors.hasOwnProperty('did.reservation')"
-                            >{{ trans('The Fancy Number is required') }}
+                            >{{ trans('The Fancyy Number is required') }}
                             </div>
                         </fieldset>
                     </div>
@@ -697,7 +697,7 @@
                             <div class="col-auto" v-if="userHasReservation && userCreated === null">
                                 <div class="mt-2 mt-md-0 text-danger text-right">
                                     <p class="mb-0">
-                                        <strong class="text-decoration-underline">{{ trans('Fancy Number') }} reservation expires in:</strong>
+                                        <strong class="text-decoration-underline">{{ trans('Fancyy Number') }} reservation expires in:</strong>
                                         <countdown-timer
                                                 :end-date="user.did.expire_at"
                                                 @countdown-over="reservationOver()"
@@ -709,7 +709,7 @@
                                 <div class="mt-2 mt-md-0 text-warning text-right">
                                     <p class="mb-0">
                                       <i class="fe fe-alert-triangle"></i>
-                                      <strong class="text-decoration-underline">{{ trans('Fancy Number') }} has expired</strong>, please select a new {{ trans('Fancy Number') }}
+                                      <strong class="text-decoration-underline">{{ trans('Fancyy Number') }} has expired</strong>, please select a new {{ trans('Fancyy Number') }}
                                     </p>
                                 </div>
                             </div>
@@ -730,7 +730,7 @@
             <div role="document" class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h3 id="search-did-title" class="modal-title">{{ trans('Reserve Fancy Number') }}</h3>
+                        <h3 id="search-did-title" class="modal-title">{{ trans('Reserve Fancyy Number') }}</h3>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -798,7 +798,7 @@
                         <fieldset class="mb-5" v-show="availablesDIDs.length > 0">
                             <legend>
                                 <span>{{ availablesDIDs.length }}</span>
-                                {{ trans('Available Fancy Numbers') }}
+                                {{ trans('Available Fancyy Numbers') }}
                             </legend>
                             <div class="overflow-auto row vh-max-35">
                                 <div
@@ -849,7 +849,7 @@
 
                     <div class="align-items-center modal-footer">
                         <div class="col" v-if="reservationDID.item.hasOwnProperty('id')">
-                            {{ trans('Selected Fancy Number') }}:
+                            {{ trans('Selected Fancyy Number') }}:
                             <div class="font-weight-bold">{{ reservationDID.item.attributes.number | phone }}</div>
                         </div>
                         <div class="col-auto">
@@ -896,7 +896,7 @@
                                     :href="fancySettingUrl"
                                     data-style="zoom-out"
                                     class="btn btn-block btn-lg btn-success rounded-0"
-                            >{{ trans('Go to Fancy Settings') }}</a>
+                            >{{ trans('Go to Fancyy Settings') }}</a>
                         </div>
                     </div>
                 </div>
@@ -1002,7 +1002,7 @@ export default {
         },
         {
           id: 'fancy-number',
-          title: 'Fancy Number on Hold',
+          title: 'Fancyy Number on Hold',
           description: 'Virtual number reservation',
           isActive: false,
           isCompleted: false,

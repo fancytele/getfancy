@@ -39,7 +39,7 @@
                                 <dd>{{ $ticket->fancy_number->user->full_name }}</dd>
                             </dl>
                             <dl>
-                                <dt>Fancy Number</dt>
+                                <dt>Fancyy Number</dt>
                                 <dd>
                                     <a href="https://my.didww.com/user_dids/{{ $ticket->fancy_number->did_id }}"
                                     target="_blank" rel="noreferrer noopener">
@@ -52,7 +52,7 @@
 
                         @empty($settings)
                             <div class="alert alert-light font-italic" role="alert">
-                                @lang('The user has not set any configuration for his Fancy number')
+                                @lang('The user has not set any configuration for his Fancyy number')
                             </div>
                         @endempty
 

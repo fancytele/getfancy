@@ -139,7 +139,7 @@ class UserService
         $user = $this->model;
 
         if ($user->hasNewTicketPending()) {
-            return ['message' => 'Your Fancy Number is processing'];
+            return ['message' => 'Your Fancyy Number is processing'];
         }
 
         $carbon = new Carbon();

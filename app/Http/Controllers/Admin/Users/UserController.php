@@ -236,7 +236,7 @@ class UserController extends Controller
             return redirect()->back()->with('alert', [
                 'type' => 'warning',
                 'icon' => 'alert-circle',
-                'message' => 'User doesn\'t have a Fancy Number'
+                'message' => 'User doesn\'t have a Fancyy Number'
             ]);
         }
 

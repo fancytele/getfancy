@@ -6,7 +6,7 @@
                 {{-- TODO: Change to SVG --}}
                 <img class="fancy-logo"
                      src="{{ URL::asset('img/logo-primary.png') }}"
-                     alt="Fancy Logo">
+                     alt="Fancyy Logo">
             </a>
             @isset ($show_nav)
             <button class="navbar-toggler" type="button" data-toggle="collapse"

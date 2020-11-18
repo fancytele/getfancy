@@ -10,7 +10,7 @@
                 &nbsp;</td>
             <td class="Content Title-copy Font Font--title" align="center"
                 style="border: 0;border-collapse: collapse;margin: 0;padding: 0;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;width: 472px;font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, Ubuntu, sans-serif;mso-line-height-rule: exactly;vertical-align: middle;color: #32325d;font-size: 24px;line-height: 32px;">
-                <img src="{{ URL::asset('img/logo-primary.png') }}" style="width: 150px;" alt="Fancy Logo">
+                <img src="{{ URL::asset('img/logo-primary.png') }}" style="width: 150px;" alt="Fancyy Logo">
             </td>
             <td class="Spacer Spacer--gutter" width="64"
                 style="border: 0;border-collapse: collapse;margin: 0;padding: 0;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;color: #ffffff;font-size: 1px;line-height: 1px;mso-line-height-rule: exactly;">

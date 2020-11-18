@@ -164,7 +164,7 @@ class DIDService
 
         $didReservation = new DIDWWReservation();
         $didReservation->setAvailableDid($available_did);
-        $didReservation->setDescription('Reserved for potencial Fancy client by user: ' . Auth::user()->email);
+        $didReservation->setDescription('Reserved for potencial Fancyy client by user: ' . Auth::user()->email);
 
         $didReservation = $didReservation->save()->getData();
 
