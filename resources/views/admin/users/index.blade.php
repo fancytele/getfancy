@@ -132,9 +132,9 @@
                             <td class="align-middle">
                                 @if($user->fancy_number)
                                 <a href="{{ route('admin.users.edit_fancy', $user->id) }}"
-                                   title="{{ __('Fancy Settings') }}"
+                                   title="{{ __('Fancyy Settings') }}"
                                    class="font-weight-normal h5 px-2">
-                                    <span class="sr-only">@lang('Fancy Settings')</span>
+                                    <span class="sr-only">@lang('Fancyy Settings')</span>
                                     <i class="fe fe-settings"></i>
                                 </a>
                                 @endif

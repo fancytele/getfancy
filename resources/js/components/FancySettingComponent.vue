@@ -325,7 +325,7 @@
                         <div class="d-flex my-3 pl-4 pt-4">
                             <i class="display-4 fe fe-check-circle mr-3 mt-n2 mt-n3 text-success"></i>
                             <div>
-                                <h3 class="mb-1">{{ trans('Fancy Settings saved') }}</h3>
+                                <h3 class="mb-1">{{ trans('Fancyy Settings saved') }}</h3>
                                 <p class="line-height-normal text-black-50">
                                     {{ trans('Changes will be applied within 24 hours') }}
                                 </p>

@@ -285,7 +285,7 @@
                                     <td class="Content Footer-help Font Font--body"
                                         style="border: 0;border-collapse: collapse;margin: 0;padding: 0;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;width: 472px;font-family: -apple-system, BlinkMacSystemFont, &#39;Segoe UI&#39;, Roboto, &#39;Helvetica Neue&#39;, Ubuntu, sans-serif;mso-line-height-rule: exactly;vertical-align: middle;color: #525f7f;font-size: 15px;line-height: 24px;">
                                         If you have any questions, contact
-                                        <span dir="ltr">Fancy support</span>
+                                        <span dir="ltr">Fancyy support</span>
                                         at <a href="mailto:{{ config('fancy.email') }}"
                                            style="white-space: nowrap;-webkit-font-smoothing: antialiased;-moz-osx-font-smoothing: grayscale;outline: 0;text-decoration: none;color: #556cd6;">
                                            {{ config('fancy.email') }}

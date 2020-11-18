@@ -25,7 +25,7 @@
                     <a href="{{ route('web.homepage') }}">
                         <img class="w-50"
                              src="{{ asset('img/Fancyy_Logo-02.png') }}"
-                             alt="Fancy Logo">
+                             alt="Fancyy Logo">
                     </a>
                 </div>
 

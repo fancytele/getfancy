@@ -36,7 +36,7 @@
         <!-- Brand -->
             <a class="navbar-brand" href="{{ route('admin.dashboard') }}">
                 <img src="{{ asset('img/Fancyy_Logo-06.png') }}" class="navbar-brand-img
-                      mx-auto" alt="Fancy Logo Light">
+                      mx-auto" alt="Fancyy Logo Light">
             </a>
 
             <!-- User (xs) -->
@@ -121,7 +121,7 @@
                         <li class="nav-item">
                             <a class="nav-link{{ (request()->is('*edit/fancy')) ? ' active' : ''}}"
                                href="{{ route('admin.users.edit_fancy', Auth::id()) }}">
-                                <i class="fe fe-settings"></i> Fancy Settings
+                                <i class="fe fe-settings"></i> Fancyy Settings
                             </a>
                         </li>
                         @endhasanyrole

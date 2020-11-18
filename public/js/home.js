@@ -42260,7 +42260,7 @@ __webpack_require__.r(__webpack_exports__);
     Object(imask__WEBPACK_IMPORTED_MODULE_2__["default"])(phoneInput, maskOptions);
     var priceInput = document.querySelector('#price');
     var maskOption = {
-      mask: '00.00'
+      mask: '00'
     };
 
     if (priceInput) {

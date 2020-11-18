@@ -11,9 +11,11 @@ use App\Enums\TicketStatus;
 use App\Events\RegisterInvoiceEvent;
 use App\FancyNumber;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\EmailController;
 use App\Http\Requests\FancyNumberRequest;
 use App\Http\Requests\FancySettingRequest;
 use App\Http\Requests\UserRequest;
+use App\Mail\ReceiptSubscriptionMail;
 use App\Mail\WelcomeMail;
 use App\PBXMessage;
 use App\Services\DIDService;
@@ -152,6 +154,10 @@ class UserController extends Controller
         // Send reset password to new user
         Mail::to($user->model())->send(new WelcomeMail($user->model()));
 
+        //Trigger email
+        $invoice= app(EmailController::class)->receiptSubscription($stripe_subscription->latest_invoice , $data);
+        Mail::to($data['email'])->send(new ReceiptSubscriptionMail($invoice->receipt));
+
         // Create Ticket
         $ticket = new Ticket();
         $ticket->fancy_number_id = $user->fancyNumberModel()->id;
@@ -230,7 +236,7 @@ class UserController extends Controller
             return redirect()->back()->with('alert', [
                 'type' => 'warning',
                 'icon' => 'alert-circle',
-                'message' => 'User doesn\'t have a Fancy Number'
+                'message' => 'User doesn\'t have a Fancyy Number'
             ]);
         }
 
