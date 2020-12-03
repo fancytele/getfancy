@@ -29,12 +29,10 @@
                                 <div class="form-group">
                                   <label>{{ trans('How much do you want to pay?') }}</label>
                                   <div class="d-flex flex-row justify-content-center">
-                                    <div>
-                                      <span>{{ trans('$')}}</span>
-                                    </div>
-                                    <div>
+                                    <span class="d-flex flex-row align-items-center font-weight-bold">{{ trans('$')}}</span>
+                                    <div class="d-flex flex-row align-items-center" >
                                       <input type="number"
-                                             class="form-control"
+                                             class="form-control font-weight-bold"
                                              id="price"
                                              name="price"
                                              v-imask="priceMask"
@@ -50,7 +48,6 @@
                                       >{{ errors.price[0] }}
                                       </div>
                                     </div>
-
                                   </div>
                                 </div>
                               <div class="modal fade" id= "exampleModal" tabindex="-1" role="dialog"
@@ -1495,9 +1492,15 @@ export default {
 <style scoped>
 #price{
   border: none;
+  max-width: 50px;
+  padding: inherit;
 }
 input:focus{
   outline: none;
+}
+::placeholder {
+  color: black;
+  font-weight: bold;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
