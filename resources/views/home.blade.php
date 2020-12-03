@@ -267,7 +267,7 @@
                                 </a>
                                 <p class="mb-0">
                                     <small class="text-muted">
-                                        @lang('Cancel anytime').
+                                        @lang('Cancel anytime')
                                     </small>
                                 </p>
                             </div>

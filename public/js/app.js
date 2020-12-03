@@ -4172,9 +4172,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -11068,7 +11065,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#price[data-v-2528f0bb]{\n  border: none;\n}\ninput[data-v-2528f0bb]:focus{\n  outline: none;\n}\ninput[data-v-2528f0bb]::-webkit-outer-spin-button,\ninput[data-v-2528f0bb]::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n\n/* Firefox */\ninput[type=number][data-v-2528f0bb] {\n  -moz-appearance: textfield;\n}\n", ""]);
+exports.push([module.i, "\n#price[data-v-2528f0bb]{\n  border: none;\n  max-width: 50px;\n  padding: inherit;\n}\ninput[data-v-2528f0bb]:focus{\n  outline: none;\n}\n[data-v-2528f0bb]::-webkit-input-placeholder {\n  color: black;\n  font-weight: bold;\n}\n[data-v-2528f0bb]::-moz-placeholder {\n  color: black;\n  font-weight: bold;\n}\n[data-v-2528f0bb]:-ms-input-placeholder {\n  color: black;\n  font-weight: bold;\n}\n[data-v-2528f0bb]::-ms-input-placeholder {\n  color: black;\n  font-weight: bold;\n}\n[data-v-2528f0bb]::placeholder {\n  color: black;\n  font-weight: bold;\n}\ninput[data-v-2528f0bb]::-webkit-outer-spin-button,\ninput[data-v-2528f0bb]::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n\n/* Firefox */\ninput[type=number][data-v-2528f0bb] {\n  -moz-appearance: textfield;\n}\n", ""]);
 
 // exports
 
@@ -68904,62 +68901,79 @@ var render = function() {
                           staticClass: "d-flex flex-row justify-content-center"
                         },
                         [
-                          _c("div", [
-                            _c("span", [_vm._v(_vm._s(_vm.trans("$")))])
-                          ]),
+                          _c(
+                            "span",
+                            {
+                              staticClass:
+                                "d-flex flex-row align-items-center font-weight-bold"
+                            },
+                            [_vm._v(_vm._s(_vm.trans("$")))]
+                          ),
                           _vm._v(" "),
-                          _c("div", [
-                            _c("input", {
-                              directives: [
-                                {
-                                  name: "imask",
-                                  rawName: "v-imask",
-                                  value: _vm.priceMask,
-                                  expression: "priceMask"
-                                },
-                                {
-                                  name: "model",
-                                  rawName: "v-model",
-                                  value: _vm.user.price,
-                                  expression: "user.price"
-                                }
-                              ],
-                              staticClass: "form-control",
-                              class: {
-                                "is-invalid": _vm.errors.hasOwnProperty("price")
-                              },
-                              attrs: {
-                                type: "number",
-                                id: "price",
-                                name: "price",
-                                placeholder: "__",
-                                required: ""
-                              },
-                              domProps: { value: _vm.user.price },
-                              on: {
-                                complete: _vm.onComplete,
-                                input: function($event) {
-                                  if ($event.target.composing) {
-                                    return
+                          _c(
+                            "div",
+                            {
+                              staticClass: "d-flex flex-row align-items-center"
+                            },
+                            [
+                              _c("input", {
+                                directives: [
+                                  {
+                                    name: "imask",
+                                    rawName: "v-imask",
+                                    value: _vm.priceMask,
+                                    expression: "priceMask"
+                                  },
+                                  {
+                                    name: "model",
+                                    rawName: "v-model",
+                                    value: _vm.user.price,
+                                    expression: "user.price"
                                   }
-                                  _vm.$set(
-                                    _vm.user,
-                                    "price",
-                                    $event.target.value
+                                ],
+                                staticClass: "form-control font-weight-bold",
+                                class: {
+                                  "is-invalid": _vm.errors.hasOwnProperty(
+                                    "price"
                                   )
+                                },
+                                attrs: {
+                                  type: "number",
+                                  id: "price",
+                                  name: "price",
+                                  placeholder: "__",
+                                  required: ""
+                                },
+                                domProps: { value: _vm.user.price },
+                                on: {
+                                  complete: _vm.onComplete,
+                                  input: function($event) {
+                                    if ($event.target.composing) {
+                                      return
+                                    }
+                                    _vm.$set(
+                                      _vm.user,
+                                      "price",
+                                      $event.target.value
+                                    )
+                                  }
                                 }
-                              }
-                            }),
-                            _vm._v(" "),
-                            _vm.errors.hasOwnProperty("price")
-                              ? _c("div", { staticClass: "invalid-feedback" }, [
-                                  _vm._v(
-                                    _vm._s(_vm.errors.price[0]) +
-                                      "\n                                  "
+                              }),
+                              _vm._v(" "),
+                              _vm.errors.hasOwnProperty("price")
+                                ? _c(
+                                    "div",
+                                    { staticClass: "invalid-feedback" },
+                                    [
+                                      _vm._v(
+                                        _vm._s(_vm.errors.price[0]) +
+                                          "\n                                  "
+                                      )
+                                    ]
                                   )
-                                ])
-                              : _vm._e()
-                          ])
+                                : _vm._e()
+                            ]
+                          )
                         ]
                       )
                     ]),
