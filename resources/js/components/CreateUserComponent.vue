@@ -1500,7 +1500,6 @@ input:focus{
 }
 ::placeholder {
   color: black;
-  font-weight: bold;
 }
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
