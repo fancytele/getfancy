@@ -11065,7 +11065,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n#price[data-v-2528f0bb]{\n  border: none;\n  max-width: 50px;\n  padding: inherit;\n}\ninput[data-v-2528f0bb]:focus{\n  outline: none;\n}\n[data-v-2528f0bb]::-webkit-input-placeholder {\n  color: black;\n  font-weight: bold;\n}\n[data-v-2528f0bb]::-moz-placeholder {\n  color: black;\n  font-weight: bold;\n}\n[data-v-2528f0bb]:-ms-input-placeholder {\n  color: black;\n  font-weight: bold;\n}\n[data-v-2528f0bb]::-ms-input-placeholder {\n  color: black;\n  font-weight: bold;\n}\n[data-v-2528f0bb]::placeholder {\n  color: black;\n  font-weight: bold;\n}\ninput[data-v-2528f0bb]::-webkit-outer-spin-button,\ninput[data-v-2528f0bb]::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n\n/* Firefox */\ninput[type=number][data-v-2528f0bb] {\n  -moz-appearance: textfield;\n}\n", ""]);
+exports.push([module.i, "\n#price[data-v-2528f0bb]{\n  border: none;\n  max-width: 50px;\n  padding: inherit;\n}\ninput[data-v-2528f0bb]:focus{\n  outline: none;\n}\n[data-v-2528f0bb]::-webkit-input-placeholder {\n  color: black;\n}\n[data-v-2528f0bb]::-moz-placeholder {\n  color: black;\n}\n[data-v-2528f0bb]:-ms-input-placeholder {\n  color: black;\n}\n[data-v-2528f0bb]::-ms-input-placeholder {\n  color: black;\n}\n[data-v-2528f0bb]::placeholder {\n  color: black;\n}\ninput[data-v-2528f0bb]::-webkit-outer-spin-button,\ninput[data-v-2528f0bb]::-webkit-inner-spin-button {\n  -webkit-appearance: none;\n  margin: 0;\n}\n\n/* Firefox */\ninput[type=number][data-v-2528f0bb] {\n  -moz-appearance: textfield;\n}\n", ""]);
 
 // exports
 
