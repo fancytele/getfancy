@@ -156,6 +156,14 @@ class UserService
         return compact('user', 'calls', 'chart', 'overview', 'range');
     }
 
+    public function callInformation(){
+        $user = $this->model;
+
+        $carbon = new Carbon();
+        $calls = $this->getCalls($user->fancy_number->did_number, $carbon->year, $carbon->month);
+
+        return compact('calls');
+    }
     /**
      * Build the payload with stripe information.
      *

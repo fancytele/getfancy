@@ -50,8 +50,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication','usersByRole','impersonate','stopImpersonate','addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard','getPhoneSystemsDashboardLink','getDIDSetting']);
-        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication' ,'addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard' ,'getPhoneSystemsDashboardLink','getDIDSetting']);
+        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication','usersByRole','impersonate','stopImpersonate','addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard','getPhoneSystemsDashboardLink','getDIDSetting','getCallInformation']);
+        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication' ,'addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard' ,'getPhoneSystemsDashboardLink','getDIDSetting','getCallInformation']);
         $this->middleware(['role:admin|user|agent'])->only(['usersByRole','impersonate','stopImpersonate']);
     }
 
@@ -597,11 +597,24 @@ class UserController extends Controller
 
         //Create Customer Session PhoneSystem
         $phone_system_service = new PhoneSystemService();
-        $phone_system_service->createCustomerSession(auth()->user());
+        $phone_system_link = $phone_system_service->createCustomerSession(auth()->user());
 
-        $link = FancyNumber::where('user_id', '=', auth()->user()->id)->pluck('dashboard_link_phone_system')->first();
+        if($phone_system_link->getStatusCode() == 200){
+            $link = FancyNumber::where('user_id', '=', auth()->user()->id)->pluck('dashboard_link_phone_system')->first();
+            return response()->json(['link' => $link],200);
+        }
+        else{
+            return response()->json(['message' => "Something went wrong. Please try again later"] , 401);
+        }
+    }
 
-        return response()->json(['link' => $link]);
+    public function getCallInformation(Request $request, User $user){
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+        $user_service = (new UserService(Auth::user()))->callInformation();
+
+        return view('admin.users.call-information' , $user_service);
     }
 
 }
