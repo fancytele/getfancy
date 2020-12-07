@@ -98,14 +98,15 @@ class PhoneSystemService{
 
         if ($error) {
             Log::info('Create Customer Session Error:'. $error);
-            return response()->json(['error' => $error] , 409);
+            return response()->json(['error' => $error] , 401);
         }
         else {
             $customer_response= json_decode($response);
             $did->dashboard_link_phone_system = $customer_response->data->attributes->uri;
             $did->save();
 
-            return $customer_response;
+            Log::info('Create Customer Session Response:'.$response);
+            return response()->json(['response' => $customer_response] , 200);
         }
     }
 }
