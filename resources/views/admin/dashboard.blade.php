@@ -124,7 +124,7 @@
                 <div class="row">
                     <div class="col-12 col-xl-5">
                         <!-- Calls -->
-                        <div class="card" id="chart-calls">
+                        <div class="card border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2" id="chart-calls">
                             <div class="card-header">
                                 <div class="row align-items-center">
                                     <div class="col">
@@ -172,7 +172,7 @@
                     </div>
                     <div class="col-12 col-xl-7">
                         <!-- Card -->
-                        <div class="card" data-toggle="lists"
+                        <div class="card border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2" data-toggle="lists"
                              data-options='{"valueNames": ["calls-did", "calls-source", "calls-duration", "calls-state"]}'>
                             <div class="card-header">
                                 <div class="row align-items-center">

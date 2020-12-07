@@ -16,9 +16,9 @@
 @section('content')
     <div class="container-fluid">
             <div class="row">
-                <div class="col-12 col-xl-12">
+                <div class="col-12 col-xl-12 ">
                     <!-- Card -->
-                    <div class="card" data-toggle="lists"
+                    <div class="border border-bottom-0 border-left-0 border-primary border-right-0 border-top border-top-2 card" data-toggle="lists"
                          data-options='{"valueNames": ["calls-did", "calls-source", "calls-duration", "calls-state"]}'>
                         <div class="card-header">
                             <div class="row align-items-center">
