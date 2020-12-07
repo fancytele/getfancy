@@ -60,6 +60,7 @@ Route::prefix('admin')->group(function () {
         Route::get('users/{user}/edit/fancy', 'Admin\Users\UserController@editFancy')->name('admin.users.edit_fancy');
         Route::post('users/{user}/update/fancy', 'Admin\Users\UserController@updateFancy')->name('admin.users.update_fancy');
         Route::resource('users', 'Admin\Users\UserController', ['as' => 'admin'])->except(['show', 'edit', 'destroy']);
+
         // Milestone 2 - user profile settings
         Route::get('users/{user}/edit/profile', 'Admin\Users\UserController@editProfile')->name('admin.users.edit_profile');
         Route::post('users/{user}/update/profile', 'Admin\Users\UserController@updateProfile')->name('admin.users.update_profile');
@@ -79,6 +80,7 @@ Route::prefix('admin')->group(function () {
         //Milestone 3- PhoneSystemAPI
         Route::get('phonesystem/create_customer', 'Admin\PhoneSystemController@createCustomer')->name('admin.phonesystem.create_customer');
         Route::get('phonesystem/create_customer_session', 'Admin\PhoneSystemController@createCustomerSession')->name('admin.phonesystem.create_customer_session');
+        Route::get('users/{user}/call-information', 'Admin\Users\UserController@getCallInformation')->name('admin.users.call-information');
 
         // Agents Management
         Route::post('agents/{agent}/reset_password', 'Admin\Users\AgentController@resetPassword')->name('admin.agents.reset_password');

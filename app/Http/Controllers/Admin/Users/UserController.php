@@ -48,8 +48,8 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication','usersByRole','impersonate','stopImpersonate','addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard','getPhoneSystemsDashboardLink','getDIDSetting']);
-        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication' ,'addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard' ,'getPhoneSystemsDashboardLink','getDIDSetting']);
+        $this->middleware(['role:admin|agent'])->except(['createFancy', 'storeFancy', 'editFancy', 'updateFancy','editProfile', 'updateProfile','cancelSubscription','getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication','usersByRole','impersonate','stopImpersonate','addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard','getPhoneSystemsDashboardLink','getDIDSetting','getCallInformation']);
+        $this->middleware(['role:user'])->only(['createFancy', 'storeFancy','editProfile', 'updateProfile','cancelSubscription' ,'getAllPaymentMethods','deletePaymentMethod','updateTwoFactorAuthentication' ,'addAuthorizedUser','deleteAuthorizedUser','updateDefaultCard' ,'getPhoneSystemsDashboardLink','getDIDSetting','getCallInformation']);
         $this->middleware(['role:admin|user|agent'])->only(['usersByRole','impersonate','stopImpersonate']);
     }
 
@@ -600,6 +600,15 @@ class UserController extends Controller
         else{
             return response()->json(['message' => "Something went wrong. Please try again later"] , 401);
         }
+    }
+
+    public function getCallInformation(Request $request, User $user){
+        if ($request->user()->hasRole(Role::USER) && $request->user()->id != $user->id) {
+            return response()->json('Cannot update other User information', Response::HTTP_FORBIDDEN);
+        }
+        $user_service = (new UserService(Auth::user()))->callInformation();
+
+        return view('admin.users.call-information' , $user_service);
     }
 
 }
