@@ -553,9 +553,10 @@
                             <form name="myForm" action="{{ route('web.planPrice') }}" method="POST">
                                 @csrf
                                 <h2 class="display-4 font-heading text-primary">
-                                    @lang('How much do you want to pay?')
+                                    @lang('How much do you')<br>
+                                    @lang('want to pay?')
                                 </h2>
-                                <div style="border: 2px solid #704895;border-radius: 5px;max-width: 14rem;
+                                <div style="border: 2px solid #704895;border-radius: 5px;max-width: 10rem;
                                  margin: 0 auto;display: flex; flex-direction: column; justify-content: center;" >
                                     <div style="background-color: #704895">
                                         <span class="small text-white">@lang('Monthly Payment')</span>
@@ -564,12 +565,12 @@
                                         <span class="text-white font-weight-bold" style="font-size: 22px">$</span>
                                         <input style="border: none;background-color: #704895;color: white;max-width: 2.5rem; font-size: 22px;font-weight: bold"
                                                type="number" name="price"
-                                               placeholder="__" id="price"
+                                               id="price"
                                                required
                                         >
                                     </div>
                                     <div class="arrow_box"></div>
-                                    <div class="small m-2" style="background-color: #FFFFFF;" >
+                                    <div class="m-2" style="background-color: #FFFFFF; font-size:10px " >
                                         @lang('Pay whatever you think is fair')
                                     </div>
                                 </div>
