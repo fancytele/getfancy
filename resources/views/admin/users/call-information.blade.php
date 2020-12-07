@@ -2,17 +2,6 @@
 
 @section('page-title', 'Call Information')
 
-@isset($range)
-@section('header-action')
-    <form action="" method="GET">
-        <label for="date-picker" class="sr-only">Date range</label>
-        <input type="text" id="dashboard-date-picker" class="form-control" placeholder="Search by date range"
-               data-toggle="flatpickr" disabled value="{{ $range }}"
-               data-options='{"mode": "range", "altInput": true, "altFormat": "M j, Y", "dateFormat": "Y-m-d"}'>
-    </form>
-@endsection
-@endisset
-
 @section('content')
     <div class="container-fluid">
             <div class="row">
