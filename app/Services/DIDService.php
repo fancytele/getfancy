@@ -290,7 +290,7 @@ class DIDService
 
             Storage::delete($file_name);
 
-            log::info('Data from CDR' .$data);
+            log::info('Data from CDR' .json_encode($data));
             return $data;
         }
 
