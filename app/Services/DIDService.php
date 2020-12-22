@@ -263,8 +263,8 @@ class DIDService
             $lines = explode("\n", Storage::get($file_name));
             $headers = str_getcsv(array_shift($lines));
 
-            log::info('Lines' . $lines);
-            log::info('Heders' . $headers);
+            log::info('Lines' . json_encode($lines));
+            log::info('Headers' . json_encode($headers));
             if (empty($lines[0])) {
                 return [];
             }
