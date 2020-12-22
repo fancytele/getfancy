@@ -17,6 +17,7 @@ use App\Subscription;
 use Carbon\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Stripe\Customer as StripeCustomer;
 use Stripe\Subscription as StripeSubscription;
@@ -161,6 +162,8 @@ class UserService
 
         $carbon = new Carbon();
         $calls = $this->getCalls($user->fancy_number->did_number, $carbon->year, $carbon->month);
+
+        log::info('Calls =>' . $calls);
 
         return compact('calls');
     }
