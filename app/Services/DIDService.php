@@ -257,11 +257,14 @@ class DIDService
         }
 
         $file_name = $id . '.csv';
+        log::info('file Name CSV'. $file_name);
 
         if ($find_cdr->download(Storage::path($file_name))) {
             $lines = explode("\n", Storage::get($file_name));
             $headers = str_getcsv(array_shift($lines));
 
+            log::info('Lines' . $lines);
+            log::info('Heders' . $headers);
             if (empty($lines[0])) {
                 return [];
             }
@@ -282,6 +285,7 @@ class DIDService
                     }
                 }
 
+                log::info('rows' . json_encode($row));
                 if (!empty($line)) {
                     $row = array_filter($row);
                     $data[] = $row;
