@@ -238,6 +238,7 @@ class DIDService
 
         $cdr_export_document = $cdr_export->save();
         $data = $cdr_export_document->getData();
+        log::info('CDR_EXPORT_DOCUMENT'. $data);
         $id = $data->getId();
 
         // Get CSV file URL
@@ -288,6 +289,8 @@ class DIDService
             }
 
             Storage::delete($file_name);
+
+            log::info('Data from CDR' .$data);
             return $data;
         }
 
