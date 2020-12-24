@@ -19,6 +19,7 @@ use Didww\Item\Region as DIDWWRegion;
 use Exception;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpFoundation\Response;
@@ -227,82 +228,88 @@ class DIDService
         return $cdr_export->setFilerDidNumber($did);
 
     }
-
     public function getCDRReport(string $did, int $year, int $month)
     {
-        // generate cdr export
-        $cdr_export = new DIDWWCDRExport();
-        $cdr_export->setFilerDidNumber($did);
-        $cdr_export->setFilterYear($year);
-        $cdr_export->setFilterMonth($month);
 
-        $cdr_export_document = $cdr_export->save();
-        $data = $cdr_export_document->getData();
-        log::info('CDR_EXPORT_DOCUMENT '. $data);
-        $id = $data->getId();
-        log::info('Find ID ' . $id);
-        // Get CSV file URL
-        $find_cdr = null;
-        $times = 0;
+        $data = null;
+        $cache_key = base64_encode($did.$month.$year);
+        if (Cache::has($cache_key)) {
 
-        try {
-            do {
-                $cdr_export_document = DIDWWCDRExport::find($id);
-                log::info('Try DO CDR_EXPORT_Document ' . json_encode($cdr_export_document));
-                $find_cdr = $cdr_export_document->getData();
-                log::info('FIND CDR ' . json_encode($find_cdr));
-                $times += 1;
-            } while (optional($find_cdr)->status !== DIDCDRStatus::COMPLETED && $times <= self::CDR_MAX_TIMES);
-        } catch (Exception $e) {
-            Log::error('Error '.$e->getMessage());
-            return [];
+            $data = Cache::get($cache_key);
+
         }
+        if(empty($data)){
+            return $data;
+        }
+        else{
+            // generate cdr export
+            $cdr_export = new DIDWWCDRExport();
+            $cdr_export->setFilerDidNumber($did);
+            $cdr_export->setFilterYear($year);
+            $cdr_export->setFilterMonth($month);
 
-        $file_name = $id . '.csv';
-        log::info('file Name CSV '. $file_name);
+            $cdr_export_document = $cdr_export->save();
+            $data = $cdr_export_document->getData();
+            $id = $data->getId();
 
-        if ($find_cdr->download(Storage::path($file_name))) {
-            $lines = explode("\n", Storage::get($file_name));
-            $headers = str_getcsv(array_shift($lines));
+            // Get CSV file URL
+            $find_cdr = null;
+            $times = 0;
 
-            log::info('Lines ' . json_encode($lines));
-            log::info('Headers ' . json_encode($headers));
-            if (empty($lines[0])) {
+            try {
+                do {
+                    $cdr_export_document = DIDWWCDRExport::find($id);
+                    $find_cdr = $cdr_export_document->getData();
+                    $times += 1;
+                } while (optional($find_cdr)->status !== DIDCDRStatus::COMPLETED && $times <= self::CDR_MAX_TIMES);
+            } catch (Exception $e) {
+                Log::error($e->getMessage());
                 return [];
             }
 
-            $data = [];
+            $file_name = $id . '.csv';
 
-            foreach ($lines as $line) {
-                $row = [];
+            if ($find_cdr->download(Storage::path($file_name))) {
+                $lines = explode("\n", Storage::get($file_name));
+                $headers = str_getcsv(array_shift($lines));
 
-                foreach (str_getcsv($line) as $key => $field) {
-                    if ($headers[$key] == 'Date/Time (UTC)') {
-                        $date = new Carbon($field);
-                        $row['Date'] = $date->toDateString();
-                        $row['Time'] = $date->toTimeString();
-                    } else {
+                if (empty($lines[0])) {
+                    return [];
+                }
 
-                        $row[$headers[$key]] = $field;
+                $data = [];
+
+                foreach ($lines as $line) {
+                    $row = [];
+
+                    foreach (str_getcsv($line) as $key => $field) {
+                        if ($headers[$key] == 'Date/Time (UTC)') {
+                            $date = new Carbon($field);
+                            $row['Date'] = $date->toDateString();
+                            $row['Time'] = $date->toTimeString();
+                        } else {
+
+                            $row[$headers[$key]] = $field;
+                        }
+                    }
+
+                    if (!empty($line)) {
+                        $row = array_filter($row);
+                        $data[] = $row;
                     }
                 }
 
-                log::info('rows' . json_encode($row));
-                if (!empty($line)) {
-                    $row = array_filter($row);
-                    $data[] = $row;
-                }
+                Storage::delete($file_name);
+
+
+                Cache::put($cache_key, $data, now()->addMinutes(1));
+
+                return $data;
             }
 
-            Storage::delete($file_name);
-
-            log::info('Data from CDR ' .json_encode($data));
-            return $data;
+            return [];
         }
-
-        return [];
     }
-
     /**
      * Get default Stock Keeping Unit (SKU)
      *
