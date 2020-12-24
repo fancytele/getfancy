@@ -163,8 +163,6 @@ class UserService
         $carbon = new Carbon();
         $calls = $this->getCalls($user->fancy_number->did_number, $carbon->year, $carbon->month);
 
-        log::info('Calls =>' . $calls);
-
         return compact('calls');
     }
     /**

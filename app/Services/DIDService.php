@@ -237,7 +237,6 @@ class DIDService
 
             $data = Cache::get($cache_key);
             log::info('cache_key'. $cache_key);
-            log::info('cache_data'. json_encode($data));
 
         }
         if(!empty($data)){
@@ -306,7 +305,7 @@ class DIDService
 
                 Cache::put($cache_key, $data, now()->addSeconds(15));
 
-                log::info('data'. json_encode($data));
+                log::info('fetch from original data');
                 return $data;
             }
 

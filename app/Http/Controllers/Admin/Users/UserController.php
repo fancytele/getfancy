@@ -614,7 +614,6 @@ class UserController extends Controller
         }
         $user_service = (new UserService(Auth::user()))->callInformation();
 
-        log::info('user_service:'.json_encode($user_service));
         return view('admin.users.call-information' , $user_service);
     }
 
