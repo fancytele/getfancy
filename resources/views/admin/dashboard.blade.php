@@ -18,7 +18,7 @@
     <div class="container-fluid">
         @isset($calls)
             <div class="row">
-                <div class="col-12 col-lg-6 col-xl">
+                <div class="col-12 col-lg-6 col-xl-6">
                     <div class="card">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -37,7 +37,26 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-6 col-xl">
+                <div class="col-12 col-lg-6 col-xl-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="row align-items-center">
+                                <div class="col text-truncate">
+                                    <h6 class="card-title text-uppercase text-muted mb-2">
+                                        Average call durations
+                                    </h6>
+
+                                    <span class="h2 mb-0">{{ $overview['duration'] }} min</span>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="h2 fe fe-clock text-muted mb-0"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-6 col-xl-4">
                     <div class="card">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -56,7 +75,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-6 col-xl">
+                <div class="col-12 col-lg-6 col-xl-4">
                     <div class="card">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -78,7 +97,7 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-6 col-xl">
+                <div class="col-12 col-lg-6 col-xl-4">
                     <div class="card">
                         <div class="card-body">
                             <div class="row align-items-center">
@@ -100,24 +119,6 @@
                     </div>
                 </div>
 
-                <div class="col-12 col-lg-6 col-xl">
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="row align-items-center">
-                                <div class="col text-truncate">
-                                    <h6 class="card-title text-uppercase text-muted mb-2">
-                                        Average call durations
-                                    </h6>
-
-                                    <span class="h2 mb-0">{{ $overview['duration'] }} min</span>
-                                </div>
-                                <div class="col-auto">
-                                    <span class="h2 fe fe-clock text-muted mb-0"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
 
             @if(count($calls) > 0)
