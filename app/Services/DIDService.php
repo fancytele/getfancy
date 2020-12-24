@@ -240,7 +240,7 @@ class DIDService
         $data = $cdr_export_document->getData();
         log::info('CDR_EXPORT_DOCUMENT'. $data);
         $id = $data->getId();
-        log::info('Find ID' , $id);
+        log::info('Find ID' . $id);
         // Get CSV file URL
         $find_cdr = null;
         $times = 0;
