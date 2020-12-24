@@ -238,9 +238,9 @@ class DIDService
 
         $cdr_export_document = $cdr_export->save();
         $data = $cdr_export_document->getData();
-        log::info('CDR_EXPORT_DOCUMENT'. $data);
+        log::info('CDR_EXPORT_DOCUMENT '. $data);
         $id = $data->getId();
-        log::info('Find ID' . $id);
+        log::info('Find ID ' . $id);
         // Get CSV file URL
         $find_cdr = null;
         $times = 0;
@@ -248,25 +248,25 @@ class DIDService
         try {
             do {
                 $cdr_export_document = DIDWWCDRExport::find($id);
-                log::info('Try DO CDR_EXPORT_Document' . json_encode($cdr_export_document));
+                log::info('Try DO CDR_EXPORT_Document ' . json_encode($cdr_export_document));
                 $find_cdr = $cdr_export_document->getData();
-                log::info('FIND CDR' . json_encode($find_cdr));
+                log::info('FIND CDR ' . json_encode($find_cdr));
                 $times += 1;
             } while (optional($find_cdr)->status !== DIDCDRStatus::COMPLETED && $times <= self::CDR_MAX_TIMES);
         } catch (Exception $e) {
-            Log::error($e->getMessage());
+            Log::error('Error '.$e->getMessage());
             return [];
         }
 
         $file_name = $id . '.csv';
-        log::info('file Name CSV'. $file_name);
+        log::info('file Name CSV '. $file_name);
 
         if ($find_cdr->download(Storage::path($file_name))) {
             $lines = explode("\n", Storage::get($file_name));
             $headers = str_getcsv(array_shift($lines));
 
-            log::info('Lines' . json_encode($lines));
-            log::info('Headers' . json_encode($headers));
+            log::info('Lines ' . json_encode($lines));
+            log::info('Headers ' . json_encode($headers));
             if (empty($lines[0])) {
                 return [];
             }
@@ -296,7 +296,7 @@ class DIDService
 
             Storage::delete($file_name);
 
-            log::info('Data from CDR' .json_encode($data));
+            log::info('Data from CDR ' .json_encode($data));
             return $data;
         }
 
