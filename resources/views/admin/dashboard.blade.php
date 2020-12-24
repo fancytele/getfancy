@@ -214,7 +214,7 @@
                                         </th>
                                         <th colspan="2" width="25%">
                                             <a href="#" class="text-muted sort" data-sort="calls-state">
-                                                State
+                                                Status
                                             </a>
                                         </th>
                                     </tr>

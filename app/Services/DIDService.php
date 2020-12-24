@@ -303,9 +303,10 @@ class DIDService
                 Storage::delete($file_name);
 
 
-                Cache::put($cache_key, $data, now()->addSeconds(15));
+                Cache::put($cache_key, $data, now()->addMinute(1));
 
                 log::info('fetch from original data');
+
                 return $data;
             }
 
