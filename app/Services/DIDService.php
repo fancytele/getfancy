@@ -240,7 +240,7 @@ class DIDService
             log::info('cache_data'. json_encode($data));
 
         }
-        if(empty($data)){
+        if(!empty($data)){
             return $data;
         }
         else{
