@@ -240,7 +240,7 @@ class DIDService
         $data = $cdr_export_document->getData();
         log::info('CDR_EXPORT_DOCUMENT'. $data);
         $id = $data->getId();
-
+        log::info('Find ID' , $id);
         // Get CSV file URL
         $find_cdr = null;
         $times = 0;
@@ -248,7 +248,9 @@ class DIDService
         try {
             do {
                 $cdr_export_document = DIDWWCDRExport::find($id);
+                log::info('Try DO CDR_EXPORT_Document' , json_decode($cdr_export_document));
                 $find_cdr = $cdr_export_document->getData();
+                log::info('FIND CDR' , json_decode($find_cdr));
                 $times += 1;
             } while (optional($find_cdr)->status !== DIDCDRStatus::COMPLETED && $times <= self::CDR_MAX_TIMES);
         } catch (Exception $e) {
