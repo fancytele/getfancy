@@ -236,6 +236,8 @@ class DIDService
         if (Cache::has($cache_key)) {
 
             $data = Cache::get($cache_key);
+            log::info('cache_key'. $cache_key);
+            log::info('cache_data'. json_encode($data));
 
         }
         if(empty($data)){
@@ -302,8 +304,9 @@ class DIDService
                 Storage::delete($file_name);
 
 
-                Cache::put($cache_key, $data, now()->addMinutes(1));
+                Cache::put($cache_key, $data, now()->addSeconds(15));
 
+                log::info('data'. json_encode($data));
                 return $data;
             }
 
