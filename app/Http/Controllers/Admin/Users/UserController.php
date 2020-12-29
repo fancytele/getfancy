@@ -75,7 +75,7 @@ class UserController extends Controller
     public function create()
     {
         $did_service = new DIDService();
-        $did_country = $did_service->getCountryByISO('US');
+        $did_country = $did_service->getCountryByISO('GB');
         $did_regions = $did_service->getRegionsByCountry($did_country['id']);
 
         $addons = Addon::subscription()->orWhere('code', AddonCode::PROFESSIONAL_RECORDING)->get();
@@ -177,7 +177,7 @@ class UserController extends Controller
         }
 
         $did_service = new DIDService();
-        $did_country = $did_service->getCountryByISO('US');
+        $did_country = $did_service->getCountryByISO('GB');
         $did_regions = $did_service->getRegionsByCountry($did_country['id']);
 
         $urls = [
