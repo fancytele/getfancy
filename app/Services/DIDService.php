@@ -135,6 +135,8 @@ class DIDService
 
         $result = $did_availables->getData();
 
+        log::info('result'. json_encode($result));
+
         if (is_null($result)) {
             return [];
         }
