@@ -77,7 +77,7 @@ class DIDService
         $countries = $did_countries->getData();
         log::info('countries ' . json_encode($countries));
 
-        abort_if($countries->iso != 'US' , Response::HTTP_NOT_FOUND);
+        abort_if($countries['iso'] != 'US' , Response::HTTP_NOT_FOUND);
 
         abort_if($countries->isEmpty(), Response::HTTP_INTERNAL_SERVER_ERROR);
 
