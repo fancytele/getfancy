@@ -72,8 +72,10 @@ class DIDService
      */
     public function getCountryByISO(string $iso)
     {
+        log::info('country'. $iso);
         $did_countries = DIDWWCountry::all(['filter' => ['iso' => $iso]]);
         $countries = $did_countries->getData();
+        log::info('countries ' . json_encode($countries));
 
         abort_if($countries->isEmpty(), Response::HTTP_INTERNAL_SERVER_ERROR);
 
