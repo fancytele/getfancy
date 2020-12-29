@@ -75,6 +75,7 @@ class DIDService
         $did_countries = DIDWWCountry::all(['filter' => ['iso' => $iso]]);
         $countries = $did_countries->getData();
 
+        log::info('country' . $countries[0]->iso);
         abort_if($countries->isEmpty(), Response::HTTP_INTERNAL_SERVER_ERROR);
 
         return $countries->first()->toJsonApiArray();
