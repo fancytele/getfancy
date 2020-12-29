@@ -77,6 +77,8 @@ class DIDService
         $countries = $did_countries->getData();
         log::info('countries ' . json_encode($countries));
 
+        abort_if($countries->iso != 'US' , Response::HTTP_NOT_FOUND);
+
         abort_if($countries->isEmpty(), Response::HTTP_INTERNAL_SERVER_ERROR);
 
         return $countries->first()->toJsonApiArray();
@@ -131,17 +133,21 @@ class DIDService
      */
     public function getAvailableDIDsByCity(string $city)
     {
-        $did_availables = DIDWWAvailableDID::all(['filter' => ['city.id' => $city]]);
+        if(!is_null($city)){
+            $did_availables = DIDWWAvailableDID::all(['filter' => ['city.id' => $city]]);
 
-        $result = $did_availables->getData();
+            $result = $did_availables->getData();
 
-        log::info('result'. json_encode($result));
+            if (is_null($result)) {
+                return [];
+            }
 
-        if (is_null($result)) {
+            return $result->toJsonApiArray();
+        }
+        else{
             return [];
         }
 
-        return $result->toJsonApiArray();
     }
 
     public function getPurchasedDID(string $order_id)
