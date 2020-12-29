@@ -75,9 +75,9 @@ class DIDService
         log::info('country'. $iso);
         $did_countries = DIDWWCountry::all(['filter' => ['iso' => $iso]]);
         $countries = $did_countries->getData();
-        log::info('countries ' . json_encode($countries));
+        log::info('countries ' . json_encode($countries->iso));
 
-        abort_if($countries['iso'] != 'US' , Response::HTTP_NOT_FOUND);
+        //abort_if($countries['iso'] != 'US' , Response::HTTP_NOT_FOUND);
 
         abort_if($countries->isEmpty(), Response::HTTP_INTERNAL_SERVER_ERROR);
 
