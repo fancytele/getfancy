@@ -238,6 +238,7 @@ class DIDService
     }
     public function getCDRReport(string $did, int $year, int $month)
     {
+        log::info('I am inside getCDRReport function');
 
         $data = null;
         $cache_key = base64_encode($did.$month.$year);
