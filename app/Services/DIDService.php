@@ -238,14 +238,10 @@ class DIDService
     }
     public function getCDRReport(string $did, int $year, int $month)
     {
-        log::info('I am inside getCDRReport function' .$did .$year . $month);
 
         $data = null;
         $cache_key = base64_encode($did.$month.$year);
 
-        log::info('Cache Key' . $cache_key);
-
-        log::info('Cache Key' . $cache_key);
 
         if (Cache::has($cache_key)) {
 
@@ -254,6 +250,7 @@ class DIDService
             $data = Cache::get($cache_key);
         }
         if(!empty($data)){
+
             log::info('I am here in non empty if');
             return $data;
         }
@@ -266,8 +263,6 @@ class DIDService
 
             $cdr_export_document = $cdr_export->save();
             $data = $cdr_export_document->getData();
-
-            log::info('Data' . json_encode($data));
             $id = $data->getId();
 
             // Get CSV file URL
@@ -288,10 +283,12 @@ class DIDService
             $file_name = $id . '.csv';
 
             if ($find_cdr->download(Storage::path($file_name))) {
+                log::info('I am inside if $find_cdr');
                 $lines = explode("\n", Storage::get($file_name));
                 $headers = str_getcsv(array_shift($lines));
 
                 if (empty($lines[0])) {
+                    log::info('line[0] is empty');
                     return [];
                 }
 
