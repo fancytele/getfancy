@@ -252,6 +252,7 @@ class DIDService
         if(!empty($data)){
 
             log::info('I am here in non empty if');
+
             return $data;
         }
         else{
@@ -283,12 +284,13 @@ class DIDService
             $file_name = $id . '.csv';
 
             if ($find_cdr->download(Storage::path($file_name))) {
-                log::info('I am inside if $find_cdr');
                 $lines = explode("\n", Storage::get($file_name));
                 $headers = str_getcsv(array_shift($lines));
 
                 if (empty($lines[0])) {
+
                     log::info('line[0] is empty');
+
                     return [];
                 }
 
@@ -315,7 +317,6 @@ class DIDService
                 }
 
                 Storage::delete($file_name);
-
 
                 Cache::put($cache_key, $data, now()->addMinutes(20));
 
