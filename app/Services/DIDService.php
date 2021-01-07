@@ -266,6 +266,10 @@ class DIDService
             $data = $cdr_export_document->getData();
             $id = $data->getId();
 
+            Cache::put($cache_key, $data, now()->addMinutes(20));
+
+            log::info('fetch from original data');
+
             // Get CSV file URL
             $find_cdr = null;
             $times = 0;
@@ -319,10 +323,6 @@ class DIDService
                 }
 
                 Storage::delete($file_name);
-
-                Cache::put($cache_key, $data, now()->addMinutes(20));
-
-                log::info('fetch from original data');
 
                 return $data;
             }
