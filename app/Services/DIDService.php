@@ -270,6 +270,10 @@ class DIDService
             $find_cdr = null;
             $times = 0;
 
+            log::info('Data upside try' . json_encode($data));
+
+            Cache::put($cache_key, $data, now()->addMinutes(20));
+
             try {
                 do {
                     $cdr_export_document = DIDWWCDRExport::find($id);
@@ -318,7 +322,7 @@ class DIDService
 
                 Storage::delete($file_name);
 
-                Cache::put($cache_key, $data, now()->addMinutes(20));
+                //Cache::put($cache_key, $data, now()->addMinutes(20));
 
                 log::info('fetch from original data');
 
