@@ -98,16 +98,16 @@ class DIDService
 
         $did_regions = DIDWWRegion::all(['filter' => ['country.id' => $country]]);
 
-         $region = $did_regions->getData()->map(function ($item) {
+        $region = $did_regions->getData()->map(function ($item) {
             return [
                 'id' => $item->getId(),
                 'text' => $item->getName()
             ];
         });
 
-         log::info('Regions filtered on this basis of country' . json_encode($region));
+        log::info('Regions filtered on this basis of country' . json_encode($region));
 
-         return $region;
+        return $region;
     }
 
     /**
@@ -267,6 +267,7 @@ class DIDService
         return $cdr_export->setFilerDidNumber($did);
 
     }
+
     public function getCDRReport(string $did, int $year, int $month)
     {
         $cache_key = base64_encode($did.$month.$year);
@@ -357,6 +358,7 @@ class DIDService
             return [];
         }
     }
+
     /**
      * Get default Stock Keeping Unit (SKU)
      *
