@@ -238,23 +238,15 @@ class DIDService
     }
     public function getCDRReport(string $did, int $year, int $month)
     {
-
-        $data = null;
         $cache_key = base64_encode($did.$month.$year);
-
 
         if (Cache::has($cache_key)) {
 
             log::info('cache_key'. $cache_key);
 
-            $data = Cache::get($cache_key);
+            return Cache::get($cache_key);
         }
-        if(!empty($data)){
 
-            log::info('I am here in non empty if');
-
-            return $data;
-        }
         else{
             // generate cdr export
             $cdr_export = new DIDWWCDRExport();
@@ -264,6 +256,9 @@ class DIDService
 
             $cdr_export_document = $cdr_export->save();
             $data = $cdr_export_document->getData();
+
+            log::info('data' . json_encode($data));
+
             $id = $data->getId();
 
 
@@ -292,6 +287,8 @@ class DIDService
 
                     log::info('line[0] is empty');
 
+                    Cache::put($cache_key, [] , now()->addMinute(1));
+
                     return [];
                 }
 
@@ -317,7 +314,7 @@ class DIDService
                     }
                 }
 
-                Cache::put($cache_key, $data, now()->addMinutes(20));
+                Cache::put($cache_key, $data, now()->addMinute(1));
 
                 log::info('fetch from original data');
 
