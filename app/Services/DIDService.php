@@ -287,7 +287,7 @@ class DIDService
 
                     log::info('line[0] is empty');
 
-                    Cache::put($cache_key, [] , now()->addMinute(1));
+                    Cache::put($cache_key, [] , now()->addMinutes(5));
 
                     return [];
                 }
@@ -314,7 +314,7 @@ class DIDService
                     }
                 }
 
-                Cache::put($cache_key, $data, now()->addMinute(1));
+                Cache::put($cache_key, $data, now()->addMinutes(10));
 
                 log::info('fetch from original data');
 
