@@ -72,8 +72,12 @@ class DIDService
      */
     public function getCountryByISO(string $iso)
     {
+        log::info('ISO From Request ' . $iso);
+
         $did_countries = DIDWWCountry::all(['filter' => ['iso' => $iso]]);
         $countries = $did_countries->getData();
+
+        log::info('Country selected from didww ' . json_encode($countries));
 
         abort_if($countries[0]->iso != 'US' , Response::HTTP_UNAUTHORIZED);
 
@@ -90,14 +94,20 @@ class DIDService
      */
     public function getRegionsByCountry(string $country)
     {
+        log::info('Country ID for US'. $country);
+
         $did_regions = DIDWWRegion::all(['filter' => ['country.id' => $country]]);
 
-        return $did_regions->getData()->map(function ($item) {
+         $region = $did_regions->getData()->map(function ($item) {
             return [
                 'id' => $item->getId(),
                 'text' => $item->getName()
             ];
         });
+
+         log::info('Regions filtered on this basis of country' . json_encode($region));
+
+         return $region;
     }
 
     /**
@@ -108,6 +118,8 @@ class DIDService
      */
     public function getCitiesByRegion(string $region)
     {
+        log::info('Selected Region ID' . $region);
+
         $did_cities = DIDWWCity::all([
             'filter' => [
                 'region.id' => $region,
@@ -115,12 +127,17 @@ class DIDService
             ]
         ]);
 
-        return $did_cities->getData()->map(function ($item) {
+
+        $city= $did_cities->getData()->map(function ($item) {
             return [
                 'id' => $item->getId(),
                 'text' => $item->name
             ];
         });
+
+        log::info('City filtered on this basis of region' . json_encode($city));
+
+        return $city;
     }
 
     /**
@@ -131,6 +148,8 @@ class DIDService
      */
     public function getAvailableDIDsByCity(string $city)
     {
+        log::info('Selected City ID' . $city);
+
         if(!is_null($city)){
             $did_availables = DIDWWAvailableDID::all(['filter' => ['city.id' => $city]]);
 
@@ -139,6 +158,8 @@ class DIDService
             if (is_null($result)) {
                 return [];
             }
+
+            log::info('Available DIDs on the basis of the selected city' . json_encode($result));
 
             return $result->toJsonApiArray();
         }
@@ -206,14 +227,24 @@ class DIDService
      */
     public function purchaseReservation(string $reservation, string $number)
     {
+        log::info('Reservation' .$reservation);
+        log::info('DID Number' . $number);
+
         $did_reservation = DIDWWReservation::find($reservation, [
             'include' => 'available_did.did_group.stock_keeping_units'
         ])->getData();
 
         throw_unless($did_reservation, new Exception('DID is no longer available'));
 
+        log::info('Did Reservation'. json_encode($did_reservation));
+
         $did_available = $did_reservation->availableDID();
+
+        log::info('Available DID' .json_encode($did_available));
+
         $did_group = $did_available->getIncluded()->didGroup();
+
+        log::info('DID Group'  .json_encode($did_group));
 
         return $this->purchaseDID($did_reservation->getId(), $number, $did_group, true);
     }
@@ -287,7 +318,7 @@ class DIDService
 
                     log::info('line[0] is empty');
 
-                    Cache::put($cache_key, [] , now()->addMinute(1));
+                    Cache::put($cache_key, [] , now()->addMinutes(5));
 
                     return [];
                 }
@@ -314,7 +345,7 @@ class DIDService
                     }
                 }
 
-                Cache::put($cache_key, $data, now()->addMinute(1));
+                Cache::put($cache_key, $data, now()->addMinutes(10));
 
                 log::info('fetch from original data');
 
@@ -373,8 +404,15 @@ class DIDService
      */
     private function purchaseDID(string $id, string $number, $did_group, bool $is_reservation = false)
     {
+        log::info('Did ID' . $id);
+        log::info('Did Number' . $number);
+        log::info('Did Group' . $did_group);
+        log::info('Is reservation' . $is_reservation);
+
         $sku = $this->getDefaultStockKeepingUnit($did_group);
         $order_item = null;
+
+        log::info('sku ' .json_encode($sku));
 
         if ($is_reservation) {
             $order_item = new DIDWWOrderItemReservation();
