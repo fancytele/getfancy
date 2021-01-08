@@ -266,15 +266,10 @@ class DIDService
             $data = $cdr_export_document->getData();
             $id = $data->getId();
 
-            Cache::put($cache_key, $data, now()->addMinutes(20));
-
-            log::info('fetch from original data');
 
             // Get CSV file URL
             $find_cdr = null;
             $times = 0;
-
-            log::info('Data upside try' . json_encode($data));
 
             try {
                 do {
@@ -321,6 +316,10 @@ class DIDService
                         $data[] = $row;
                     }
                 }
+
+                Cache::put($cache_key, $data, now()->addMinutes(20));
+
+                log::info('fetch from original data');
 
                 Storage::delete($file_name);
 
