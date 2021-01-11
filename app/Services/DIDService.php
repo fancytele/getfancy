@@ -227,15 +227,24 @@ class DIDService
      */
     public function purchaseReservation(string $reservation, string $number)
     {
+        log::info('Reservation' . $reservation);
+        log::info('Number' . $number);
+
         $did_reservation = DIDWWReservation::find($reservation, [
             'include' => 'available_did.did_group.stock_keeping_units'
         ])->getData();
+
+        log::info('DID Reservation' .json_encode($did_reservation));
 
         throw_unless($did_reservation, new Exception('DID is no longer available'));
 
         $did_available = $did_reservation->availableDID();
 
+        log::info('DID Available' .json_encode($did_available));
+
         $did_group = $did_available->getIncluded()->didGroup();
+
+        log::info('DID Group' .json_encode($did_group));
 
         return $this->purchaseDID($did_reservation->getId(), $number, $did_group, true);
     }
@@ -398,6 +407,9 @@ class DIDService
     private function purchaseDID(string $id, string $number, $did_group, bool $is_reservation = false)
     {
         $sku = $this->getDefaultStockKeepingUnit($did_group);
+
+        log::info('SKU' .json_encode($sku));
+
         $order_item = null;
 
         if ($is_reservation) {
@@ -416,6 +428,9 @@ class DIDService
         $order_document = $order->save();
 
         $order = $order_document->getData();
+
+        log::info('Order Details' .json_encode($order));
+
         $item = $order->getItems()[0];
 
         return [
