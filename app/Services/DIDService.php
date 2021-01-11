@@ -190,13 +190,19 @@ class DIDService
      */
     public function createReservation(string $did)
     {
+        log::info('Create Reservation' . $did);
+
         $available_did = DIDWWAvailableDID::find($did)->getData();
+
+        log::info('Available DID' .json_encode($available_did));
 
         $didReservation = new DIDWWReservation();
         $didReservation->setAvailableDid($available_did);
         $didReservation->setDescription('Reserved for potencial Fancyy client by user: ' . Auth::user()->email);
 
         $didReservation = $didReservation->save()->getData();
+
+        log::info('Did Reservation' .json_encode($didReservation));
 
         return $didReservation->toJsonApiArray();
     }
