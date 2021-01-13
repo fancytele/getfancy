@@ -257,9 +257,14 @@
                             <h1 class="display-3 font-heading font-weight-bold line-height-md text-primary">
                                 @lang('Hero Title')
                             </h1>
-                            <p class="my-md-5 w-75">
-                                @lang('Hero Message')
-                            </p>
+                           <div class="my-md-5 w-75">
+                               <p class="mb-2">
+                                   @lang('Hero Message title')
+                               </p><br>
+                               <p>
+                                   @lang('Hero Message')
+                               </p>
+                           </div>
                             <div class="d-inline-block">
                                 <a href="#plans" id="get-started"
                                    class="btn btn-block btn-lg btn-primary px-6 rounded text-uppercase">
@@ -408,10 +413,14 @@
                                         </small>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="work-list">
                                 <div class="mb-5 media">
                                     <div class="work-item-left">
                                         <img src="{{ asset('/img/web/microphone-svgrepo-com.svg') }}"
-                                             class="d-flex img-fluid m-auto w-60" alt="Phone office">
+                                            class="d-flex img-fluid m-auto w-60" alt="Phone office">
                                     </div>
                                     <div class="media-body">
                                         <h4 class="mt-0">
@@ -424,6 +433,8 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-6">
                             <div class="work-list">
                                 <div class="mb-5 media">
@@ -440,6 +451,10 @@
                                         </small>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="work-list">
                                 <div class="mb-5 media">
                                     <div class="work-item-left">
                                         <img src="{{ asset('/img/web/phone-office.svg') }}" class="img-fluid"
@@ -553,9 +568,10 @@
                             <form name="myForm" action="{{ route('web.planPrice') }}" method="POST">
                                 @csrf
                                 <h2 class="display-4 font-heading text-primary">
-                                    @lang('How much do you')<br>
-                                    @lang('want to pay?')
+                                    @lang('How much do you want to pay')
                                 </h2>
+                                <p style="font-size: small; margin-bottom: 10px">@lang('Pay Message')</p>
+
                                 <div style="border: 2px solid #704895;border-radius: 5px;max-width: 10rem;
                                  margin: 0 auto;display: flex; flex-direction: column; justify-content: center;" >
                                     <div style="background-color: #704895">
@@ -582,10 +598,10 @@
                                         </div>
                                             <div style="text-align: left; line-height: 10px; padding:5px 0 0">
                                                 <div>
-                                                    <span class="text-primary font-weight-bolder" style="font-size: 10px">@lang('Heads Up!')</span>
+                                                    <span class="text-primary font-weight-bolder" style="font-size: 10px">@lang('Heads Up')</span>
                                                 </div>
                                                 <div>
-                                                    <span style="font-size: 9px;">@lang('Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair')</span>
+                                                    <span style="font-size: 9px;">@lang('Heads Up Message')</span>
                                                 </div>
 
                                             </div>
@@ -603,10 +619,10 @@
                                             </div>
                                             <div style="text-align: left; line-height: 10px; padding:5px 0 0">
                                                 <div>
-                                                    <span class="text-primary font-weight-bolder" style="font-size: 10px">@lang('Heads Up!')</span>
+                                                    <span class="text-primary font-weight-bolder" style="font-size: 10px">@lang('Heads Up')</span>
                                                 </div>
                                                 <div>
-                                                    <span style="font-size: 9px;">@lang('Although we believe you should be able to name your own price, we don’t believe less than $10.00 is fair')</span>
+                                                    <span style="font-size: 9px;">@lang('Heads Up Message')</span>
                                                 </div>
 
                                             </div>
@@ -617,9 +633,9 @@
                                     </div>
                                 @endif
                                 <br>
-                                <h5>First month free!</h5>
+                                <h5>@lang('First month free')</h5>
                                 <button id="plan_submit_backend" type="submit" style="display: none" class="btn btn-primary px-6" disabled>Nextyolo</button>
-                                <button id="plan_submit"  onclick="return validateForm()" class="btn btn-primary px-6" disabled>Next</button>
+                                <button id="plan_submit"  onclick="return validateForm()" class="btn btn-primary px-6" disabled>@lang('Next')</button>
                             </form>
                         </div>
                     </div>
