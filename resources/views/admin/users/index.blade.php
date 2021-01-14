@@ -108,7 +108,7 @@
                             <td class="align-middle orders-name">
                                 {{ $user->full_name }}
                             </td>
-                            <td class="align-middle orders-name">
+                            <td class="align-middle orders-did">
                                 {{ optional($user->fancy_number)->us_did_number }}
                             </td>
                             <td class="align-middle orders-email">{{ $user->email }}

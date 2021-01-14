@@ -48,6 +48,8 @@
         <style>
             input{
                 outline: none;
+                padding: 0;
+                margin: 0;
             }
             ::placeholder {
                 color: white;
@@ -146,8 +148,13 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="font-weight-bold nav-link text-body" href="#featuresPlans">
+                                    @lang('Features')
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="font-weight-bold nav-link text-body" href="#plans">
-                                    @lang('Plans and Features')
+                                    @lang('Plans')
                                 </a>
                             </li>
                             <li class="nav-item">
@@ -477,14 +484,14 @@
             <!-- / How It Works Section -->
 
             <!-- Plans Section -->
-            <section id="plans" class="bg-white fancy-section pt-0 text-center">
+            <section id="featuresPlans" class="bg-white fancy-section pt-0 text-center">
                 <svg class="h-60 mb-6 w-100" preserveAspectRatio="none" viewBox="0 0 100 100">
                     <polygon class="fill-body" points="0,0 100,0 0,100 0,100"></polygon>
                 </svg>
                 <div class="container" data-aos="fade-up">
                     <div class="text-center" data-aos="fade-up">
                         <h2 class="display-4 font-heading text-primary">
-                            @lang('Plans and Features')
+                            @lang('Features')
                         </h2>
                         <p class="mx-auto w-lg-75">
                             @lang('Plans and Features Message')
@@ -564,86 +571,89 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <form name="myForm" action="{{ route('web.planPrice') }}" method="POST">
-                                @csrf
-                                <h2 class="display-4 font-heading text-primary">
-                                    @lang('How much do you want to pay')
-                                </h2>
-                                <p style="font-size: small; margin-bottom: 10px">@lang('Pay Message')</p>
-
-                                <div style="border: 2px solid #704895;border-radius: 5px;max-width: 10rem;
-                                 margin: 0 auto;display: flex; flex-direction: column; justify-content: center;" >
-                                    <div style="background-color: #704895">
-                                        <span class="small text-white">@lang('Monthly Payment')</span>
-                                    </div>
-                                    <div style="display: flex; flex-direction: row; justify-content: center;background-color: #704895;">
-                                        <span class="text-white font-weight-bold" style="font-size: 22px">$</span>
-                                        <input style="border: none;background-color: #704895;color: white;max-width: 2.5rem; font-size: 22px;font-weight: bold"
-                                               type="number" name="price"
-                                               id="price"
-                                               required
-                                        >
-                                    </div>
-                                    <div class="arrow_box"></div>
-                                    <div class="m-2" style="background-color: #FFFFFF; font-size:10px " >
-                                        @lang('Pay whatever you think is fair')
-                                    </div>
-                                </div>
-
-                                <div id="priceError" style="max-width: 14rem; display:none; margin: 0 auto; background-color: #F3F3F3; border-radius: 5px;">
-                                    <div style="display:flex;flex-direction: row;">
-                                        <div style="padding: 16px 10px 0">
-                                            <h1><i class="fa fa-exclamation-triangle text-primary"></i></h1>
-                                        </div>
-                                            <div style="text-align: left; line-height: 10px; padding:5px 0 0">
-                                                <div>
-                                                    <span class="text-primary font-weight-bolder" style="font-size: 10px">@lang('Heads Up')</span>
-                                                </div>
-                                                <div>
-                                                    <span style="font-size: 9px;">@lang('Heads Up Message')</span>
-                                                </div>
-
-                                            </div>
-                                            <div class="text-left pr-3">
-                                                <a href="javascript:void(0)" onclick="closeDialog()" style="color:#464343">&times;</a>
-                                            </div>
-                                    </div>
-                                </div>
-
-                                @if($errors->any())
-                                    <div id="priceError" style="max-width: 14rem; display:none; margin: 0 auto; background-color: #F3F3F3; border-radius: 5px;">
-                                        <div style="display:flex;flex-direction: row;">
-                                            <div style="padding: 16px 10px 0">
-                                                <h1><i class="fa fa-exclamation-triangle text-primary"></i></h1>
-                                            </div>
-                                            <div style="text-align: left; line-height: 10px; padding:5px 0 0">
-                                                <div>
-                                                    <span class="text-primary font-weight-bolder" style="font-size: 10px">@lang('Heads Up')</span>
-                                                </div>
-                                                <div>
-                                                    <span style="font-size: 9px;">@lang('Heads Up Message')</span>
-                                                </div>
-
-                                            </div>
-                                            <div class="text-left pr-3">
-                                                <a href="javascript:void(0)" onclick="closeDialog()" style="color:#464343">&times;</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif
-                                <br>
-                                <h5>@lang('First month free')</h5>
-                                <button id="plan_submit_backend" type="submit" style="display: none" class="btn btn-primary px-6" disabled>Nextyolo</button>
-                                <button id="plan_submit"  onclick="return validateForm()" class="btn btn-primary px-6" disabled>@lang('Next')</button>
-                            </form>
                         </div>
                     </div>
                 </div>
             </section>
             <!-- / Plans Section -->
 
-            >
+            <!-- Plans Section -->
+
+            <section id="plans"  class="bg-white fancy-section pt-4 text-center">
+                <form id="planForm" name="myForm" action="{{ route('web.planPrice') }}" method="POST">
+                    @csrf
+                    <h2 class="display-4 font-heading text-primary">
+                        @lang('How much do you want to pay')
+                    </h2>
+                    <p style="font-size: small; margin-bottom: 18px">@lang('Pay Message')</p>
+
+                    <div style="border: 2px solid #704895;border-radius: 5px;max-width: 10rem;
+                                 margin: 0 auto;display: flex; flex-direction: column; justify-content: center;" >
+                        <div style="background-color: #704895">
+                            <span class="small text-white">@lang('Monthly Payment')</span>
+                        </div>
+                        <div style="display: flex; flex-direction: row; justify-content: center;background-color: #704895;">
+                            <span class="text-white font-weight-bold" style="font-size: 22px">$</span>
+                            <input style="border: none;background-color: #704895;color: white;max-width: 2rem; font-size: 22px;font-weight: bold"
+                                   type="number" name="price"
+                                   id="price"
+                                   required
+                            >
+                        </div>
+                        <div class="arrow_box"></div>
+                        <div class="m-2" style="background-color: #FFFFFF; font-size:10px " >
+                            @lang('Pay whatever you think is fair')
+                        </div>
+                    </div>
+
+                    <div id="priceError" style="max-width: 14rem; display:none; margin: 0 auto; background-color: #F3F3F3; border-radius: 5px;">
+                        <div style="display:flex;flex-direction: row;">
+                            <div style="padding: 16px 10px 0">
+                                <h1><i class="fa fa-exclamation-triangle text-primary"></i></h1>
+                            </div>
+                            <div style="text-align: left; line-height: 10px; padding:5px 0 0">
+                                <div>
+                                    <span class="text-primary font-weight-bolder" style="font-size: 10px">@lang('Heads Up')</span>
+                                </div>
+                                <div>
+                                    <span style="font-size: 9px;">@lang('Heads Up Message')</span>
+                                </div>
+
+                            </div>
+                            <div class="text-left pr-3">
+                                <a href="javascript:void(0)" onclick="closeDialog()" style="color:#464343">&times;</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    @if($errors->any())
+                        <div id="priceError" style="max-width: 14rem; display:none; margin: 0 auto; background-color: #F3F3F3; border-radius: 5px;">
+                            <div style="display:flex;flex-direction: row;">
+                                <div style="padding: 16px 10px 0">
+                                    <h1><i class="fa fa-exclamation-triangle text-primary"></i></h1>
+                                </div>
+                                <div style="text-align: left; line-height: 10px; padding:5px 0 0">
+                                    <div>
+                                        <span class="text-primary font-weight-bolder" style="font-size: 10px">@lang('Heads Up')</span>
+                                    </div>
+                                    <div>
+                                        <span style="font-size: 9px;">@lang('Heads Up Message')</span>
+                                    </div>
+
+                                </div>
+                                <div class="text-left pr-3">
+                                    <a href="javascript:void(0)" onclick="closeDialog()" style="color:#464343">&times;</a>
+                                </div>
+                            </div>
+                        </div>
+                    @endif
+                    <br>
+                    <h5>@lang('First month free')</h5>
+                    <button id="plan_submit_backend" type="submit" style="display: none" class="btn btn-primary px-6" disabled>Nextyolo</button>
+                    <button id="plan_submit"  onclick="return validateForm()" class="btn btn-primary px-6" disabled>@lang('Next')</button>
+                </form>
+            </section>
+            <!-- Plans Section -->
 
             <!-- Testimonials Section -->
             <section id="about" class="fancy-section position-relative pt-0">

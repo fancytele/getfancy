@@ -126,7 +126,7 @@
                             </div> <!-- / .row -->
 
                             <!-- Input -->
-                            <input type="number" name="two_factor_code"
+                            <input type="number" name="two_factor_code" min="0"
                                    class="form-control form-control-appended @error('two_factor_code') is-invalid @enderror"
                                    placeholder="@lang('Enter your two factor code')">
 
@@ -163,7 +163,7 @@
                     <p class="text-center">
                         <small>
                             @lang('Don\'t have an account yet?') 
-                            <a class="text-decoration-underline text-white" href="{{ route('web.homepage')}}#plans ">
+                            <a class="text-decoration-underline text-white" href="{{ route('web.homepage')}}#planForm">
                                 @lang('Sign Up Here')</a>.
                         </small>
                     </p>
@@ -363,7 +363,17 @@
                 }
 
         @endif
+ /* Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
 
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
     </style>
 
 </body>

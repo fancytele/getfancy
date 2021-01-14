@@ -140,7 +140,7 @@ class LoginController extends Controller
      */
     public function generateTwoFactorCode(Request $request)
     {
-        $two_factor_code = mt_rand(1000,9999);
+        $two_factor_code = mt_rand(100000,999999);
 
         $expire_time = Carbon::now()->addMinutes(10);
 
