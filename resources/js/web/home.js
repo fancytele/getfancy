@@ -51,7 +51,7 @@ import navbarCollapse from '../navbarCollapse';
     IMask(phoneInput, maskOptions);
 
     const priceInput = document.querySelector('#price');
-    const maskOption = { mask: '00' };
+    const maskOption = { mask: '000' };
     if(priceInput){
       IMask(priceInput, maskOption);
     }

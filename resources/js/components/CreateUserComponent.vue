@@ -1075,7 +1075,7 @@ export default {
       },
 
       priceMask: {
-        mask: '00'
+        mask: '000'
       },
       invalid_cost: false,
       unmaskedprice:'',

@@ -594,7 +594,7 @@
                         </div>
                         <div style="display: flex; flex-direction: row; justify-content: center;background-color: #704895;">
                             <span class="text-white font-weight-bold" style="font-size: 22px">$</span>
-                            <input style="border: none;background-color: #704895;color: white;max-width: 2rem; font-size: 22px;font-weight: bold"
+                            <input style="border: none;background-color: #704895;color: white;max-width: 3rem; font-size: 22px;font-weight: bold"
                                    type="number" name="price"
                                    id="price"
                                    required
