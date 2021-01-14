@@ -68990,7 +68990,7 @@ var render = function() {
                                   type: "number",
                                   id: "price",
                                   name: "price",
-                                  placeholder: "__",
+                                  placeholder: "___",
                                   required: ""
                                 },
                                 domProps: { value: _vm.user.price },
