@@ -37,7 +37,7 @@
                                              name="price"
                                              v-imask="priceMask"
                                              v-model="user.price"
-                                             placeholder="__"
+                                             placeholder="___"
                                              required
                                              :class="{'is-invalid': errors.hasOwnProperty('price')}"
                                              @complete="onComplete"
