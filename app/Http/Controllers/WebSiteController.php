@@ -72,7 +72,7 @@ class WebSiteController extends Controller
      */
     public function contactUs(Request $request)
     {
-        $name = $request->name;
+        $name = $request->full_name;
         $email = $request->email;
         $message = $request->message;
 
