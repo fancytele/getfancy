@@ -19,8 +19,9 @@
           function validateForm() {
             var x = document.forms["myForm"]["price"].value;
             if (x < {{ env('MINIMUM_PRODUCT_PRICE') }}) {
-              document.getElementById('priceError').style.display = "block";
+              //document.getElementById('priceError').style.display = "block";
               document.getElementById('plan_submit').disabled = "true";
+              $('#exampleModal').modal('show');
 
               return false;
             }
@@ -96,6 +97,18 @@
             
             gtag('config', 'UA-143244951-1');
         </script>
+        @endenv
+
+        @env('local')
+            <!-- Global site tag (gtag.js) - Google Analytics -->
+                <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143532505-1"></script>
+                <script>
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+
+                  gtag('config', 'UA-143532505-1');
+                </script>
         @endenv
     </head>
 
@@ -606,7 +619,7 @@
                         </div>
                     </div>
 
-                    <div id="priceError" style="max-width: 14rem; display:none; margin: 0 auto; background-color: #F3F3F3; border-radius: 5px;">
+             <!--       <div id="priceError" style="max-width: 14rem; display:none; margin: 0 auto; background-color: #F3F3F3; border-radius: 5px;">
                         <div style="display:flex;flex-direction: row;">
                             <div style="padding: 16px 10px 0">
                                 <h1><i class="fa fa-exclamation-triangle text-primary"></i></h1>
@@ -626,7 +639,7 @@
                         </div>
                     </div>
 
-                    @if($errors->any())
+                  @if($errors->any())
                         <div id="priceError" style="max-width: 14rem; display:none; margin: 0 auto; background-color: #F3F3F3; border-radius: 5px;">
                             <div style="display:flex;flex-direction: row;">
                                 <div style="padding: 16px 10px 0">
@@ -646,7 +659,8 @@
                                 </div>
                             </div>
                         </div>
-                    @endif
+                    @endif -->
+
                     <br>
                     <h5>@lang('First month free')</h5>
                     <button id="plan_submit_backend" type="submit" style="display: none" class="btn btn-primary px-6" disabled>Nextyolo</button>
@@ -748,5 +762,35 @@
 
             </div>
         </footer>
+        <!--try-->
+        <div class="modal fade" id= "exampleModal" tabindex="-1" role="dialog"
+             aria-labelledby="delete-element-label" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-body p-0">
+                        <button type="button" class="close mr-3 mt-2"
+                                data-dismiss="modal" aria-label="Close">
+                            <i class="fa fa-times text-primary" style="font-size: medium"></i>
+                        </button>
+                        <div class="d-flex my-3">
+                            <div style="display:flex;flex-direction: row;">
+                                <div style="padding: 16px 10px 0">
+                                    <h1><i class="fa fa-exclamation-triangle text-primary"></i></h1>
+                                </div>
+                                <div style="text-align: left; line-height: 13px; padding:5px 0 0">
+                                    <div>
+                                        <span class="text-primary font-weight-bolder" style="font-size: 15px">@lang('Heads Up')</span>
+                                    </div>
+                                    <div>
+                                        <span style="font-size: 13px;">@lang('Heads Up Message')</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--try-->
     </body>
 </html>

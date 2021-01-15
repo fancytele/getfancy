@@ -158,7 +158,12 @@ class LoginController extends Controller
 
                     $user->save();
 
-                    Mail::to($user->email)->send(new TwoFactorCodeVerificationEmail($user, $two_factor_code ));
+                    try{
+                        Mail::to($user->email)->send(new TwoFactorCodeVerificationEmail($user, $two_factor_code ));
+                    }
+                    catch (\Exception $e){
+                        return response()->json($e->getMessage(),500);
+                    }
                 }
                 else{
                     return response()->json('These credentials do not match our records.',401);
