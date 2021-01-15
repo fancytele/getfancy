@@ -302,6 +302,8 @@
             l.stop();
             document.getElementById('two_factor_code').style.display ="none";
             document.getElementById('submit-button').style.display ="none";
+            document.getElementById('password').value=null;
+            document.getElementById('emailError').innerHTML = '<strong>@lang('Sorry, currently there is some technical glitch! Please, Try again later.')</strong>';
           }
         }
         return false;

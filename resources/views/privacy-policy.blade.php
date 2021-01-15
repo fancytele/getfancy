@@ -24,19 +24,6 @@
 
     <!-- Styles -->
     <link href="{{ asset(mix('css/web.css')) }}" rel="stylesheet">
-
-@env('production')
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-143244951-1">
-        </script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-
-          gtag('config', 'UA-143244951-1');
-        </script>
-    @endenv
 </head>
 
 <body>
@@ -198,7 +185,7 @@
             <div class="row" data-aos="zoom-in">
                 <div class="col-md-12">
                     <h2>Privacy Policy</h2>
-                    <p>Your privacy is important to us. It is Hyper Telecom LLC's policy to respect your privacy regarding any information we may collect from you across our website, <a href="http://fancyy.co">http://fancyy.co</a>, and other sites we own and operate.</p>
+                    <p>Your privacy is important to us. It is Fancyy, LLC's policy to respect your privacy regarding any information we may collect from you across our website, <a href="http://fancyy.co">http://fancyy.co</a>, and other sites we own and operate.</p>
                     <h3>1. Information we collect</h3>
                     <h4>Log data</h4>
                     <p>When you visit our website, our servers may automatically log the standard data provided by your web browser. It may include your computer’s Internet Protocol (IP) address, your browser type and version, the pages you visit, the time and date of your visit, the time spent on each page, and other details.</p>
@@ -252,7 +239,7 @@
                         <li>third parties to collect and process data.</li>
                     </ul>
                     <h3>5. International transfers of personal information</h3>
-                    <p>The personal information we collect is stored and processed in United States, or where we or our partners, affiliates and third-party providers maintain facilities. By providing us with your personal information, you consent to the disclosure to these overseas third parties.</p>
+                    <p>The personal information we collect is stored and processed in the United States, or where we or our partners, affiliates and third-party providers maintain facilities. By providing us with your personal information, you consent to the disclosure to these overseas third parties.</p>
                     <p>We will ensure that any transfer of personal information from countries in the European Economic Area (EEA) to countries outside the EEA will be protected by appropriate safeguards, for example by using standard data protection clauses approved by the European Commission, or the use of binding corporate rules or other legally accepted means.</p>
                     <p>Where we transfer personal information from a non-EEA country to another country, you acknowledge that third parties in other jurisdictions may not be subject to similar data protection laws to the ones in our jurisdiction. There are risks if any such third party engages in any act or practice that would contravene the data privacy laws in our jurisdiction and this might mean that you will not be able to seek redress under our jurisdiction’s privacy laws.</p>
                     <h3>6. Your rights and controlling your personal information</h3>
@@ -273,9 +260,8 @@
                     <h3>10. Changes to this policy</h3>
                     <p>At our discretion, we may change our privacy policy to reflect current acceptable practices. We will take reasonable steps to let users know about changes via our website. Your continued use of this site after any changes to this policy will be regarded as acceptance of our practices around privacy and personal information. </p>
                     <p>If we make a significant change to this privacy policy, for example changing a lawful basis on which we process your personal information, we will ask you to re-consent to the amended privacy policy.</p>
-                    <p><strong>Hyper Telecom LLC Data Controller</strong><br />
-                        Johnny Bosche<br />
-                        jbosche@hyper-tele.com</p>
+                    <p><strong>Fancyy, LLC Data Controller</strong><br />
+                        info@fancyy.co<br />
                     <p>This policy is effective as of October 1, 2020.</p>
                 </div>
             </div>
