@@ -163,7 +163,7 @@
     "Status": "Estado",
     "Active": "Activo",
     "Inactive": "Inactivo",
-    "Delete Message": "¿Seguro que quieres eliminar este",
+    "Delete Message": "¿Seguro que quieres eliminar este mensaje?",
     "Restore": "Activar",
     "User list": "Lista de usuarios",
     "Create User": "Crear Usuario",
@@ -281,7 +281,7 @@
     "How much do you want to pay" : "¿cuánto quieres pagar?",
     "Monthly Payment": "Pago Mensual",
     "Pay whatever you think is fair": "Paga lo que te parezca justo",
-    "Heads Up": "¡ cabezas arriba!",
+    "Heads Up": "¡Alerta!",
     "Heads Up Message": "Aunque creemos que debería poder establecer su propio precio, no creemos que menos de $ 10.00 sea justo.",
     "First month free": "¡Primer mes gratis!",
     "Feature Spam Filtering Queues": "Colas de filtrado de spam",
@@ -290,6 +290,6 @@
     "Feature Call Queues SMS": "Funcion de cola de llamadas",
     "Pay Message" : "En Fancyy, creemos que la calidad y el valor de nuestros productos deben hablar por sí mismos.",
     "Features": "Caracteristicas",
-    "Plans": "Nombra tu propio precio",
+    "Plans": "Nombra tu Propio Precio",
     "Dismiss": "Descartar"
 }
