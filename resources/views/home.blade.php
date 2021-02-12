@@ -497,11 +497,11 @@
             <!-- / How It Works Section -->
 
             <!-- Plans Section -->
-            <section id="featuresPlans" class="bg-primary text-white fancy-section pt-0 text-center">
+            <section id="featuresPlans" class="bg-primary text-white pt-0 text-center">
                 <svg class="h-60 mb-6 w-100" preserveAspectRatio="none" viewBox="0 0 100 100">
                     <polygon class="fill-body" points="0,0 100,0 0,100 0,100"></polygon>
                 </svg>
-                <div class="container" data-aos="fade-up">
+                <div class="container fancy-section" data-aos="fade-up">
                     <div class="text-center" data-aos="fade-up">
                         <h2 class="display-4 font-heading">
                             @lang('Features')
@@ -587,6 +587,9 @@
                         </div>
                     </div>
                 </div>
+                <svg class="h-60 w-100" preserveAspectRatio="none" viewBox="0 0 100 100">
+                    <polygon class="fill-body" points="0,80 100,0 100,100 0,100"></polygon>
+                </svg>
             </section>
             <!-- / Plans Section -->
 
