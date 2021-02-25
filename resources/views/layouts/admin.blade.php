@@ -17,6 +17,7 @@
 
     <!-- Styles -->
     <link href="{{ asset(mix('css/app.css')) }}" rel="stylesheet">
+    <link rel="icon" href="favicon.png" type="image/png">
 </head>
 
 <body>
