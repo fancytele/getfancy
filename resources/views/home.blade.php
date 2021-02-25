@@ -172,7 +172,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="font-weight-bold nav-link text-body"
-                                   href="#about">@lang('About us')</a>
+                                   href="#about">@lang('About Us')</a>
                             </li>
                             @guest
                             <li class="nav-item">
