@@ -36,6 +36,7 @@
         </script>
         <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <link rel="icon" href="favicon.png" type="image/png">
         <link rel="stylesheet"
               href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
 
