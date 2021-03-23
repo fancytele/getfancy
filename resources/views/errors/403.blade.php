@@ -9,6 +9,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="icon" href="favicon.png" type="image/png">
 </head>
 
 <body class="d-flex align-items-center border-top border-top-2 border-primary">
