@@ -15,6 +15,7 @@
 
     <!-- Styles -->
     <link href="{{ asset(mix('css/app.css')) }}" rel="stylesheet">
+    <link rel="icon" href="/favicon.png" type="image/png">
 </head>
 
 <body class="d-flex align-items-center bg-auth border-top border-top-2 border-primary">
